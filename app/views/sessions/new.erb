@@ -21,8 +21,8 @@
         <%= {:error => 'danger', :warning => 'warning', :success => 'success', :notice => 'info'}.map { |type, class_name| flash_tag(type, :class => "alert alert-#{class_name} fade in", :bootstrap => true) }.join.html_safe %>
 
         <div class="form-group">
-          <label for="email" class="col-lg-2 control-label"><%= pat('login.email') %></label>
-          <div class="col-lg-10"><%= email_field_tag :email, :id => :email, :value => params[:email], :autofocus => true, :class => 'form-control' %></div>
+          <label for="username" class="col-lg-2 control-label"><%= pat('login.email') %></label>
+          <div class="col-lg-10"><%= text_field_tag :username, :id => :username, :value => params[:username], :autofocus => true, :class => 'form-control' %></div>
         </div>
 
         <div class="form-group">

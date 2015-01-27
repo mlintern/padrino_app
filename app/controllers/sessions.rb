@@ -4,7 +4,7 @@ PadrinoApp::App.controllers :sessions do
   end
 
   post :create do
-    if account = Account.authenticate(params[:email], params[:password])
+    if account = Account.authenticate(params[:username], params[:password])
       set_current_account(account)
       redirect url(:base, :index)
     elsif Padrino.env == :development && params[:bypass]

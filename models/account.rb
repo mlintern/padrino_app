@@ -5,6 +5,7 @@ class Account
 
   # Properties
   property :id,               Serial
+  property :username,         String
   property :name,             String
   property :surname,          String
   property :email,            String
@@ -12,13 +13,14 @@ class Account
   property :role,             String
 
   # Validations
-  validates_presence_of      :email, :role
+  validates_presence_of      :username, :role
   validates_presence_of      :password,                          :if => :password_required
   validates_presence_of      :password_confirmation,             :if => :password_required
   validates_length_of        :password, :min => 4, :max => 40,   :if => :password_required
   validates_confirmation_of  :password,                          :if => :password_required
+  validates_length_of        :username, :min => 3, :max => 100
+  validates_uniqueness_of    :username, :case_sensitive => false
   validates_length_of        :email,    :min => 3, :max => 100
-  validates_uniqueness_of    :email,    :case_sensitive => false
   validates_format_of        :email,    :with => :email_address
   validates_format_of        :role,     :with => /[A-Za-z]/
 
@@ -28,8 +30,8 @@ class Account
   ##
   # This method is for authentication purpose.
   #
-  def self.authenticate(email, password)
-    account = first(:conditions => ["lower(email) = lower(?)", email]) if email.present?
+  def self.authenticate(username, password)
+    account = first(:conditions => ["lower(username) = lower(?)", username]) if username.present?
     account && account.has_password?(password) ? account : nil
   end
 
