@@ -38,7 +38,7 @@ PadrinoApp::App.helpers do
       session[:redirect_to] = request.fullpath
       return true
     else
-      flash[:info] = "Admin rights required to view the settings page."
+      flash[:error] = "Admin rights required to view that page."
       redirect_last
       return false
     end
@@ -56,7 +56,7 @@ PadrinoApp::App.helpers do
     if current_user && current_user.id.to_i == owner_id.to_i
       return true
     else
-      flash[:info] = "You are not authorised to view that page."
+      flash[:error] = "You are not authorised to view that page."
       redirect "/"
       return false
     end    

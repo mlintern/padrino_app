@@ -1,6 +1,7 @@
 PadrinoApp::App.controllers :accounts do
   get :index do
     apr
+    session[:redirect_to] = request.fullpath
 
     @title = "Accounts"
     @accounts = Account.all
@@ -9,6 +10,7 @@ PadrinoApp::App.controllers :accounts do
 
   get :new do
     apr
+    session[:redirect_to] = request.fullpath
 
     @title = pat(:new_title, :model => 'account')
     @account = Account.new
@@ -31,7 +33,8 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    upr && is_owner?(params[:id]) 
+    ( upr && is_owner?(params[:id]) ) || is_admin?
+    session[:redirect_to] = request.fullpath
 
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])
