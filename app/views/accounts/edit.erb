@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs">
+  <li> <a href="/accounts"><i class="fa fa-list"></i> List</a></li>
+  <li> <a href="/accounts/new"><i class="fa fa-plus"></i> New</a></li>
+  <li class="active"> <a href="/accounts/edit/1"><i class="fa fa-edit"></i> Edit</a></li>
+</ul>
+<div class="tabs-content">
+  <% form_for :account, url(:accounts, :update, :id => @account.id), :method => :put, :class => 'form-horizontal' do |f| %>
+    <%= partial 'accounts/form', :locals => { :f => f } %>
+  <% end %>
+</div>
