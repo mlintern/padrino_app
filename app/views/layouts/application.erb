@@ -7,7 +7,7 @@
     <![endif]-->
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name=viewport content='width=device-width,initial-scale=1' />
-    <title><%= @title.present? ? "#{@title} | Padrino Admin" : "Padrino Admin" %></title>
+    <title><%= @title.present? ? "#{@title} | Padrino App" : "Padrino App" %></title>
     <%= favicon_tag "favicon.ico" %>
     <link href='http://fonts.googleapis.com/css?family=Varela' rel=stylesheet />
     <%= stylesheet_link_tag 'bootstrap', 'application' %>
@@ -16,27 +16,19 @@
     <div class="navbar navbar-fixed-top">
       <div class=navbar-inner>
         <div class=container>
-          <a class="navbar-brand" title="Padrino Admin" href="/">Padrino</a>
+          <a class="navbar-brand" title="Padrino Admin" href="/">Padrino App</a>
           <ul class="nav navbar-nav pull-right">
             <li class="navbar-edit-account">
-              <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/1"><i class="fa fa-user"></i></a>
+              <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.username %> &nbsp; <i class="fa fa-user"></i></a>
+            </li>
+            <li class="navbar-module">
+              <a href="/accounts"><i class="fa fa-users"></i></a>
             </li>
             <li class=navbar-logout>
-              <form action="/sessions/destroy" accept-charset="UTF-8" method="post" class="navbar-nav-form"><input type="hidden" name="_method" value="delete"><input type="hidden" name="authenticity_token" value="e1835e77d1b569f95449926bd516c9d6"><button type="submit" title="Exit the admin" class="navbar-nav-form-link"><i class="fa fa-power-off"></i> </button></form>
+              <a href="/sessions/destroy"><i class="fa fa-power-off"></i></a>
             </li>
           </ul>
 
-          <ul class="nav navbar-nav pull-left">
-            <% project_modules.each do |project_module| %>
-              <% if request.path_info =~ /^#{project_module.path}/ %>
-                <li class="navbar-module active">
-              <% else %>
-                <li class=navbar-module>
-              <% end %>
-                <a href="/accounts">Accounts</a>
-                </li>
-            <% end %>
-          </ul>
         </div>
       </div>
     </div>

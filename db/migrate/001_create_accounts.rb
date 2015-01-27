@@ -7,6 +7,7 @@ migration 1, :create_accounts do
       column :surname, DataMapper::Property::String, :length => 255
       column :email, DataMapper::Property::String, :length => 255
       column :crypted_password, DataMapper::Property::String, :length => 255
+      column :token, DataMapper::Property::String, :length => 255
       column :role, DataMapper::Property::String, :length => 255
     end
   end

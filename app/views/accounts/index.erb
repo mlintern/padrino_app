@@ -37,6 +37,7 @@
           </div>
         </th>
         <th class=header> <%= mat(:account, :id) %></th>
+        <th class=header> <%= mat(:account, :username) %></th>
         <th class=header> <%= mat(:account, :name) %></th>
         <th class=header> <%= mat(:account, :surname) %></th>
         <th class=header> <%= mat(:account, :email) %></th>
@@ -52,6 +53,7 @@
             <%= check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox' %>
            </td>
           <td class=list-column> <%= account.id %> </td>
+          <td class=list-column> <%= account.username %> </td>
           <td class=list-column> <%= account.name %> </td>
           <td class=list-column> <%= account.surname %> </td>
           <td class=list-column> <%= account.email %> </td>

@@ -1,17 +1,23 @@
 PadrinoApp::App.controllers :accounts do
   get :index do
+    apr
+
     @title = "Accounts"
     @accounts = Account.all
     render 'accounts/index'
   end
 
   get :new do
+    apr
+
     @title = pat(:new_title, :model => 'account')
     @account = Account.new
     render 'accounts/new'
   end
 
   post :create do
+    apr
+
     @account = Account.new(params[:account])
     if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
@@ -25,6 +31,8 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
+    upr && is_owner?(params[:id]) 
+
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])
     if @account
@@ -36,6 +44,8 @@ PadrinoApp::App.controllers :accounts do
   end
 
   put :update, :with => :id do
+    upr
+
     @title = pat(:update_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])
     if @account

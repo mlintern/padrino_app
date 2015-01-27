@@ -1,3 +1,5 @@
+require "securerandom"
+
 class Account
   include DataMapper::Resource
   include DataMapper::Validate
@@ -10,6 +12,7 @@ class Account
   property :surname,          String
   property :email,            String
   property :crypted_password, String, :length => 70
+  property :token,            String
   property :role,             String
 
   # Validations
@@ -26,6 +29,10 @@ class Account
 
   # Callbacks
   before :save, :encrypt_password
+
+  after :create do
+    self.token = SecureRandom.hex
+  end
 
   ##
   # This method is for authentication purpose.
@@ -44,6 +51,10 @@ class Account
 
   def has_password?(password)
     ::BCrypt::Password.new(crypted_password) == password
+  end
+
+  def generate_token
+    self.update!(:token => SecureRandom.hex)
   end
 
   private
