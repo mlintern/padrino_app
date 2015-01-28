@@ -2,9 +2,6 @@
 html, body {
   height: 100%;
 }
-body {
-  font-size: 13px;
-}
 .fa {
   display: inline-block;
 }
@@ -98,7 +95,6 @@ footer p {
 
 /* -- Begin Errors -- */
 .custom-error {
-  font-family: 'Varela', sans-serif;
   font-size: 1.5em;
   width: 500px;
   margin: 100px auto 0;
@@ -131,6 +127,7 @@ footer p {
   position: relative;
   display: block;
   padding: 10px 50px;
+  font-size: 1.6em;
 }
 .tabs-content {
   padding: 30px 0;
@@ -185,7 +182,6 @@ footer p {
 .navbar .navbar-brand {
   margin-top: 10px;
   padding: 0px 15px;
-  font-family: 'Varela', sans-serif;
   text-transform: uppercase;
   font-size: 2.5em;
   line-height: 1em;
@@ -282,7 +278,6 @@ footer p {
 /* --- End Application::List --- */
 /* --- Begin Application::Base --- */
 .base-text {
-  font-family: 'Varela', sans-serif;
   width: 730px;
   margin: 40px auto 0;
   font-size: 1.45em;
