@@ -1,6 +1,7 @@
 /* -- Begin Layout -- */
 html, body {
   height: 100%;
+  font-size: 16px;
 }
 .fa {
   display: inline-block;
@@ -12,11 +13,9 @@ html, body {
   padding: 0 10px;
 }
 .main-wrapper {
-  padding-top: 100px /* same as footers height */
+  padding-top: 120px;
 }
-.main-wrapper-push {
-  height: 70px; /* same as the footer */
-}
+
 footer {
   margin-top: -60px;
   height: 60px;
@@ -65,7 +64,7 @@ footer p {
   border-radius: 5px;
   padding: 20px;
   width: 50%;
-  margin: 60px auto 0;
+  margin: 10px auto 0;
 }
 .login-logo {
   text-align: center;
@@ -123,11 +122,14 @@ footer p {
 /* -- End Notifications -- */
 
 /* -- Begin Application -- */
+ul.nav.navbar-nav.pull-right {
+  margin-top: 5px;
+}
 .nav-tabs>li>a {
   position: relative;
   display: block;
   padding: 10px 50px;
-  font-size: 1.6em;
+  font-size: 20px;
 }
 .tabs-content {
   padding: 30px 0;

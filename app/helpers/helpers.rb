@@ -1,9 +1,5 @@
 PadrinoApp::App.helpers do
 
-  def test
-    puts "test"
-  end
-
   # Redirect to last page or root
   def redirect_last
     if session[:redirect_to]
@@ -32,8 +28,8 @@ PadrinoApp::App.helpers do
 
   # Require admin role to view page
   def admin_permission_required
-    puts " - - - Admin permission check - - - "
-    puts " - - - is_admin?: " + admin?.to_s + " - - - "
+    logger("Admin Permission Check: ")
+    logger("admin?: ",admin?)
     if current_user && admin?
       session[:redirect_to] = request.fullpath
       return true
@@ -68,7 +64,6 @@ PadrinoApp::App.helpers do
 
   # Return current_user record if logged in
   def current_user
-    puts Account.first(:token => request.cookies["user"])
     return @current_user ||= Account.first(:token => request.cookies["user"]) if request.cookies["user"]
     @current_user ||= Account.first(:token => session[:user]) if session[:user]
   end
@@ -76,6 +71,10 @@ PadrinoApp::App.helpers do
   # check if user is logged in?
   def logged_in?
     !!session[:user]
+  end
+
+  def logger(text,value = nil)
+    puts " - - - #{text}#{value} - - - "
   end
 
 end

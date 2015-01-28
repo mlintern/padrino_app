@@ -21,9 +21,7 @@ PadrinoApp::App.controllers :accounts do
     admin
 
     @account = Account.new(params[:account])
-    puts @account
-    puts result = @account.save
-    if result
+    if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
       flash[:success] = pat(:create_success, :model => 'Account')
       params[:save_and_continue] ? redirect( url( :accounts, :index ) ) : redirect( url( :accounts, :edit, :id => @account.id ) )
@@ -35,7 +33,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    is_admin? || ( user && owner?(params[:id]) )
+    admin? || ( user && owner?(params[:id]) )
     session[:redirect_to] = request.fullpath
 
     @title = pat(:edit_title, :model => "account #{params[:id]}")
@@ -70,6 +68,8 @@ PadrinoApp::App.controllers :accounts do
   end
 
   delete :destroy, :with => :id do
+    admin
+
     @title = "Accounts"
     account = Account.get(params[:id])
     if account
@@ -86,6 +86,8 @@ PadrinoApp::App.controllers :accounts do
   end
 
   delete :destroy_many do
+    admin
+    
     @title = "Accounts"
     unless params[:account_ids]
       flash[:error] = pat(:destroy_many_error, :model => 'account')
