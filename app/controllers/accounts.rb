@@ -97,7 +97,6 @@ PadrinoApp::App.controllers :accounts do
     if accounts.include? current_account
       flash[:error] = pat(:delete_error, :model => 'account')
     elsif accounts.destroy
-    
       flash[:success] = pat(:destroy_many_success, :model => 'Accounts', :ids => "#{ids.to_sentence}")
     end
     redirect url(:accounts, :index)
