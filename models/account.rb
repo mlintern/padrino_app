@@ -29,10 +29,9 @@ class Account
 
   # Callbacks
   before :save, :encrypt_password
+  before :save, :generate_token
 
-  after :create do
-    self.token = SecureRandom.hex
-  end
+  before :update, :encrypt_password
 
   ##
   # This method is for authentication purpose.
@@ -54,7 +53,7 @@ class Account
   end
 
   def generate_token
-    self.update!(:token => SecureRandom.hex)
+    self.token = SecureRandom.hex
   end
 
   private

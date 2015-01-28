@@ -1,6 +1,6 @@
 PadrinoApp::App.controllers :accounts do
   get :index do
-    apr
+    admin
     session[:redirect_to] = request.fullpath
 
     @title = "Accounts"
@@ -9,37 +9,39 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :new do
-    apr
+    admin
     session[:redirect_to] = request.fullpath
 
     @title = pat(:new_title, :model => 'account')
     @account = Account.new
-    render 'accounts/new'
+    render 'accounts/new', :locals => { 'account' => @account }
   end
 
   post :create do
-    apr
+    admin
 
     @account = Account.new(params[:account])
-    if @account.save
+    puts @account
+    puts result = @account.save
+    if result
       @title = pat(:create_title, :model => "account #{@account.id}")
       flash[:success] = pat(:create_success, :model => 'Account')
-      params[:save_and_continue] ? redirect(url(:accounts, :index)) : redirect(url(:accounts, :edit, :id => @account.id))
+      params[:save_and_continue] ? redirect( url( :accounts, :index ) ) : redirect( url( :accounts, :edit, :id => @account.id ) )
     else
       @title = pat(:create_title, :model => 'account')
       flash.now[:error] = pat(:create_error, :model => 'account')
-      render 'accounts/new'
+      render 'accounts/new', :locals => { 'account' => @account }
     end
   end
 
   get :edit, :with => :id do
-    is_admin? || ( upr && is_owner?(params[:id]) )
+    is_admin? || ( user && owner?(params[:id]) )
     session[:redirect_to] = request.fullpath
 
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])
     if @account
-      render 'accounts/edit', :locals => { 'account' => @account, "test" => "Test String." }
+      render 'accounts/edit', :locals => { 'account' => @account }
     else
       flash[:warning] = pat(:create_error, :model => 'account', :id => "#{params[:id]}")
       halt 404
@@ -47,7 +49,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   put :update, :with => :id do
-    upr
+    user
 
     @title = pat(:update_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])

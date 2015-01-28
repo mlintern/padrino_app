@@ -28,13 +28,13 @@ PadrinoApp::App.helpers do
     end
   end
 
-  alias_method :upr, :user_permission_required
+  alias_method :user, :user_permission_required
 
   # Require admin role to view page
   def admin_permission_required
-    puts "admin permission check"
-    puts is_admin?
-    if current_user && is_admin?
+    puts " - - - Admin permission check - - - "
+    puts " - - - is_admin?: " + admin?.to_s + " - - - "
+    if current_user && admin?
       session[:redirect_to] = request.fullpath
       return true
     else
@@ -44,15 +44,17 @@ PadrinoApp::App.helpers do
     end
   end
 
-  alias_method :apr, :admin_permission_required
+  alias_method :admin, :admin_permission_required
 
   # Check user has admin role
-  def is_admin?
+  def admin?
     return current_user.role == 'admin'
   end
 
+  alias_method :is_admin?, :admin?
+
   # Check logged in user is the owner
-  def is_owner? owner_id
+  def owner? owner_id
     if current_user && current_user.id.to_i == owner_id.to_i
       return true
     else
@@ -61,6 +63,8 @@ PadrinoApp::App.helpers do
       return false
     end    
   end
+
+  alias_method :is_owner?, :owner?
 
   # Return current_user record if logged in
   def current_user
@@ -72,11 +76,6 @@ PadrinoApp::App.helpers do
   # check if user is logged in?
   def logged_in?
     !!session[:user]
-  end
-
-  # Loads partial view into template. Required vriables into locals
-  def partial(template, locals = {})
-    erb(template, :layout => false, :locals => locals)
   end
 
 end

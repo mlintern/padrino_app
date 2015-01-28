@@ -125,5 +125,6 @@ DEPENDENCIES
   dm-types
   dm-validations
   erubis (~> 2.7.0)
+  json
   padrino (= 0.12.4)
   rake

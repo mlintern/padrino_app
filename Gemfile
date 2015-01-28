@@ -24,6 +24,7 @@ gem 'dm-constraints'
 gem 'dm-aggregates'
 gem 'dm-types'
 gem 'dm-core'
+gem 'json'
 
 # Test requirements
 

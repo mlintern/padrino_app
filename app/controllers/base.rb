@@ -1,6 +1,6 @@
 PadrinoApp::App.controllers :base do
   get :index, :map => "/" do
-    upr
+    user
     session[:redirect_to] = request.fullpath
     
     render "base/index"

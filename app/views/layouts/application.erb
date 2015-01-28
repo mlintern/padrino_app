@@ -17,17 +17,21 @@
       <div class=navbar-inner>
         <div class=container>
           <a class="navbar-brand" title="Padrino Admin" href="/">Padrino App</a>
+          <% unless current_user.nil? %>
           <ul class="nav navbar-nav pull-right">
             <li class="navbar-edit-account">
-              <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.username %> &nbsp; <i class="fa fa-user"></i></a>
+              <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.name %>&nbsp;<%= current_user.surname %> &nbsp; <i class="fa fa-user"></i></a>
             </li>
+            <% if is_admin? %>
             <li class="navbar-module">
               <a href="/accounts"><i class="fa fa-users"></i></a>
             </li>
+            <% end %>
             <li class=navbar-logout>
               <a href="/sessions/destroy"><i class="fa fa-power-off"></i></a>
             </li>
           </ul>
+          <% end %>
 
         </div>
       </div>
@@ -43,12 +47,12 @@
 
     <footer>
       <div class='footer-wrapper container'>
-        <p class='pull-left'>Copyright &copy; 2015 Your Site - Powered by Padrino v.0.12.4</p>
+        <p class='pull-left'>Copyright &copy; <%= Date.today.year %> Padrino App</p>
         <ul class="pull-right footer-links">
-          <li><a target="_blank" class="footer-links-link" href="http://www.padrinorb.com"><i class="fa fa-home"></i> web</a></li>
-          <li><a target="_blank" class="footer-links-link" href="http://www.padrinorb.com/blog"><i class="fa fa-heart"></i> blog</a></li>
-          <li><a target="_blank" class="footer-links-link" href="https://github.com/padrino/padrino-framework"><i class="fa fa-github"></i> code</a></li>
-          <li><a target="_blank" class="footer-links-link" href="http://twitter.com/padrinorb"><i class="fa fa-twitter"></i> twitter</a></li>
+          <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com"><i class="fa fa-home"></i> web</a></li>
+          <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com/successbucket"><i class="fa fa-heart"></i> blog</a></li>
+          <li><a target="_blank" class="footer-links-link" href="https://github.com/mlintern/padrino_app"><i class="fa fa-github"></i> code</a></li>
+          <li><a target="_blank" class="footer-links-link" href="http://twitter.com/mlintern"><i class="fa fa-twitter"></i> twitter</a></li>
         </ul>
       </div>
     </footer>
