@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-sm-8 col-sm-offset-2">
 		  <% form_for :account, url(:accounts, :update, :id => @account.id), :method => :put, :class => 'form-horizontal' do |f| %>
-		    <%= erb :"accounts/form", :layout => false,  :locals => { :f => f } %>
+		    <%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account } %>
 		  <% end %>
 		</div>
   </div>

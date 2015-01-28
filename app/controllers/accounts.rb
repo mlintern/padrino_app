@@ -33,13 +33,13 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    ( upr && is_owner?(params[:id]) ) || is_admin?
+    is_admin? || ( upr && is_owner?(params[:id]) )
     session[:redirect_to] = request.fullpath
 
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])
     if @account
-      render 'accounts/edit'
+      render 'accounts/edit', :locals => { 'account' => @account, "test" => "Test String." }
     else
       flash[:warning] = pat(:create_error, :model => 'account', :id => "#{params[:id]}")
       halt 404
