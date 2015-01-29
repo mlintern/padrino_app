@@ -14,6 +14,7 @@ class Account
   property :crypted_password, String, :length => 70
   property :token,            String
   property :role,             String
+  property :last_update,      DateTime
 
   # Validations
   validates_presence_of      :username, :role
@@ -31,11 +32,13 @@ class Account
   before :save, :encrypt_password
   before :save, :generate_token
 
-  before :update, :encrypt_password
-
   ##
   # This method is for authentication purpose.
   #
+  def check
+    puts " * * * * Check"
+  end
+
   def self.authenticate(username, password)
     account = first(:conditions => ["lower(username) = lower(?)", username]) if username.present?
     account && account.has_password?(password) ? account : nil
@@ -63,6 +66,7 @@ class Account
   end
 
   def encrypt_password
+    puts " * * * * * Encrypting Password"
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
   end
 end

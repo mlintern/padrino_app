@@ -20,6 +20,7 @@ PadrinoApp::App.controllers :accounts do
   post :create do
     admin
 
+    params[:account][:last_update] = DateTime.now
     @account = Account.new(params[:account])
     if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
@@ -50,13 +51,13 @@ PadrinoApp::App.controllers :accounts do
     user
 
     @title = pat(:update_title, :model => "account #{params[:id]}")
+    
+    params[:account][:last_update] = DateTime.now
     @account = Account.get(params[:id])
     if @account
       if @account.update(params[:account])
         flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
-        params[:save_and_continue] ?
-          redirect(url(:accounts, :index)) :
-          redirect(url(:accounts, :edit, :id => @account.id))
+        params[:save_and_continue] ? redirect(url(:accounts, :index)) : redirect(url(:accounts, :edit, :id => @account.id))
       else
         flash.now[:error] = pat(:update_error, :model => 'account')
         render 'accounts/edit'
