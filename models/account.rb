@@ -36,7 +36,7 @@ class Account
   # This method is for authentication purpose.
   #
   def check
-    puts " * * * * Check"
+    puts " * * * * Check * * * * "
   end
 
   def self.authenticate(username, password)
@@ -56,7 +56,7 @@ class Account
   end
 
   def generate_token
-    self.token = SecureRandom.hex
+    self.token = SecureRandom.hex if self.token.nil?
   end
 
   private
@@ -66,7 +66,7 @@ class Account
   end
 
   def encrypt_password
-    puts " * * * * * Encrypting Password"
+    puts " * * * * * Encrypting Password * * * * * "
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
   end
 end

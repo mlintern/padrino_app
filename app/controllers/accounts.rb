@@ -24,26 +24,30 @@ PadrinoApp::App.controllers :accounts do
     @account = Account.new(params[:account])
     if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
-      flash[:success] = pat(:create_success, :model => 'Account')
+      flash[:success] = "Account was successfully created" # user flash[:error] when redirecting
       params[:save_and_continue] ? redirect( url( :accounts, :index ) ) : redirect( url( :accounts, :edit, :id => @account.id ) )
     else
       @title = pat(:create_title, :model => 'account')
-      flash.now[:error] = pat(:create_error, :model => 'account')
+      @account.errors.each do |e|
+        logger.error("Save Error: #{e}")
+        flash.now[:error] = e[0] # User flash.now[:error] when rendering
+      end
       render 'accounts/new', :locals => { 'account' => @account }
     end
   end
 
   get :edit, :with => :id do
     admin? || ( user && owner?(params[:id]) )
-    session[:redirect_to] = request.fullpath
 
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])
     if @account
+      session[:redirect_to] = request.fullpath
       render 'accounts/edit', :locals => { 'account' => @account }
     else
-      flash[:warning] = pat(:create_error, :model => 'account', :id => "#{params[:id]}")
-      halt 404
+      flash[:warning] = "Couldn't Find Account" # user flash[:error] when redirecting
+      # halt 404
+      redirect_last
     end
   end
 
@@ -56,15 +60,19 @@ PadrinoApp::App.controllers :accounts do
     @account = Account.get(params[:id])
     if @account
       if @account.update(params[:account])
-        flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
+        flash[:success] = "Account with id params[:id] was successfully updated."
         params[:save_and_continue] ? redirect(url(:accounts, :index)) : redirect(url(:accounts, :edit, :id => @account.id))
       else
-        flash.now[:error] = pat(:update_error, :model => 'account')
-        render 'accounts/edit'
+        @account.errors.each do |e|
+          logger.error("Save Error: #{e}")
+          flash.now[:error] = e[0] # User flash.now[:error] when rendering
+        end
+        render 'accounts/edit', :locals => { 'account' => @account }
       end
     else
-      flash[:warning] = pat(:update_warning, :model => 'account', :id => "#{params[:id]}")
-      halt 404
+      flash[:warning] = "Account with that ID does not exist."
+      # halt 404
+      redirect_last
     end
   end
 
@@ -75,13 +83,13 @@ PadrinoApp::App.controllers :accounts do
     account = Account.get(params[:id])
     if account
       if account != current_account && account.destroy
-        flash[:success] = pat(:delete_success, :model => 'Account', :id => "#{params[:id]}")
+        flash[:success] = "Account #{params[:id]} was successfully deleted."
       else
-        flash[:error] = pat(:delete_error, :model => 'account')
+        flash[:error] = "You cannot delete yourself."
       end
       redirect url(:accounts, :index)
     else
-      flash[:warning] = pat(:delete_warning, :model => 'account', :id => "#{params[:id]}")
+      flash[:warning] = "User does not exist."
       halt 404
     end
   end
@@ -91,16 +99,16 @@ PadrinoApp::App.controllers :accounts do
     
     @title = "Accounts"
     unless params[:account_ids]
-      flash[:error] = pat(:destroy_many_error, :model => 'account')
+      flash[:error] = "You must specify account IDs with account_ids."
       redirect(url(:accounts, :index))
     end
     ids = params[:account_ids].split(',').map(&:strip)
     accounts = Account.all(:id => ids)
     
     if accounts.include? current_account
-      flash[:error] = pat(:delete_error, :model => 'account')
+      flash[:error] = "You cannot delete yourself."
     elsif accounts.destroy
-      flash[:success] = pat(:destroy_many_success, :model => 'Accounts', :ids => "#{ids.to_sentence}")
+      flash[:success] = "Accounts #{ids.to_sentence} were successfully deleted."
     end
     redirect url(:accounts, :index)
   end

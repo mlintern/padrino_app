@@ -7,7 +7,7 @@ RACK_ENV=production bundle exec rake db:seed
 
 Current Routes
 
-RACK_ENV=production bundle exec rake routes
+bundle exec rake routes
 
 Application: PadrinoApp::App
     URL                           REQUEST  PATH
