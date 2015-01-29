@@ -60,8 +60,7 @@ PadrinoApp::App.controllers :accounts do
     params[:account][:last_update] = DateTime.now
     @account = Account.get(params[:id])
     if @account
-      params[:account][:role] = "" if params[:account][:role].nil?
-      logger.error("params: #{params.inspect}")
+      params[:account][:role] = "" if ( params[:account][:role].nil? && admin? )
       if @account.update(params[:account])
         flash[:success] = "Account with id #{params[:id]} was successfully updated."
         params[:save_and_continue] ? redirect(url(:accounts, :index)) : redirect(url(:accounts, :edit, :id => @account.id))

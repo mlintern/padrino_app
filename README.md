@@ -13,6 +13,8 @@ cd project/dir
 RACK_ENV=production bundle exec rake db:create
 RACK_ENV=production bundle exec rake db:migrate
 RACK_ENV=production bundle exec rake db:seed
+chmod 777 db
+chmod 777 db/padrino_app_production.db
 
 
 
