@@ -17,7 +17,7 @@ class Account
   property :last_update,      DateTime
 
   # Validations
-  validates_presence_of      :username, :role
+  validates_presence_of      :username
   validates_presence_of      :password,                          :if => :password_required
   validates_presence_of      :password_confirmation,             :if => :password_required
   validates_length_of        :password, :min => 4, :max => 40,   :if => :password_required

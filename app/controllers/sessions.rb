@@ -21,6 +21,6 @@ PadrinoApp::App.controllers :sessions do
     response.delete_cookie("user", :path => '/')
     session[:user] = nil
     session[:errors] = nil
-    redirect url(:sessions, :new)
+    render "/sessions/new", nil
   end
 end

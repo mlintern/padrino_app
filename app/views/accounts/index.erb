@@ -8,19 +8,19 @@
       <tr>
         <th class="header list-menu">
           <div class=dropdown>
-            <a href="#" class="list-menu-toggle dropdown-toggle" data-toggle='dropdown'>
-              <%= tag_icon :magic %> <span class=caret></span>
+            <a href="#" class="list-menu-toggle dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-magic"></i>  <span class="caret"></span>
             </a>
             <ul class="list-menu dropdown-menu" role=menu>
               <li class=ist-menu-wrapper>
-                <%= link_to tag_icon('check-square-o', pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link' %>
+                <a id="select-all" class="list-menu-link" href="#"><i class="fa fa-check-square-o"></i> Select all</a>
               </li>
               <li class=list-menu-wrapper.list-menu-wrapper-disabled>
-                <%= link_to tag_icon('square-o', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled' %>
+                <a id="deselect-all" class="list-menu-link list-menu-link-disabled" href="#"><i class="fa fa-square-o"></i> Deselect all</a>
               </li>
               <li class="list-menu-divider divider"></li>
               <li class=list-menu-wrapper.list-menu-wrapper-disabled>
-                <%=link_to tag_icon('trash-o', pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled' %>
+                <a id="delete-selected" class="list-menu-link list-menu-link-disabled" href="#"><i class="fa fa-trash-o"></i> Delete selected</a>
                 <div class='list-menu-popover-delete-selected popover right'>
                   <div class=arrow></div>
                   <h3 class=popover-title><%= pat(:delete_selected_title) %></h3>
@@ -36,12 +36,12 @@
             </ul>
           </div>
         </th>
-        <th class=header> <%= mat(:account, :id) %></th>
-        <th class=header> <%= mat(:account, :username) %></th>
-        <th class=header> <%= mat(:account, :name) %></th>
-        <th class=header> <%= mat(:account, :surname) %></th>
-        <th class=header> <%= mat(:account, :email) %></th>
-        <th class=header> <%= mat(:account, :role) %></th>
+        <th class=header> Id</th>
+        <th class=header> Username</th>
+        <th class=header> Name</th>
+        <th class=header> Surname</th>
+        <th class=header> Email Address</th>
+        <th class=header> Roles</th>
         <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -51,7 +51,7 @@
         <tr class=list-row>
           <td class="list-column list-selectable">
             <%= check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox' %>
-           </td>
+          </td>
           <td class=list-column> <%= account.id %> </td>
           <td class=list-column> <%= account.username %> </td>
           <td class=list-column> <%= account.name %> </td>
@@ -60,19 +60,19 @@
           <td class=list-column> <%= account.role %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
-               <%= link_to tag_icon(:edit), :href => url(:accounts, :edit, :id => account.id), :rel => :tooltip, :title => "#{pat(:edit)} account", :class => 'list-row-action-wrapper-link' %>
-               <%= link_to tag_icon('trash-o'), :rel => :tooltip, :title => "#{pat(:delete)} account", :class => 'list-row-action-delete-one list-row-action-wrapper-link' %>
-               <div class="popover list-row-action-popover-delete-one left">
-                 <div class=arrow> </div>
-                 <h3 class=popover-title><%= pat(:delete, :model => "account") %></h3>
-                 <div class=popover-content>
-                   <%- form_tag url(:accounts, :destroy, :id => account.id), :method => :delete do %>
-                     <%= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
-                     <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
-                   <% end %>
-                 </div>
-               </div>
-             </div>
+              <a href="/accounts/edit/<%= account.id %>" rel="tooltip" title="Edit account" class="list-row-action-wrapper-link"><i class="fa fa-edit"></i> </a>
+              <a rel="tooltip" title="Delete account" class="list-row-action-delete-one list-row-action-wrapper-link" href="#"><i class="fa fa-trash-o"></i> </a>
+              <div class="popover list-row-action-popover-delete-one left">
+                <div class=arrow> </div>
+                <h3 class=popover-title><%= pat(:delete, :model => "account") %></h3>
+                <div class=popover-content>
+                  <%- form_tag url(:accounts, :destroy, :id => account.id), :method => :delete do %>
+                    <%= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
+                    <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
       <% end %>

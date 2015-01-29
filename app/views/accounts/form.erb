@@ -2,60 +2,62 @@
   <label for="account_username" class="control-label">Username: </label>
   <div class="controls">
     <input type="text" name="account[username]" value="<%= user.username %>" id="account_username" class="form-control input-xlarge input-with-feedback" autofocus="autofocus">
-    <span class="help-inline">Ex: a simple text</span>
   </div>
 </fieldset>
 <fieldset class="control-group ">
   <label for="account_name" class="control-label">Name: </label>
   <div class="controls">
     <input type="text" name="account[name]" value="<%= user.name %>" id="account_name" class="form-control input-xlarge input-with-feedback">
-    <span class="help-inline">Ex: a simple text</span>
   </div>
 </fieldset>
 <fieldset class="control-group ">
   <label for="account_surname" class="control-label">Surname: </label>
   <div class="controls">
     <input type="text" name="account[surname]" value="<%= user.surname %>" id="account_surname" class="form-control input-xlarge input-with-feedback">
-    <span class="help-inline">Ex: a simple text</span>
   </div>
 </fieldset>
 <fieldset class="control-group ">
   <label for="account_email" class="control-label">Email: </label>
   <div class="controls">
     <input type="text" name="account[email]" value="<%= user.email %>" id="account_email" class="form-control input-xlarge input-with-feedback">
-    <span class="help-inline">Ex: a simple text</span>
   </div>
 </fieldset>
 <fieldset class="control-group ">
   <label for="account_password" class="control-label">Password: </label>
   <div class="controls">
     <input type="password" name="account[password]" id="account_password" class="form-control input-xlarge input-with-feedback">
-    <span class="help-inline">Ex: a simple text</span>
   </div>
 </fieldset>
 <fieldset class="control-group ">
   <label for="account_password_confirmation" class="control-label">Password confirmation: </label>
   <div class="controls">
     <input type="password" name="account[password_confirmation]" id="account_password_confirmation" class="form-control input-xlarge input-with-feedback">
-    <span class="help-inline">Ex: a simple text</span>
   </div>
 </fieldset>
+<% if admin? %>
 <fieldset class="control-group ">
-  <label for="account_role" class="control-label">Role: </label>
+  <label for="account_role" class="control-label">Roles: </label>
   <div class="controls">
-    <select type="text" name="account[role]" id="account_role" class="form-control input-xlarge input-with-feedback">
-      <option value="user" <% if user.role == 'user' %>selected<% end %> >user</option>
-      <option value="admin" <% if user.role == 'admin' %>selected<% end %> >admin</option>
-    </select>
-    <span class="help-inline">Ex: a simple text</span>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="account[role][]" value="user" <% if user.role["user"] %>checked<%end%>/>user
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="account[role][]" value="admin" <% if user.role["admin"] %>checked<%end%>/>admin
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="account[role][]" value="other" <% if user.role["other"] %>checked<%end%>/>other
+    </label>
   </div>
 </fieldset>
+<% end %>
 
 
 <div class="form-actions">
   <input type="submit" value="Save" class="btn btn-primary">
   &nbsp;
+  <% if admin? %>
   <input type="submit" value="Save and continue" class="btn btn-info" name="save_and_continue">
   &nbsp;
+  <% end %>
   <a class="btn btn-default" href="/accounts">Cancel</a>
 </div>

@@ -13,24 +13,26 @@ PadrinoApp::App.helpers do
 
   # Require login to view page
 
-  def user_permission_required
+  def login_required
     if session[:user]
       return true
     else
       flash[:info] = "Login is required."
       session[:redirect_to] = request.fullpath
-      redirect "/sessions/new"
+      render "/sessions/new"
       return false
     end
   end
 
-  alias :user :user_permission_required
+  alias :login :login_required
 
   # Require admin role to view page
   def admin_permission_required
+    login
+
     log("Admin Permission Check")
     log("admin? = ",admin?)
-    if current_user && admin?
+    if admin?
       session[:redirect_to] = request.fullpath
       return true
     else
@@ -42,13 +44,48 @@ PadrinoApp::App.helpers do
 
   alias :admin :admin_permission_required
 
+  # Require user role to view page
+  def user_permission_required
+    login
+
+    log("User Permission Check")
+    log("user? = ",user?)
+    if user?
+      session[:redirect_to] = request.fullpath
+      return true
+    else
+      flash[:error] = "Admin rights required to view that page."
+      redirect_last
+      return false
+    end
+  end
+
+  alias :user :user_permission_required
+
+  # Check user has user role
+  def user?
+    if current_user['role'].nil?
+      return false
+    else
+      return current_user.role['user']
+    end
+  end
+
   # Check user has admin role
   def admin?
-    puts current_user.inspect
-    return current_user.role == 'admin'
+    if current_user['role'].nil?
+      return false
+    else
+      return current_user.role['admin']
+    end
   end
 
   alias :is_admin? :admin?
+
+  # Check user has other role
+  def other?
+    return current_user.role['other']
+  end
 
   # Check logged in user is the owner
   def owner? owner_id

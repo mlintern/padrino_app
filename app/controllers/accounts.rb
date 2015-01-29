@@ -14,6 +14,7 @@ PadrinoApp::App.controllers :accounts do
 
     @title = pat(:new_title, :model => 'account')
     @account = Account.new
+    @account.role = ""
     render 'accounts/new', :locals => { 'account' => @account }
   end
 
@@ -37,7 +38,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    admin? || ( user && owner?(params[:id]) )
+    admin? || ( login && owner?(params[:id]) )
 
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.get(params[:id])
@@ -52,15 +53,17 @@ PadrinoApp::App.controllers :accounts do
   end
 
   put :update, :with => :id do
-    user
+    login
 
     @title = pat(:update_title, :model => "account #{params[:id]}")
     
     params[:account][:last_update] = DateTime.now
     @account = Account.get(params[:id])
     if @account
+      params[:account][:role] = "" if params[:account][:role].nil?
+      logger.error("params: #{params.inspect}")
       if @account.update(params[:account])
-        flash[:success] = "Account with id params[:id] was successfully updated."
+        flash[:success] = "Account with id #{params[:id]} was successfully updated."
         params[:save_and_continue] ? redirect(url(:accounts, :index)) : redirect(url(:accounts, :edit, :id => @account.id))
       else
         @account.errors.each do |e|
