@@ -1,8 +1,19 @@
+Set up development Database:
+
+cd project/dir
+bundle exec rake db:create
+bundle exec rake db:migrate
+bundle exec rake db:seed
+
+
+
 Set up Prdouction Database:
 
+cd project/dir
 RACK_ENV=production bundle exec rake db:create
 RACK_ENV=production bundle exec rake db:migrate
 RACK_ENV=production bundle exec rake db:seed
+
 
 
 Current Routes:
