@@ -5,7 +5,7 @@ RACK_ENV=production bundle exec rake db:migrate
 RACK_ENV=production bundle exec rake db:seed
 
 
-Current Routes
+Current Routes:
 
 bundle exec rake routes
 
@@ -24,3 +24,15 @@ Application: PadrinoApp::App
     (:base, :index)                 GET    /
     (:api, :index)                  GET    /api
     (:api, :info)                   GET    /api/info
+
+
+
+Seeded Users:
+
+administrator - admin
+mweston - user
+fglenanne - user
+saxe - user
+jporter - user
+
+password is 'password'
