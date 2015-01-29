@@ -9,8 +9,7 @@
     <meta name=viewport content='width=device-width,initial-scale=1' />
     <title><%= @title.present? ? "#{@title} | Padrino App" : "#{pat(:custom_errors.title)} | Padrino App" %></title>
     <%= favicon_tag "favicon.ico" %>
-    <link href='http://fonts.googleapis.com/css?family=Varela' rel=stylesheet />
-    <%= stylesheet_link_tag 'bootstrap', 'application' %>
+    <%= stylesheet_link_tag 'bootstrap.min', 'application' %>
   </head>
   <body>
     <div class="custom-error text-center">
