@@ -28,7 +28,7 @@ PadrinoApp::App.helpers do
 
   # Require admin role to view page
   def admin_permission_required
-    logger("Admin Permission Check: ")
+    logger("Admin Permission Check")
     logger("admin?: ",admin?)
     if current_user && admin?
       session[:redirect_to] = request.fullpath

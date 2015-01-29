@@ -1,24 +1,31 @@
 <% form_tag url(:sessions, :create), :class=>"login form-horizontal" do %>
-  <div class="login-header modal-header">
-    <div class="login-logo"> <%= image_tag("padrino_logo.png", :alt => "Padrino's logo", :height => 250, :width => 250) %> </div>
-  </div>
   <div class="login-body modal-body">
 
-    <div class="form-group">
-      <label for="username" class="col-lg-2 control-label">Username</label>
-      <div class="col-lg-10"><%= text_field_tag :username, :id => :username, :value => params[:username], :autofocus => true, :class => 'form-control' %></div>
-    </div>
+    <div class="row">
 
-    <div class="form-group">
-      <label for="password" class="col-lg-2 control-label">Password</label>
-      <div class="col-lg-10"><%= password_field_tag :password, :id => :password, :class => 'form-control' %></div>
-    </div>
-
-    <fieldset class="login-control-group-last control-group">
-      <div class="login-controls controls">
-        <label class="login-bypass-label checkbox"><input type="checkbox" name="remember_me" checked>  remember me?</label>
+      <div class="col-sm-4">
+        <div class="login-logo"> <%= image_tag("padrino_logo.png", :alt => "Padrino's logo") %> </div>
       </div>
-    </fieldset>
+
+      <div class="col-sm-8 input-boxes">
+        <div class="form-group">
+          <label for="username" class="col-sm-4 control-label">Username</label>
+          <div class="col-sm-8"><%= text_field_tag :username, :id => :username, :value => params[:username], :autofocus => true, :class => 'form-control' %></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">Password</label>
+          <div class="col-sm-8"><%= password_field_tag :password, :id => :password, :class => 'form-control' %></div>
+        </div>
+
+        <fieldset class="login-control-group-last control-group">
+          <div class="login-controls controls">
+            <label class="login-bypass-label checkbox"><input type="checkbox" name="remember_me" checked>  remember me?</label>
+          </div>
+        </fieldset>
+      </div>
+
+    </div>
 
   </div>
   <div class="login-footer modal-footer"><%= submit_tag(pat('login.sign_in'), :class => "btn btn-primary pull-right") %></div>
