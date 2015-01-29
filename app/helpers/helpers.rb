@@ -12,19 +12,15 @@ PadrinoApp::App.helpers do
   end
 
   # Require login to view page
-
-  def login_required
+  def login
     if session[:user]
       return true
     else
       flash[:info] = "Login is required."
-      session[:redirect_to] = request.fullpath
-      render "/sessions/new"
+      redirect url(:sessions, :new), 303
       return false
     end
   end
-
-  alias :login :login_required
 
   # Require admin role to view page
   def admin_permission_required

@@ -1,6 +1,6 @@
 PadrinoApp::App.controllers :sessions do
   get :new do
-    render "/sessions/new", nil
+    render "/sessions/new"
   end
 
   post :create do
@@ -10,9 +10,8 @@ PadrinoApp::App.controllers :sessions do
       session[:user] = account.token
       redirect url(:base, :index)
     else
-      params[:username] = h(params[:suername])
-      flash.now[:error] = pat('login.error')
-      render "/sessions/new", nil
+      flash.now[:error] = "Username or Password is wrong"
+      render '/sessions/new', nil
     end
   end
 
@@ -21,6 +20,6 @@ PadrinoApp::App.controllers :sessions do
     response.delete_cookie("user", :path => '/')
     session[:user] = nil
     session[:errors] = nil
-    render "/sessions/new", nil
+    redirect url(:sessions, :new)
   end
 end

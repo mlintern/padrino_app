@@ -21,7 +21,7 @@ module PadrinoApp
     #
 
     set :admin_model, 'Account'
-    set :login_page,  '/sessions/new'
+    # set :login_page,  '/sessions/new'
 
     enable  :sessions
     disable :store_location
