@@ -400,4 +400,10 @@ background-color: transparent;
   .btn-group>.btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
     border-radius: 4px;
   }
+  .list-row .list-row-action-wrapper {
+    min-width: 60px;
+  }
+  .list-row-action-wrapper-link {
+    visibility: visible;
+  }
 }
