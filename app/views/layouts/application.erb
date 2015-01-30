@@ -12,12 +12,20 @@
     <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'font-awesome.min', 'application' %>
   </head>
   <body>
-    <div class="navbar navbar-fixed-top">
-      <div class=navbar-inner>
-        <div class=container>
-          <a class="navbar-brand" title="Padrino Admin" href="/">Padrino App</a>
-          <% unless current_user.nil? %>
-          <ul class="nav navbar-nav pull-right">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" title="Padrino Admin" href="/">Padrino App</a>
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <% unless current_user.nil? %>
+          <ul class="nav navbar-nav navbar-right">
             <li class="navbar-edit-account">
               <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.name %>&nbsp;<%= current_user.surname %> &nbsp; <i class="fa fa-user"></i></a>
             </li>
@@ -31,8 +39,6 @@
             </li>
           </ul>
           <% end %>
-
-        </div>
       </div>
     </div>
 
@@ -50,8 +56,8 @@
 
     <footer>
       <div class='footer-wrapper container'>
-        <p class='pull-left'>Copyright &copy; <%= Date.today.year %> Padrino App</p>
-        <ul class="pull-right footer-links">
+        <p class='copyright'>Copyright &copy; <%= Date.today.year %> Padrino App</p>
+        <ul class="footer-links">
           <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com"><i class="fa fa-home"></i> web</a></li>
           <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com/successbucket"><i class="fa fa-heart"></i> blog</a></li>
           <li><a target="_blank" class="footer-links-link" href="https://github.com/mlintern/padrino_app"><i class="fa fa-github"></i> code</a></li>
