@@ -26,14 +26,14 @@ unless Account.first(:username => "jporter")
   account = Account.create(:username => "jporter", :email => "jporter@padrino.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["other"], :last_update => DateTime.now )
 end
 
-if Account.count == 0
+if Account.count == 0 || false
 
   username  = shell.ask "Which username do you want use for logging into admin?"
   password  = shell.ask "Tell me the password to use:"
 
   shell.say ""
 
-  account = Account.create(:username => username, :email => "foo@bar.com", :name => "Foo", :surname => "Bar", :password => password, :password_confirmation => password, :role => "admin")
+  account = Account.create(:username => username, :email => "foo@bar.com", :name => "Foo", :surname => "Bar", :password => password, :password_confirmation => password, :role => ["admin"], :last_update => DateTime.now)
 
   if account.valid?
     shell.say "================================================================="
