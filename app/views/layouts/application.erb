@@ -28,15 +28,15 @@
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <% unless current_user.nil? %>
           <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-edit-account">
+            <li>
               <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.name %>&nbsp;<%= current_user.surname %> &nbsp; <i class="fa fa-user"></i></a>
             </li>
             <% if admin? %>
-            <li class="navbar-module">
+            <li>
               <a href="/accounts"><i class="fa fa-users"></i></a>
             </li>
             <% end %>
-            <li class="navbar-logout">
+            <li>
               <a href="/sessions/destroy"><i class="fa fa-power-off"></i></a>
             </li>
           </ul>

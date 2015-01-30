@@ -339,6 +339,17 @@ background-color: transparent;
   }
   .navbar-fixed-top {
     position: relative;
+    border-bottom: none;
+  }
+  .navbar-collapse {
+    padding: 0;
+  }
+  .navbar-nav {
+    margin: 0;
+    text-align: center;
+  }
+  .navbar-default .navbar-nav>li>a {
+    border-bottom: 1px #fff solid;
   }
   footer { 
     position: relative;
