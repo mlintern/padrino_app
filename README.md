@@ -9,6 +9,8 @@ bundle exec rake db:seed
 
 Set up Prdouction Database:
 
+create database with util script
+
 cd project/dir
 RACK_ENV=production bundle exec rake db:create
 RACK_ENV=production bundle exec rake db:migrate

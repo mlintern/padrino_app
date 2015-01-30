@@ -21,15 +21,15 @@ module PadrinoApp
     #
 
     set :admin_model, 'Account'
-    # set :login_page,  '/sessions/new'
+    set :login_page,  '/sessions/new'
 
     enable  :sessions
     disable :store_location
 
-    # access_control.roles_for :any do |role|
-    #   role.protect '/'
-    #   role.allow   '/sessions'
-    # end
+    access_control.roles_for :any do |role|
+      role.protect '/'
+      role.allow   '/sessions'
+    end
 
     # access_control.roles_for :admin do |role|
     #   role.project_module :accounts, '/accounts'
