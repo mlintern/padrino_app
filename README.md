@@ -7,15 +7,15 @@ bundle exec rake db:seed
 
 
 
-Set up Prdouction Database:
+Set up Prdouction Database on MySQL:
 
-create database with util script
+create database with util script:
 
 mysql -uroot utilities/setup_production_db.sql
 
 cd project/dir
-RACK_ENV=production bundle exec rake db:migrate
-RACK_ENV=production bundle exec rake db:seed
+RACK_ENV=production padrino rake db:migrate
+RACK_ENV=production padrino rake db:seed
 chmod 777 db
 chmod 777 db/padrino_app_production.db
 
