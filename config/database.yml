@@ -11,14 +11,14 @@ test:
   database: nretnil_test
   username: webuser
   password: webuser
-  host: 127.0.0.1
+  host: localhost
 
 production:
   adapter: mysql
   database: nretnil_prd
   username: webuser
   password: webuser
-  host: 127.0.0.1
+  host: localhost
 
 
 
