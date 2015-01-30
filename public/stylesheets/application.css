@@ -348,14 +348,24 @@ background-color: transparent;
     padding-top: 0;
     padding-bottom: 0;
   }
+  .login {
+    width: 100%;
+  }
   .footer-links {
     float: none;
-    margin: 0;
+    padding: 0;
+  }
+  .footer-links-link {
+    color: #ddd;
+  }
+  footer p {
+    color: #ddd;
   }
   .footer-links li {
     list-style: none;
     display: block;
     text-align: center;
+    margin: 5px 0;
   }
   .copyright {
     text-align: center;
