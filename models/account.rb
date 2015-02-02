@@ -66,7 +66,7 @@ class Account
   end
 
   def encrypt_password
-    puts " * * * * * Encrypting Password * * * * * "
+    # puts " * * * * * Encrypting Password * * * * * "
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
   end
 end

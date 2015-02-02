@@ -37,12 +37,12 @@
             </ul>
           </div>
         </th>
-        <th class=header> Id</th>
-        <th class=header> Username</th>
-        <th class=header> Name</th>
-        <th class=header> Surname</th>
-        <th class=header> Email Address</th>
-        <th class=header> Roles</th>
+        <th class=header><a href="?by=id&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Id <% if params[:by] == 'id' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
+        <th class=header><a href="?by=username&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Username <% if params[:by] == 'username' || params[:by].nil? %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
+        <th class=header><a href="?by=name&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Name <% if params[:by] == 'name' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
+        <th class=header><a href="?by=surname&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Surname <% if params[:by] == 'surname' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
+        <th class=header><a href="?by=email&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Email Address <% if params[:by] == 'email' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
+        <th class=header>Roles</th>
         <th class="header list-row-action-header"></th>
       </tr>
     </thead>

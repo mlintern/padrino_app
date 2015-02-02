@@ -10,8 +10,8 @@ PadrinoApp::App.controllers :sessions do
       session[:user] = account.token
       redirect url(:base, :index)
     else
-      flash.now[:error] = "Username or Password is wrong"
-      render '/sessions/new', nil
+      flash[:error] = "Username or Password is wrong"
+      redirect url(:sessions, :new), 302
     end
   end
 

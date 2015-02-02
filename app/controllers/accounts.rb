@@ -4,7 +4,19 @@ PadrinoApp::App.controllers :accounts do
     session[:redirect_to] = request.fullpath
 
     @title = "Accounts"
-    @accounts = Account.all
+    if params[:dir] == "desc"
+      if params[:by]
+        @accounts = Account.all(:order => [ params[:by].to_sym.desc ]) # desc
+      else
+        @accounts = Account.all(:order => [ :username.desc ]) # desc
+      end
+    else
+      if params[:by]
+        @accounts = Account.all(:order => [ params[:by].to_sym.asc ]) # desc
+      else
+        @accounts = Account.all(:order => [ :username.asc ]) # desc
+      end
+    end
     render 'accounts/index'
   end
 

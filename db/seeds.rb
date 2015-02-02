@@ -11,19 +11,31 @@ unless Account.first(:username => "administrator")
 end
 
 unless Account.first(:username => "mweston")
-  account = Account.create(:username => "mweston", :email => "mweston@padrino.com", :name => "Michael", :surname => "Weston", :password => "password", :password_confirmation => "password", :role => ["user"], :last_update => DateTime.now )
+  account = Account.create(:username => "mweston", :email => "michael.weston@padrino.com", :name => "Michael", :surname => "Weston", :password => "password", :password_confirmation => "password", :role => ["user"], :last_update => DateTime.now )
 end
 
 unless Account.first(:username => "fglenanne")
-  account = Account.create(:username => "fglenanne", :email => "fglenanne@padrino.com", :name => "Fiona", :surname => "Glenanne", :password => "password", :password_confirmation => "password", :role => ["user","admin"], :last_update => DateTime.now )
+  account = Account.create(:username => "fglenanne", :email => "fiona.glenanne@padrino.com", :name => "Fiona", :surname => "Glenanne", :password => "password", :password_confirmation => "password", :role => ["user","admin"], :last_update => DateTime.now )
 end
 
 unless Account.first(:username => "saxe")
-  account = Account.create(:username => "saxe", :email => "saxe@padrino.com", :name => "Sam", :surname => "Axe", :password => "password", :password_confirmation => "password", :role => "", :last_update => DateTime.now )
+  account = Account.create(:username => "saxe", :email => "sam.axe@padrino.com", :name => "Sam", :surname => "Axe", :password => "password", :password_confirmation => "password", :role => "", :last_update => DateTime.now )
 end
 
 unless Account.first(:username => "jporter")
-  account = Account.create(:username => "jporter", :email => "jporter@padrino.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["other"], :last_update => DateTime.now )
+  account = Account.create(:username => "jporter", :email => "jesse.porter@padrino.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["other"], :last_update => DateTime.now )
+end
+
+unless Account.first(:username => "maddie")
+  account = Account.create(:username => "maddie", :email => "maddie.weston@padrino.com", :name => "Madeline", :surname => "Weston", :password => "password", :password_confirmation => "password", :role => ["user"], :last_update => DateTime.now )
+end
+
+unless Account.first(:username => "nweston")
+  account = Account.create(:username => "nweston", :email => "nate.weston@padrino.com", :name => "Nate", :surname => "Weston", :password => "password", :password_confirmation => "password", :role => ["user"], :last_update => DateTime.now )
+end
+
+unless Account.first(:username => "barry")
+  account = Account.create(:username => "barry", :email => "barry@padrino.com", :name => "Barry", :surname => "", :password => "password", :password_confirmation => "password", :role => ["user"], :last_update => DateTime.now )
 end
 
 if Account.count == 0 || false

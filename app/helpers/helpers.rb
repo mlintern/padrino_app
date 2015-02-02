@@ -16,8 +16,8 @@ PadrinoApp::App.helpers do
     if session[:user]
       return true
     else
-      flash[:info] = "Login is required."
-      redirect url(:sessions, :new), 303
+      flash[:error] = "Login is required."
+      redirect url(:sessions, :new), 302
       return false
     end
   end
@@ -26,8 +26,8 @@ PadrinoApp::App.helpers do
   def admin_permission_required
     login
 
-    log("Admin Permission Check")
-    log("admin? = ",admin?)
+    # log("Admin Permission Check")
+    # log("admin? = ",admin?)
     if admin?
       session[:redirect_to] = request.fullpath
       return true
@@ -44,8 +44,8 @@ PadrinoApp::App.helpers do
   def user_permission_required
     login
 
-    log("User Permission Check")
-    log("user? = ",user?)
+    # log("User Permission Check")
+    # log("user? = ",user?)
     if user?
       session[:redirect_to] = request.fullpath
       return true
