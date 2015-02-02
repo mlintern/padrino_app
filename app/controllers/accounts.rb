@@ -4,6 +4,7 @@ PadrinoApp::App.controllers :accounts do
     session[:redirect_to] = request.fullpath
 
     @title = "Accounts"
+    account_status_options = { 0 => "disabled", 1 => "enabled" }
     if params[:dir] == "desc"
       if params[:by]
         @accounts = Account.all(:order => [ params[:by].to_sym.desc ]) # desc
@@ -17,7 +18,7 @@ PadrinoApp::App.controllers :accounts do
         @accounts = Account.all(:order => [ :username.asc ]) # desc
       end
     end
-    render 'accounts/index'
+    render 'accounts/index', :locals => { 'account_status' => account_status_options }
   end
 
   get :new do
@@ -34,6 +35,7 @@ PadrinoApp::App.controllers :accounts do
     admin
 
     params[:account][:last_update] = DateTime.now
+    params[:account][:status] = 0 if params[:account][:status].nil? 
     @account = Account.new(params[:account])
     if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
@@ -73,6 +75,7 @@ PadrinoApp::App.controllers :accounts do
     @account = Account.get(params[:id])
     if @account
       params[:account][:role] = "" if ( params[:account][:role].nil? && admin? )
+      params[:account][:status] = 0 if ( params[:account][:status].nil? && admin? )
       log("params[:account] = ",params[:account].inspect)
       if @account.update(params[:account])
         flash[:success] = "Account with id #{params[:id]} was successfully updated."

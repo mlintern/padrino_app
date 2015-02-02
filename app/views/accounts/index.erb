@@ -43,6 +43,7 @@
         <th class=header><a href="?by=surname&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Surname <% if params[:by] == 'surname' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
         <th class=header><a href="?by=email&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Email Address <% if params[:by] == 'email' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
         <th class=header>Roles</th>
+        <th class=header><a href="?by=status&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Status <% if params[:by] == 'status' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
         <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -59,6 +60,7 @@
           <td class=list-column> <%= account.surname %> </td>
           <td class=list-column> <%= account.email %> </td>
           <td class=list-column> <%= account.role %> </td>
+          <td class=list-column> <%= account_status[account.status] %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
               <a href="/accounts/edit/<%= account.id %>" rel="tooltip" title="Edit account" class="list-row-action-wrapper-link"><i class="fa fa-edit"></i> </a>

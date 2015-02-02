@@ -23,9 +23,11 @@ gem 'dm-timestamps'
 gem 'dm-migrations'
 gem 'dm-constraints'
 gem 'dm-aggregates'
+gem 'dm-serializer'
 gem 'dm-types'
 gem 'dm-core'
 gem 'json'
+gem 'httparty'
 
 # Test requirements
 

@@ -15,6 +15,7 @@ class Account
   property :token,            String
   property :role,             String
   property :last_update,      DateTime
+  property :status,           Integer
 
   # Validations
   validates_presence_of      :username
@@ -49,6 +50,10 @@ class Account
   #
   def self.find_by_id(id)
     get(id) rescue nil
+  end
+
+  def active?
+    status != 0
   end
 
   def has_password?(password)

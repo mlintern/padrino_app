@@ -4,4 +4,8 @@ migration 2, :add_last_update do
       add_column :last_update, DataMapper::Property::DateTime, :allow_nil => true
     end
   end
+
+  down do
+    drop_column :last_update
+  end
 end
