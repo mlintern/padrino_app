@@ -9,6 +9,12 @@ PadrinoApp::App.controllers :api do
     return 200, Account.all.to_json
   end
 
+  get :me, :map => "/api/accounts/me" do
+    account = api_auth(request.env["HTTP_AUTHORIZATION"])
+
+    return 200, account.to_json
+  end
+
   get :info do
     return 200, { :success => true, :content => "Information about stuff." }.to_json
   end

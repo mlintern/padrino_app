@@ -22,13 +22,22 @@ PadrinoApp::App.helpers do
     end
   end
 
-  def api_auth(auth_header, role)
+  def auth_creds(auth_header)
+    plain = Base64.decode64(auth_header.gsub("Basic ",""))
+    username = plain.split(':')[0]
+    password = plain.split(':')[1]
+    return { :username => username, :password => password }
+  end
+
+  def api_auth(auth_header, role = nil )
     unless auth_header.nil?
-      plain = Base64.decode64(auth_header.gsub("Basic ",""))
-      username = plain.split(':')[0]
-      password = plain.split(':')[1]
-      if Account.authenticate(username,password).role[role]
-        return true
+      creds = auth_creds(auth_header)
+      if account = Account.authenticate(creds[:username],creds[:password])
+        if role.nil? || account.role[role]
+          return account
+        else
+          halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
+        end
       else
         halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
       end

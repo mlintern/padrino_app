@@ -27,9 +27,6 @@ bundle exec rake routes
 
 Application: PadrinoApp::App
     URL                           REQUEST  PATH
-    (:sessions, :new)               GET    /sessions/new
-    (:sessions, :create)           POST    /sessions/create
-    (:sessions, :destroy)           GET    /sessions/destroy
     (:accounts, :index)             GET    /accounts
     (:accounts, :new)               GET    /accounts/new
     (:accounts, :create)           POST    /accounts/create
@@ -37,9 +34,14 @@ Application: PadrinoApp::App
     (:accounts, :update)            PUT    /accounts/update/:id
     (:accounts, :destroy)         DELETE   /accounts/destroy/:id
     (:accounts, :destroy_many)    DELETE   /accounts/destroy_many
-    (:base, :index)                 GET    /
     (:api, :index)                  GET    /api
+    (:api, :accounts)               GET    /api/accounts
+    (:api, :me)                     GET    /api/accounts/me
     (:api, :info)                   GET    /api/info
+    (:base, :index)                 GET    /
+    (:sessions, :new)               GET    /sessions/new
+    (:sessions, :create)           POST    /sessions/create
+    (:sessions, :destroy)           GET    /sessions/destroy
 
 
 
