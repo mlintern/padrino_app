@@ -322,7 +322,6 @@ background-color: transparent;
   float: left;
   width: 150px;
   padding: 20px 0;
-  cursor: default;
 }
 .base-icons [class^="icon-"] {
   display: block;

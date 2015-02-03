@@ -57,6 +57,9 @@ GEM
     http_router (0.11.1)
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.2)
     json_pure (1.8.2)
@@ -67,6 +70,7 @@ GEM
     minitest (5.5.1)
     moneta (0.7.20)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     padrino (0.12.4)
       padrino-admin (= 0.12.4)
       padrino-cache (= 0.12.4)
@@ -139,6 +143,7 @@ DEPENDENCIES
   dm-types
   dm-validations
   erubis (~> 2.7.0)
+  httparty
   json
   padrino (= 0.12.4)
   rake

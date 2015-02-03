@@ -4,28 +4,9 @@ PadrinoApp::App.controllers :api do
   end
 
   get :accounts do
-    admin
+    api_auth(request.env["HTTP_AUTHORIZATION"]) || admin 
 
-    options = {}
-    if params[:direction] == "desc"
-      if params[:order_by]
-        options = { :order => [ params[:order_by].to_sym.desc ] }
-      else
-        options = { :order => [ :username.desc ] }
-      end
-    else
-      if params[:order_by]
-        options = { :order => [ params[:order_by].to_sym.asc ] }
-      else
-        options = { :order => [ :username.asc ] }
-      end
-    end
-
-    accounts_list = Account.all(options)
-
-    log("accounts_list",accounts_list.inspect)
-
-    return accounts_list.to_json
+    return 200, Account.all.to_json
   end
 
   get :info do
