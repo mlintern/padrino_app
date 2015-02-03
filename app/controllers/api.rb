@@ -10,7 +10,7 @@ PadrinoApp::App.controllers :api do
   end
 
   get :me, :map => "/api/accounts/me" do
-    account = api_auth(request.env["HTTP_AUTHORIZATION"])
+    account = api_auth(request.env["HTTP_AUTHORIZATION"], nil) # nil indicates any or no role is ok.  Only being logged is neccessary.
 
     return 200, account.to_json
   end

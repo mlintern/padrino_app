@@ -30,19 +30,31 @@ PadrinoApp::App.helpers do
   end
 
   def api_auth(auth_header, role = nil )
-    unless auth_header.nil?
-      creds = auth_creds(auth_header)
-      if account = Account.authenticate(creds[:username],creds[:password])
-        if role.nil? || account.role[role]
-          return account
+    if current_user
+      if role.nil?
+        return current_user
+      else
+        if current_user.role[role]
+          return current_user
+        else
+          halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
+        end
+      end
+    else
+      unless auth_header.nil?
+        creds = auth_creds(auth_header)
+        if account = Account.authenticate(creds[:username],creds[:password])
+          if role.nil? || account.role[role]
+            return account
+          else
+            halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
+          end
         else
           halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
         end
       else
         halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
       end
-    else
-      halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
     end
   end
 
