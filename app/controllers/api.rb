@@ -18,4 +18,21 @@ PadrinoApp::App.controllers :api do
   get :info do
     return 200, { :success => true, :content => "Information about stuff." }.to_json
   end
+
+  post :external_pub do
+    data = JSON.parse request.body.read
+    log("Post Data: ", data)
+    if data["content"]
+      id = data['content'].try(:[],'remote_id') || rand(1000000)
+      if data["content"]["title"]
+        url = data['content'].try(:[],'remote_url') || 'http://www.hubot.com/' + data.try(:[],"content").try(:[],"title").downcase.gsub(' ','-')
+        return 202, { :success => true, :id => id, :url => url }.to_json
+      else
+        return 400, { :success => false, :error => 'Missing Title' }.to_json
+      end
+    else
+      return 400, { :success => false, :error => 'Bad Data' }.to_json
+    end
+  end
+
 end
