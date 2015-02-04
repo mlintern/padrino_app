@@ -37,7 +37,7 @@ PadrinoApp::App.helpers do
         if current_user.role[role]
           return current_user
         else
-          halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
+          halt 403, { :success => false, :message => "You are Unauthorized" }.to_json
         end
       end
     else
@@ -47,13 +47,13 @@ PadrinoApp::App.helpers do
           if role.nil? || account.role[role]
             return account
           else
-            halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
+            halt 403, { :success => false, :message => "You are Unauthorized" }.to_json
           end
         else
-          halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
+          halt 403, { :success => false, :message => "You are Unauthorized" }.to_json
         end
       else
-        halt 403, { :error => true, :message => "You are Unauthorized" }.to_json
+        halt 403, { :success => false, :message => "You are Unauthorized" }.to_json
       end
     end
   end
