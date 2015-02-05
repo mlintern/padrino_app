@@ -28,6 +28,7 @@ gem 'dm-types'
 gem 'dm-core'
 gem 'json'
 gem 'httparty'
+gem "sinatra-flash", :require => "sinatra/flash"
 
 # Test requirements
 

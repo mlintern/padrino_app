@@ -25,7 +25,7 @@ PadrinoApp::App.controllers :accounts do
     admin
     session[:redirect_to] = request.fullpath
 
-    @title = pat(:new_title, :model => 'account')
+    @title = "New Account"
     @account = Account.new
     @account.role = ""
     render 'accounts/new', :locals => { 'account' => @account }
@@ -38,11 +38,11 @@ PadrinoApp::App.controllers :accounts do
     params[:account][:status] = 0 if params[:account][:status].nil? 
     @account = Account.new(params[:account])
     if @account.save
-      @title = pat(:create_title, :model => "account #{@account.id}")
+      @title = "Created Account #{@account.id}"
       flash[:success] = "Account was successfully created" # user flash[:error] when redirecting
       params[:save_and_continue] ? redirect( url( :accounts, :index ) ) : redirect( url( :accounts, :edit, :id => @account.id ) )
     else
-      @title = pat(:create_title, :model => 'account')
+      @title = "New Account"
       @account.errors.each do |e|
         logger.error("Save Error: #{e}")
         flash.now[:error] = e[0] # User flash.now[:error] when rendering
@@ -54,7 +54,7 @@ PadrinoApp::App.controllers :accounts do
   get :edit, :with => :id do
     admin? || ( login && owner?(params[:id]) )
 
-    @title = pat(:edit_title, :model => "account #{params[:id]}")
+    @title = "Editing Account #{params[:id]}"
     @account = Account.get(params[:id])
     if @account
       session[:redirect_to] = request.fullpath
@@ -69,7 +69,7 @@ PadrinoApp::App.controllers :accounts do
   put :update, :with => :id do
     login
 
-    @title = pat(:update_title, :model => "account #{params[:id]}")
+    @title = "Update account #{params[:id]}"
     
     params[:account][:last_update] = DateTime.now
     @account = Account.get(params[:id])

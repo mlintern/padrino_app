@@ -57,9 +57,11 @@
 
 
 <div class="form-actions">
-  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  <input type="submit" value="Save" class="btn btn-primary">
   &nbsp;
-  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  <% if admin? %>
+  <input type="submit" value="Save and continue" class="btn btn-info" name="save_and_continue">
   &nbsp;
-  <%= link_to pat(:cancel), url(:accounts, :index), :class => 'btn btn-default' %>
+  <% end %>
+  <a class="btn btn-default" href="/accounts">Cancel</a>
 </div>

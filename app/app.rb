@@ -2,7 +2,7 @@ module PadrinoApp
   class App < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
-    register Padrino::Admin::AccessControl
+    register Sinatra::Flash
 
     ##
     # Application configuration options
@@ -19,6 +19,8 @@ module PadrinoApp
     # disable :flash                  # Disables sinatra-flash (enabled by default if Sinatra::Flash is defined)
     # layout  :my_layout              # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
+
+    enable  :sessions
 
     # Custom error management 
     error(401) { @title = "Error 401"; render('errors/401', :layout => :error) }

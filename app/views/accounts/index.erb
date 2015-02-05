@@ -23,13 +23,13 @@
               <li class=list-menu-wrapper.list-menu-wrapper-disabled>
                 <a id="delete-selected" class="list-menu-link list-menu-link-disabled" href="#"><i class="fa fa-trash-o"></i> Delete selected</a>
                 <div class='list-menu-popover-delete-selected popover right'>
-                  <div class=arrow></div>
-                  <h3 class=popover-title><%= pat(:delete_selected_title) %></h3>
-                  <div class=popover-content>
+                  <div class="arrow"></div>
+                  <h3 class="popover-title">Are you sure you want to delete all the selected items?</h3>
+                  <div class="popover-content">
                     <% form_tag url(:accounts, :destroy_many), :method => :delete do %>
                       <%=hidden_field_tag :account_ids, :'data-delete-many-ids' => true %>
-                      <%=submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small' %>
-                      <div class='btn btn-default btn-small cancel'><%= pat(:cancel) %></div>
+                      <input type="submit" value="Delete" class="list-menu-popover-delete-selected-btn btn btn-danger btn-small">
+                      <div class='btn btn-default btn-small cancel'>Cancel</div>
                     <% end %>
                   </div>
                 </div>
@@ -66,12 +66,12 @@
               <a href="/accounts/edit/<%= account.id %>" rel="tooltip" title="Edit account" class="list-row-action-wrapper-link"><i class="fa fa-edit"></i> </a>
               <a rel="tooltip" title="Delete account" class="list-row-action-delete-one list-row-action-wrapper-link" href="#"><i class="fa fa-trash-o"></i> </a>
               <div class="popover list-row-action-popover-delete-one left">
-                <div class=arrow> </div>
-                <h3 class=popover-title><%= pat(:delete, :model => "account") %></h3>
-                <div class=popover-content>
+                <div class="arrow"> </div>
+                <h3 class="popover-title">Delete <%= account.username %></h3>
+                <div class="popover-content">
                   <%- form_tag url(:accounts, :destroy, :id => account.id), :method => :delete do %>
-                    <%= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
-                    <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
+                    <input type="submit" value="Delete" class="list-row-action-popover-delete-one-btn btn btn-danger btn-small">
+                    <div class="btn btn-default btn-small cancel">Cancel</div>
                   <% end %>
                 </div>
               </div>
