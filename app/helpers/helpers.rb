@@ -13,7 +13,7 @@ PadrinoApp::App.helpers do
 
   # Require login to view page
   def login
-    if session[:user]
+    if current_user
       return true
     else
       flash[:error] = "Login is required."
@@ -135,7 +135,6 @@ PadrinoApp::App.helpers do
   # Return current_user record if logged in
   def current_user
     return @current_user ||= Account.first(:token => request.cookies["user"]) if request.cookies["user"]
-    @current_user ||= Account.first(:token => session[:user]) if session[:user]
   end
 
   # check if user is logged in?
