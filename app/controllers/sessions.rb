@@ -15,7 +15,6 @@ PadrinoApp::App.controllers :sessions do
   end
 
   get :destroy do
-    set_current_account(nil)
     response.delete_cookie("user", :path => '/')
     session[:user] = nil
     session[:errors] = nil
