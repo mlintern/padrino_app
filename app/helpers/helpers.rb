@@ -32,6 +32,7 @@ PadrinoApp::App.helpers do
   def api_auth(auth_header, role = nil )
     if current_user
       if role.nil?
+        puts current_user.status
         return current_user
       else
         if current_user.role[role]
@@ -44,7 +45,7 @@ PadrinoApp::App.helpers do
       unless auth_header.nil?
         creds = auth_creds(auth_header)
         if account = Account.authenticate(creds[:username],creds[:password])
-          if role.nil? || account.role[role]
+          if ( role.nil? || account.role[role] ) && account.status != 0
             return account
           else
             halt 403, { :success => false, :message => "You are Unauthorized" }.to_json

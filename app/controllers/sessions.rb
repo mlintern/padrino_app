@@ -5,8 +5,14 @@ PadrinoApp::App.controllers :sessions do
 
   post :create do
     if account = Account.authenticate(params[:username], params[:password])
-      response.set_cookie( "user", :value => account.token, :path => '/' , :expires => (Time.now + 52*7*24*60*60) )  if params[:remember_me]
-      redirect url(:base, :index)
+      unless account.status == 0
+        response.set_cookie( "user", :value => account.token, :path => '/' , :expires => (Time.now + 52*7*24*60*60) )  if params[:remember_me]
+        redirect url(:base, :index)
+      else
+        flash[:error] = "User is Disabled"
+        log("User is Disabled")
+        redirect url(:sessions, :new), 302
+      end
     else
       flash[:error] = "Username or Password is wrong"
       log("Username or Password is Wrong")
