@@ -2,6 +2,7 @@ module PadrinoApp
   class App < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
+    register Padrino::Admin::AccessControl
 
     ##
     # Application configuration options
