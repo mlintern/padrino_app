@@ -23,19 +23,15 @@
           <span class="icon-bar"></span>
         </button>
         <% end %>
-        <a class="navbar-brand" title="Nretnil Admin" href="/">Nretnil App</a>
+        <a class="navbar-brand" title="Nretnil Admin" id="tools" class="btn btn-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nretnil App</a>
+        <ul class="dropdown-menu main-nav" role="menu" aria-labelledby="tools">
+          <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+          <% if !current_user.nil? && compendium? %><li><a href="/compendium"><i class="fa fa-code"> Compendium API Tool</i></a></li><%end%>
+          <!-- <li><a href="/compendium" class="btn btn-info"><i class="fa fa-laptop"> Button 2</i></a></li> -->
+        </ul>
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <% unless current_user.nil? %>
-        <div class="navbar-center dropdown">
-          <button id="tools" class="btn btn-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Tools
-          </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="tools">
-            <% if compendium? %><li><a href="/compendium" class="btn btn-info"><i class="fa fa-code"> Compendium API Tool</i></a></li><%end%>
-            <!-- <li><a href="/compendium" class="btn btn-info"><i class="fa fa-laptop"> Button 2</i></a></li> -->
-          </ul>
-        </div>
         <ul class="nav navbar-nav navbar-right">
           <li>
             <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.name %>&nbsp;<%= current_user.surname %> &nbsp; <i class="fa fa-user"></i></a>

@@ -215,26 +215,13 @@ background-color: transparent;
 }
 .navbar .navbar-brand:hover {
   color: #fff;
+  cursor: pointer;
 }
 .navbar-right {
   margin-right: 15px;
 }
-.navbar-center {
-  float: left;
-  text-align: center;
-  margin-top: 10px;
-  display: inline;
-  left: 33%;
-}
-.navbar-center li {
-  list-style: none;
-  margin-bottom: 20px;
-}
-.navbar-center .dropdown-menu {
-  min-width: 250px;
-  left: -95px;
-  top: 125%;
-  padding: 20px 20px 0;
+.navbar .main-nav {
+  left: 15px;
 }
 /* --- End Application::TopBar --- */
 
