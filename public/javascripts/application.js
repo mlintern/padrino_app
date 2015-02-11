@@ -116,3 +116,35 @@
     if (error_input = $('.has-error :input').first()) { error_input.focus(); }
   });
 }(window.jQuery);
+
+
+// Comepndium API Form Validation
+var f1 = new LiveValidation( 'f1', {onlyOnSubmit: true } );
+f1.add( Validate.Presence );
+
+var f2 = new LiveValidation( 'f2', {onlyOnSubmit: true } );
+f2.add( Validate.Presence );
+
+var automaticOnSubmit = f1.form.onsubmit;
+f1.form.onsubmit = function(){
+  if( automaticOnSubmit() || $('#public').is(':checked') ){ 
+    return true;
+  }
+  return false;
+}
+
+var setFields = function () {
+  if( $('#public').is(':checked') ){ 
+    $('.auth').hide();
+    $('#method').prop('selectedIndex', 0);
+    $("#method option.auth").prop('disabled',true);
+  } else {
+    $('.auth').show();
+  }
+}
+
+$(document).ready(function() {
+  $('#public').change(function() { setFields() } );
+})
+
+setFields();
