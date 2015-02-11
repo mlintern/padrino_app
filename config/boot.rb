@@ -7,6 +7,7 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 require 'date'
 require 'json'
+require 'compendium-api'
 Bundler.require(:default, RACK_ENV)
 
 ##

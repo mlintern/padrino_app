@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/mlintern/compendium-api
+  revision: 74351f4f31fd10be07ef150953b3be3d5a84b346
+  specs:
+    compendium-api (0.14.0)
+      httparty (~> 0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -134,6 +141,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt
+  compendium-api!
   dm-aggregates
   dm-constraints
   dm-core

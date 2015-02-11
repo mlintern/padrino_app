@@ -29,6 +29,7 @@ gem 'dm-core'
 gem 'json'
 gem 'httparty'
 gem "sinatra-flash", :require => "sinatra/flash"
+gem 'compendium-api', :git => 'https://github.com/mlintern/compendium-api'
 
 # Test requirements
 

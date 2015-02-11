@@ -7,11 +7,11 @@
 #
 
 unless Account.first(:username => "administrator")
-  account = Account.create(:username => "administrator", :email => "admin@padrino.com", :name => "Padrino", :surname => "Admin", :password => "password", :password_confirmation => "password", :role => ["admin"], :last_update => DateTime.now )
+  account = Account.create(:username => "administrator", :email => "admin@padrino.com", :name => "Padrino", :surname => "Admin", :password => "password", :password_confirmation => "password", :role => ["admin","compendium"], :last_update => DateTime.now )
 end
 
 unless Account.first(:username => "mweston")
-  account = Account.create(:username => "mweston", :email => "michael.weston@padrino.com", :name => "Michael", :surname => "Weston", :password => "password", :password_confirmation => "password", :role => ["user"], :last_update => DateTime.now )
+  account = Account.create(:username => "mweston", :email => "michael.weston@padrino.com", :name => "Michael", :surname => "Weston", :password => "password", :password_confirmation => "password", :role => ["user","compendium"], :last_update => DateTime.now )
 end
 
 unless Account.first(:username => "fglenanne")
@@ -23,7 +23,7 @@ unless Account.first(:username => "saxe")
 end
 
 unless Account.first(:username => "jporter")
-  account = Account.create(:username => "jporter", :email => "jesse.porter@padrino.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["other"], :last_update => DateTime.now )
+  account = Account.create(:username => "jporter", :email => "jesse.porter@padrino.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["compendium","other"], :last_update => DateTime.now )
 end
 
 unless Account.first(:username => "maddie")

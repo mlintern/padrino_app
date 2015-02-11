@@ -69,7 +69,7 @@ PadrinoApp::App.helpers do
       session[:redirect_to] = request.fullpath
       return true
     else
-      flash[:error] = "Admin rights required to view that page."
+      flash[:error] = "Admin right required to view that page."
       redirect_last
       return false
     end
@@ -87,13 +87,31 @@ PadrinoApp::App.helpers do
       session[:redirect_to] = request.fullpath
       return true
     else
-      flash[:error] = "Admin rights required to view that page."
+      flash[:error] = "User right required to view that page."
       redirect_last
       return false
     end
   end
 
   alias :user :user_permission_required
+
+  # Require user role to view page
+  def compendium_permission_required
+    login
+
+    # log("User Permission Check")
+    # log("user? = ",user?)
+    if compendium?
+      session[:redirect_to] = request.fullpath
+      return true
+    else
+      flash[:error] = "Comepndium right required to view that page."
+      redirect_last
+      return false
+    end
+  end
+
+  alias :compendium :compendium_permission_required
 
   # Check user has user role
   def user?
@@ -117,7 +135,20 @@ PadrinoApp::App.helpers do
 
   # Check user has other role
   def other?
-    return current_user.role['other']
+    if current_user['role'].nil?
+      return false
+    else
+      return current_user.role['other']
+    end
+  end
+
+  # Check user has other role
+  def compendium?
+    if current_user['role'].nil?
+      return false
+    else
+      return current_user.role['compendium']
+    end
   end
 
   # Check logged in user is the owner
@@ -145,6 +176,22 @@ PadrinoApp::App.helpers do
 
   def log(text,value = nil)
     logger.info(" - - - #{text}#{value} - - - ")
+  end
+
+  def norm_data(data)
+    result = '?'
+    data.each do |a,b|
+      result += a.to_s+'='+b.to_s+'&'
+    end
+    result[0...-1]
+  end
+
+  def json_data(data)
+    if data == {}
+      '{}'
+    else
+      data.to_s.is_json? ? data : data.to_json
+    end
   end
 
 end

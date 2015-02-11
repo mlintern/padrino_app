@@ -6,7 +6,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <meta name=viewport content='width=device-width,initial-scale=1' />
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
     <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
     <%= favicon_tag "favicon.ico" %>
     <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'font-awesome.min', 'application' %>
@@ -27,20 +27,29 @@
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <% unless current_user.nil? %>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.name %>&nbsp;<%= current_user.surname %> &nbsp; <i class="fa fa-user"></i></a>
-            </li>
-            <% if admin? %>
-            <li>
-              <a href="/accounts"><i class="fa fa-users"></i></a>
-            </li>
-            <% end %>
-            <li>
-              <a href="/sessions/destroy"><i class="fa fa-power-off"></i></a>
-            </li>
+        <div class="navbar-center dropdown">
+          <button id="tools" class="btn btn-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Tools
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="tools">
+            <% if compendium? %><li><a href="/compendium" class="btn btn-info"><i class="fa fa-code"> Compendium API Tool</i></a></li><%end%>
+            <!-- <li><a href="/compendium" class="btn btn-info"><i class="fa fa-laptop"> Button 2</i></a></li> -->
           </ul>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.name %>&nbsp;<%= current_user.surname %> &nbsp; <i class="fa fa-user"></i></a>
+          </li>
+          <% if admin? %>
+          <li>
+            <a href="/accounts"><i class="fa fa-users"></i></a>
+          </li>
           <% end %>
+          <li>
+            <a href="/sessions/destroy"><i class="fa fa-power-off"></i></a>
+          </li>
+        </ul>
+        <% end %>
       </div>
     </div>
 
