@@ -134,17 +134,28 @@ f1.form.onsubmit = function(){
 }
 
 var setFields = function () {
-  if( $('#public').is(':checked') ){ 
+  if ( $('#public').is(':checked') ) { 
     $('.auth').hide();
     $('#method').prop('selectedIndex', 0);
     $("#method option.auth").prop('disabled',true);
   } else {
     $('.auth').show();
   }
+
+  var method = $('#method').val()
+
+  if ( method == 'get' || method == 'delete' ) {
+    $('.query').show();
+    $('.body').hide();
+  } else {
+    $('.query').hide();
+    $('.body').show();
+  }
 }
 
 $(document).ready(function() {
   $('#public').change(function() { setFields() } );
+  $('#method').change(function() { setFields() } );
 })
 
 setFields();
