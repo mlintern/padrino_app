@@ -1,3 +1,7 @@
+<div class="page-header">
+  <h1>Account Editor <small>Edit <%= @account.username %> account information</small></h1>
+</div>
+
 <ul class="nav nav-tabs">
   <% if admin? %><li> <a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
   <% if admin? %><li class="pull-right"> <a href="/accounts/new"><i class="fa fa-user-plus"></i></a></li><% end %>

@@ -10,6 +10,7 @@
     <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
     <%= favicon_tag "favicon.ico" %>
     <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'font-awesome.min', 'application' %>
+    <%= javascript_include_tag 'jquery-1.11.0.min', :livevalidation_standalone %>
   </head>
   <body>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +74,7 @@
       </div>
     </footer>
 
-    <%= javascript_include_tag 'jquery-1.11.0.min', 'bootstrap.min', :livevalidation_standalone, :application %>
+    <%= javascript_include_tag 'bootstrap.min', :application %>
 
   </body>
 </html>

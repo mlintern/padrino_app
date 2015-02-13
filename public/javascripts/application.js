@@ -117,20 +117,21 @@
   });
 }(window.jQuery);
 
+if ( $('#f1').length ) {
+  // Comepndium API Form Validation
+  var f1 = new LiveValidation( 'f1', {onlyOnSubmit: true } );
+  f1.add( Validate.Presence );
 
-// Comepndium API Form Validation
-var f1 = new LiveValidation( 'f1', {onlyOnSubmit: true } );
-f1.add( Validate.Presence );
+  var f2 = new LiveValidation( 'f2', {onlyOnSubmit: true } );
+  f2.add( Validate.Presence );
 
-var f2 = new LiveValidation( 'f2', {onlyOnSubmit: true } );
-f2.add( Validate.Presence );
-
-var automaticOnSubmit = f1.form.onsubmit;
-f1.form.onsubmit = function(){
-  if( automaticOnSubmit() || $('#public').is(':checked') ){ 
-    return true;
+  var automaticOnSubmit = f1.form.onsubmit;
+  f1.form.onsubmit = function(){
+    if( automaticOnSubmit() || $('#public').is(':checked') ){ 
+      return true;
+    }
+    return false;
   }
-  return false;
 }
 
 var setFields = function () {
