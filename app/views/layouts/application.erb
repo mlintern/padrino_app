@@ -6,7 +6,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <meta name='viewport' content='width=device-width,initial-scale=1' />
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
     <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
     <%= favicon_tag "favicon.ico" %>
     <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'font-awesome.min', 'application' %>
@@ -76,7 +76,7 @@
       </div>
     </footer>
 
-    <%= javascript_include_tag 'bootstrap.min', :application %>
+    <%= javascript_include_tag 'bootstrap', :application %>
 
   </body>
 </html>
