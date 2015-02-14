@@ -419,4 +419,11 @@ background-color: transparent;
   .list-row-action-wrapper-link {
     visibility: visible;
   }
+  .nav-mobile li {
+    width: 33%;
+    text-align: center;
+  }
+  .nav-mobile li a {
+    padding: 10px 0;
+  }
 }
