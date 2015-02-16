@@ -26,7 +26,7 @@
 # override these settings in the subapps as needed.
 #
 Padrino.configure_apps do
-
+  set :protection, :except => :frame_options
 end
 
 # Mounts the core application for this project

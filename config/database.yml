@@ -20,8 +20,6 @@ production:
   password: webuser
   host: localhost
 
-
-
 # # SQLite version 3.x
 development:
   adapter: sqlite3
