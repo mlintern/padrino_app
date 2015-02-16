@@ -139,10 +139,14 @@ var setFields = function () {
     $('.auth').hide();
     $('#method').prop('selectedIndex', 0);
     $("#method option.auth").prop('disabled',true);
-    $("#uri").val('/api/publishers/<publisher_id>/feed')
+    if ( $("#uri").val() == '/api/content' || $("#uri").val() == '/api/publishers/<publisher_id>/feed' ) {
+      $("#uri").val('/api/publishers/<publisher_id>/feed')
+    }
   } else {
     $('.auth').show();
-    $("#uri").val('/api/content')
+    if ( $("#uri").val() == '/api/content' || $("#uri").val() == '/api/publishers/<publisher_id>/feed' ) {
+      $("#uri").val('/api/content')
+    }
   }
 
   var method = $('#method').val()

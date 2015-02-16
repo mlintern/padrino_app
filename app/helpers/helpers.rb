@@ -178,12 +178,14 @@ PadrinoApp::App.helpers do
     logger.info(" - - - #{text}#{value} - - - ")
   end
 
+  # Used to create API call on compendium tool results page
+
   def norm_data(data)
     result = '?'
     data.each do |a,b|
       result += a.to_s+'='+b.to_s+'&'
     end
-    result[0...-1]
+    result[0...-1].gsub('"','\\"').gsub("[","\\[").gsub("]","\\]").gsub(", ",",")
   end
 
   def json_data(data)
