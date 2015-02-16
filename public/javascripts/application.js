@@ -48,6 +48,12 @@
     $('#public').change(function() { setFields() } );
     $('#method').change(function() { setFields() } );
 
+    $('.screenshot img').click(function() {
+      var url = $(this).attr('src')
+      window.open(url);
+      return true;
+    });
+
     var listCheckboxesSelector = '.list-selectable-checkbox', list = $('#list'), alertTimeout = 4000, listCheckboxes, listCheckboxesLength;
 
     // Automatically close alerts if there was any present.

@@ -100,7 +100,7 @@ PadrinoApp::App.controllers :accounts do
     @title = "Accounts"
     account = Account.get(params[:id])
     if account
-      if account != current_account && account.destroy
+      if account != current_user && account.destroy
         flash[:success] = "Account #{params[:id]} was successfully deleted."
       else
         flash[:error] = "You cannot delete yourself."

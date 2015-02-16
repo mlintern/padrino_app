@@ -1,15 +1,33 @@
-<div class="base-text">
-  <p>Padrino is a ruby framework built upon the Sinatra web library.</p>
-  <p>It was created to make it fun and easy to code more advanced web applications while still adhering to the spirit that makes Sinatra great!</p>
-  <p>Padrino comes shipped with a slick and beautiful Admin Interface, with the following features:</p>
+<div class="page-header">
+  <h1>Home Base <br><small>Find out what's new.</small></h1>
 </div>
 
-<div class=base-icons>
-  <div class="btn-group">
-    <div class="btn btn-primary" title="Adapters for datamapper, sequel, activerecord, minirecord, mongomapper, mongoid, couchrest"><i class="fa fa-cogs fa-2x"></i> <br>Orm Agnostic</div>
-    <div class="btn btn-success" title="User Authentication Support, User Authorization Management"><i class="fa fa-group fa-2x"></i> <br>Authentication</div>
-    <div class="btn btn-info" title="Erb, Haml, Slim Rendering Support"><i class="fa fa-tasks fa-2x"></i> <br>Template Agnostic</div>
-    <div class="btn btn-warning" title="English, German, Russian, Danish, French, Brazilian and Italian localizations and many more!.."><i class="fa fa-flag fa-2x"></i> <br>Multi Language</div>
-    <div class="btn btn-danger" title="You can create a new 'admin interface' by providing a single Model"><i class="fa fa-magic fa-2x"></i> <br>Scaffold</div>
-  </div>
-</div>
+<div class="row">
+
+  <div class="col-sm-6">
+    <h3>Accounts Interface</h3>
+    <p class="feature-info">
+      The Accounts interface has two levels of permission. The admin level is able to see the listing page, add, delete, and edit users. All other users are able to view and editor their own information.
+    </p>
+    <div class="screenshot thumbnail">
+      <img src="images/screenshots/Users-List.png">
+    </div>
+    <div class="screenshot thumbnail">
+      <img src="images/screenshots/Users-Edit.png">
+    </div>
+  </div> <!-- col-sm-6 -->
+
+  <div class="col-sm-6">
+    <h3>Compendium API Tool <span class="label label-info">New</span></h3>
+    <p class="feature-info">
+      The Compendium API Tool is a form style interface that allows you to create and make API calls against the Compendium platform. The call is made using the <a href="https://github.com/mlintern/compendium-api">compendium-api</a> gem. The results page will also show you the corresponding curl command that can be executed.
+    </p>
+    <div class="screenshot thumbnail">
+      <img src="images/screenshots/Compendium-API-Config.png">
+    </div>
+    <div class="screenshot thumbnail">
+      <img src="images/screenshots/Compendium-API-Results.png">
+    </div>
+  </div> <!-- col-sm-6 -->
+
+</div> <!-- row -->
