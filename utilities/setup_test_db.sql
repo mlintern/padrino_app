@@ -9,6 +9,6 @@ FLUSH PRIVILEGES;
 # Create Database
 CREATE DATABASE nretnil_test;
 
-GRANT ALL PRIVILEGES ON nretnil_test . * TO 'webuser'@'localhost';
+GRANT ALL PRIVILEGES ON nretnil_test.* TO 'webuser'@'localhost';
 
 FLUSH PRIVILEGES;
