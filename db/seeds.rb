@@ -23,7 +23,7 @@ unless Account.first(:username => "saxe")
 end
 
 unless Account.first(:username => "jporter")
-  account = Account.create(:username => "jporter", :email => "jesse.porter@nretnil.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["compendium","other"], :last_update => DateTime.now )
+  account = Account.create(:username => "jporter", :email => "jesse.porter@nretnil.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["compendium"], :last_update => DateTime.now )
 end
 
 unless Account.first(:username => "maddie")
