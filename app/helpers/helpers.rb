@@ -134,15 +134,6 @@ PadrinoApp::App.helpers do
   alias :is_admin? :admin?
 
   # Check user has other role
-  def other?
-    if current_user['role'].nil?
-      return false
-    else
-      return current_user.role['other']
-    end
-  end
-
-  # Check user has other role
   def compendium?
     if current_user['role'].nil?
       return false
