@@ -94,4 +94,41 @@ PadrinoApp::App.controllers :api do
     end
   end
 
+  get :email do
+    require 'net/smtp'
+
+    from_email="floyd@frogland.com"
+    from_name="Floyd Frog"
+    to_email="mark.lintern@oracle.com"
+    to_name="Mark Lintern"
+    subject="Ruby Email Test"
+
+    header = "From: #{from_name} <#{from_email}>
+    To: #{to_name} <#{to_email}>
+    MIME-Version: 1.0
+    Content-type: text/html
+    Subject: #{subject}
+    "
+
+    message = "
+    This is an e-mail message to be sent in HTML format
+
+    <b>This is HTML message.</b>
+    <h1>This is headline.</h1>
+    "
+
+    email = header + message
+
+    # Let's put our code in safe area
+    begin 
+      Net::SMTP.start('localhost') do |smtp|
+         smtp.sendmail(email, from_email, [to_email])
+      end
+    rescue Exception => e  
+      print "Exception occured: " + e.to_s  
+    end
+
+    return 200, { :success => true }.to_json
+  end
+
 end
