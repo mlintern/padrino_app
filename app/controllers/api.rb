@@ -52,7 +52,7 @@ PadrinoApp::App.controllers :api do
         data = remove_elements(account.attributes,attributes_to_remove)
         return 200, data.to_json
       else
-        return 400
+        return 400, { :success => false, :error => "Bad Request" }.to_json
       end
     end
 
