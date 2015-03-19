@@ -33,11 +33,11 @@ PadrinoApp::App.controllers :api do
     account = Account.all(:id => params[:id])[0]
     if account
       data = remove_elements(account.attributes,attributes_to_remove)
+      return 200, data.to_json
     else
-      return 404, "Not Found"
+      return 404, { :success => false, :error => "User Not Found" }.to_json
     end
 
-    return 200, data.to_json
   end
 
   put :account, :map => "/api/accounts/:id" do
