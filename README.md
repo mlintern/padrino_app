@@ -26,7 +26,6 @@ Current Routes:
 bundle exec rake routes
 
 Application: PadrinoApp::App
-    URL                           REQUEST  PATH
     (:accounts, :index)             GET    /accounts
     (:accounts, :new)               GET    /accounts/new
     (:accounts, :create)           POST    /accounts/create
@@ -37,8 +36,15 @@ Application: PadrinoApp::App
     (:api, :index)                  GET    /api
     (:api, :accounts)               GET    /api/accounts
     (:api, :me)                     GET    /api/accounts/me
+    (:api, :account)                GET    /api/accounts/:id
+    (:api, :account)                PUT    /api/accounts/:id
+    (:api, :accounts)              POST    /api/accounts
     (:api, :info)                   GET    /api/info
+    (:api, :external_pub)          POST    /api/external_pub
+    (:api, :debug)                 POST    /api/external_pub/debug
     (:base, :index)                 GET    /
+    (:compendium, :index)           GET    /compendium
+    (:compendium, :index)          POST    /compendium
     (:sessions, :new)               GET    /sessions/new
     (:sessions, :create)           POST    /sessions/create
     (:sessions, :destroy)           GET    /sessions/destroy
@@ -47,10 +53,13 @@ Application: PadrinoApp::App
 
 Seeded Users:
 
-administrator - admin
-mweston - user
-fglenanne - user
-saxe - user
-jporter - user
+administrator - admin,compendium
+mweston - user,compendium
+fglenanne - user,admin
+saxe - 
+jporter - comepndium
+maddie - user
+nweston - user
+barry - user
 
 password is 'password'

@@ -48,12 +48,36 @@ PadrinoApp::App.controllers :api do
     account = Account.all(:id => params[:id])[0]
     remove_other_elements(data,allowed_attributes)
     if account
+      data[:last_update] = DateTime.now
       if account.update(data)
         data = remove_elements(account.attributes,attributes_to_remove)
         return 200, data.to_json
       else
         return 400, { :success => false, :error => "Bad Request" }.to_json
       end
+    end
+
+  end
+
+  post :accounts do
+    api_auth(request.env["HTTP_AUTHORIZATION"], "admin")
+
+    data = JSON.parse request.body.read
+
+    data[:last_update] = DateTime.now
+    data[:role] = data[:role] || ""
+
+    # :username => "jporter", :email => "jesse.porter@nretnil.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["compendium"], :last_update => DateTime.now 
+
+    account = Account.new(data)
+    if account.save
+      return 200, account.to_json
+    else
+      errors = []
+      account.errors.each do |e|
+        errors << e
+      end
+      return 400, { :success => false, :errors => errors }.to_json
     end
 
   end
