@@ -170,7 +170,6 @@ PadrinoApp::App.helpers do
   end
 
   # Used to create API call on compendium tool results page
-
   def norm_data(data)
     result = '?'
     data.each do |a,b|

@@ -23,23 +23,25 @@ PadrinoApp::App.controllers :compendium do
 
     query = eval(params[:session]['query']) || {}
 
+    @result = { :results => 'Did not make request' }
+
     case params[:session]['call_type']
       when "get"
         if params[:session]['public'] == 'on'
-          params[:session]['only_curl'] == 'on' ? @result = { :results => 'Did not make request' } : @result = @public.get(params[:session]['api_uri'],query)
+          params[:session]['only_curl'] == 'on' ? true : @result = @public.get(params[:session]['api_uri'],query)
           curl_auth = ''
         else
-          params[:session]['only_curl'] == 'on' ? @result = { :results => 'Did not make request' } : @result = @compendium.get(params[:session]['api_uri'],query)
+          params[:session]['only_curl'] == 'on' ? true : @result = @compendium.get(params[:session]['api_uri'],query)
         end
         curl_call = 'curl --insecure "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+norm_data(query)+'"'
       when "put"
-        params[:session]['only_curl'] == 'on' ? @result = { :results => 'Did not make request' } : @result = @compendium.put(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
+        params[:session]['only_curl'] == 'on' ? true : @result = @compendium.put(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
         curl_call = 'curl --insecure --data \''+json_data(body)+'\' "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPUT'
       when "post"
-        params[:session]['only_curl'] == 'on' ? @result = { :results => 'Did not make request' } : @result = @compendium.post(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
+        params[:session]['only_curl'] == 'on' ? true : @result = @compendium.post(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
         curl_call = 'curl --insecure --data \''+json_data(body)+'\' "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPOST'
       when "delete"
-        params[:session]['only_curl'] == 'on' ? @result = { :results => 'Did not make request' } : @result = @compendium.delete(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
+        params[:session]['only_curl'] == 'on' ? true : @result = @compendium.delete(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
         curl_call = 'curl --insecure --data \''+json_data(body)+'\' "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XDELETE'
       end
 

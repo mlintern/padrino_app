@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/mlintern/compendium-api
-  revision: 2d4bb9feac4bf741e4fce77485a8e97248df194c
+  revision: 21af54e394fec7cf8c58d63d9b92aefab6c7bd26
   specs:
-    compendium-api (0.14.1)
+    compendium-api (0.14.3)
       httparty (~> 0)
 
 GEM
@@ -18,7 +18,7 @@ GEM
     bcrypt (3.1.10)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
-    data_objects (0.10.14)
+    data_objects (0.10.15)
       addressable (~> 2.1)
     dm-aggregates (1.2.0)
       dm-core (~> 1.2.0)
@@ -55,10 +55,10 @@ GEM
       uuidtools (~> 2.1)
     dm-validations (1.2.0)
       dm-core (~> 1.2.0)
-    do_mysql (0.10.14)
-      data_objects (= 0.10.14)
-    do_sqlite3 (0.10.14)
-      data_objects (= 0.10.14)
+    do_mysql (0.10.15)
+      data_objects (= 0.10.15)
+    do_sqlite3 (0.10.15)
+      data_objects (= 0.10.15)
     erubis (2.7.0)
     fastercsv (1.5.5)
     http_router (0.11.1)
@@ -76,7 +76,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.5.1)
     moneta (0.7.20)
-    multi_json (1.10.1)
+    multi_json (1.11.0)
     multi_xml (0.5.5)
     padrino (0.12.4)
       padrino-admin (= 0.12.4)
