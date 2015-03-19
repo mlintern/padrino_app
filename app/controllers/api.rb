@@ -1,4 +1,7 @@
 PadrinoApp::App.controllers :api do
+  attributes_to_remove = [:token,:crypted_password,:last_update]
+  allowed_attributes = [:username,:name,:surname,:email,:role,:password,:password_confirmation]
+
   get :index do
     return 200, { :success => true, :content => "Hello World" }.to_json
   end
@@ -6,13 +9,53 @@ PadrinoApp::App.controllers :api do
   get :accounts do
     api_auth(request.env["HTTP_AUTHORIZATION"], "admin")
 
-    return 200, Account.all.to_json
+    accounts = Account.all
+
+    @data = []
+    accounts.each do |a|
+      @data << remove_elements(a.attributes,attributes_to_remove)
+    end
+
+    return 200, @data.to_json
   end
 
   get :me, :map => "/api/accounts/me" do
     account = api_auth(request.env["HTTP_AUTHORIZATION"], nil) # nil indicates any or no role is ok.  Only being logged is neccessary.
 
-    return 200, account.to_json
+    data = remove_elements(account.attributes,attributes_to_remove)
+
+    return 200, data.to_json
+  end
+
+  get :account, :map => "/api/accounts/:id" do
+    api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
+
+    account = Account.all(:id => params[:id])[0]
+    if account
+      data = remove_elements(account.attributes,attributes_to_remove)
+    else
+      return 404, "Not Found"
+    end
+
+    return 200, data.to_json
+  end
+
+  put :account, :map => "/api/accounts/:id" do
+    api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
+
+    data = JSON.parse request.body.read
+
+    account = Account.all(:id => params[:id])[0]
+    remove_other_elements(data,allowed_attributes)
+    if account
+      if account.update(data)
+        data = remove_elements(account.attributes,attributes_to_remove)
+        return 200, data.to_json
+      else
+        return 400
+      end
+    end
+
   end
 
   get :info do

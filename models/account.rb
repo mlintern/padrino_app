@@ -45,15 +45,8 @@ class Account
     account && account.has_password?(password) ? account : nil
   end
 
-  ##
-  # This method is used by AuthenticationHelper
-  #
-  def self.find_by_id(id)
-    get(id) rescue nil
-  end
-
   def active?
-    status != 0
+    self.status != 0
   end
 
   def has_password?(password)
