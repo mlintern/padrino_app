@@ -47,7 +47,10 @@ PadrinoApp::App.controllers :accounts do
         logger.error("Save Error: #{e}")
         flash.now[:error] = e[0] # User flash.now[:error] when rendering
       end
-      render 'accounts/new', :locals => { 'account' => @account }
+      unless params[:account][:role] 
+        params[:account][:role] = ""
+      end
+      render 'accounts/new', :locals => { 'account' => Account.new(params[:account]) }
     end
   end
 
