@@ -59,8 +59,8 @@ PadrinoApp::App.controllers :accounts do
 
     @title = "Editing Account #{params[:id]}"
     @account = Account.get(params[:id])
-    photo = AccountProperty.first( :id => params[:id], :name => "photo") || "/images/spy_logo_2.png"
-    
+    photo = AccountProperty.first( :id => params[:id], :name => "photo") || { :value => "/images/spy_logo_2.png" }
+
     if @account
       session[:redirect_to] = request.fullpath
       render 'accounts/edit', :locals => { 'account' => @account, 'photo' => photo }
