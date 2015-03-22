@@ -26,38 +26,39 @@ Current Routes:
 bundle exec rake routes
 
 Application: PadrinoApp::App
-    (:accounts, :index)             GET    /accounts
-    (:accounts, :new)               GET    /accounts/new
-    (:accounts, :create)           POST    /accounts/create
-    (:accounts, :edit)              GET    /accounts/edit/:id
-    (:accounts, :update)            PUT    /accounts/update/:id
-    (:accounts, :destroy)         DELETE   /accounts/destroy/:id
-    (:accounts, :destroy_many)    DELETE   /accounts/destroy_many
-    (:api, :index)                  GET    /api
-    (:api, :accounts)               GET    /api/accounts
-    (:api, :me)                     GET    /api/accounts/me
-    (:api, :account)                GET    /api/accounts/:id
-    (:api, :account)                PUT    /api/accounts/:id
-    (:api, :accounts)              POST    /api/accounts
-    (:api, :info)                   GET    /api/info
-    (:api, :external_pub)          POST    /api/external_pub
-    (:api, :debug)                 POST    /api/external_pub/debug
-    (:base, :index)                 GET    /
-    (:compendium, :index)           GET    /compendium
-    (:compendium, :index)          POST    /compendium
-    (:sessions, :new)               GET    /sessions/new
-    (:sessions, :create)           POST    /sessions/create
-    (:sessions, :destroy)           GET    /sessions/destroy
+URL                           REQUEST  PATH
+(:accounts, :index)             GET    /accounts
+(:accounts, :new)               GET    /accounts/new
+(:accounts, :create)           POST    /accounts/create
+(:accounts, :edit)              GET    /accounts/edit/:id
+(:accounts, :update)            PUT    /accounts/update/:id
+(:accounts, :destroy)         DELETE   /accounts/destroy/:id
+(:accounts, :destroy_many)    DELETE   /accounts/destroy_many
+(:api, :index)                  GET    /api
+(:api, :accounts)               GET    /api/accounts
+(:api, :me)                     GET    /api/accounts/me
+(:api, :account)                GET    /api/accounts/:id
+(:api, :account)                PUT    /api/accounts/:id
+(:api, :accounts)              POST    /api/accounts
+(:api, :info)                   GET    /api/info
+(:api, :external_pub)          POST    /api/external_pub
+(:api, :debug)                 POST    /api/external_pub/debug
+(:base, :index)                 GET    /
+(:curl, :index)                 GET    /curl
+(:curl, :index)                POST    /curl
+(:sessions, :new)               GET    /sessions/new
+(:sessions, :create)           POST    /sessions/create
+(:sessions, :destroy)           GET    /sessions/destroy
 
 
 
 Seeded Users:
 
-administrator - admin,compendium
-mweston - user,compendium
+administrator - admin,curl
+mweston - user,curl
 fglenanne - user,admin
 saxe - 
-jporter - comepndium
+jporter - curl
 maddie - user
 nweston - user
 barry - user

@@ -71,8 +71,6 @@ PadrinoApp::App.controllers :api do
     data[:last_update] = DateTime.now
     data[:role] = data[:role] || ""
 
-    # :username => "jporter", :email => "jesse.porter@nretnil.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["compendium"], :last_update => DateTime.now 
-
     account = Account.new(data)
     if account.save
       return 200, account.to_json
@@ -87,7 +85,7 @@ PadrinoApp::App.controllers :api do
   end
 
   get :info do
-    return 200, { :success => true, :content => "Information about stuff." }.to_json
+    return 200, { :success => true, :info => [{ 1 =>"This endpoint provides information about the app.nretnil.com API." },{ 2 => "You are able to perform all Account management tasks via the API." }] }.to_json
   end
 
   post :external_pub do
