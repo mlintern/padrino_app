@@ -9,9 +9,18 @@
 </ul>
 <div class="tabs-content">
 	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2">
+		<div class="col-sm-4">
+			<div class="thumbnail">
+	      <img class="user-photo" src="<%= photo[:value] %>" alt="User Photo">
+	      <div class="caption">
+	        <input type="text" class="form-control photo-url" value="<%= photo[:value] %>" />
+	        <p><button onclick="updatePhoto()" class="btn btn-default" role="button">Update</button></p>
+	      </div>
+	    </div>
+		</div>
+		<div class="col-sm-8 user-info" data-user-id="<%= account.id %>">
 		  <% form_for :account, url(:accounts, :update, :id => @account.id), :method => :put, :class => 'form-horizontal' do |f| %>
-		    <%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account } %>
+		    <%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account || nil } %>
 		  <% end %>
 		</div>
   </div>

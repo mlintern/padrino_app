@@ -49,6 +49,8 @@ PadrinoApp::App.controllers :api do
 
     data = JSON.parse request.body.read
 
+    add_update_properties(data)
+
     account = Account.all(:id => params[:id])[0]
     remove_other_elements(data,allowed_attributes)
     if account
@@ -70,6 +72,8 @@ PadrinoApp::App.controllers :api do
 
     data[:last_update] = DateTime.now
     data[:role] = data[:role] || ""
+
+    add_update_properties(data)
 
     account = Account.new(data)
     if account.save

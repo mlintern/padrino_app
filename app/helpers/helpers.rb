@@ -1,5 +1,32 @@
 PadrinoApp::App.helpers do
 
+  def add_update_properties(data)
+    current_properties = ["photo"]
+    
+    if data['properties']
+      data['properties'].each do |p|
+        if current_properties.include? p['name']
+          property = AccountProperty.first(:id => params[:id], :name => p['name'])
+          if property
+            if property.update(:value => p['value'])
+              log("Property Updated")
+            else
+              log("Property Update Failed")
+            end
+          else
+            property = AccountProperty.new(:id => params[:id], :name => p['name'], :value => p['value'])
+            if property.save
+              log("Property Saved")
+            else
+              puts property.errors.inspect
+              log("Property Save Failed")
+            end
+          end
+        end
+      end
+    end
+  end
+
   # Redirect to last page or root
   def redirect_last
     if session[:redirect_to]
