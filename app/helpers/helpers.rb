@@ -111,22 +111,20 @@ PadrinoApp::App.helpers do
   alias :user :user_permission_required
 
   # Require user role to view page
-  def compendium_permission_required
+  def curl_permission_required
     login
 
-    # log("User Permission Check")
-    # log("user? = ",user?)
-    if compendium?
+    if curl?
       session[:redirect_to] = request.fullpath
       return true
     else
-      flash[:error] = "Comepndium right required to view that page."
+      flash[:error] = "Curl right required to view that page."
       redirect_last
       return false
     end
   end
 
-  alias :compendium :compendium_permission_required
+  alias :curl :curl_permission_required
 
   # Check user has user role
   def user?
@@ -149,11 +147,11 @@ PadrinoApp::App.helpers do
   alias :is_admin? :admin?
 
   # Check user has other role
-  def compendium?
+  def curl?
     if current_user['role'].nil?
       return false
     else
-      return current_user.role['compendium']
+      return current_user.role['curl']
     end
   end
 
@@ -184,7 +182,7 @@ PadrinoApp::App.helpers do
     logger.info(" - - - #{text}#{value} - - - ")
   end
 
-  # Used to create API call on compendium tool results page
+  # Used to create API call on curl tool results page
   def norm_data(data)
     result = '?'
     data.each do |a,b|

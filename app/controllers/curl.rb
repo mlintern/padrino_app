@@ -1,17 +1,23 @@
-PadrinoApp::App.controllers :compendium do
+PadrinoApp::App.controllers :curl do
 
   get :index do
-    compendium
+    curl
 
-    render '/compendium/index' 
+    render '/curl/index' 
   end
 
   post :index do
-    compendium
+    curl
+
+    if params[:session]['protocol'] == 'https://'
+      curl_start = 'curl --insecure '
+    else
+      curl_start = 'curl '
+    end
 
     if params[:session]['only_curl'] != 'on'
-      @public = Nretnil::CompendiumAPI::CompendiumPublic.new('https://'+params[:session]['server'])
-      @compendium = Nretnil::CompendiumAPI::Compendium.new(params[:session]['username'], params[:session]['api_key'], 'https://'+params[:session]['server'])
+      @public = Nretnil::CompendiumAPI::CompendiumPublic.new(params[:session]['protocol']+params[:session]['server'])
+      @compendium = Nretnil::CompendiumAPI::Compendium.new(params[:session]['username'], params[:session]['api_key'], params[:session]['protocol']+params[:session]['server'])
     end
     curl_auth = params[:session]['username']+':'+params[:session]['api_key']+'@'
 
@@ -33,19 +39,20 @@ PadrinoApp::App.controllers :compendium do
         else
           params[:session]['only_curl'] == 'on' ? true : @result = @compendium.get(params[:session]['api_uri'],query)
         end
-        curl_call = 'curl --insecure "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+norm_data(query)+'"'
+        curl_call = curl_start+'"'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+norm_data(query)+'"'
       when "put"
         params[:session]['only_curl'] == 'on' ? true : @result = @compendium.put(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
-        curl_call = 'curl --insecure --data \''+json_data(body)+'\' "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPUT'
+        curl_call = curl_start+' --data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPUT'
       when "post"
         params[:session]['only_curl'] == 'on' ? true : @result = @compendium.post(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
-        curl_call = 'curl --insecure --data \''+json_data(body)+'\' "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPOST'
+        curl_call = curl_start+' --data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPOST'
       when "delete"
         params[:session]['only_curl'] == 'on' ? true : @result = @compendium.delete(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
-        curl_call = 'curl --insecure --data \''+json_data(body)+'\' "https://'+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XDELETE'
+        curl_call = curl_start+' --data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XDELETE'
       end
 
-    render 'compendium/result', :locals => { :curl_call => curl_call, :result => @result }
+    puts @result  
+    render 'curl/result', :locals => { :curl_call => curl_call, :result => @result }
 
   end
 

@@ -2,6 +2,10 @@ PadrinoApp::App.controllers :api do
   attributes_to_remove = [:token,:crypted_password,:last_update]
   allowed_attributes = [:username,:name,:surname,:email,:role,:password,:password_confirmation]
 
+  before do
+    headers "Content-Type" => "application/json; charset=utf8"
+  end
+
   get :index do
     return 200, { :success => true, :content => "Hello World" }.to_json
   end

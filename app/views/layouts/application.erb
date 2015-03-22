@@ -28,8 +28,7 @@
         <% unless current_user.nil? %>
         <ul class="dropdown-menu main-nav" role="menu" aria-labelledby="tools">
           <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-          <% if compendium? %><li><a href="/compendium"><i class="fa fa-code"></i> Compendium API Tool</a></li><%end%>
-          <!-- <li><a href="/compendium" class="btn btn-info"><i class="fa fa-laptop"> Button 2</i></a></li> -->
+          <% if curl? %><li><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><%end%>
         </ul>
         <% end %>
       </div>

@@ -1,35 +1,45 @@
 <div class="col-sm-8 col-sm-offset-2">
 
   <div class="page-header">
-    <h1>Compendium API Tool <br><small>This tool will make api calls to the compendium application and display the curl call.</small></h1>
+    <h1>Curl API Tool <br><small>This tool will make api calls any application and display the curl call.</small></h1>
   </div>
 
-  <form class="form-horizontal" role="form" method="post" action="/compendium">
+  <form class="form-horizontal" role="form" method="post" action="/curl">
 
     <div class="form-group">
-        <label class="col-sm-4 control-label">Environment</label>
+        <label class="col-sm-4 control-label">Application</label>
         <div class="col-sm-8">
-          <input type="text" name="session[server]" value="app.compendium.com" class="form-control"/>
+          <div class="row">
+            <div class="col-xs-4">
+              <select name="session[protocol]" class="form-control">
+                <option value="http://">http://</option>
+                <option value="https://" selected>https://</option>
+              </select>
+            </div>
+            <div class="col-xs-8">
+              <input type="text" name="session[server]" value="app.compendium.com" class="form-control"/>
+            </div>
+          </div>
         </div>
     </div>
 
     <div class="form-group">
       <div class="col-sm-8 col-sm-offset-4 checkbox">
         <label>
-          <input type="checkbox" id="public" name="session[public]" /> Public API Only
+          <input type="checkbox" id="public" name="session[public]" /> Public Access
         </label>
       </div>
     </div>
 
     <div class="form-group auth">
-      <label class="col-sm-4 control-label">Compendium Username</label>
+      <label class="col-sm-4 control-label">Username</label>
       <div class="col-sm-8">
         <input type="text" id="f1" name="session[username]" value="" class="form-control"/>
       </div>
     </div>
 
     <div class="form-group auth">
-      <label class="col-sm-4 control-label">Compendium API Key</label>
+      <label class="col-sm-4 control-label">Authentication Key</label>
       <div class="col-sm-8">
         <input type="text" id="f2" name="session[api_key]" value="" class="form-control"/>
       </div>
