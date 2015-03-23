@@ -17,7 +17,14 @@ PadrinoApp::App.controllers :api do
 
     @data = []
     accounts.each do |a|
-      @data << remove_elements(a.attributes,attributes_to_remove)
+      user_properties = AccountProperty.all(:id => a[:id])
+      properties = []
+      user_properties.each do |up|
+        properties << remove_elements(up.attributes,[:id])
+      end
+      user = remove_elements(a.attributes,attributes_to_remove)
+      user[:properties] = properties
+      @data << user
     end
 
     return 200, @data.to_json
@@ -27,6 +34,12 @@ PadrinoApp::App.controllers :api do
     account = api_auth(request.env["HTTP_AUTHORIZATION"], nil) # nil indicates any or no role is ok.  Only being logged is neccessary.
 
     data = remove_elements(account.attributes,attributes_to_remove)
+    user_properties = AccountProperty.all(:id => params[:id])
+    properties = []
+    user_properties.each do |up|
+      properties << remove_elements(up.attributes,[:id])
+    end
+    data[:properties] = properties
 
     return 200, data.to_json
   end
@@ -37,6 +50,12 @@ PadrinoApp::App.controllers :api do
     account = Account.all(:id => params[:id])[0]
     if account
       data = remove_elements(account.attributes,attributes_to_remove)
+      user_properties = AccountProperty.all(:id => params[:id])
+      properties = []
+      user_properties.each do |up|
+        properties << remove_elements(up.attributes,[:id])
+      end
+      data[:properties] = properties
       return 200, data.to_json
     else
       return 404, { :success => false, :error => "User Not Found" }.to_json
