@@ -51,7 +51,6 @@ PadrinoApp::App.controllers :curl do
         curl_call = curl_start+' --data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XDELETE'
       end
 
-    puts @result  
     render 'curl/result', :locals => { :curl_call => curl_call, :result => @result }
 
   end
