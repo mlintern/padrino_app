@@ -8,6 +8,6 @@ class AccountProperty
   property :value,            String
 
   validates_presence_of 			:id
-  validates_presence_of       :name                      
-  validates_presence_of       :value
+  validates_presence_of       :name
+  validates_presence_of 			:value
 end

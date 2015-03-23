@@ -9,17 +9,28 @@ PadrinoApp::App.helpers do
           property = AccountProperty.first(:id => params[:id], :name => p['name'])
           if property
             if property.update(:value => p['value'])
-              log("Property Updated")
             else
-              log("Property Update Failed")
+              property.errors.each do |e|
+                logger.error("Save Error: #{e}")
+              end
+              errors = []
+              property.errors.each do |e|
+                errors << e
+              end
+              halt 400, { :success => false, :errors => errors }.to_json
             end
           else
             property = AccountProperty.new(:id => params[:id], :name => p['name'], :value => p['value'])
             if property.save
-              log("Property Saved")
             else
-              puts property.errors.inspect
-              log("Property Save Failed")
+              property.errors.each do |e|
+                logger.error("Save Error: #{e}")
+              end
+              errors = []
+              property.errors.each do |e|
+                errors << e
+              end
+              halt 400, { :success => false, :errors => errors }.to_json
             end
           end
         end
