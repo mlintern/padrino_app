@@ -55,7 +55,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    admin? || ( login && owner?(params[:id]) )
+    admin || ( login && owner?(params[:id]) )
 
     @title = "Editing Account #{params[:id]}"
     @account = Account.get(params[:id])
