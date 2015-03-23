@@ -64,7 +64,7 @@ PadrinoApp::App.controllers :api do
   end
 
   put :account, :map => "/api/accounts/:id" do
-    api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
+    api_owner?(request.env["HTTP_AUTHORIZATION"],params[:id]) || api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
 
     data = JSON.parse request.body.read
 

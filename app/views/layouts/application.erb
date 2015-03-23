@@ -35,7 +35,8 @@
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <% unless current_user.nil? %>
         <ul class="nav navbar-nav navbar-right">
-          <li><a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><%= current_user.name %>&nbsp;<%= current_user.surname %> &nbsp; <i class="fa fa-user"></i></a></li>
+          <li><a class="small-user-photo"><img src="<%= user_property('photo').value %>" /></a></li>
+          <li><a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><span class="account-name"><%= current_user.name %>&nbsp;<%= current_user.surname %></span></a></li>
           <% if admin? %>
           <li><a href="/accounts"><i class="fa fa-users"></i></a></li>
           <% end %>

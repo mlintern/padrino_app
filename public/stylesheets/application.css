@@ -7,7 +7,7 @@ body {
 }
 img {
   max-width: 100%;
-  height: auto !important;
+  height: auto;
 }
 .fa {
   display: inline-block;
@@ -186,8 +186,16 @@ background-color: transparent;
 .navbar-inner {
   margin: 5px 0;
 }
-.navbar-nav-link {
-  padding: 17px 15px 13px !important;
+.navbar .small-user-photo img{
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+}
+.navbar .small-user-photo{
+  margin-top: -5px;
+}
+.nav>li>a {
+  padding: 17px 15px 13px;
 }
 .navbar-nav-form {
   margin: 0;

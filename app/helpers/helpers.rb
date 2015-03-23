@@ -206,9 +206,34 @@ PadrinoApp::App.helpers do
 
   alias :is_owner? :owner?
 
+  def api_owner?(auth_header,owner_id)
+    if current_user
+      if current_user.id.to_i == owner_id.to_i
+        return true
+      else
+        return false
+      end
+    else
+      creds = auth_creds(auth_header)
+      if account = Account.authenticate(creds[:username],creds[:password])
+        if account.id.to_i == owner_id.to_i
+          return true
+        else
+          return false
+        end
+      else
+        return false
+      end
+    end
+  end
+
   # Return current_user record if logged in
   def current_user
     return @current_user ||= Account.first(:token => request.cookies["user"]) if request.cookies["user"]
+  end
+
+  def user_property(property)
+    return AccountProperty.first(:id => current_user.id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => 'photo', :value => '/images/spy_logo_2.png'})
   end
 
   # check if user is logged in?
