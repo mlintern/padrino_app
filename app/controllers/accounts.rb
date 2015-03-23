@@ -66,7 +66,6 @@ PadrinoApp::App.controllers :accounts do
       render 'accounts/edit', :locals => { 'account' => @account, 'photo' => photo }
     else
       flash[:warning] = "Couldn't Find Account" # user flash[:error] when redirecting
-      # halt 404
       redirect_last
     end
   end
@@ -94,7 +93,6 @@ PadrinoApp::App.controllers :accounts do
       end
     else
       flash[:warning] = "Account with that ID does not exist."
-      # halt 404
       redirect_last
     end
   end
