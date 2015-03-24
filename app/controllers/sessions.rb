@@ -18,12 +18,12 @@ PadrinoApp::App.controllers :sessions do
         redirect url(:base, :index)
       else
         flash[:error] = "User is Disabled"
-        log("User is Disabled")
+        logger.info("User is Disabled")
         redirect url(:sessions, :new), 302
       end
     else
       flash[:error] = "Username or Password is wrong"
-      log("Username or Password is Wrong")
+      logger.info("Username or Password is Wrong")
       redirect url(:sessions, :new), 302
     end
   end

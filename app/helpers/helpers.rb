@@ -38,6 +38,11 @@ PadrinoApp::App.helpers do
     end
   end
 
+  def user_property(property)
+    defaults = { :photo => '/images/spy_logo_2.png' }
+    return AccountProperty.first(:id => current_user.id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => property, :value => defaults[:photo] })
+  end
+
   # Redirect to last page or root
   def redirect_last
     if session[:redirect_to]
@@ -171,10 +176,6 @@ PadrinoApp::App.helpers do
   # check if user is logged in?
   def logged_in?
     !!session[:user]
-  end
-
-  def log(text,value = nil)
-    logger.info(" - - - #{text}#{value} - - - ")
   end
 
   # Used to create API call on curl tool results page

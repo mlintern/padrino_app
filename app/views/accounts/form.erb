@@ -4,7 +4,7 @@
     <input type="text" name="account[username]" value="<%= user.username %>" id="account_username" class="form-control input-xlarge input-with-feedback" autofocus="autofocus">
   </div>
 </fieldset>
-<% if admin? %>
+<% if permission_check('admin') %>
 <fieldset class="control-group ">
   <label for="account_role" class="control-label">Active: </label>
   <div class="controls">
@@ -44,7 +44,7 @@
     <input type="password" name="account[password_confirmation]" id="account_password_confirmation" class="form-control input-xlarge input-with-feedback">
   </div>
 </fieldset>
-<% if admin? %>
+<% if permission_check('admin') %>
 <fieldset class="control-group ">
   <label for="account_role" class="control-label">Roles: </label>
   <div class="controls">
@@ -65,7 +65,7 @@
 <div class="form-actions">
   <input type="submit" value="Save" class="btn btn-primary">
   &nbsp;
-  <% if admin? %>
+  <% if permission_check('admin') %>
   <input type="submit" value="Save and continue" class="btn btn-info" name="save_and_continue">
   &nbsp;
   <% end %>

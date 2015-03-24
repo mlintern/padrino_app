@@ -3,8 +3,8 @@
 </div>
 
 <ul class="nav nav-tabs nav-mobile">
-  <% if admin? %><li> <a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
-  <% if admin? %><li class="pull-right"> <a href="/accounts/new"><i class="fa fa-user-plus"></i></a></li><% end %>
+  <% if permission_check('admin') %><li> <a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
+  <% if permission_check('admin') %><li class="pull-right"> <a href="/accounts/new"><i class="fa fa-user-plus"></i></a></li><% end %>
   <li class="active"> <a href="/accounts/edit/<%= account.id %>"><i class="fa fa-user"></i></a></li>
 </ul>
 <div class="tabs-content">
