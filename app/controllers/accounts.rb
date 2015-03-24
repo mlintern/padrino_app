@@ -55,7 +55,8 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    permission_check('admin') || ( login && owner?(params[:id]) )
+    owner?(params[:id]) || permission_check('admin')
+    session[:redirect_to] = request.fullpath
 
     @title = "Editing Account #{params[:id]}"
     @account = Account.get(params[:id])

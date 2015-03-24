@@ -1,5 +1,10 @@
 PadrinoApp::App.helpers do
 
+  # Return current_user record if logged in
+  def current_user
+    return @current_user ||= Account.first(:token => request.cookies["user"]) if request.cookies["user"]
+  end
+
   def add_update_properties(data)
     current_properties = ["photo"]
     
@@ -61,7 +66,6 @@ PadrinoApp::App.helpers do
     else
       flash[:error] = "Login is required."
       redirect url(:sessions, :new), 302
-      return false
     end
   end
 
@@ -101,8 +105,9 @@ PadrinoApp::App.helpers do
     end
   end
 
-  def permission_check(role)
+  def permission_check(role, strict = true)
     login
+
     if current_user['role'].nil?
       flash[:error] = role+" right required to view that page."
       redirect_last
@@ -111,8 +116,10 @@ PadrinoApp::App.helpers do
       if current_user.role[role]
         return true
       else
-        flash[:error] = role+" right required to view that page."
-        redirect_last
+        if strict
+          flash[:error] = role+" right required to view that page."
+          redirect_last
+        end
         return false
       end
     end
@@ -120,9 +127,11 @@ PadrinoApp::App.helpers do
 
   # Check logged in user is the owner
   def owner? owner_id
-    if current_user && current_user.id.to_i == owner_id.to_i
+    if current_user.id.to_i == owner_id.to_i
+      logger.info("Is Owner")
       return true
     else
+      logger.info("Is Not Owner")
       flash[:error] = "You are not authorized to view that page."
       redirect "/"
       return false
@@ -166,11 +175,6 @@ PadrinoApp::App.helpers do
       end
     end
     data
-  end
-
-  # Return current_user record if logged in
-  def current_user
-    return @current_user ||= Account.first(:token => request.cookies["user"]) if request.cookies["user"]
   end
 
   # check if user is logged in?

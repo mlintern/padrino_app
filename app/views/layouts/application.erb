@@ -28,7 +28,7 @@
         <% unless current_user.nil? %>
         <ul class="dropdown-menu main-nav" role="menu" aria-labelledby="tools">
           <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-          <% if permission_check('curl') %><li><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><%end%>
+          <% if permission_check('curl',false) %><li><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><%end%>
         </ul>
         <% end %>
       </div>
@@ -37,7 +37,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a class="small-user-photo"><img src="<%= user_property('photo').value %>" /></a></li>
           <li><a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><span class="account-name"><%= current_user.name %>&nbsp;<%= current_user.surname %></span></a></li>
-          <% if permission_check('admin') %>
+          <% if permission_check('admin',false) %>
           <li><a href="/accounts"><i class="fa fa-users"></i></a></li>
           <% end %>
           <li><a href="/sessions/destroy"><i class="fa fa-power-off"></i></a></li>
