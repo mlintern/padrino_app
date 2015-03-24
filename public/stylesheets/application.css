@@ -194,7 +194,7 @@ background-color: transparent;
 .navbar .small-user-photo{
   margin-top: -5px;
 }
-.nav>li>a {
+.nav>li>.navbar-nav-link {
   padding: 17px 15px 13px;
 }
 .navbar-nav-form {
