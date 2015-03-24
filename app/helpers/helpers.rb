@@ -127,24 +127,12 @@ PadrinoApp::App.helpers do
 
   # Check logged in user is the owner
   def owner? owner_id
-    if current_user.id.to_i == owner_id.to_i
-      return true
-    else
-      flash[:error] = "You are not authorized to view that page."
-      redirect "/"
-      return false
-    end
+    return current_user.id.to_i == owner_id.to_i
   end
-
-  alias :is_owner? :owner?
 
   def api_owner?(auth_header,owner_id)
     if current_user
-      if current_user.id.to_i == owner_id.to_i
-        return true
-      else
-        return false
-      end
+      owner? current_user.id
     else
       creds = auth_creds(auth_header)
       if account = Account.authenticate(creds[:username],creds[:password])

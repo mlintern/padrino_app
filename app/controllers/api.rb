@@ -45,7 +45,7 @@ PadrinoApp::App.controllers :api do
   end
 
   get :account, :map => "/api/accounts/:id" do
-    api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
+    api_owner?(request.env["HTTP_AUTHORIZATION"],params[:id]) || api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
 
     account = Account.all(:id => params[:id])[0]
     if account
@@ -58,6 +58,7 @@ PadrinoApp::App.controllers :api do
       data[:properties] = properties
       return 200, data.to_json
     else
+      headers "Content-Type" => "text/html; charset=utf8"
       return 404, { :success => false, :error => "User Not Found" }.to_json
     end
 
