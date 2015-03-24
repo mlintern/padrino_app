@@ -1,6 +1,6 @@
 PadrinoApp::App.controllers :accounts do
   get :index do
-    admin
+    permission_check('admin')
     session[:redirect_to] = request.fullpath
 
     @title = "Accounts"
@@ -22,7 +22,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :new do
-    admin
+    permission_check('admin')
     session[:redirect_to] = request.fullpath
 
     @title = "New Account"
@@ -32,7 +32,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   post :create do
-    admin
+    permission_check('admin')
 
     params[:account][:last_update] = DateTime.now
     params[:account][:status] = 0 if params[:account][:status].nil? 
@@ -55,7 +55,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    admin || ( login && owner?(params[:id]) )
+    permission_check('admin') || ( login && owner?(params[:id]) )
 
     @title = "Editing Account #{params[:id]}"
     @account = Account.get(params[:id])
@@ -98,7 +98,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   delete :destroy, :with => :id do
-    admin
+    permission_check('admin')
 
     @title = "Accounts"
     account = Account.get(params[:id])
@@ -116,7 +116,7 @@ PadrinoApp::App.controllers :accounts do
   end
 
   delete :destroy_many do
-    admin
+    permission_check('admin')
     
     @title = "Accounts"
     unless params[:account_ids]

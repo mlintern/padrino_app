@@ -1,13 +1,13 @@
 PadrinoApp::App.controllers :curl do
 
   get :index do
-    curl
+    permission_check('curl')
 
     render '/curl/index' 
   end
 
   post :index do
-    curl
+    permission_check('curl')
 
     if params[:session]['protocol'] == 'https://'
       curl_start = 'curl --insecure '

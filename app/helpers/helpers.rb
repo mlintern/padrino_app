@@ -96,100 +96,20 @@ PadrinoApp::App.helpers do
     end
   end
 
-  def remove_elements(data,elements = [])
-    elements.each do |e|
-      data.delete(e)
-    end
-    data
-  end
-
-  def remove_other_elements(data,elements = [])
-    data.each do |x,y|
-      unless elements.include? x.to_sym
-        data.delete(x)
+  def permission_check(role)
+    login
+    if current_user['role'].nil?
+      flash[:error] = role+" right required to view that page."
+      redirect_last
+      return false
+    else
+      if current_user.role[role]
+        return true
+      else
+        flash[:error] = role+" right required to view that page."
+        redirect_last
+        return false
       end
-    end
-    data
-  end
-
-  # Require admin role to view page
-  def admin_permission_required
-    login
-
-    # log("Admin Permission Check")
-    # log("admin? = ",admin?)
-    if admin?
-      session[:redirect_to] = request.fullpath
-      return true
-    else
-      flash[:error] = "Admin right required to view that page."
-      redirect_last
-      return false
-    end
-  end
-
-  alias :admin :admin_permission_required
-
-  # Require user role to view page
-  def user_permission_required
-    login
-
-    # log("User Permission Check")
-    # log("user? = ",user?)
-    if user?
-      session[:redirect_to] = request.fullpath
-      return true
-    else
-      flash[:error] = "User right required to view that page."
-      redirect_last
-      return false
-    end
-  end
-
-  alias :user :user_permission_required
-
-  # Require user role to view page
-  def curl_permission_required
-    login
-
-    if curl?
-      session[:redirect_to] = request.fullpath
-      return true
-    else
-      flash[:error] = "Curl right required to view that page."
-      redirect_last
-      return false
-    end
-  end
-
-  alias :curl :curl_permission_required
-
-  # Check user has user role
-  def user?
-    if current_user['role'].nil?
-      return false
-    else
-      return current_user.role['user']
-    end
-  end
-
-  # Check user has admin role
-  def admin?
-    if current_user['role'].nil?
-      return false
-    else
-      return current_user.role['admin']
-    end
-  end
-
-  alias :is_admin? :admin?
-
-  # Check user has other role
-  def curl?
-    if current_user['role'].nil?
-      return false
-    else
-      return current_user.role['curl']
     end
   end
 
@@ -198,7 +118,7 @@ PadrinoApp::App.helpers do
     if current_user && current_user.id.to_i == owner_id.to_i
       return true
     else
-      flash[:error] = "You are not authorised to view that page."
+      flash[:error] = "You are not authorized to view that page."
       redirect "/"
       return false
     end
@@ -227,13 +147,25 @@ PadrinoApp::App.helpers do
     end
   end
 
+    def remove_elements(data,elements = [])
+    elements.each do |e|
+      data.delete(e)
+    end
+    data
+  end
+
+  def remove_other_elements(data,elements = [])
+    data.each do |x,y|
+      unless elements.include? x.to_sym
+        data.delete(x)
+      end
+    end
+    data
+  end
+
   # Return current_user record if logged in
   def current_user
     return @current_user ||= Account.first(:token => request.cookies["user"]) if request.cookies["user"]
-  end
-
-  def user_property(property)
-    return AccountProperty.first(:id => current_user.id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => 'photo', :value => '/images/spy_logo_2.png'})
   end
 
   # check if user is logged in?
