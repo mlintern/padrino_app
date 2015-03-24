@@ -128,10 +128,8 @@ PadrinoApp::App.helpers do
   # Check logged in user is the owner
   def owner? owner_id
     if current_user.id.to_i == owner_id.to_i
-      logger.info("Is Owner")
       return true
     else
-      logger.info("Is Not Owner")
       flash[:error] = "You are not authorized to view that page."
       redirect "/"
       return false

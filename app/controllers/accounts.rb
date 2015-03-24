@@ -79,8 +79,8 @@ PadrinoApp::App.controllers :accounts do
     params[:account][:last_update] = DateTime.now
     @account = Account.get(params[:id])
     if @account
-      params[:account][:role] = "" if ( params[:account][:role].nil? && permission_check('admin') )
-      params[:account][:status] = 0 if ( params[:account][:status].nil? && permission_check('admin') )
+      params[:account][:role] = "" if ( params[:account][:role].nil? && permission_check('admin',false) )
+      params[:account][:status] = 0 if ( params[:account][:status].nil? && permission_check('admin',false) )
       logger.info("params[:account] = "+params[:account].inspect)
       if @account.update(params[:account])
         flash[:success] = "Account with id #{params[:id]} was successfully updated."
