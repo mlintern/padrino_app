@@ -60,11 +60,11 @@ PadrinoApp::App.controllers :accounts do
 
     @title = "Editing Account #{params[:id]}"
     @account = Account.get(params[:id])
-    photo = AccountProperty.first( :id => params[:id], :name => "photo") || { :value => "/images/spy_logo_2.png" }
+    photo_url = user_property(params[:id],"photo").value || '/images/default.png'
 
     if @account
       session[:redirect_to] = request.fullpath
-      render 'accounts/edit', :locals => { 'account' => @account, 'photo' => photo }
+      render 'accounts/edit', :locals => { 'account' => @account, 'photo_url' => photo_url }
     else
       flash[:warning] = "Couldn't Find Account" # user flash[:error] when redirecting
       redirect_last

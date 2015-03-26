@@ -58,12 +58,13 @@ PadrinoApp::App.helpers do
   ####
   # Name: user_property
   # Description: Returns AccountProperty for logged in User
-  # Arguments: property - string - name of property to be returned for the current_user
+  # Arguments: id - integer - id of user property
+  #            property - string - name of property to be returned for the current_user   
   # Response: AccountProperty object
   ####
-  def user_property(property)
-    defaults = { :photo => '/images/spy_logo_2.png' }
-    return AccountProperty.first(:id => current_user.id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => property, :value => defaults[:photo] })
+  def user_property(id,property)
+    defaults = { :photo => '/images/default.png' }
+    return AccountProperty.first(:id => id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => property, :value => defaults[:photo] })
   end
 
   ####

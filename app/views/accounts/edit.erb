@@ -11,10 +11,10 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="thumbnail">
-	      <div class="row text-center"><div class="col-xs-10 col-xs-offset-1"><img class="user-photo" src="<%= photo[:value] %>" alt="User Photo"></div></div>
+	      <div class="row text-center"><div class="col-xs-10 col-xs-offset-1"><img class="user-photo" src="<%= photo_url %>" alt="User Photo"></div></div>
 	      <div class="caption">
-	        <input type="text" class="form-control photo-url" value="<%= photo[:value] %>" />
-	        <p><button onclick="updatePhoto()" class="btn btn-default" role="button">Update</button></p>
+	        <input type="text" class="form-control photo-url" value="<%= photo_url %>" />
+	        <p><button onclick="updatePhoto()" class="btn btn-success" role="button">Update</button><button onclick="clearPhoto()" class="btn btn-warning" role="button">Clear</button></p>
 	      </div>
 	    </div>
 		</div>

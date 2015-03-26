@@ -13,7 +13,7 @@ function flashError (message) {
 function updatePhoto () {
   id = $(".user-info").data('user-id');
   photo = $('.photo-url').val()
-  data = { "properties" : [ { "name":"photo", "value": photo } ] }
+  data = { "properties" : [ { "name":"photo", "value": photo } ] };
   $.ajax({
 		url: '/api/accounts/'+id,
 		data: JSON.stringify(data),
@@ -22,8 +22,30 @@ function updatePhoto () {
 		type: 'PUT',
 		success: function(response) {
 			console.log(response);
-			$('.user-photo').attr('src', photo);	
+			$('.user-photo').attr('src', photo);
 			flashSuccess('Account photo updated successfully.');
+		},
+		error: function(response) {
+			console.log(response);
+			flashError(response['responseText']);
+		}
+	});
+}
+
+function clearPhoto () {
+  id = $(".user-info").data('user-id');
+  data = { "properties" : [ { "name":"photo", "value": null } ] };
+  $.ajax({
+		url: '/api/accounts/'+id,
+		data: JSON.stringify(data),
+		dataType: 'json',
+    contentType: "application/json",
+		type: 'PUT',
+		success: function(response) {
+			console.log(response);
+			$('.user-photo').attr('src', '/images/default.png');
+			$('.photo-url').val('')
+			flashSuccess('Account photo cleared successfully.');
 		},
 		error: function(response) {
 			console.log(response);
