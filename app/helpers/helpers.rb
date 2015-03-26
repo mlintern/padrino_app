@@ -1,10 +1,21 @@
 PadrinoApp::App.helpers do
 
-  # Return current_user record if logged in
+  ####
+  # Name: current_user
+  # Description: Will return the currently logged in Account
+  # Arguments: None
+  # Response: Account object
+  ####
   def current_user
     return @current_user ||= Account.first(:token => request.cookies["user"]) if request.cookies["user"]
   end
 
+  ####
+  # Name: add_update_properties
+  # Description: Updates AccountProperty Table or creates new entry for user params[:id]
+  # Arguments: data - json object which may contain AccountProperty
+  # Response: true or halt 400
+  ####
   def add_update_properties(data)
     current_properties = ["photo"]
     
@@ -14,6 +25,7 @@ PadrinoApp::App.helpers do
           property = AccountProperty.first(:id => params[:id], :name => p['name'])
           if property
             if property.update(:value => p['value'])
+              return true
             else
               property.errors.each do |e|
                 logger.error("Save Error: #{e}")
@@ -43,12 +55,23 @@ PadrinoApp::App.helpers do
     end
   end
 
+  ####
+  # Name: user_property
+  # Description: Returns AccountProperty for logged in User
+  # Arguments: property - string - name of property to be returned for the current_user
+  # Response: AccountProperty object
+  ####
   def user_property(property)
     defaults = { :photo => '/images/spy_logo_2.png' }
     return AccountProperty.first(:id => current_user.id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => property, :value => defaults[:photo] })
   end
 
-  # Redirect to last page or root
+  ####
+  # Name: redirect_last
+  # Description: Will redirect to session[:redirect_to] or /
+  # Arguments: None
+  # Response: None
+  ####
   def redirect_last
     if session[:redirect_to]
       redirect_url = session[:redirect_to]
@@ -59,7 +82,12 @@ PadrinoApp::App.helpers do
     end  
   end
 
-  # Require login to view page
+  ####
+  # Name: login
+  # Description: check if user is logged in
+  # Arguments: None
+  # Response: true or redirect to /sessions/new
+  ####
   def login
     if current_user
       return true
@@ -69,13 +97,30 @@ PadrinoApp::App.helpers do
     end
   end
 
+  ####
+  # Name: auth_creds
+  # Description: takes the encoded authorication string and returns a json object of the username and password
+  # Arguments: auth_deader - string - Base64 encoded authentication 
+  # Response: json object - username and password
+  ####
   def auth_creds(auth_header)
-    plain = Base64.decode64(auth_header.gsub("Basic ",""))
-    username = plain.split(':')[0]
-    password = plain.split(':')[1]
-    return { :username => username, :password => password }
+    if auth_header
+      plain = Base64.decode64(auth_header.gsub("Basic ",""))
+      username = plain.split(':')[0]
+      password = plain.split(':')[1]
+      return { :username => username, :password => password }
+    else
+      return { :username => nil, :password => nil }
+    end
   end
 
+  ####
+  # Name: api_auth
+  # Description: checks user's authorization and permissions
+  # Arguments: auth_header - string - Base64 encoded authentication 
+  #            role - optional - string - name of the required role
+  # Response: current_user, authorized user or halt 403
+  ####
   def api_auth(auth_header, role = nil )
     if current_user
       if role.nil?
@@ -105,18 +150,25 @@ PadrinoApp::App.helpers do
     end
   end
 
-  def permission_check(role, strict = true)
+  ####
+  # Name: permissions_check
+  # Description: checks that the logged in user has specified permission
+  # Arguments: role - string
+  # Response: true, false or redirect_last
+  ####
+  def permission_check(role, redirect = true)
     login
-
     if current_user['role'].nil?
-      flash[:error] = role+" right required to view that page."
-      redirect_last
+      if redirect
+        flash[:error] = role+" right required to view that page."
+        redirect_last
+      end
       return false
     else
       if current_user.role[role]
         return true
       else
-        if strict
+        if redirect
           flash[:error] = role+" right required to view that page."
           redirect_last
         end
@@ -125,17 +177,29 @@ PadrinoApp::App.helpers do
     end
   end
 
-  # Check logged in user is the owner
-  def owner? owner_id
+  ####
+  # Name: owner?
+  # Description: checks to see if current user owns requested data
+  # Arguments: owner_id - integer
+  # Response: true or false
+  ####
+  def owner?(owner_id)
     return current_user.id.to_i == owner_id.to_i
   end
 
+  ####
+  # Name: api_owner?
+  # Description: checks to see if current user owns requested api data
+  # Arguments: auth_header - string - Base64 encoded authentication 
+  #            owner_id - integer
+  # Response: true or false
+  ####
   def api_owner?(auth_header,owner_id)
     if current_user
       owner? current_user.id
     else
       creds = auth_creds(auth_header)
-      if account = Account.authenticate(creds[:username],creds[:password])
+      if account = Account.authenticate(creds[:username],creds[:password]) && !creds.nil?
         if account.id.to_i == owner_id.to_i
           return true
         else
@@ -147,13 +211,27 @@ PadrinoApp::App.helpers do
     end
   end
 
-    def remove_elements(data,elements = [])
+  ####
+  # Name: remove_elements
+  # Description: strips hash object of specified elements
+  # Arguments: data - hash - object to be stipped
+  #            elements - array of symbols
+  # Response: hash
+  ####
+  def remove_elements(data,elements = [])
     elements.each do |e|
       data.delete(e)
     end
     data
   end
 
+  ####
+  # Name: remove_other_elements
+  # Description: strips hash object leaving only specified elements
+  # Arguments: data - hash - object to be stipped
+  #            elements - array of symbols
+  # Response: hash
+  ####
   def remove_other_elements(data,elements = [])
     data.each do |x,y|
       unless elements.include? x.to_sym
@@ -163,12 +241,12 @@ PadrinoApp::App.helpers do
     data
   end
 
-  # check if user is logged in?
-  def logged_in?
-    !!session[:user]
-  end
-
-  # Used to create API call on curl tool results page
+  ####
+  # Name: norm_data
+  # Description: takes a hash object and turns it into a string of arguments
+  # Arguments: data - hash - object to be transformed
+  # Response: string - ?x=b&c=d
+  ####
   def norm_data(data)
     result = '?'
     data.each do |a,b|
@@ -177,6 +255,12 @@ PadrinoApp::App.helpers do
     result[0...-1].gsub('"','\\"').gsub("[","\\[").gsub("]","\\]").gsub(", ",",")
   end
 
+  ####
+  # Name: json_data
+  # Description: takes a hash object and turns it into a string json object
+  # Arguments: data - hash - object to be transformed
+  # Response: string - {"a":"b","c":"d"}
+  ####
   def json_data(data)
     if data == {}
       '{}'
