@@ -1,6 +1,37 @@
 PadrinoApp::App.helpers do
 
   ####
+  # Name: attributes_to_remove
+  # Description: returns list of attributes used in remove_elements
+  # Arguments: None
+  # Response: Array of symbols
+  ####
+  def attributes_to_remove
+    [:token,:crypted_password,:last_update]
+  end
+
+  ####
+  # Name: allowed_attributes
+  # Description: returns list of attributes used in remove_other_elements
+  # Arguments: None
+  # Response: Array of symbols
+  ####
+  def allowed_attributes
+    [:username,:name,:surname,:email,:role,:password,:password_confirmation]
+  end
+
+  ####
+  # Name: default
+  # Description: returns default of the defined property
+  # Arguments: String - name of property
+  # Response: string
+  ####
+  def default(property)
+    defaults = { :photo => '/images/default.png' }
+    defaults[property.to_sym]
+  end
+
+  ####
   # Name: current_user
   # Description: Will return the currently logged in Account
   # Arguments: None
@@ -63,8 +94,7 @@ PadrinoApp::App.helpers do
   # Response: AccountProperty object
   ####
   def user_property(id,property)
-    defaults = { :photo => '/images/default.png' }
-    return AccountProperty.first(:id => id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => property, :value => defaults[:photo] })
+    return AccountProperty.first(:id => id, :name => property) || AccountProperty.new({ :id => current_user.id, :name => property, :value => default("photo") })
   end
 
   ####
@@ -219,7 +249,7 @@ PadrinoApp::App.helpers do
   #            elements - array of symbols
   # Response: hash
   ####
-  def remove_elements(data,elements = [])
+  def remove_elements(data,elements = attributes_to_remove)
     elements.each do |e|
       data.delete(e)
     end
@@ -233,7 +263,7 @@ PadrinoApp::App.helpers do
   #            elements - array of symbols
   # Response: hash
   ####
-  def remove_other_elements(data,elements = [])
+  def remove_other_elements(data,elements = allowed_attributes)
     data.each do |x,y|
       unless elements.include? x.to_sym
         data.delete(x)

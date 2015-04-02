@@ -1,6 +1,4 @@
 PadrinoApp::App.controllers :api do
-  attributes_to_remove = [:token,:crypted_password,:last_update]
-  allowed_attributes = [:username,:name,:surname,:email,:role,:password,:password_confirmation]
 
   before do
     headers "Content-Type" => "application/json; charset=utf8"
@@ -32,11 +30,11 @@ PadrinoApp::App.controllers :api do
     @data = []
     accounts.each do |a|
       user_properties = AccountProperty.all(:id => a[:id])
-      properties = []
+      properties = {}
       user_properties.each do |up|
-        properties << remove_elements(up.attributes,[:id])
+        properties[up.name.to_sym] = up.value
       end
-      user = remove_elements(a.attributes,attributes_to_remove)
+      user = remove_elements(a.attributes)
       user[:properties] = properties
       @data << user
     end
@@ -54,11 +52,11 @@ PadrinoApp::App.controllers :api do
   get :me, :map => "/api/accounts/me" do
     account = api_auth(request.env["HTTP_AUTHORIZATION"], nil) # nil indicates any or no role is ok.  Only being logged is neccessary.
 
-    data = remove_elements(account.attributes,attributes_to_remove)
-    user_properties = AccountProperty.all(:id => params[:id])
-    properties = []
+    data = remove_elements(account.attributes)
+    user_properties = AccountProperty.all(:id => account.id)
+    properties = {}
     user_properties.each do |up|
-      properties << remove_elements(up.attributes,[:id])
+      properties[up.name.to_sym] = up.value
     end
     data[:properties] = properties
 
@@ -77,11 +75,11 @@ PadrinoApp::App.controllers :api do
 
     account = Account.all(:id => params[:id])[0]
     if account
-      data = remove_elements(account.attributes,attributes_to_remove)
+      data = remove_elements(account.attributes)
       user_properties = AccountProperty.all(:id => params[:id])
-      properties = []
+      properties = {}
       user_properties.each do |up|
-        properties << remove_elements(up.attributes,[:id])
+        properties[up.name.to_sym] = up.value
       end
       data[:properties] = properties
       return 200, data.to_json
@@ -106,11 +104,11 @@ PadrinoApp::App.controllers :api do
     add_update_properties(data)
 
     account = Account.all(:id => params[:id])[0]
-    remove_other_elements(data,allowed_attributes)
+    remove_other_elements(data)
     if account
       data[:last_update] = DateTime.now
       if account.update(data)
-        data = remove_elements(account.attributes,attributes_to_remove)
+        data = remove_elements(account.attributes)
         return 200, data.to_json
       else
         return 400, { :success => false, :error => "Bad Request" }.to_json

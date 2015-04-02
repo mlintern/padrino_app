@@ -18,7 +18,28 @@ PadrinoApp::App.controllers :accounts do
         @accounts = Account.all(:order => [ :username.asc ]) # desc
       end
     end
-    render 'accounts/index', :locals => { 'account_status' => account_status_options }
+    render 'accounts/index', :locals => { 'account_status' => account_status_options, 'accounts' => @accounts, 'account' => current_user }
+  end
+
+  get :cards do
+    permission_check('admin')
+    session[:redirect_to] = request.fullpath
+
+    @title = "Account Cards"
+
+    accounts = Account.all
+    data = []
+    accounts.each do |a|
+      user_properties = AccountProperty.all(:id => a[:id])
+      properties = {}
+      user_properties.each do |up|
+        properties[up.name.to_sym] = up.value
+      end
+      user = remove_elements(a.attributes,attributes_to_remove)
+      user[:properties] = properties
+      data << user
+    end
+    render 'accounts/cards', :locals => { 'accounts' => data, 'account' => current_user }
   end
 
   get :new do
@@ -26,9 +47,9 @@ PadrinoApp::App.controllers :accounts do
     session[:redirect_to] = request.fullpath
 
     @title = "New Account"
-    @account = Account.new
-    @account.role = ""
-    render 'accounts/new', :locals => { 'account' => @account }
+    account = Account.new
+    account.role = ""
+    render 'accounts/new', :locals => { 'account' => account }
   end
 
   post :create do

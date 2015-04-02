@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs nav-mobile">
+  <% if permission_check('admin',false) %><li<% if page == "list" %> class="active"<% end %>> <a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
+  <% if permission_check('admin',false) %><li class="pull-right<% if page == "new" %> active<% end %>"> <a href="/accounts/new"><i class="fa fa-user-plus"></i></a></li><% end %>
+  <li<% if page == "edit" %> class="active"<% end %>> <a href="/accounts/edit/<%= user.id %>"><i class="fa fa-user"></i></a></li>
+  <% if permission_check('admin',false) %><li<% if page == "card" %> class="active"<% end %>><a href="/accounts/cards"><i class="fa fa-newspaper-o"></i></a></li><% end %>
+</ul>

@@ -335,10 +335,20 @@ background-color: transparent;
   height: 100px;
 }
 /* --- End Application::Base --- */
-/* */
+/* Live Validation*/
 .LV_validation_message {font-size: 12px;} 
 .LV_invalid {color: red;}
 .LV_valid {display: none;}
+
+/*Account Card View*/
+.account-card .panel .panel-body{
+  min-height: 240px;
+}
+.account-card .panel .panel-body .account-image{
+  max-height: 210px;
+  overflow: hidden;
+}
+
 /* -- End Application -- */
 
 /* Mobile CSS*/

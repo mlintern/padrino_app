@@ -1,5 +1,4 @@
 PadrinoApp::App.controllers :curl do
-
   get :index do
     permission_check('curl')
 
