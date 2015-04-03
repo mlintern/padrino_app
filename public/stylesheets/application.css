@@ -398,6 +398,9 @@ background-color: transparent;
     text-align: center;
     margin: 5px 0;
   }
+  .feature-info {
+    height: auto;
+  }
   .copyright {
     text-align: center;
     float: none;
