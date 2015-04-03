@@ -27,7 +27,7 @@ PadrinoApp::App.controllers :accounts do
 
     @title = "Account Cards"
 
-    accounts = Account.all
+    accounts = Account.all(:order => [ :surname.asc ])
     data = []
     accounts.each do |a|
       user_properties = AccountProperty.all(:id => a[:id])

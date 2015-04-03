@@ -13,8 +13,8 @@
           </div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-sm-5 account-image">
-                <img src="<%= account[:properties][:photo] || default("photo") %>">
+              <div class="col-sm-5">
+                <div class="account-image"><img src="<%= account[:properties][:photo] || default("photo") %>"></div>
               </div>
               <div class="col-sm-7">
                 <p><%= account[:email] %></p>
