@@ -50,7 +50,7 @@ PadrinoApp::App.controllers :api do
   # Response: json object of own Account
   ####
   get :me, :map => "/api/accounts/me" do
-    account = api_auth(request.env["HTTP_AUTHORIZATION"], nil) # nil indicates any or no role is ok.  Only being logged is neccessary.
+    account = api_auth(request.env["HTTP_AUTHORIZATION"], nil) # nil indicates any or no role is ok.  Only being logged in is neccessary.
 
     data = remove_elements(account.attributes)
     user_properties = AccountProperty.all(:id => account.id)
@@ -71,7 +71,7 @@ PadrinoApp::App.controllers :api do
   # Response: json object of account with :id
   ####
   get :account, :map => "/api/accounts/:id" do
-    api_owner?(request.env["HTTP_AUTHORIZATION"],params[:id]) || api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
+    api_owner?(request.env["HTTP_AUTHORIZATION"],params[:id]) || api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged in is neccessary.
 
     account = Account.all(:id => params[:id])[0]
     if account
@@ -97,7 +97,7 @@ PadrinoApp::App.controllers :api do
   # Response: json object of account with :id
   ####
   put :account, :map => "/api/accounts/:id" do
-    api_owner?(request.env["HTTP_AUTHORIZATION"],params[:id]) || api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged is neccessary.
+    api_owner?(request.env["HTTP_AUTHORIZATION"],params[:id]) || api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged in is neccessary.
 
     data = JSON.parse request.body.read
 
@@ -113,6 +113,29 @@ PadrinoApp::App.controllers :api do
       else
         return 400, { :success => false, :error => "Bad Request" }.to_json
       end
+    end
+
+  end
+
+  ####
+  # Endpoint: DELETE /api/accounts/:id
+  # Description: Updated account information
+  # Authorization: owner of account or admin
+  # Arguments: json object of data to update
+  # Response: json object of account with :id
+  ####
+  delete :account, :map => "/api/accounts/:id" do
+    auth_account = api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged in is neccessary.
+
+    account = Account.get(params[:id])
+    if account
+      if ( account != auth_account ) && account.destroy
+        return 200, { :success => true, :message => "Account #{params[:id]} was successfully deleted." }.to_json
+      else
+        return 400, { :success => false, :error => "You cannot delete yourself." }.to_json
+      end
+    else
+      reutrn 404, { :success => false, :error => "Account does not exist." }.to_json
     end
 
   end
