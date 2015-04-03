@@ -6,6 +6,8 @@ user = Nretnil::CompendiumAPI::Compendium.new("mweston", "password", "http://loc
 admin = Nretnil::CompendiumAPI::Compendium.new("administrator", "password", "http://localhost:3000")
 
 label = false
+@successes = 0
+@failures = 0
 
 def divider
   " - - - - - - - - - - - "
@@ -21,11 +23,18 @@ def header (text)
   puts divider+space
 end
 
-def check_result (response)
+def check_result (response, neg = false)
   # puts response
   if response.key?(:error)
-    return false
+    if neg 
+      @successes += 1
+      return true
+    else
+      @failures += 1
+      return false
+    end
   else
+    @successes += 1
     return true
   end
 end
@@ -55,7 +64,7 @@ header("GET /api/accounts")
 #Negative Test
 puts "\nGet all accounts as user - Should 403" if label
 response = user.get("/api/accounts")
-puts !check_result(response)
+puts check_result(response,true)
 
 puts "\nGet all accounts info as admin" if label
 response = admin.get("/api/accounts")
@@ -75,7 +84,7 @@ puts check_result(response)
 #Negative Test
 puts "\nGet different account by id as user - Should 404" if label
 response = user.get("/api/accounts/"+admin_id.to_s)
-puts !check_result(response)
+puts check_result(response,true)
 
 puts "\nGet own account by id as admin" if label
 response = admin.get("/api/accounts/"+admin_id.to_s)
@@ -96,7 +105,7 @@ data = { :username => Time.now.to_i, :email => "test@test.com", :password => "pa
 #Negative Test
 puts "\nCreate account as user - Should 403" if label
 response = user.post("/api/accounts",data)
-puts !check_result(response)
+puts check_result(response,true)
 
 puts "\nCreate account as admin" if label
 response = admin.post("/api/accounts",data)
@@ -108,7 +117,7 @@ new_username = response["username"]
 #Negative Test
 puts "\nCreate Duplicate account as admin - Should 400" if label
 response = admin.post("/api/accounts",data)
-puts !check_result(response)
+puts check_result(response,true)
 
 
 ###
@@ -122,7 +131,7 @@ updata = { :name => "API", :surname => "Tester" }.to_json
 #Negative Test
 puts "\nUpdate new user account as user - Should 403" if label
 response = user.put("/api/accounts/"+new_user_id.to_s,updata)
-puts !check_result(response)
+puts check_result(response,true)
 
 newuser = Nretnil::CompendiumAPI::Compendium.new(new_username, "password", "http://localhost:3000")
 
@@ -146,7 +155,7 @@ header("DELETE /api/accounts/:id")
 #Negative Test
 puts "\nDelete new user account as user - Should 403" if label
 response = user.delete("/api/accounts/"+new_user_id.to_s)
-puts !check_result(response)
+puts check_result(response,true)
 
 puts "\nDelete new user account as admin" if label
 response = admin.delete("/api/accounts/"+new_user_id.to_s)
@@ -155,4 +164,8 @@ puts check_result(response)
 #Negative Test
 puts "\nDelete new user account as user - Should 400" if label
 response = admin.delete("/api/accounts/"+admin_id.to_s)
-puts !check_result(response)
+puts check_result(response,true)
+
+header("Results")
+
+puts "#{@successes} Successful Tests and #{@failures} Failed Tests"
