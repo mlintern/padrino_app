@@ -35,11 +35,11 @@
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <% unless current_user.nil? %>
         <ul class="nav navbar-nav navbar-right">
-          <li><a class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" /></a></li>
+          <% unless current_user.nil? %><li class="visible-xs"><a href="/"><i class="fa fa-home"></i> Home</a></li><% end %>
+          <% if permission_check('curl',false) %><li class="visible-xs"><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
+          <li class="hidden-xs"><a class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" /></a></li>
           <li><a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><span class="account-name"><%= current_user.name %>&nbsp;<%= current_user.surname %></span></a></li>
-          <% if permission_check('admin',false) %>
-          <li><a href="/accounts"><i class="fa fa-users"></i></a></li>
-          <% end %>
+          <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
           <li><a href="/sessions/destroy"><i class="fa fa-power-off"></i></a></li>
         </ul>
         <% end %>
