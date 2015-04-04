@@ -166,7 +166,7 @@ PadrinoApp::App.helpers do
     else
       unless auth_header.nil?
         creds = auth_creds(auth_header)
-        if account = Account.authenticate(creds[:username],creds[:password])
+        if account = Account.authenticate(creds[:username],creds[:password]) || Account.token_authenticate(creds[:username],creds[:password])
           if ( role.nil? || account.role[role] ) && account.active?
             return account
           else

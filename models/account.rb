@@ -45,12 +45,21 @@ class Account
     account && account.has_password?(password) ? account : nil
   end
 
+  def self.token_authenticate(username, token)
+    account = first(:conditions => ["lower(username) = lower(?)", username]) if username.present?
+    account && account.has_token?(token) ? account : nil
+  end
+
   def active?
     self.status != 0
   end
 
   def has_password?(password)
     ::BCrypt::Password.new(crypted_password) == password
+  end
+
+  def has_token?(token)
+    token == self.token
   end
 
   def generate_token
