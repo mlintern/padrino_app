@@ -5,7 +5,8 @@ require "compendium-api"
 user = Nretnil::CompendiumAPI::Compendium.new("mweston", "password", "http://localhost:3000")
 admin = Nretnil::CompendiumAPI::Compendium.new("administrator", "password", "http://localhost:3000")
 
-label = false
+@label = false
+@details = false
 @successes = 0
 @failures = 0
 
@@ -24,7 +25,7 @@ def header (text)
 end
 
 def check_result (response, neg = false)
-  # puts response
+  puts response if @details
   if response.key?(:error)
     if neg 
       @successes += 1
@@ -45,12 +46,12 @@ end
 
 header("GET /api/accounts/me")
 
-puts "Get own account info as user" if label 
+puts "Get own account info as user" if @label 
 response = user.get("/api/accounts/me")
 user_id = response["id"]
 puts check_result(response)
 
-puts "\nGet own account info and admin" if label 
+puts "\nGet own account info and admin" if @label 
 response = admin.get("/api/accounts/me")
 admin_id = response["id"]
 puts check_result(response)
@@ -62,11 +63,11 @@ puts check_result(response)
 header("GET /api/accounts")
 
 #Negative Test
-puts "\nGet all accounts as user - Should 403" if label
+puts "\nGet all accounts as user - Should 403" if @label
 response = user.get("/api/accounts")
 puts check_result(response,true)
 
-puts "\nGet all accounts info as admin" if label
+puts "\nGet all accounts info as admin" if @label
 response = admin.get("/api/accounts")
 puts check_result(response)
 
@@ -77,20 +78,20 @@ puts check_result(response)
 
 header("GET /api/accounts/:id")
 
-puts "\nGet own account by id as user" if label
+puts "\nGet own account by id as user" if @label
 response = user.get("/api/accounts/"+user_id.to_s)
 puts check_result(response)
 
 #Negative Test
-puts "\nGet different account by id as user - Should 404" if label
+puts "\nGet different account by id as user - Should 404" if @label
 response = user.get("/api/accounts/"+admin_id.to_s)
 puts check_result(response,true)
 
-puts "\nGet own account by id as admin" if label
+puts "\nGet own account by id as admin" if @label
 response = admin.get("/api/accounts/"+admin_id.to_s)
 puts check_result(response)
 
-puts "\nGet different account by id as admin" if label
+puts "\nGet different account by id as admin" if @label
 response = admin.get("/api/accounts/"+user_id.to_s)
 puts check_result(response)
 
@@ -103,11 +104,11 @@ header("POST /api/accounts")
 data = { :username => Time.now.to_i, :email => "test@test.com", :password => "password", :password_confirmation => "password" }.to_json
 
 #Negative Test
-puts "\nCreate account as user - Should 403" if label
+puts "\nCreate account as user - Should 403" if @label
 response = user.post("/api/accounts",data)
 puts check_result(response,true)
 
-puts "\nCreate account as admin" if label
+puts "\nCreate account as admin" if @label
 response = admin.post("/api/accounts",data)
 puts check_result(response)
 
@@ -115,7 +116,7 @@ new_user_id = response["id"]
 new_username = response["username"]
 
 #Negative Test
-puts "\nCreate Duplicate account as admin - Should 400" if label
+puts "\nCreate Duplicate account as admin - Should 400" if @label
 response = admin.post("/api/accounts",data)
 puts check_result(response,true)
 
@@ -129,19 +130,19 @@ header("PUT /api/accounts/:id")
 updata = { :name => "API", :surname => "Tester" }.to_json
 
 #Negative Test
-puts "\nUpdate new user account as user - Should 403" if label
+puts "\nUpdate new user account as user - Should 403" if @label
 response = user.put("/api/accounts/"+new_user_id.to_s,updata)
 puts check_result(response,true)
 
 newuser = Nretnil::CompendiumAPI::Compendium.new(new_username, "password", "http://localhost:3000")
 
-puts "\nUpdate new user account as self" if label
+puts "\nUpdate new user account as self" if @label
 response = newuser.put("/api/accounts/"+new_user_id.to_s,updata)
 puts check_result(response)
 
 updata2 = { :username => "api_tester", :role => ["user"] }.to_json
 
-puts "\nUpdate new user account as admin" if label
+puts "\nUpdate new user account as admin" if @label
 response = admin.put("/api/accounts/"+new_user_id.to_s,updata2)
 puts check_result(response)
 
@@ -153,16 +154,16 @@ puts check_result(response)
 header("DELETE /api/accounts/:id")
 
 #Negative Test
-puts "\nDelete new user account as user - Should 403" if label
+puts "\nDelete new user account as user - Should 403" if @label
 response = user.delete("/api/accounts/"+new_user_id.to_s)
 puts check_result(response,true)
 
-puts "\nDelete new user account as admin" if label
+puts "\nDelete new user account as admin" if @label
 response = admin.delete("/api/accounts/"+new_user_id.to_s)
 puts check_result(response)
 
 #Negative Test
-puts "\nDelete new user account as user - Should 400" if label
+puts "\nDelete new user account as user - Should 400" if @label
 response = admin.delete("/api/accounts/"+admin_id.to_s)
 puts check_result(response,true)
 
