@@ -11,14 +11,14 @@ function flashError (message) {
 }
 
 function updatePhoto () {
-  id = $(".user-info").data('user-id');
-  photo = $('.photo-url').val()
-  data = { "properties" : [ { "name":"photo", "value": photo } ] };
-  $.ajax({
+	id = $(".user-info").data('user-id');
+	photo = $('.photo-url').val()
+	data = { "properties" : [ { "name":"photo", "value": photo } ] };
+	$.ajax({
 		url: '/api/accounts/'+id,
 		data: JSON.stringify(data),
 		dataType: 'json',
-    contentType: "application/json",
+		contentType: "application/json",
 		type: 'PUT',
 		success: function(response) {
 			console.log(response);
@@ -33,13 +33,13 @@ function updatePhoto () {
 }
 
 function clearPhoto () {
-  id = $(".user-info").data('user-id');
-  data = { "properties" : [ { "name":"photo", "value": null } ] };
-  $.ajax({
+	id = $(".user-info").data('user-id');
+	data = { "properties" : [ { "name":"photo", "value": null } ] };
+	$.ajax({
 		url: '/api/accounts/'+id,
 		data: JSON.stringify(data),
 		dataType: 'json',
-    contentType: "application/json",
+		contentType: "application/json",
 		type: 'PUT',
 		success: function(response) {
 			console.log(response);
