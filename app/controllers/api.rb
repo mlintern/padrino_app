@@ -119,10 +119,10 @@ PadrinoApp::App.controllers :api do
 
   ####
   # Endpoint: DELETE /api/accounts/:id
-  # Description: Updated account information
-  # Authorization: owner of account or admin
-  # Arguments: json object of data to update
-  # Response: json object of account with :id
+  # Description: Delete an Account
+  # Authorization: admin
+  # Arguments: None
+  # Response: json object with result
   ####
   delete :account, :map => "/api/accounts/:id" do
     auth_account = api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.  Only being logged in is neccessary.

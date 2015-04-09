@@ -27,6 +27,8 @@ PadrinoApp::App.controllers :accounts do
 
     @title = "Account Cards"
 
+    # HTTParty.get("http://localhost:3000/api/accounts", :basic_auth => { :username => current_user.username, :password => current_user.token } )
+
     accounts = Account.all(:order => [ :surname.asc ])
     data = []
     accounts.each do |a|
