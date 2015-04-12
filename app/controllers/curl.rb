@@ -52,6 +52,7 @@ PadrinoApp::App.controllers :curl do
         end
     rescue StandardError => e
       logger.error(e)
+      @result = { :error => e }
     end
 
     render 'curl/result', :locals => { :curl_call => curl_call, :result => @result }
