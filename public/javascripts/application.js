@@ -23,18 +23,19 @@
       if ( $('#public').is(':checked') ) { 
         $('.auth').hide();
         $('#method').prop('selectedIndex', 0);
-        $("#method option.auth").prop('disabled',true);
+        $(".not-pub").prop('disabled',true);
         if ( $("#uri").val() == '/api/content' || $("#uri").val() == '/api/publishers/<publisher_id>/feed' ) {
           $("#uri").val('/api/publishers/<publisher_id>/feed')
         }
       } else {
         $('.auth').show();
+        $(".not-pub").prop('disabled',false);
         if ( $("#uri").val() == '/api/content' || $("#uri").val() == '/api/publishers/<publisher_id>/feed' ) {
           $("#uri").val('/api/content')
         }
       }
 
-      var method = $('#method').val()
+      var method = $('#method').val();
 
       if ( method == 'get' || method == 'delete' ) {
         $('.query').show();
@@ -49,7 +50,7 @@
     $('#method').change(function() { setFields() } );
 
     $('.screenshot img').click(function() {
-      var url = $(this).attr('src')
+      var url = $(this).attr('src');
       window.open(url);
       return true;
     });
