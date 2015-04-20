@@ -104,11 +104,11 @@ PadrinoApp::App.controllers :accounts do
     if @account
       params[:account][:role] = "" if ( params[:account][:role].nil? && permission_check('admin',false) )
       params[:account][:status] = 0 if ( params[:account][:status].nil? && permission_check('admin',false) )
-      logger.info("params[:account] = "+params[:account].inspect)
       if @account.update(params[:account])
         flash[:success] = "Account with id #{params[:id]} was successfully updated."
         params[:save_and_continue] ? redirect(url(:accounts, :index)) : redirect(url(:accounts, :edit, :id => @account.id))
       else
+        logger.debug("params[:account] = "+params[:account].inspect)
         @account.errors.each do |e|
           logger.error("Save Error: #{e}")
           flash.now[:error] = e[0] # User flash.now[:error] when rendering
