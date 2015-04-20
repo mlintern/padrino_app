@@ -51,7 +51,7 @@
 
       <tbody>
         <% @accounts.each do |account| %>
-          <tr class="list-row<% if account.status == 0 %> danger<% end %>">
+          <tr class="list-row<% if account.status == 0 %> danger disabled<% end %>">
             <td class="list-column list-selectable">
               <%= check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox' %>
             </td>
