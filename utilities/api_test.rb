@@ -3,6 +3,7 @@ require "compendium-api"
 # Prep Work - Make sure you have two users, one with admin rights and one without
 
 user = Nretnil::CompendiumAPI::Compendium.new("mweston", "password", "http://localhost:3000")
+user2 = Nretnil::CompendiumAPI::Compendium.new("maddie", "password", "http://localhost:3000")
 admin = Nretnil::CompendiumAPI::Compendium.new("administrator", "password", "http://localhost:3000")
 
 @options = {
@@ -171,6 +172,100 @@ puts "\nDelete new user account as user - Should 400" if @options[:label]
 response = admin.delete("/api/accounts/"+admin_id.to_s)
 puts check_result(response,true)
 
+
+###
+# GET /api/todos
+###
+
+header("GET /api/todos") if @options[:headers]
+
+puts "\nGet user todos as user" if @options[:label]
+response = user.get("/api/todos")
+puts check_result(response)
+
+#Negative Test
+puts "\nGet admin todos an not user" if @options[:label]
+response = admin.get("/api/todos")
+puts check_result(response,true)
+
+
+###
+# POST /api/todos
+###
+
+header("POST /api/todos") if @options[:headers]
+
+tdata = { :title => "Test Todo" }.to_json
+bdata = { :titlez => "Voodoo" }.to_json
+
+puts "\nCreate todo as user" if @options[:label]
+response = user.post("/api/todos", tdata)
+puts check_result(response)
+
+new_todo_id = response["id"]
+
+#Netative Test
+puts "\nCreate todo as user with bad data" if @options[:label]
+response = user.post("/api/todos", bdata)
+puts check_result(response,true)
+
+#Negative Test
+puts "\nCreate todo as not user" if @options[:label]
+response = admin.post("/api/todos", tdata)
+puts check_result(response,true)
+
+
+###
+# PUT /api/todos/:id
+###
+
+header("PUT /api/todos/:id") if @options[:headers]
+
+uptdata = { :title => "Edited Test Todo", :completed => true }.to_json
+
+#Negative Test
+puts "\nUpdate todo as wrong user" if @options[:label]
+response = user2.put("/api/todos/"+new_todo_id, uptdata)
+puts check_result(response,true)
+
+puts "\nUpdate todo as user" if @options[:label]
+response = user.put("/api/todos/"+new_todo_id, uptdata)
+puts check_result(response)
+
+#Negative Test
+puts "\nUpdate todo as not user" if @options[:label]
+response = admin.put("/api/todos/"+new_todo_id, uptdata)
+puts check_result(response,true)
+
+
+###
+# Delete /api/todos/:id
+###
+
+header("DELETE /api/todos/:id") if @options[:headers]
+
+#Negative Test
+puts "\nDelete todo as not user" if @options[:label]
+response = admin.delete("/api/todos/"+new_todo_id)
+puts check_result(response,true)
+
+#Negative Test
+puts "\nDelete todo as wrong user" if @options[:label]
+response = user2.delete("/api/todos/"+new_todo_id)
+puts check_result(response,true)
+
+puts "\nDelete todo as user" if @options[:label]
+response = user.delete("/api/todos/"+new_todo_id)
+puts check_result(response)
+
+#Negative Test
+puts "\nDelete missing todo as user" if @options[:label]
+response = user.delete("/api/todos/"+new_todo_id)
+puts check_result(response,true)
+
+
+
 header("Results")
 
 puts "#{@successes} Successful Tests and #{@failures} Failed Tests"
+
