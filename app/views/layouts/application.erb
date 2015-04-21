@@ -9,8 +9,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
     <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
     <%= favicon_tag "favicon.ico" %>
-    <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'font-awesome.min', 'application', 'todo' %>
-    <%= javascript_include_tag 'jquery-1.11.0.min', :livevalidation_standalone %>
+    <%= stylesheet_link_tag 'third_party/bootstrap.min', 'third_party/bootstrap-theme.min', 'font-awesome.min', :application, :todo %>
+    <%= javascript_include_tag 'third_party/jquery.min', 'third_party/livevalidation_standalone' %>
   </head>
   <body>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -38,9 +38,9 @@
           <% if permission_check('user',false) %><li><a data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i></a></li><% end %>
           <% unless current_user.nil? %><li class="visible-xs"><a href="/"><i class="fa fa-home"></i> Home</a></li><% end %>
           <% if permission_check('curl',false) %><li class="visible-xs"><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
+          <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
           <li class="hidden-xs"><a class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" /></a></li>
           <li><a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><span class="account-name"><%= current_user.name %>&nbsp;<%= current_user.surname %></span></a></li>
-          <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
           <li><a href="/sessions/destroy"><i class="fa fa-power-off"></i></a></li>
         </ul>
         <% end %>
@@ -73,7 +73,7 @@
       </div>
     </footer>
 
-    <%= javascript_include_tag 'bootstrap', :underscore, :application, :ajax %>
+    <%= javascript_include_tag 'third_party/bootstrap', 'third_party/underscore', :application, :ajax %>
 
     <%= erb :'base/todos', :layout => false %>
 

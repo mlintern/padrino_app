@@ -8,6 +8,8 @@ var app = app || {};
 (function () {
 	'use strict';
 
+	var Utils = app.Utils;
+
 	app.ALL_TODOS = 'all';
 	app.ACTIVE_TODOS = 'active';
 	app.COMPLETED_TODOS = 'completed';
@@ -19,9 +21,21 @@ var app = app || {};
 	var TodoApp = React.createClass({
 		getInitialState: function () {
 			return {
+				todos: [],
 				nowShowing: app.ALL_TODOS,
 				editing: null
 			};
+		},
+
+		componentDidMount: function () {
+			$.get('/api/todos', function (data) {
+				//console.log(data);
+				if (this.isMounted()) {
+					this.setState({
+						todos: data
+					});
+				}
+			}.bind(this));
 		},
 
 		allTodos: function () {
@@ -46,45 +60,60 @@ var app = app || {};
 			var val = this.refs.newField.getDOMNode().value.trim();
 
 			if (val) {
-				this.props.model.addTodo(val);
+				Utils.addTodo({"title":val});
 				this.refs.newField.getDOMNode().value = '';
+				this.componentDidMount();
 			}
 		},
 
 		toggleAll: function (event) {
+			console.log("A");
 			var checked = event.target.checked;
-			this.props.model.toggleAll(checked);
+			this.componentDidMount();
 		},
 
 		toggle: function (todoToToggle) {
-			this.props.model.toggle(todoToToggle);
+			console.log("B");
+			Utils.updateTodo(todoToToggle["id"],{ "completed" : !todoToToggle.completed });
+			this.componentDidMount();
 		},
 
 		destroy: function (todo) {
-			this.props.model.destroy(todo);
+			console.log("C");
+			Utils.deleteTodo(todo.id);
+			this.componentDidMount();
 		},
 
 		edit: function (todo) {
+			console.log("D");
 			this.setState({editing: todo.id});
 		},
 
 		save: function (todoToSave, text) {
-			this.props.model.save(todoToSave, text);
+			console.log("E");
+			Utils.updateTodo(todoToSave.id, {"title":text});
 			this.setState({editing: null});
+			this.componentDidMount();
 		},
 
 		cancel: function () {
+			console.log("F");
 			this.setState({editing: null});
+			this.componentDidMount();
 		},
 
 		clearCompleted: function () {
-			this.props.model.clearCompleted();
+			console.log("G");
+			_.each(this.state.todos,function (todo) {
+				if (todo.completed) { Utils.deleteTodo(todo.id); }
+			})
+			this.componentDidMount();
 		},
 
 		render: function () {
 			var footer;
 			var main;
-			var todos = this.props.model.todos;
+			var todos = this.state.todos;
 
 			var shownTodos = todos.filter(function (todo) {
 				switch (this.state.nowShowing) {
@@ -165,15 +194,13 @@ var app = app || {};
 		}
 	});
 
-	var model = new app.TodoModel('react-todos');
-
 	function render() {
 		React.render(
-			<TodoApp model={model}/>,
+			<TodoApp/>,
 			document.getElementById('todo')
 		);
 	}
 
-	model.subscribe(render);
 	render();
+
 })();

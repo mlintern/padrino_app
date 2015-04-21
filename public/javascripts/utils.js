@@ -25,13 +25,56 @@ var app = app || {};
 			return count === 1 ? word : word + 's';
 		},
 
-		store: function (namespace, data) {
-			if (data) {
-				return localStorage.setItem(namespace, JSON.stringify(data));
-			}
+		addTodo: function (data) {
+			//data = { "completed" : true };
+			$.ajax({
+				url: '/api/todos',
+				data: JSON.stringify(data),
+				dataType: 'json',
+				contentType: "application/json",
+				type: 'POST',
+				success: function(response) {
+					// console.log(response);
+				},
+				error: function(response) {
+					console.log(response);
+					flashError(response['responseText']);
+				}
+			});
+		},
 
-			var store = localStorage.getItem(namespace);
-			return (store && JSON.parse(store)) || [];
+		updateTodo: function (id,data) {
+			//data = { "completed" : true };
+			$.ajax({
+				url: '/api/todos/'+id,
+				data: JSON.stringify(data),
+				dataType: 'json',
+				contentType: "application/json",
+				type: 'PUT',
+				success: function(response) {
+					// console.log(response);
+				},
+				error: function(response) {
+					console.log(response);
+					flashError(response['responseText']);
+				}
+			});
+		},
+
+		deleteTodo: function (id) {
+			$.ajax({
+				url: '/api/todos/'+id,
+				dataType: 'json',
+				contentType: "application/json",
+				type: 'DELETE',
+				success: function(response) {
+					// console.log(response);
+				},
+				error: function(response) {
+					console.log(response.responseText);
+					flashError(response['responseText']);
+				}
+			});
 		},
 
 		extend: function () {

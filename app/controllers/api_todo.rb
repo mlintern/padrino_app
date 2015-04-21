@@ -62,7 +62,7 @@ PadrinoApp::App.controllers :todos, :map => '/api/todos' do
 
     data = JSON.parse request.body.read
 
-    if (data["title"] || data["completed"])
+    if (data.key?("title") || data.key?("completed"))
       data = remove_other_elements(data,[:title,:completed])
       todo = Todo.get(params[:id])
       if todo
