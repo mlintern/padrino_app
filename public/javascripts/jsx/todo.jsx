@@ -22,7 +22,7 @@ var app = app || {};
 		getInitialState: function () {
 			return {
 				todos: [],
-				nowShowing: app.ALL_TODOS,
+				nowShowing: app.ACTIVE_TODOS,
 				editing: null
 			};
 		},
