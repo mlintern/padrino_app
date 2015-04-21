@@ -18,7 +18,12 @@ PadrinoApp::App.controllers :curl do
       @public = Nretnil::CompendiumAPI::CompendiumPublic.new(params[:session]['protocol']+params[:session]['server'])
       @compendium = Nretnil::CompendiumAPI::Compendium.new(params[:session]['username'], params[:session]['api_key'], params[:session]['protocol']+params[:session]['server'])
     end
-    curl_auth = params[:session]['username']+':'+params[:session]['api_key']+'@'
+
+    unless params[:session]['public'] == 'on'
+      curl_auth = params[:session]['username']+':'+params[:session]['api_key']+'@'
+    else
+      curl_auth = ''
+    end
 
     if params[:session]['body'].is_json?
       body = params[:session]['body'] || {}
@@ -36,7 +41,6 @@ PadrinoApp::App.controllers :curl do
           curl_call = curl_start+'"'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+norm_data(query)+'"'
           if params[:session]['public'] == 'on'
             params[:session]['only_curl'] == 'on' ? true : @result = @public.get(params[:session]['api_uri'],query)
-            curl_auth = ''
           else
             params[:session]['only_curl'] == 'on' ? true : @result = @compendium.get(params[:session]['api_uri'],query)
           end

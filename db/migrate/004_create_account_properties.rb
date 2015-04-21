@@ -8,6 +8,6 @@ migration 4, :create_account_properties do
   end
 
   down do
-    drop_table :account_property
+    drop_table :account_properties
   end
 end

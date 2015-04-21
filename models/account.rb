@@ -36,10 +36,6 @@ class Account
   ##
   # This method is for authentication purpose.
   #
-  def check
-    puts " * * * * Check * * * * "
-  end
-
   def self.authenticate(username, password)
     account = first(:conditions => ["lower(username) = lower(?)", username]) if username.present?
     account && account.has_password?(password) ? account : nil
@@ -66,6 +62,10 @@ class Account
     self.token = SecureRandom.hex if self.token.nil?
   end
 
+  def generate_uuid
+    self.uuid = SecureRandom.uuid if self.uuid.nil?
+  end
+
   private
 
   def password_required
@@ -73,7 +73,6 @@ class Account
   end
 
   def encrypt_password
-    # puts " * * * * * Encrypting Password * * * * * "
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
   end
 end
