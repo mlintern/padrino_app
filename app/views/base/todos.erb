@@ -1,0 +1,22 @@
+<div class="modal fade" id="todos">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">My Todo List</h4>
+      </div>
+      <div class="modal-body">
+        <section id="todo"></section>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<%= javascript_include_tag 'react-with-addons', :JSXTransformer, :utils, :todoModel %>
+
+<!-- jsx is an optional syntactic sugar that transforms methods in React's
+`render` into an HTML-looking format. Since the two models above are
+unrelated to React, we didn't need those transforms. -->
+<script type="text/jsx" src="/javascripts/jsx/todoItem.jsx"></script>
+<script type="text/jsx" src="/javascripts/jsx/footer.jsx"></script>
+<script type="text/jsx" src="/javascripts/jsx/todo.jsx"></script>

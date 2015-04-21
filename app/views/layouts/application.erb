@@ -9,7 +9,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
     <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
     <%= favicon_tag "favicon.ico" %>
-    <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'font-awesome.min', 'application' %>
+    <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'font-awesome.min', 'application', 'todo' %>
     <%= javascript_include_tag 'jquery-1.11.0.min', :livevalidation_standalone %>
   </head>
   <body>
@@ -35,6 +35,7 @@
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <% unless current_user.nil? %>
         <ul class="nav navbar-nav navbar-right">
+          <% if permission_check('user',false) %><li><a data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i></a></li><% end %>
           <% unless current_user.nil? %><li class="visible-xs"><a href="/"><i class="fa fa-home"></i> Home</a></li><% end %>
           <% if permission_check('curl',false) %><li class="visible-xs"><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
           <li class="hidden-xs"><a class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" /></a></li>
@@ -73,6 +74,8 @@
     </footer>
 
     <%= javascript_include_tag 'bootstrap', :underscore, :application, :ajax %>
+
+    <%= erb :'base/todos', :layout => false %>
 
   </body>
 </html>
