@@ -9,25 +9,7 @@ input[type="checkbox"] {
 
 #todo {
 	background: #fff;
-	margin: 10px 0;
-}
-
-#todo input::-webkit-input-placeholder {
-	font-style: italic;
-	font-weight: 300;
-	color: #e6e6e6;
-}
-
-#todo input::-moz-placeholder {
-	font-style: italic;
-	font-weight: 300;
-	color: #e6e6e6;
-}
-
-#todo input::input-placeholder {
-	font-style: italic;
-	font-weight: 300;
-	color: #e6e6e6;
+	margin: 0;
 }
 
 #todo h1 {

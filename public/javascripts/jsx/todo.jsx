@@ -29,7 +29,6 @@ var app = app || {};
 
 		componentDidMount: function () {
 			$.get('/api/todos', function (data) {
-				//console.log(data);
 				if (this.isMounted()) {
 					this.setState({
 						todos: data
@@ -67,43 +66,39 @@ var app = app || {};
 		},
 
 		toggleAll: function (event) {
-			console.log("A");
 			var checked = event.target.checked;
+			_.each(this.state.todos,function (todo) {
+				Utils.updateTodo(todo.id,{ "completed" : checked });
+			})
 			this.componentDidMount();
 		},
 
 		toggle: function (todoToToggle) {
-			console.log("B");
 			Utils.updateTodo(todoToToggle["id"],{ "completed" : !todoToToggle.completed });
 			this.componentDidMount();
 		},
 
 		destroy: function (todo) {
-			console.log("C");
 			Utils.deleteTodo(todo.id);
 			this.componentDidMount();
 		},
 
 		edit: function (todo) {
-			console.log("D");
 			this.setState({editing: todo.id});
 		},
 
 		save: function (todoToSave, text) {
-			console.log("E");
 			Utils.updateTodo(todoToSave.id, {"title":text});
 			this.setState({editing: null});
 			this.componentDidMount();
 		},
 
 		cancel: function () {
-			console.log("F");
 			this.setState({editing: null});
 			this.componentDidMount();
 		},
 
 		clearCompleted: function () {
-			console.log("G");
 			_.each(this.state.todos,function (todo) {
 				if (todo.completed) { Utils.deleteTodo(todo.id); }
 			})
