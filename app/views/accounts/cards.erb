@@ -18,6 +18,7 @@
               </div>
               <div class="col-sm-7">
                 <p><%= account[:email] %></p>
+                <p><%= account[:id] %></p>
                 <p>
                 <% account[:role].gsub('"',"").gsub('[',"").gsub(']',"").split(',').each do |role| %> 
                   <span class="label label-primary"><%= role %></span>

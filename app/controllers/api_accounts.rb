@@ -94,6 +94,7 @@ PadrinoApp::App.controllers :accounts, :map => '/api/accounts' do
 
     data[:last_update] = DateTime.now
     data[:role] = data[:role] || ""
+    data[:id] = SecureRandom.uuid
 
     add_update_properties(data)
 

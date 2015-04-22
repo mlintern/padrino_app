@@ -58,10 +58,11 @@ PadrinoApp::App.controllers :accounts do
     permission_check('admin')
 
     params[:account][:last_update] = DateTime.now
-    params[:account][:status] = 0 if params[:account][:status].nil? 
+    params[:account][:status] = 0 if params[:account][:status].nil?
+    params[:account][:id] = SecureRandom.uuid
     @account = Account.new(params[:account])
     if @account.save
-      @title = "Created Account #{@account.id}"
+      @title = "Created Account #{@account.username}"
       flash[:success] = "Account was successfully created" # user flash[:error] when redirecting
       params[:save_and_continue] ? redirect( url( :accounts, :index ) ) : redirect( url( :accounts, :edit, :id => @account.id ) )
     else

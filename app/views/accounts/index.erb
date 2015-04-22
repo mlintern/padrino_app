@@ -38,7 +38,6 @@
               </ul>
             </div>
           </th>
-          <th class=header><a href="?by=id&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Id <% if params[:by] == 'id' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
           <th class=header><a href="?by=username&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Username <% if params[:by] == 'username' || params[:by].nil? %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
           <th class=header><a href="?by=name&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Name <% if params[:by] == 'name' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
           <th class=header><a href="?by=surname&dir=<%if params[:dir] == 'desc' %>asc<%else%>desc<%end%>">Surname <% if params[:by] == 'surname' %><%if params[:dir] == 'desc' %><i class="fa fa-chevron-up"></i><%else%><i class="fa fa-chevron-down"></i><%end%><% end %></a></th>
@@ -55,7 +54,6 @@
             <td class="list-column list-selectable">
               <%= check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox' %>
             </td>
-            <td class=list-column> <%= account.id %> </td>
             <td class=list-column> <%= account.username %> </td>
             <td class=list-column> <%= account.name %> </td>
             <td class=list-column> <%= account.surname %> </td>

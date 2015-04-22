@@ -3,7 +3,7 @@ class AccountProperty
   include DataMapper::Validate
 
   # Properties
-  property :id,               Integer, :key => true, :unique_index => false
+  property :id,               UUID, :key => true, :unique_index => false
   property :name,             String
   property :value,            String
 

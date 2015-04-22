@@ -1,12 +1,10 @@
-require "securerandom"
-
 class Account
   include DataMapper::Resource
   include DataMapper::Validate
   attr_accessor :password, :password_confirmation
 
   # Properties
-  property :id,               Serial
+  property :id,               UUID, :key => true
   property :username,         String
   property :name,             String
   property :surname,          String

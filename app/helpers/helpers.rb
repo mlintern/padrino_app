@@ -231,7 +231,7 @@ PadrinoApp::App.helpers do
     else
       creds = auth_creds(auth_header)
       if ( account = Account.authenticate(creds[:username],creds[:password]) ) && !creds.nil?
-        if account.id.to_i == owner_id.to_i
+        if account.id.to_s == owner_id
           return true
         else
           return false

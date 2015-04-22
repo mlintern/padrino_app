@@ -1,7 +1,7 @@
 migration 1, :create_accounts do
   up do
     create_table :accounts do
-      column :id, Integer, :serial => true
+      column :id, DataMapper::Property::UUID
       column :username, DataMapper::Property::String, :length => 255
       column :name, DataMapper::Property::String, :length => 255
       column :surname, DataMapper::Property::String, :length => 255

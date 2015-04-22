@@ -5,7 +5,7 @@ class Todo
   # Properties
   property :id,               UUID, :key => true
   property :title,            String
-  property :user_id,          Integer
+  property :user_id,          UUID
   property :completed,        Boolean, :default => false
 
   validates_uniqueness_of     :id, :case_sensitive => false
