@@ -186,13 +186,14 @@ background-color: transparent;
 .navbar-inner {
   margin: 5px 0;
 }
+.navbar .small-user-photo{
+  margin-top: -5px;
+  height: 30px;
+  overflow: hidden;
+}
 .navbar .small-user-photo img{
   border-radius: 8px;
   width: 30px;
-  height: 30px;
-}
-.navbar .small-user-photo{
-  margin-top: -5px;
 }
 .nav>li>.navbar-nav-link {
   padding: 17px 15px 13px;
