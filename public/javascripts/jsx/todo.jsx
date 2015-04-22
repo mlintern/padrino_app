@@ -35,9 +35,18 @@ var app = app || {};
 			}.bind(this));
 		},
 
+		update: _.throttle( function () {
+			var self = this;
+			$.get('/api/todos', function (data) {
+				self.setState({
+					todos: data
+				});
+			});
+		},200),
+
 		addTodo: function (data) {
 			//data = { "completed" : true };
-			var that = this;
+			var self = this;
 			$.ajax({
 				url: '/api/todos',
 				data: JSON.stringify(data),
@@ -46,11 +55,7 @@ var app = app || {};
 				type: 'POST',
 				success: function(response) {
 					// console.log(response);
-					$.get('/api/todos', function (data) {
-						that.setState({
-							todos: data
-						});
-					});
+					self.update();
 				},
 				error: function(response) {
 					console.log(response);
@@ -61,7 +66,7 @@ var app = app || {};
 
 		updateTodo: function (id,data) {
 			//data = { "completed" : true };
-			var that = this;
+			var self = this;
 			$.ajax({
 				url: '/api/todos/'+id,
 				data: JSON.stringify(data),
@@ -70,11 +75,7 @@ var app = app || {};
 				type: 'PUT',
 				success: function(response) {
 					// console.log(response);
-					$.get('/api/todos', function (data) {
-							that.setState({
-								todos: data
-							});
-					});
+					self.update();
 				},
 				error: function(response) {
 					console.log(response);
@@ -84,7 +85,7 @@ var app = app || {};
 		},
 
 		deleteTodo: function (id) {
-			var that = this;
+			var self = this;
 			$.ajax({
 				url: '/api/todos/'+id,
 				dataType: 'json',
@@ -92,11 +93,7 @@ var app = app || {};
 				type: 'DELETE',
 				success: function(response) {
 					// console.log(response);
-					$.get('/api/todos', function (data) {
-						that.setState({
-							todos: data
-						});
-					});
+					self.update();
 				},
 				error: function(response) {
 					console.log(response.responseText);
