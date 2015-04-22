@@ -32,9 +32,6 @@ var app = app || {};
 			var nowShowing = this.props.nowShowing;
 			return (
 				<div className="todo-sort">
-					<span id="todo-count">
-						<strong>{this.props.count}</strong> {activeTodoWord} left
-					</span>
 					<ul id="filters">
 						<li>
 							<a href="javascript:void(0)"
@@ -60,6 +57,9 @@ var app = app || {};
 							</a>
 						</li>
 					</ul>
+					<span id="todo-count">
+						<strong>{this.props.count}</strong> {activeTodoWord} left
+					</span>
 					{clearButton}
 				</div>
 			);

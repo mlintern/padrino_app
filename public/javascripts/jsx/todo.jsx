@@ -84,24 +84,6 @@ var app = app || {};
 			});
 		},
 
-		deleteTodo: function (id) {
-			var self = this;
-			$.ajax({
-				url: '/api/todos/'+id,
-				dataType: 'json',
-				contentType: "application/json",
-				type: 'DELETE',
-				success: function(response) {
-					// console.log(response);
-					self.update();
-				},
-				error: function(response) {
-					console.log(response.responseText);
-					flashError(response['responseText']);
-				}
-			});
-		},
-
 		allTodos: function () {
 			this.setState({nowShowing: app.ALL_TODOS});
 		},
@@ -142,7 +124,21 @@ var app = app || {};
 		},
 
 		destroy: function (todo) {
-			this.deleteTodo(todo.id);
+			var self = this;
+			$.ajax({
+				url: '/api/todos/'+todo.id,
+				dataType: 'json',
+				contentType: "application/json",
+				type: 'DELETE',
+				success: function(response) {
+					// console.log(response);
+					self.update();
+				},
+				error: function(response) {
+					console.log(response.responseText);
+					flashError(response['responseText']);
+				}
+			});
 		},
 
 		edit: function (todo) {
@@ -162,7 +158,7 @@ var app = app || {};
 		clearCompleted: function () {
 			var that = this;
 			_.each(this.state.todos,function (todo) {
-				if (todo.completed) { that.deleteTodo(todo.id); }
+				if (todo.completed) { that.destroy(todo); }
 			})
 		},
 

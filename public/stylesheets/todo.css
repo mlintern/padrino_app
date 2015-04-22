@@ -1,3 +1,6 @@
+.todo-modal {
+	padding: 0 15px;
+}
 #todo button,
 #todo input[type="checkbox"] {
 	outline: none;
@@ -112,13 +115,19 @@ label[for='toggle-all'] {
 	-webkit-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
+	font-family: FontAwesome;
+	font-size: 1.5em;
 }
 #todo-list li .toggle:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
+	content: "\f096";
 }
 #todo-list li .toggle:checked:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+	content: "\f046";
+	color: green;
 }
+
 #todo-list li label {
 	white-space: pre;
 	word-break: break-word;
@@ -139,11 +148,10 @@ label[for='toggle-all'] {
 	right: 10px;
 	bottom: 0;
 	width: 40px;
-	height: 40px;
+	height: auto;
 	margin: auto 0;
 	font-size: 30px;
 	color: #cc9a9a;
-	margin-bottom: 11px;
 	transition: color 0.2s ease-out;
 	border: none;
 	background-color: transparent;
@@ -234,7 +242,7 @@ html #clear-completed:active {
 	}
 
 	#todo-list li .toggle {
-		height: 40px;
+		height: 33px;
 	}
 
 	#toggle-all {
@@ -247,10 +255,16 @@ html #clear-completed:active {
 
 @media (max-width: 430px) {
 	.todo-sort {
-		height: 50px;
+		height: 75px;
 	}
-
 	#filters {
-		bottom: 10px;
+		position: relative;
+		margin-bottom: 7px;
+	}
+	#toggle-all {
+	  top: -130px;
+	}
+	#todo-list li .destroy {
+		display: block;
 	}
 }
