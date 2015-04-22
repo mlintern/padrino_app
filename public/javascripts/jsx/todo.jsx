@@ -8,8 +8,6 @@ var app = app || {};
 (function () {
 	'use strict';
 
-	var Utils = app.Utils;
-
 	app.ALL_TODOS = 'all';
 	app.ACTIVE_TODOS = 'active';
 	app.COMPLETED_TODOS = 'completed';
@@ -37,6 +35,76 @@ var app = app || {};
 			}.bind(this));
 		},
 
+		addTodo: function (data) {
+			//data = { "completed" : true };
+			var that = this;
+			$.ajax({
+				url: '/api/todos',
+				data: JSON.stringify(data),
+				dataType: 'json',
+				contentType: "application/json",
+				type: 'POST',
+				success: function(response) {
+					// console.log(response);
+					$.get('/api/todos', function (data) {
+						that.setState({
+							todos: data
+						});
+					});
+				},
+				error: function(response) {
+					console.log(response);
+					flashError(response['responseText']);
+				}
+			});
+		},
+
+		updateTodo: function (id,data) {
+			//data = { "completed" : true };
+			var that = this;
+			$.ajax({
+				url: '/api/todos/'+id,
+				data: JSON.stringify(data),
+				dataType: 'json',
+				contentType: "application/json",
+				type: 'PUT',
+				success: function(response) {
+					// console.log(response);
+					$.get('/api/todos', function (data) {
+							that.setState({
+								todos: data
+							});
+					});
+				},
+				error: function(response) {
+					console.log(response);
+					flashError(response['responseText']);
+				}
+			});
+		},
+
+		deleteTodo: function (id) {
+			var that = this;
+			$.ajax({
+				url: '/api/todos/'+id,
+				dataType: 'json',
+				contentType: "application/json",
+				type: 'DELETE',
+				success: function(response) {
+					// console.log(response);
+					$.get('/api/todos', function (data) {
+						that.setState({
+							todos: data
+						});
+					});
+				},
+				error: function(response) {
+					console.log(response.responseText);
+					flashError(response['responseText']);
+				}
+			});
+		},
+
 		allTodos: function () {
 			this.setState({nowShowing: app.ALL_TODOS});
 		},
@@ -59,28 +127,25 @@ var app = app || {};
 			var val = this.refs.newField.getDOMNode().value.trim();
 
 			if (val) {
-				Utils.addTodo({"title":val});
+				this.addTodo({"title":val});
 				this.refs.newField.getDOMNode().value = '';
-				this.componentDidMount();
 			}
 		},
 
 		toggleAll: function (event) {
 			var checked = event.target.checked;
+			var that = this;
 			_.each(this.state.todos,function (todo) {
-				Utils.updateTodo(todo.id,{ "completed" : checked });
+				that.updateTodo(todo.id,{ "completed" : checked });
 			})
-			this.componentDidMount();
 		},
 
 		toggle: function (todoToToggle) {
-			Utils.updateTodo(todoToToggle["id"],{ "completed" : !todoToToggle.completed });
-			this.componentDidMount();
+			this.updateTodo(todoToToggle["id"],{ "completed" : !todoToToggle.completed });
 		},
 
 		destroy: function (todo) {
-			Utils.deleteTodo(todo.id);
-			this.componentDidMount();
+			this.deleteTodo(todo.id);
 		},
 
 		edit: function (todo) {
@@ -88,9 +153,8 @@ var app = app || {};
 		},
 
 		save: function (todoToSave, text) {
-			Utils.updateTodo(todoToSave.id, {"title":text});
+			this.updateTodo(todoToSave.id, {"title":text});
 			this.setState({editing: null});
-			this.componentDidMount();
 		},
 
 		cancel: function () {
@@ -99,10 +163,10 @@ var app = app || {};
 		},
 
 		clearCompleted: function () {
+			var that = this;
 			_.each(this.state.todos,function (todo) {
-				if (todo.completed) { Utils.deleteTodo(todo.id); }
+				if (todo.completed) { that.deleteTodo(todo.id); }
 			})
-			this.componentDidMount();
 		},
 
 		render: function () {

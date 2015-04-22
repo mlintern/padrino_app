@@ -9,8 +9,12 @@ var app = app || {};
 	'use strict';
 
 	app.TodoFooter = React.createClass({
+		pluralize: function (count, word) {
+			return count === 1 ? word : word + 's';
+		},
+
 		render: function () {
-			var activeTodoWord = app.Utils.pluralize(this.props.count, 'item');
+			var activeTodoWord = this.pluralize(this.props.count, 'item');
 			var clearButton = null;
 
 			if (this.props.completedCount > 0) {
