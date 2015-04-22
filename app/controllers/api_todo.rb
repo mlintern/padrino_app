@@ -1,5 +1,3 @@
-require "securerandom"
-
 PadrinoApp::App.controllers :todos, :map => '/api/todos' do
 
   before do
