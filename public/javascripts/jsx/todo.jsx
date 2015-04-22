@@ -42,7 +42,7 @@ var app = app || {};
 					todos: data
 				});
 			});
-		},200),
+		},1000),
 
 		addTodo: function (data) {
 			//data = { "completed" : true };
