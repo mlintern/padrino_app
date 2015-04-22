@@ -40,8 +40,14 @@ def check_result (response, neg = false)
       return false
     end
   else
-    @successes += 1
-    return true
+    if neg 
+      @failures += 1
+      puts "Check permissions for this test"
+      return false
+    else
+      @successes += 1
+      return true
+    end
   end
 end
 
