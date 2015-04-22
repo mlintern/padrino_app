@@ -157,7 +157,7 @@ var app = app || {};
 
 			if (todos.length) {
 				main = (
-					<section id="main">
+					<div id="main">
 						<input
 							id="toggle-all"
 							type="checkbox"
@@ -167,13 +167,13 @@ var app = app || {};
 						<ul id="todo-list">
 							{todoItems}
 						</ul>
-					</section>
+					</div>
 				);
 			}
 
 			return (
 				<div>
-					<header id="header">
+					<div id="header">
 						<input
 							ref="newField"
 							id="new-todo"
@@ -181,7 +181,7 @@ var app = app || {};
 							onKeyDown={this.handleNewTodoKeyDown}
 							autoFocus={true}
 						/>
-					</header>
+					</div>
 					{footer}
 					{main}
 				</div>

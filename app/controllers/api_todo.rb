@@ -15,7 +15,7 @@ PadrinoApp::App.controllers :todos, :map => '/api/todos' do
   # Response: json object
   ####
   get :index do
-    todos = Todo.all(:user_id => @api_account.id)
+    todos = Todo.all(:user_id => @api_account.id, :order => [ :title.asc ])
     return 200, todos.to_json
   end
 
