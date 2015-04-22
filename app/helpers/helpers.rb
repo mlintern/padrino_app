@@ -227,7 +227,7 @@ PadrinoApp::App.helpers do
   ####
   def api_owner?(auth_header,owner_id)
     if current_user
-      owner? current_user.id
+      owner? current_user.id.to_s
     else
       creds = auth_creds(auth_header)
       if ( account = Account.authenticate(creds[:username],creds[:password]) ) && !creds.nil?
