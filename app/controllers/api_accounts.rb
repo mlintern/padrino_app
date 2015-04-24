@@ -92,7 +92,7 @@ PadrinoApp::App.controllers :accounts, :map => '/api/accounts' do
 
     data = JSON.parse request.body.read
 
-    data[:last_update] = DateTime.now
+    data[:last_update] = DateTime.now.utc
     data[:role] = data[:role] || ""
     data[:id] = SecureRandom.uuid
 
@@ -127,7 +127,7 @@ PadrinoApp::App.controllers :accounts, :map => '/api/accounts' do
     account = Account.all(:id => params[:id])[0]
     remove_other_elements(data)
     if account
-      data[:last_update] = DateTime.now
+      data[:last_update] = DateTime.now.utc
       if account.update(data)
         data = remove_elements(account.attributes)
         return 200, data.to_json

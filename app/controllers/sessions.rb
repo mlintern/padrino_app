@@ -7,12 +7,12 @@ PadrinoApp::App.controllers :sessions do
     if account = Account.authenticate(params[:username], params[:password])
       unless account.status == 0
         token = SecureRandom.hex
-        account.update( :token => token )
+        account.update({ :token => token, :last_login => Time.now.utc })
         if account
           if params[:remember_me]
-            response.set_cookie( "user", :value => token, :path => '/' , :expires => (Time.now + 24*60*60) )
+            response.set_cookie( "user", :value => token, :path => '/' , :expires => (Time.now.utc + 24*60*60) )
           else
-            response.set_cookie( "user", :value => token, :path => '/' , :expires => (Time.now + 30*60) )
+            response.set_cookie( "user", :value => token, :path => '/' , :expires => (Time.now.utc + 30*60) )
           end
         end
         redirect url(:base, :index)

@@ -57,7 +57,7 @@ PadrinoApp::App.controllers :accounts do
   post :create do
     permission_check('admin')
 
-    params[:account][:last_update] = DateTime.now
+    params[:account][:last_update] = DateTime.now.utc
     params[:account][:status] = 0 if params[:account][:status].nil?
     params[:account][:id] = SecureRandom.uuid
     @account = Account.new(params[:account])
@@ -100,7 +100,7 @@ PadrinoApp::App.controllers :accounts do
 
     @title = "Update account #{params[:id]}"
     
-    params[:account][:last_update] = DateTime.now
+    params[:account][:last_update] = DateTime.now.utc
     @account = Account.get(params[:id])
     if @account
       params[:account][:role] = "" if ( params[:account][:role].nil? && permission_check('admin',false) )

@@ -112,7 +112,7 @@ puts check_result(response)
 
 header("POST /api/accounts") if @options[:headers]
 
-data = { :username => Time.now.to_i, :email => "test@test.com", :password => "password", :password_confirmation => "password" }.to_json
+data = { :username => Time.now.utc.to_i, :email => "test@test.com", :password => "password", :password_confirmation => "password" }.to_json
 
 #Negative Test
 puts "\nCreate account as user - Should 403" if @options[:label]
