@@ -22,7 +22,7 @@
 	-ms-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
 }
-#new-todo,
+.new-todo,
 .edit {
 	position: relative;
 	margin: 0;
@@ -44,13 +44,13 @@
 	-ms-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 }
-#new-todo {
+.new-todo {
 	padding: 16px 16px 16px 60px;
 	border: none;
 	background: rgba(0, 0, 0, 0.003);
 	box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
 }
-#main {
+#todo .main {
 	position: relative;
 	z-index: 2;
 	border-top: 1px solid #e6e6e6;
@@ -58,7 +58,7 @@
 label[for='toggle-all'] {
 	display: none;
 }
-#toggle-all {
+.toggle-all {
 	position: absolute;
 	top: -105px;
 	left: -12px;
@@ -67,42 +67,42 @@ label[for='toggle-all'] {
 	text-align: center;
 	border: none; /* Mobile Safari */
 }
-#toggle-all:before {
+.toggle-all:before {
 	content: '❯';
 	font-size: 22px;
 	color: #e6e6e6;
 	padding: 10px 27px 10px 27px;
 }
-#toggle-all:checked:before {
+.toggle-all:checked:before {
 	color: #737373;
 }
-#todo-list {
+.todo-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-#todo-list li {
+.todo-list li {
 	position: relative;
 	font-size: 24px;
 	border-bottom: 1px solid #ededed;
 }
-#todo-list li:last-child {
+.todo-list li:last-child {
 	border-bottom: none;
 }
-#todo-list li.editing {
+.todo-list li.editing {
 	border-bottom: none;
 	padding: 0;
 }
-#todo-list li.editing .edit {
+.todo-list li.editing .edit {
 	display: block;
 	width: 506px;
 	padding: 13px 17px 12px 17px;
 	margin: 0 0 0 43px;
 }
-#todo-list li.editing .view {
+.todo-list li.editing .view {
 	display: none;
 }
-#todo-list li .toggle {
+.todo-list li .toggle {
 	text-align: center;
 	width: 40px;
 	/* auto, since non-WebKit browsers doesn't support input styling */
@@ -118,17 +118,17 @@ label[for='toggle-all'] {
 	font-family: FontAwesome;
 	font-size: 1.5em;
 }
-#todo-list li .toggle:after {
+.todo-list li .toggle:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
 	content: "\f096";
 }
-#todo-list li .toggle:checked:after {
+.todo-list li .toggle:checked:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 	content: "\f046";
 	color: green;
 }
 
-#todo-list li label {
+.todo-list li label {
 	white-space: pre;
 	word-break: break-word;
 	padding: 15px 60px 15px 15px;
@@ -137,11 +137,11 @@ label[for='toggle-all'] {
 	line-height: 1.2;
 	transition: color 0.4s;
 }
-#todo-list li.completed label {
+.todo-list li.completed label {
 	color: #d9d9d9;
 	text-decoration: line-through;
 }
-#todo-list li .destroy {
+.todo-list li .destroy {
 	display: none;
 	position: absolute;
 	top: 0;
@@ -156,19 +156,19 @@ label[for='toggle-all'] {
 	border: none;
 	background-color: transparent;
 }
-#todo-list li .destroy:hover {
+.todo-list li .destroy:hover {
 	color: #af5b5e;
 }
-#todo-list li .destroy:after {
+.todo-list li .destroy:after {
 	content: '×';
 }
-#todo-list li:hover .destroy {
+.todo-list li:hover .destroy {
 	display: block;
 }
-#todo-list li .edit {
+.todo-list li .edit {
 	display: none;
 }
-#todo-list li.editing:last-child {
+.todo-list li.editing:last-child {
 	margin-bottom: -1px;
 }
 .todo-sort {
@@ -178,14 +178,14 @@ label[for='toggle-all'] {
 	text-align: center;
 	border-top: 1px solid #e6e6e6;
 }
-#todo-count {
+.todo-count {
 	float: left;
 	text-align: left;
 }
-#todo-count strong {
+.todo-count strong {
 	font-weight: 300;
 }
-#filters {
+.filters {
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -193,10 +193,10 @@ label[for='toggle-all'] {
 	right: 0;
 	left: 0;
 }
-#filters li {
+.filters li {
 	display: inline;
 }
-#filters li a {
+.filters li a {
 	color: inherit;
 	margin: 3px;
 	padding: 3px 7px;
@@ -204,15 +204,15 @@ label[for='toggle-all'] {
 	border: 1px solid transparent;
 	border-radius: 3px;
 }
-#filters li a.selected,
-#filters li a:hover {
+.filters li a.selected,
+.filters li a:hover {
 	border-color: rgba(175, 47, 47, 0.1);
 }
-#filters li a.selected {
+.filters li a.selected {
 	border-color: rgba(175, 47, 47, 0.2);
 }
-#clear-completed,
-html #clear-completed:active {
+.clear-completed,
+.clear-completed:active {
 	float: right;
 	position: relative;
 	line-height: 20px;
@@ -221,14 +221,14 @@ html #clear-completed:active {
 	visibility: hidden;
 	position: relative;
 }
-#clear-completed::after {
+.clear-completed::after {
 	visibility: visible;
 	content: 'Clear completed';
 	position: absolute;
 	right: 0;
 	white-space: nowrap;
 }
-#clear-completed:hover::after {
+.clear-completed:hover::after {
 	text-decoration: underline;
 }
 /*
@@ -236,16 +236,16 @@ html #clear-completed:active {
 	Can't use it globally since it destroys checkboxes in Firefox
 */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	#toggle-all,
-	#todo-list li .toggle {
+	.toggle-all,
+	.todo-list li .toggle {
 		background: none;
 	}
 
-	#todo-list li .toggle {
+	.todo-list li .toggle {
 		height: 33px;
 	}
 
-	#toggle-all {
+	.toggle-all {
 		-webkit-transform: rotate(90deg);
 		transform: rotate(90deg);
 		-webkit-appearance: none;
@@ -257,14 +257,14 @@ html #clear-completed:active {
 	.todo-sort {
 		height: 75px;
 	}
-	#filters {
+	.filters {
 		position: relative;
 		margin-bottom: 7px;
 	}
-	#toggle-all {
+	.toggle-all {
 	  top: -130px;
 	}
-	#todo-list li .destroy {
+	.todo-list li .destroy {
 		display: block;
 	}
 }
