@@ -215,6 +215,7 @@ PadrinoApp::App.helpers do
   # Response: true or false
   ####
   def owner?(owner_id)
+    login
     return current_user.id.to_s == owner_id
   end
 
