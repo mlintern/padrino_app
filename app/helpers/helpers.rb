@@ -1,3 +1,17 @@
+class String
+    ####
+    # Name: to_b
+    # Description: Converts string to boolean 
+    # Arguments: string
+    # Response: true, false, or nil 
+    ####
+    def to_b
+        return true if self.downcase == "true"
+        return false if self.downcase == "false"
+        return nil
+    end
+end
+
 PadrinoApp::App.helpers do
 
   ####
@@ -18,18 +32,6 @@ PadrinoApp::App.helpers do
   ####
   def allowed_attributes
     [:username,:name,:surname,:email,:role,:password,:password_confirmation]
-  end
-
-  ####
-  # Name: to_b
-  # Description: Converts string to boolean 
-  # Arguments: string to convert
-  # Response: true, false, or nil 
-  ####
-  def to_b(str)
-    return true if str.downcase=="true"
-    return false if str.downcase=="false"
-    return nil
   end
 
   ####

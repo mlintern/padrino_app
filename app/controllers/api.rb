@@ -36,12 +36,9 @@ PadrinoApp::App.controllers :api do
   # Response: json object containing formation
   ####
   get :password do
-    puts params.inspect
-    symbols = params[:sym] || true
-    length = params[:len] || 15
-    puts symbols
-    puts length
-    return 200, Nretnil::Password.generate(length.to_i,to_b(symbols.to_s)).to_json
+    symbols = params[:symbols] || true
+    length = params[:length] || 15
+    return 200, Nretnil::Password.generate(length.to_i,symbols.to_s.to_b).to_json
   end
 
   ####
