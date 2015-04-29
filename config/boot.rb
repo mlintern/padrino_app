@@ -8,6 +8,7 @@ require 'bundler/setup'
 require 'date'
 require 'json'
 require 'compendium-api'
+require 'nretnil-password'
 require 'securerandom'
 Bundler.require(:default, RACK_ENV)
 

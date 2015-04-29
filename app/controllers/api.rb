@@ -27,6 +27,24 @@ PadrinoApp::App.controllers :api do
   end
 
   ####
+  # Endpoint: GET /api/password
+  # Description: Returns information the api
+  # Authorization: none
+  # Arguments: 
+  #   optional - length - number of characters in the password
+  #   optional - symbols - boolean to determine if symbols will be included in password.
+  # Response: json object containing formation
+  ####
+  get :password do
+    puts params.inspect
+    symbols = params[:sym] || true
+    length = params[:len] || 15
+    puts symbols
+    puts length
+    return 200, Nretnil::Password.generate(length.to_i,to_b(symbols.to_s)).to_json
+  end
+
+  ####
   # Endpoint: POST /api/external_pub
   # Description: Endpoint for testing Compendiums External Publisher
   # Authorization: none

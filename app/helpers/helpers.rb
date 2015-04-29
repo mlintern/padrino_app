@@ -21,6 +21,18 @@ PadrinoApp::App.helpers do
   end
 
   ####
+  # Name: to_b
+  # Description: Converts string to boolean 
+  # Arguments: string to convert
+  # Response: true, false, or nil 
+  ####
+  def to_b(str)
+    return true if str.downcase=="true"
+    return false if str.downcase=="false"
+    return nil
+  end
+
+  ####
   # Name: default
   # Description: returns default of the defined property
   # Arguments: String - name of property
