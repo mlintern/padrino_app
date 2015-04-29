@@ -22,7 +22,7 @@ PadrinoApp::App.controllers :api do
   # Description: Returns information the api
   # Authorization: none
   # Arguments: none
-  # Response: json object containing formation
+  # Response: json object containing information
   ####
   get :info do
     return 200, { :success => true, :info => [{ 1 =>"This endpoint provides information about the app.nretnil.com API." },{ 2 => "You are able to perform all Account management tasks via the API." }] }.to_json
@@ -30,17 +30,28 @@ PadrinoApp::App.controllers :api do
 
   ####
   # Endpoint: GET /api/password
-  # Description: Returns information the api
+  # Description: Returns a password and phonetic version
   # Authorization: none
   # Arguments: 
   #   optional - length - number of characters in the password
   #   optional - symbols - boolean to determine if symbols will be included in password.
-  # Response: json object containing formation
+  # Response: json object containing data
   ####
   get :password do
     symbols = params[:symbols] || true
     length = params[:length] || 15
     return 200, Nretnil::Password.generate(length.to_i,symbols.to_s.to_b).to_json
+  end
+
+  ####
+  # Endpoint: GET /api/password/phrase
+  # Description: Returns information the api
+  # Authorization: none
+  # Arguments: none
+  # Response: json object containing data
+  ####
+  get :phrase, :map => 'api/password/phrase' do
+    return 200, Nretnil::Password.phrase.to_json
   end
 
   ####
