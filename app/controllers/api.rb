@@ -1,7 +1,9 @@
 PadrinoApp::App.controllers :api do
 
   before do
-    headers "Content-Type" => "application/json; charset=utf8"
+    headers "Content-Type" => "application/json; charset=utf8",
+            'Access-Control-Allow-Origin' => '*', 
+            'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
   end
 
   ####
