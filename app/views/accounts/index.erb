@@ -50,7 +50,7 @@
 
       <tbody>
         <% @accounts.each do |account| %>
-          <tr class="list-row<% if account.status == 0 %> danger disabled<% end %>">
+          <tr class="list-row<% if account.status == 0 %> danger disabled<% end %><% if account.status == 2 %> info disabled<% end %>">
             <td class="list-column list-selectable">
               <%= check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox' %>
             </td>
@@ -59,9 +59,15 @@
             <td class=list-column> <%= account.surname %> </td>
             <td class=list-column> <%= account.email %> </td>
             <td class=list-column> 
-            <% account.role.gsub('"',"").gsub('[',"").gsub(']',"").split(',').each do |role| %> 
+            <% 
+              unless account.role.nil? || account.role.empty?
+                account.role.gsub('"',"").gsub('[',"").gsub(']',"").split(',').each do |role| 
+            %> 
                 <span class="label label-primary"><%= role %></span>
-            <% end %>
+            <% 
+                end
+              end 
+            %>
             </td>
             <td class=list-column> <%= account_status[account.status] %> </td>
             <td class="list-column list-row-action">

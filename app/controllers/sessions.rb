@@ -3,9 +3,34 @@ PadrinoApp::App.controllers :sessions do
     render "/sessions/new"
   end
 
+  post :signup do
+
+    form_params = params
+
+    params[:last_update] = DateTime.now.utc
+    params[:status] = 2
+    params[:id] = SecureRandom.uuid
+    params[:password] = params[:password_confirmation] = Nretnil::Password.generate(10)[:password]
+    params[:role] = ""
+    @account = Account.new(params)
+    if @account.save
+      flash.now[:success] = "Your Account has been saved.  You will recieve an email with credentials shortly." # user flash[:error] when redirecting
+      redirect url(:sessions, :new), 302
+    else
+      errors = ""
+      @account.errors.each do |e|
+        logger.error("Save Error: #{e}")
+        errors += e[0] + " "
+      end
+      flash.now[:error] = errors
+      flash[:error] = errors
+      redirect url(:sessions, :new), 302, form_params
+    end
+  end
+
   post :create do
     if account = Account.authenticate(params[:username], params[:password])
-      unless account.status == 0
+      if account.status == 1
         token = SecureRandom.hex
         account.update({ :token => token, :last_login => Time.now.utc })
         if account
@@ -17,8 +42,8 @@ PadrinoApp::App.controllers :sessions do
         end
         redirect url(:base, :index)
       else
-        flash[:error] = "User is Disabled"
-        logger.info("User is Disabled")
+        flash[:error] = "Account is Disabled"
+        logger.info("Account is Disabled")
         redirect url(:sessions, :new), 302
       end
     else

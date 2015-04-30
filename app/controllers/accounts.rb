@@ -4,7 +4,7 @@ PadrinoApp::App.controllers :accounts do
     session[:redirect_to] = request.fullpath
 
     @title = "Accounts"
-    account_status_options = { 0 => "disabled", 1 => "enabled" }
+    account_status_options = { 0 => "Disabled", 1 => "Enabled", 2 => "New" }
     if params[:dir] == "desc"
       if params[:by]
         @accounts = Account.all(:order => [ params[:by].to_sym.desc ]) # desc
@@ -104,7 +104,7 @@ PadrinoApp::App.controllers :accounts do
     @account = Account.get(params[:id])
     if @account
       params[:account][:role] = "" if ( params[:account][:role].nil? && permission_check('admin',false) )
-      params[:account][:status] = 0 if ( params[:account][:status].nil? && permission_check('admin',false) )
+      params[:account][:status] = 0 if ( params[:account][:status].nil? && permission_check('admin',false) && @account.status != 2 )
       if @account.update(params[:account])
         flash[:success] = "Account #{@account.username} was successfully updated."
         params[:save_and_continue] ? redirect(url(:accounts, :index)) : redirect(url(:accounts, :edit, :id => @account.id))
@@ -151,7 +151,7 @@ PadrinoApp::App.controllers :accounts do
     ids = params[:account_ids].split(',').map(&:strip)
     accounts = Account.all(:id => ids)
     
-    if accounts.include? current_account
+    if accounts.include? current_user
       flash[:error] = "You cannot delete yourself."
     elsif accounts.destroy
       flash[:success] = "Accounts #{ids.to_sentence} were successfully deleted."

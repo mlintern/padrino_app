@@ -13,7 +13,7 @@ class Account
   property :token,            String
   property :role,             String
   property :last_update,      DateTime
-  property :last_login,      DateTime
+  property :last_login,       DateTime
   property :status,           Integer
 
   # Validations
@@ -46,7 +46,7 @@ class Account
   end
 
   def active?
-    self.status != 0
+    self.status == 1
   end
 
   def has_password?(password)

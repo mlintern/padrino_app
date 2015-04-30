@@ -28,5 +28,55 @@
     </div>
 
   </div>
-  <div class="login-footer modal-footer"><input type="submit" value="Sign In" class="btn btn-primary pull-right"></div>
+  <div class="login-footer modal-footer">
+    <small><a href="javascript:void(0);" class="pull-left" data-toggle="modal" data-target="#requestModal">Request Account</a></small>
+    <input type="submit" value="Sign In" class="btn btn-primary pull-right">
+  </div>
 <% end %>
+
+<div class="modal fade" id="requestModal">
+  <div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">New Account Sign Up</h4>
+      </div>
+    <% form_tag url(:sessions, :signup), :class=>"form-horizontal" do %>
+      <div class="modal-body">
+        
+        <div class="form-group">
+          <label for="username" class="col-sm-4 control-label">Username</label>
+          <div class="col-sm-8"><%= text_field_tag :username, :id => :r1, :class => 'form-control' %></div>
+        </div>
+
+<!--         <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">Password</label>
+          <div class="col-sm-8"><%= password_field_tag :password, :id => :r2, :class => 'form-control' %></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">Password Confirmation</label>
+          <div class="col-sm-8"><%= password_field_tag :password_confirmation, :id => :r3, :class => 'form-control' %></div>
+        </div> -->
+
+        <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">First Name</label>
+          <div class="col-sm-8"><%= text_field_tag :name, :id => :r4, :class => 'form-control' %></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">Last Name</label>
+          <div class="col-sm-8"><%= text_field_tag :surname, :id => :r5, :class => 'form-control' %></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">Email Address</label>
+          <div class="col-sm-8"><%= text_field_tag :email, :id => :r6, :class => 'form-control' %></div>
+        </div>
+
+      </div>
+      <div class="login-footer modal-footer"><input type="submit" value="Request" class="btn btn-primary pull-right"></div>
+    <% end %>
+  </div>
+  </div>
+</div>
