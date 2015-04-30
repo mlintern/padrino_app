@@ -15,6 +15,14 @@ PadrinoApp::App.controllers :sessions do
     @account = Account.new(params)
     if @account.save
       flash.now[:success] = "Your Account has been saved.  You will recieve an email with credentials shortly." # user flash[:error] when redirecting
+      flash[:success] = "Your Account has been saved.  You will recieve an email with credentials shortly." # user flash[:error] when redirecting
+      
+      begin
+        email( :from => "donotreply@nretnil.com", :to => "mark@lintern.us", :subject => "New User", :body=>"A New User has signed up" )
+      rescue
+        logger.error("Eamil did not send")
+      end
+
       redirect url(:sessions, :new), 302
     else
       errors = ""
