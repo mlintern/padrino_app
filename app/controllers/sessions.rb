@@ -11,7 +11,7 @@ PadrinoApp::App.controllers :sessions do
     params[:status] = 2
     params[:id] = SecureRandom.uuid
     params[:password] = params[:password_confirmation] = Nretnil::Password.generate(10)[:password]
-    params[:role] = ""
+    params[:role] = ["user"]
     @account = Account.new(params)
     if @account.save
       flash.now[:success] = "Your Account has been saved.  You will recieve an email with credentials shortly." # user flash[:error] when redirecting
@@ -20,8 +20,8 @@ PadrinoApp::App.controllers :sessions do
       begin
         email(  
               :from => "donotreply@nretnil.com", 
-              :to => "mark@lintern.us", 
-              :subject => "New User Request", 
+              :to => params[:email], 
+              :subject => "New User Information", 
               :content_type => :html,
               :body => render( "email/newuser", :layout => false, :locals => { 'user' => params } ) 
               )
@@ -45,7 +45,7 @@ PadrinoApp::App.controllers :sessions do
 
   post :create do
     if account = Account.authenticate(params[:username], params[:password])
-      if account.status == 1
+      unless account.status == 0
         token = SecureRandom.hex
         account.update({ :token => token, :last_login => Time.now.utc })
         if account
@@ -55,7 +55,13 @@ PadrinoApp::App.controllers :sessions do
             response.set_cookie( "user", :value => token, :path => '/' , :expires => (Time.now.utc + 30*60) )
           end
         end
-        redirect url(:base, :index)
+        if account.status == 2
+          account.update({ :status => 1 })
+          flash[:notice] = "You should update your password!"
+          redirect '/accounts/edit/'+account.id.to_s
+        else
+          redirect url(:base, :index)
+        end
       else
         flash[:error] = "Account is Disabled"
         logger.info("Account is Disabled")
