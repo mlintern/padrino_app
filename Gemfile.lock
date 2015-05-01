@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/mlintern/compendium-api
-  revision: 21af54e394fec7cf8c58d63d9b92aefab6c7bd26
+  revision: aef51660cea635e5c656e3a470f04bbb6c57fc4b
   specs:
-    compendium-api (0.14.3)
+    compendium-api (0.14.4)
       httparty (~> 0)
 
 GIT
   remote: https://github.com/mlintern/nretnil-password
-  revision: 2f4a5d7203465944858e394c46e267c1feefdebd
+  revision: be6aa0eaf10a5c4b4ee4d1512a5d408b11322005
   specs:
     nretnil-password (0.0.3)
 

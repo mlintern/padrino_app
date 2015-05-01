@@ -2,6 +2,7 @@ require "compendium-api"
 
 # Prep Work - Make sure you have two users, one with admin rights and one without
 
+anonymous = Nretnil::CompendiumAPI::CompendiumPublic.new("http://localhost:3000")
 user = Nretnil::CompendiumAPI::Compendium.new("mweston", "password", "http://localhost:3000")
 user2 = Nretnil::CompendiumAPI::Compendium.new("maddie", "password", "http://localhost:3000")
 admin = Nretnil::CompendiumAPI::Compendium.new("administrator", "password", "http://localhost:3000")
@@ -50,6 +51,82 @@ def check_result (response, neg = false)
     end
   end
 end
+
+###
+# Get /api
+###
+
+header("GET /api") if @options[:headers]
+
+puts "\nGet api root" if @options[:label]
+response = anonymous.get("/api")
+puts check_result(response)
+
+
+###
+# Get /api/info
+###
+
+header("GET /api/info") if @options[:headers]
+
+puts "\nGet api info" if @options[:label]
+response = anonymous.get("/api/info")
+puts check_result(response)
+
+
+###
+# Get /api/password
+###
+
+header("GET /api/password") if @options[:headers]
+
+puts "\nGet Password" if @options[:label]
+response = anonymous.get("/api/password")
+puts check_result(response)
+
+puts "\nGet Passphrase" if @options[:label]
+response = anonymous.get("/api/password/phrase")
+puts check_result(response)
+
+
+###
+# Post /api/external_pub
+###
+
+header("POST /api/external_pub") if @options[:headers]
+
+foodata = { :foo => "bar" }.to_json
+data = { :content => { :id => 8549176320, :remote_url => "http://www.hubot.com/one", :title => "One" } }.to_json
+bdata = { :content => { :id => 8549176320, :remote_url => "http://www.hubot.com/one" } }.to_json
+
+puts "\nPOST to external pub test" if @options[:label]
+response = anonymous.post("/api/external_pub", data)
+puts check_result(response)
+
+#Negative Test
+puts "\nPOST to external pub test with foo data" if @options[:label]
+response = anonymous.post("/api/external_pub", foodata)
+puts check_result(response, true)
+
+#Negative Test
+puts "\nPOST to external pub test with missing title" if @options[:label]
+response = anonymous.post("/api/external_pub", bdata)
+puts check_result(response, true)
+
+puts "\nPOST to external pub debug test" if @options[:label]
+response = anonymous.post("/api/external_pub/debug", data)
+puts check_result(response)
+
+#Negative Test
+puts "\nPOST to external pub debug test with foo data" if @options[:label]
+response = anonymous.post("/api/external_pub/debug", foodata)
+puts check_result(response, true)
+
+#Negative Test
+puts "\nPOST to external pub debug test with missing title" if @options[:label]
+response = anonymous.post("/api/external_pub/debug", bdata)
+puts check_result(response, true)
+
 
 ###
 # GET /api/accounts/me

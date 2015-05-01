@@ -25,7 +25,7 @@ PadrinoApp::App.controllers :api do
   # Response: json object containing information
   ####
   get :info do
-    return 200, { :success => true, :info => [{ 1 =>"This endpoint provides information about the app.nretnil.com API." },{ 2 => "You are able to perform all Account management tasks via the API." }] }.to_json
+    return 200, { :success => true, :info => [{ 1 =>"This endpoint provides information about the app.nretnil.com API." },{ 2 => "You are able to perform all Account management tasks via the API." },{ 3 => "You are able to perform all Todo tasks via the API." }] }.to_json
   end
 
   ####
