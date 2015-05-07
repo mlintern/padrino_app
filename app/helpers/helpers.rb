@@ -314,4 +314,50 @@ PadrinoApp::App.helpers do
     end
   end
 
+
+  ####
+  # Name: create_data
+  # Description: takes a hash object of name => type and returns fake data element
+  # Arguments: data - hash - what dataelement should look like
+  # Response: string - {"a":"b","c":"d"}
+  ####
+  def create_data(elements)
+    hash = {}
+    elements.each do |a,b|
+      
+      case b
+        when "sentence"
+          hash[a] = Nretnil::FakeData.words((rand(15)+15)) + '.'
+        when "uuid"
+          hash[a] = Nretnil::Password.uuid
+        when "email"
+          if hash.key?("name") && hash.key?("surname")
+            hash[a] = (hash["name"][0,1] + hash["surname"]).downcase + "@" + Nretnil::FakeData.word + ".com"
+          else
+            hash[a] = hash.key?("name") ? hash["name"].downcase + "@" + Nretnil::FakeData.word + ".com" : Nretnil::FakeData.name + Nretnil::FakeData.number(3).to_s + "@" + Nretnil::FakeData.word + ".com"
+          end
+        when "name"
+          hash[a] = Nretnil::FakeData.name 
+        when "surname"
+          hash[a] = Nretnil::FakeData.surname 
+        when "fullname"
+          hash[a] = Nretnil::FakeData.surname + " " + Nretnil::FakeData.surname 
+        when "username"
+          if hash.key?("name") && hash.key?("surname")
+            hash[a] = (hash["name"][0,1] + hash["surname"]).downcase
+          elsif hash.key?("name")
+            hash[a] = hash["name"] + Nretnil::FakeData.number(3).to_s
+          else
+            hash[a] = Nretnil::FakeData.word + Nretnil::FakeData.number(3).to_s
+          end
+        when "date"
+          hash[a] = rand(12).to_s + "-" + rand(30).to_s + "-" + ( rand(64) + 1950 ).to_s
+        else
+          hash[a] = Nretnil::FakeData.number
+      end
+
+    end
+    hash
+  end
+
 end

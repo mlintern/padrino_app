@@ -1,15 +1,21 @@
 GIT
   remote: https://github.com/mlintern/compendium-api
-  revision: aef51660cea635e5c656e3a470f04bbb6c57fc4b
+  revision: 3fb9094a85088d5290acaeb47b1e92caaf2ccded
   specs:
-    compendium-api (0.14.4)
+    compendium-api (0.14.6)
       httparty (~> 0)
 
 GIT
-  remote: https://github.com/mlintern/nretnil-password
-  revision: be6aa0eaf10a5c4b4ee4d1512a5d408b11322005
+  remote: https://github.com/mlintern/nretnil-fake-data
+  revision: 68aa44d2aae487b2aba8a7552c0988e4a23e4b8e
   specs:
-    nretnil-password (0.0.3)
+    nretnil-fake-data (0.0.1)
+
+GIT
+  remote: https://github.com/mlintern/nretnil-password
+  revision: f09a13ff1d2ef991d1e110ddf8d1afaa05b0b65b
+  specs:
+    nretnil-password (0.0.4)
 
 GEM
   remote: https://rubygems.org/
@@ -119,7 +125,7 @@ GEM
     padrino-support (0.12.4)
       activesupport (>= 3.1)
     polyglot (0.3.5)
-    rack (1.6.0)
+    rack (1.6.1)
     rack-protection (1.5.3)
       rack
     rake (10.4.2)
@@ -161,6 +167,7 @@ DEPENDENCIES
   erubis (~> 2.7.0)
   httparty
   json
+  nretnil-fake-data!
   nretnil-password!
   padrino (= 0.12.4)
   rake

@@ -31,6 +31,7 @@ gem 'httparty'
 gem "sinatra-flash", :require => "sinatra/flash"
 gem 'compendium-api', :git => 'https://github.com/mlintern/compendium-api'
 gem 'nretnil-password', :git => 'https://github.com/mlintern/nretnil-password'
+gem 'nretnil-fake-data', :git => 'https://github.com/mlintern/nretnil-fake-data'
 
 # Test requirements
 

@@ -9,6 +9,7 @@ require 'date'
 require 'json'
 require 'compendium-api'
 require 'nretnil-password'
+require 'nretnil-fake-data'
 require 'securerandom'
 require './env' if File.exists?('env.rb')
 Bundler.require(:default, RACK_ENV)

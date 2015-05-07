@@ -100,4 +100,28 @@ PadrinoApp::App.controllers :api do
     end
   end
 
+  ####
+  # Endpoint: GET /api/fakedata
+  # Description: Returns fake data
+  # Authorization: none
+  # Arguments: 
+  #   count = number of pieces of data. default: 10
+  #   elements = name=type
+  #       type options: name, surname, uuid, date, sentence, username, email
+  # Response: json object containing fake data
+  # Notes: Order and name matters, if name and surname are used and first then other elements can build off of them.
+  # Example: /api/fakedata?count=20&name=name&surname=surname&id=uuid&dob=date&about=sentence&email=email&username=username
+  ####
+  get :fakedata do
+    data = []
+    count = params[:count] || 10
+    params.delete("count")
+
+    (0...count.to_i).each do 
+      data << create_data(params)
+    end
+
+    return 200, data.to_json
+  end
+
 end
