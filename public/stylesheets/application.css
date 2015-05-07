@@ -18,6 +18,9 @@ img {
   margin: 0 auto;
   padding: 0 10px;
 }
+.pointer {
+  cursor: pointer;
+}
 footer {
   position: fixed;
   bottom: 0;
