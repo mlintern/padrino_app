@@ -318,37 +318,56 @@ PadrinoApp::App.helpers do
   ####
   # Name: create_data
   # Description: takes a hash object of name => type and returns fake data element
-  # Arguments: data - hash - what dataelement should look like
+  # Arguments: data - hash - what data element should contain and look like
+  #   example: {"name"=>"name", "surname"=>"surname", "id"=>"uuid", "dob"=>"date", "about"=>"sentence", "email"=>"email", "username"=>"username"}
   # Response: string - {"a":"b","c":"d"}
   ####
   def create_data(elements)
     hash = {}
+    name = surname = number = username = nil
     elements.each do |a,b|
-      
       case b
         when "sentence"
-          hash[a] = Nretnil::FakeData.words((rand(15)+15)) + '.'
+          hash[a] = (Nretnil::FakeData.words((rand(15)+15)) + '.').capitalize
         when "uuid"
           hash[a] = Nretnil::Password.uuid
         when "email"
-          if hash.key?("name") && hash.key?("surname")
-            hash[a] = (hash["name"][0,1] + hash["surname"]).downcase + "@" + Nretnil::FakeData.word + ".com"
+          if username
+            hash[a] = username + "@" + Nretnil::FakeData.word + ".com"
+          elsif name && surname
+            username = (hash["name"][0,1] + hash["surname"]).downcase
+            hash[a] = username + "@" + Nretnil::FakeData.word + ".com"
+          elsif name
+            hash[a] = name + "@" + Nretnil::FakeData.word + ".com"
           else
-            hash[a] = hash.key?("name") ? hash["name"].downcase + "@" + Nretnil::FakeData.word + ".com" : Nretnil::FakeData.name + Nretnil::FakeData.number(3).to_s + "@" + Nretnil::FakeData.word + ".com"
+            word = word || Nretnil::FakeData.word
+            number = number || Nretnil::FakeData.number(3).to_s
+            username = username || word + number
+            hash[a] = username + "@" + Nretnil::FakeData.word + ".com"
           end
         when "name"
-          hash[a] = Nretnil::FakeData.name 
+          hash[a] = name = name || Nretnil::FakeData.name 
         when "surname"
-          hash[a] = Nretnil::FakeData.surname 
+          hash[a] = surname = surname || Nretnil::FakeData.surname 
         when "fullname"
-          hash[a] = Nretnil::FakeData.surname + " " + Nretnil::FakeData.surname 
+          name = name || Nretnil::FakeData.surname
+          surname = surname || Nretnil::FakeData.surname 
+          hash[a] = name + " " + surname 
         when "username"
-          if hash.key?("name") && hash.key?("surname")
-            hash[a] = (hash["name"][0,1] + hash["surname"]).downcase
-          elsif hash.key?("name")
-            hash[a] = hash["name"] + Nretnil::FakeData.number(3).to_s
+          if username
+            hash[a] = username
+          elsif name && surname
+            username = username || (name[0,1] + surname).downcase
+            hash[a] = username
+          elsif name
+            number = number || Nretnil::FakeData.number(3).to_s
+            username = name + number
+            hash[a] = name + number
           else
-            hash[a] = Nretnil::FakeData.word + Nretnil::FakeData.number(3).to_s
+            number = number || Nretnil::FakeData.number(3).to_s
+            word = word || Nretnil::FakeData.word
+            username = word + number
+            hash[a] = username
           end
         when "date"
           hash[a] = rand(12).to_s + "-" + rand(30).to_s + "-" + ( rand(64) + 1950 ).to_s
