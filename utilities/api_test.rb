@@ -129,6 +129,23 @@ puts check_result(response, true)
 
 
 ###
+# Get /api/fakedata
+###
+
+header("GET /api/fakedata") if @options[:headers]
+
+query = { :name => "name", :lastname => "surname", :username => "username", :dob => "date", :description => "sentence", :count => 100, :email => "email" }
+
+puts "\nGet Fake Data with no options" if @options[:label]
+response = anonymous.get("/api/fakedata")
+puts check_result(response)
+
+puts "\nGet Fake Data with options " if @options[:label]
+response = anonymous.get("/api/fakedata", query)
+puts check_result(response)
+
+
+###
 # GET /api/accounts/me
 ###
 
