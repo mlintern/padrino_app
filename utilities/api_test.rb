@@ -146,6 +146,19 @@ puts check_result(response)
 
 
 ###
+# Post /api/fakedata
+###
+
+header("POST /api/fakedata") if @options[:headers]
+
+data = { :name => "name", :lastname => "surname", :username => "username", :dob => "date", :description => "sentence", :count => 100, :email => "email" }
+
+puts "\nGet Fake Data with no options" if @options[:label]
+response = anonymous.post("/api/fakedata",data.to_json)
+puts check_result(response)
+
+
+###
 # GET /api/accounts/me
 ###
 
