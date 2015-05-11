@@ -130,4 +130,17 @@ PadrinoApp::App.controllers :api do
     return 200, data.to_json
   end
 
+  ####
+  # Endpoint: POST /api/fakedata
+  # Description: Takes any data and Returns 200 with the data
+  # Authorization: none
+  # Arguments: anything here 
+  # Response: json object containing data you sent it
+  ####
+  post :fakedata do
+    data = JSON.parse request.body.read
+
+    return 200, data.to_json
+  end
+
 end
