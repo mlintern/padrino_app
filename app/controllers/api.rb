@@ -107,18 +107,24 @@ PadrinoApp::App.controllers :api do
   # Arguments: 
   #   count = number of pieces of data. default: 10
   #   elements = name=type
-  #       type options: name, surname, uuid, date, sentence, username, email
+  #       type options: name, surname, uuid, date, sentence, username, email, numbers
   # Response: json object containing fake data
   # Notes: Order and name matters, if name and surname are used and first then other elements can build off of them.
-  # Example: /api/fakedata?count=20&name=name&surname=surname&id=uuid&dob=date&about=sentence&email=email&username=username
+  # Example: /api/fakedata?count=1&name=name&surname=surname&id=uuid&dob=date&about=sentence&email=email&username=username&post_count=number&extra=gibberish
   ####
   get :fakedata do
     data = []
     count = params[:count] || 10
     params.delete("count")
-
+    
+    if params.empty?
+      elements = { :id => "uuid", :name => "name", :surname => "surname", :username => "username", :email => "email", :description => "sentence", :dob => "date" }
+    else
+      elements = params
+    end
+    
     (0...count.to_i).each do 
-      data << create_data(params)
+      data << create_data(elements)
     end
 
     return 200, data.to_json
