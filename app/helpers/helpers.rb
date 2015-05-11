@@ -371,8 +371,10 @@ PadrinoApp::App.helpers do
           end
         when "date"
           hash[a] = Nretnil::FakeData.date
-        else
+        when "number"
           hash[a] = Nretnil::FakeData.number
+        else
+          hash[a] = b
       end
 
     end

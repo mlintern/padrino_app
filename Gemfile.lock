@@ -7,9 +7,9 @@ GIT
 
 GIT
   remote: https://github.com/mlintern/nretnil-fake-data
-  revision: d16da469a597949db85491f07bb766c2752c17d9
+  revision: 6257422a0f263b9bf055e1179e2bdc619d0e15c5
   specs:
-    nretnil-fake-data (0.0.2)
+    nretnil-fake-data (0.0.3)
 
 GIT
   remote: https://github.com/mlintern/nretnil-password
