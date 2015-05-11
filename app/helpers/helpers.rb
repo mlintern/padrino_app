@@ -370,13 +370,7 @@ PadrinoApp::App.helpers do
             hash[a] = username
           end
         when "date"
-          month = (rand(12)+1).to_s
-          if month == 2
-            day = (rand(28)+1).to_s
-          else
-            day = (rand(30)+1).to_s
-          end
-          hash[a] = month + "-" + day + "-" + ( rand(85) + 1930 ).to_s
+          hash[a] = Nretnil::FakeData.date
         else
           hash[a] = Nretnil::FakeData.number
       end
