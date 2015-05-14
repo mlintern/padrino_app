@@ -73,10 +73,8 @@ PadrinoApp::App.controllers :api do
   # Response: json object with success, id, and url
   ####
   post :external_pub do
-    puts params["host"]
     data = JSON.parse request.body.read
     host = params["host"] || "www.hubot.com"
-    puts host
     if data["content"]
       id = data['content'].try(:[],'remote_id') || rand(1000000)
       if data["content"]["title"]
