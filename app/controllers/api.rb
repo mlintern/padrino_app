@@ -97,10 +97,11 @@ PadrinoApp::App.controllers :api do
   ####
   post :debug, :map => "api/external_pub/debug" do
     data = JSON.parse request.body.read
+    host = params["host"] || "www.hubot.com"
     if data["content"]
       id = data['content'].try(:[],'remote_id') || rand(1000000)
       if data["content"]["title"]
-        url = data['content'].try(:[],'remote_url') || 'http://www.hubot.com/' + data.try(:[],"content").try(:[],"title").downcase.gsub(' ','-')
+        url = data['content'].try(:[],'remote_url') || 'http://' + host + '/' + data.try(:[],"content").try(:[],"title").downcase.gsub(' ','-')
         return 202, { :success => true, :id => id, :url => url, :data_recieved => data }.to_json
       else
         return 400, { :success => false, :error => 'Missing Title', :data_recieved => data }.to_json

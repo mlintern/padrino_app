@@ -9,8 +9,8 @@ admin = Nretnil::CompendiumAPI::Compendium.new("administrator", "password", "htt
 
 @options = {
   :headers =>  true,
-  :label => true,
-  :details => true
+  :label => false,
+  :details => false
 }
 
 @successes = 0
@@ -135,6 +135,10 @@ puts check_result(response, true)
 
 puts "\nPOST to external pub debug test" if @options[:label]
 response = anonymous.post("/api/external_pub/debug", data)
+puts check_result(response)
+
+puts "\nPOST to external pub debug test iwht missing remote_url and a host" if @options[:label]
+response = anonymous.post("/api/external_pub/debug?host=www.icecream.com", adata)
 puts check_result(response)
 
 #Negative Test
