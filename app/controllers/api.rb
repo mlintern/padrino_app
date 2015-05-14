@@ -55,6 +55,17 @@ PadrinoApp::App.controllers :api do
   end
 
   ####
+  # Endpoint: GET /api/external_pub
+  # Description: Info Endpoint for testing Compendiums External Publisher
+  # Authorization: none
+  # Arguments: none
+  # Response: json object with success, id, and url
+  ####
+  get :external_pub do
+    return 200, { :success => true, :content => "This endpoint only accepts POST requests." }.to_json
+  end
+
+  ####
   # Endpoint: POST /api/external_pub
   # Description: Endpoint for testing Compendiums External Publisher
   # Authorization: none
@@ -62,11 +73,14 @@ PadrinoApp::App.controllers :api do
   # Response: json object with success, id, and url
   ####
   post :external_pub do
+    puts params["host"]
     data = JSON.parse request.body.read
+    host = params["host"] || "www.hubot.com"
+    puts host
     if data["content"]
       id = data['content'].try(:[],'remote_id') || rand(1000000)
       if data["content"]["title"]
-        url = data['content'].try(:[],'remote_url') || 'http://www.hubot.com/' + data.try(:[],"content").try(:[],"title").downcase.gsub(' ','-')
+        url = data['content'].try(:[],'remote_url') || 'http://' + host + '/' + data.try(:[],"content").try(:[],"title").downcase.gsub(' ','-')
         return 202, { :success => true, :id => id, :url => url }.to_json
       else
         return 400, { :success => false, :error => 'Missing Title' }.to_json

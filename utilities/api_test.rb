@@ -9,8 +9,8 @@ admin = Nretnil::CompendiumAPI::Compendium.new("administrator", "password", "htt
 
 @options = {
   :headers =>  true,
-  :label => false,
-  :details => false
+  :label => true,
+  :details => true
 }
 
 @successes = 0
@@ -90,6 +90,17 @@ puts check_result(response)
 
 
 ###
+# Get /api/external_pub
+###
+
+header("GET /api/external_pub") if @options[:headers]
+
+puts "\nGET request to external pub test" if @options[:label]
+response = anonymous.get("/api/external_pub")
+puts check_result(response)
+
+
+###
 # Post /api/external_pub
 ###
 
@@ -97,10 +108,19 @@ header("POST /api/external_pub") if @options[:headers]
 
 foodata = { :foo => "bar" }.to_json
 data = { :content => { :id => 8549176320, :remote_url => "http://www.hubot.com/one", :title => "One" } }.to_json
+adata = { :content => { :id => 8549176320, :title => "One" } }.to_json
 bdata = { :content => { :id => 8549176320, :remote_url => "http://www.hubot.com/one" } }.to_json
 
 puts "\nPOST to external pub test" if @options[:label]
 response = anonymous.post("/api/external_pub", data)
+puts check_result(response)
+
+puts "\nPOST to external pub test with no remote_url" if @options[:label]
+response = anonymous.post("/api/external_pub", adata)
+puts check_result(response)
+
+puts "\nPOST to external pub with missing remote_rul and a host" if @options[:label]
+response = anonymous.post("/api/external_pub?host=www.icecream.com", adata)
 puts check_result(response)
 
 #Negative Test
