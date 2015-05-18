@@ -74,7 +74,7 @@ PadrinoApp::App.controllers :api do
   ####
   post :external_pub do
     data = JSON.parse request.body.read
-    host = params["host"] || "www.hubot.com"
+    host = params["host"] || "www.nretnil.com"
     if data["content"]
       id = data['content'].try(:[],'remote_id') || rand(1000000)
       if data["content"]["title"]
@@ -97,7 +97,7 @@ PadrinoApp::App.controllers :api do
   ####
   post :debug, :map => "api/external_pub/debug" do
     data = JSON.parse request.body.read
-    host = params["host"] || "www.hubot.com"
+    host = params["host"] || "www.nretnil.com"
     if data["content"]
       id = data['content'].try(:[],'remote_id') || rand(1000000)
       if data["content"]["title"]
