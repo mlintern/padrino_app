@@ -25,13 +25,21 @@ PadrinoApp::App.controllers :curl do
       curl_auth = ''
     end
 
-    if params[:session]['body'].is_json?
-      body = params[:session]['body'] || {}
-    else
-      body = eval(params[:session]['body']) || {}
+    begin
+      if params[:session]['body'].is_json?
+        body = params[:session]['body'] || {}
+      else
+        body = eval(params[:session]['body']) || {}
+      end
+    rescue NameError
+      body = { :error => "check your body syntax for missing ':'"}
     end
 
-    query = eval(params[:session]['query']) || {}
+    begin
+      query = eval(params[:session]['query']) || {}
+    rescue NameError
+      query = { :error => "check your query syntax for missing ':'"}
+    end
 
     @result = { :results => 'Did not make request' }
 
