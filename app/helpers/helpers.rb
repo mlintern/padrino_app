@@ -1,15 +1,15 @@
 class String
-    ####
-    # Name: to_b
-    # Description: Converts string to boolean 
-    # Arguments: string
-    # Response: true, false, or nil 
-    ####
-    def to_b
-        return true if self.downcase == "true"
-        return false if self.downcase == "false"
-        return nil
-    end
+  ####
+  # Name: to_b
+  # Description: Converts string to boolean 
+  # Arguments: string
+  # Response: true, false, or nil 
+  ####
+  def to_b
+    return true if self.downcase == "true"
+    return false if self.downcase == "false"
+    return nil
+  end
 end
 
 PadrinoApp::App.helpers do
