@@ -55,6 +55,17 @@ PadrinoApp::App.controllers :api do
   end
 
   ####
+  # Endpoint: GET /api/uuid
+  # Description: Returns a uuid
+  # Authorization: none
+  # Arguments: none
+  # Response: uuid
+  ####
+  get :uuid do
+    return 200, Nretnil::Password.uuid.to_json
+  end
+
+  ####
   # Endpoint: GET /api/external_pub
   # Description: Info Endpoint for testing Compendiums External Publisher
   # Authorization: none
