@@ -165,4 +165,59 @@ PadrinoApp::App.controllers :api do
     return 200, data.to_json
   end
 
+  ####
+  # Endpoint: GET /api/words
+  # Description: reads parameters and returns correct number of each type of word
+  # Authorization: none
+  # Arguments: 
+  #   optional: nouns - number
+  #   optional: verbs - number
+  #   optional: adjectives - number
+  #   optional: animals - number
+  #   optional: names - number
+  #   optional: colors - number
+  # Response: json object containing data you requested
+  ####
+  get :words do
+    data = { :nouns => [], :verbs => [], :adjectives => [], :animals => [], :names => [], :colors => [] }
+
+    if !params[:nouns].nil? && params[:nouns].to_i > 0
+      (0...params[:nouns].to_i).each do |index|
+        data[:nouns] << Nretnil::FakeData.noun
+      end
+    end
+
+    if !params[:verbs].nil? && params[:verbs].to_i > 0
+      (0...params[:verbs].to_i).each do |index|
+        data[:verbs] << Nretnil::FakeData.verb
+      end
+    end
+
+    if !params[:adjectives].nil? && params[:adjectives].to_i > 0
+      (0...params[:adjectives].to_i).each do |index|
+        data[:adjectives] << Nretnil::FakeData.adjective
+      end
+    end
+
+    if !params[:animals].nil? && params[:animals].to_i > 0
+      (0...params[:animals].to_i).each do |index|
+        data[:animals] << Nretnil::FakeData.animal
+      end
+    end
+
+    if !params[:names].nil? && params[:names].to_i > 0
+      (0...params[:names].to_i).each do |index|
+        data[:names] << Nretnil::FakeData.name
+      end
+    end
+
+    if !params[:colors].nil? && params[:colors].to_i > 0
+      (0...params[:colors].to_i).each do |index|
+        data[:colors] << Nretnil::FakeData.color[:name]
+      end
+    end
+
+    return 200, data.to_json
+  end
+
 end
