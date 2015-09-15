@@ -213,7 +213,7 @@ PadrinoApp::App.controllers :api do
 
     if !params[:colors].nil? && params[:colors].to_i > 0
       (0...params[:colors].to_i).each do |index|
-        data[:colors] << Nretnil::FakeData.color[:name]
+        data[:colors] << Nretnil::FakeData.color[:name].downcase
       end
     end
 
