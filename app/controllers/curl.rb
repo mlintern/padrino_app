@@ -6,23 +6,25 @@ PadrinoApp::App.controllers :curl do
   end
 
   post :index do
+    logger.debug params[:session]
     permission_check('curl')
 
-    if params[:session]['protocol'] == 'https://'
-      curl_start = 'curl --insecure '
-    else
-      curl_start = 'curl '
-    end
+    curl_start = 'curl '
 
-    if params[:session]['only_curl'] != 'on'
-      @public = Nretnil::CompendiumAPI::CompendiumPublic.new(params[:session]['protocol']+params[:session]['server'])
-      @compendium = Nretnil::CompendiumAPI::Compendium.new(params[:session]['username'], params[:session]['api_key'], params[:session]['protocol']+params[:session]['server'])
-    end
+    headers = JSON.parse(params[:session]['headers'].gsub('=>',':')) || { "Accept" => "application/vnd.compendium.blog;version=2,application/json" }
 
     unless params[:session]['public'] == 'on'
       curl_auth = params[:session]['username']+':'+params[:session]['api_key']+'@'
+      @auth = { :username => params[:session]['username'], :password => params[:session]['api_key'] }
     else
       curl_auth = ''
+    end
+
+    if params[:session]['secure'] == 'on'
+      secure = true
+    else
+      curl_start += "--insecure "
+      secure = false
     end
 
     begin
@@ -43,30 +45,34 @@ PadrinoApp::App.controllers :curl do
 
     @result = { :results => 'Did not make request' }
 
+    @url = params[:session]['protocol']+params[:session]['server']+params[:session]['api_uri']
+
     begin
       case params[:session]['call_type']
         when "get"
           curl_call = curl_start+'"'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+norm_data(query)+'"'
           if params[:session]['public'] == 'on'
-            params[:session]['only_curl'] == 'on' ? true : @result = @public.get(params[:session]['api_uri'],query)
+            params[:session]['only_curl'] == 'on' ? true : @result = HTTParty.get(@url, :query => query, :headers => headers, :verify => secure)
           else
-            params[:session]['only_curl'] == 'on' ? true : @result = @compendium.get(params[:session]['api_uri'],query)
+            params[:session]['only_curl'] == 'on' ? true : @result = HTTParty.get(@url, :basic_auth => @auth, :query => query, :headers => headers, :verify => secure)
           end
         when "put"
-          curl_call = curl_start+' --data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPUT'
-          params[:session]['only_curl'] == 'on' ? true : @result = @compendium.put(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
+          curl_call = curl_start+'--data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPUT'
+          params[:session]['only_curl'] == 'on' ? true : @result = HTTParty.put(@url, :basic_auth => @auth, :body => body.to_s.is_json? ? body : body.to_json, :headers => headers, :verify => secure)
         when "post"
-          curl_call = curl_start+' --data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPOST'
-          params[:session]['only_curl'] == 'on' ? true : @result = @compendium.post(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
+          curl_call = curl_start+'--data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XPOST'
+          params[:session]['only_curl'] == 'on' ? true : @result = HTTParty.post(@url, :basic_auth => @auth, :body => body.to_s.is_json? ? body : body.to_json, :headers => headers, :verify => secure)
         when "delete"
-          curl_call = curl_start+' --data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XDELETE'
-          params[:session]['only_curl'] == 'on' ? true : @result = @compendium.delete(params[:session]['api_uri'],body.to_s.is_json? ? body : body.to_json,query)
+          curl_call = curl_start+'--data \''+json_data(body)+'\' "'+params[:session]['protocol']+curl_auth+params[:session]['server']+params[:session]['api_uri']+'" -XDELETE'
+          params[:session]['only_curl'] == 'on' ? true : @result = HTTParty.delete(@url, :basic_auth => @auth, :query => query, :headers => headers, :verify => secure)
         end
     rescue StandardError => e
       logger.error(e)
+      logger.error(e.backtrace)
       @result = { :error => e }
     end
-
+    
+    logger.info @result
     render 'curl/result', :locals => { :curl_call => curl_call, :result => @result }
 
   end
