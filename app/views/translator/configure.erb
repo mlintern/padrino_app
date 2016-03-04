@@ -1,0 +1,26 @@
+<% form_tag url(:translator, :configure), :class=>"login form-horizontal" do %>
+  <div class="login-body modal-body">
+    <h1>Configure Translator Credentials</h1>
+
+    <div class="input-boxes">
+      <div class="form-group">
+        <label for="username" class="col-sm-4 control-label">Username</label>
+        <div class="col-sm-8"><%= text_field_tag :username, :id => :username, :value => params[:username], :autofocus => true, :class => 'form-control' %></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="col-sm-4 control-label">Password</label>
+        <div class="col-sm-8"><%= password_field_tag :password, :id => :password, :class => 'form-control' %></div>
+      </div>
+
+      <% params.each do |a,b| %>
+        <input type="hidden" name="<%= a %>" value="<%= b %>">
+      <% end %>
+
+    </div>
+
+  </div>
+  <div class="login-footer modal-footer">
+    <input type="submit" value="Set Credentials" class="btn btn-primary pull-right">
+  </div>
+<% end %>

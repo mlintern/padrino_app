@@ -28,6 +28,7 @@
         <% unless current_user.nil? %>
         <ul class="dropdown-menu main-nav" role="menu" aria-labelledby="tools">
           <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+          <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> Projects</a></li><% end %>
           <% if permission_check('curl',false) %><li><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
         </ul>
         <% end %>

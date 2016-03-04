@@ -1,4 +1,5 @@
 class String
+
   ####
   # Name: to_b
   # Description: Converts string to boolean 
@@ -6,10 +7,73 @@ class String
   # Response: true, false, or nil 
   ####
   def to_b
-    return true if self.downcase == "true"
-    return false if self.downcase == "false"
+    return true if ( self.downcase == "true" || self.downcase == "t" )
+    return false if ( self.downcase == "false" || self.downcase == "f" )
     return nil
   end
+
+  ####
+  # Name: shuffle
+  # Description: returns same string with characters in random order
+  # Arguments: string
+  # Response: string
+  ####
+  def shuffle
+    self.split('').shuffle.join
+  end
+
+  ####
+  # Name: first
+  # Description: returns first charater of string
+  # Arguments: string
+  # Response: string
+  ####
+  def first
+    self[0,1]
+  end
+
+  ####
+  # Name: last
+  # Description: returns last charater of string
+  # Arguments: string
+  # Response: string
+  ####
+  def last
+    length = self.length
+    self[length-1,length]
+  end
+
+  ####
+  # Name: middle
+  # Description: returns middle charaters of string.  Everything but first and last characters.
+  # Arguments: string
+  # Response: string
+  ####
+  def middle
+    length = self.length
+    length > 2 ? self[1,length-2] : ""
+  end
+
+  ####
+  # Name: scramble
+  # Description: returns string word with first and last characters the same and middle characters shuffled.
+  # Arguments: string
+  # Response: string
+  ####
+  def scramble
+    self.length > 2 ? self.first + self.middle.shuffle + self.last : self
+  end
+
+  ####
+  # Name: pig_latin
+  # Description: returns string word in translated into pig latin.
+  # Arguments: string
+  # Response: string
+  ####
+  def pig_latin
+    self.length > 2 ? self.first + self.middle.shuffle + self.last : self
+  end
+
 end
 
 PadrinoApp::App.helpers do
@@ -379,6 +443,214 @@ PadrinoApp::App.helpers do
 
     end
     hash
+  end
+
+  ####
+  # Name: trasnlate_title
+  # Description: takes a title and lanugage and returns new title
+  # Arguments: title - string
+  #            language - string
+  # Response: string
+  ####
+  def translate_title(title,language)
+    title_words = title.split(" ")
+    new_title = title
+    title_words.each do |w|
+      new_title = new_title.gsub(w,w.scramble)
+    end
+    return "[" + language + "] " + new_title
+  end
+
+  ####
+  # Name: trasnlate_body
+  # Description: takes a body text (html) and language and returns a translated text
+  # Arguments: body - string
+  #            language - string
+  # Response: string
+  ####
+  def translate_body(body,language)
+    word_array = body.gsub(/<\/?[^>]+>/, '').gsub(/[!@#`$%^&*()-=_+|;:",.<>?]/, '').gsub('\'s', '').split(" ").uniq
+    new_html = body
+    word_array.each do |word|
+      new_word = word.scramble
+      new_html = new_html.gsub(' '+word+' ',' '+new_word+' ')
+      new_html = new_html.gsub(word+' ',new_word+' ')
+      new_html = new_html.gsub(' '+word,' '+new_word)
+    end
+
+    return new_html
+  end
+
+  ####
+  # Name: params_to_url
+  # Description: takes hash of params and turns it into url params
+  # Arguments: params - hash
+  #            ignore - Array - items not to include
+  # Response: string
+  ####
+  def params_to_url(params,ignore = [])
+    elements = []
+    params.each do |a,b|
+      if !ignore.include? a
+        elements << "#{a}=#{b}"
+      end
+    end
+    param_url = "?" + elements.join('&')
+    return param_url
+  end
+
+  ####
+  # Name: signmal_ocm(project)
+  # Description: tell ocm that a project status has changed
+  # Arguments: project - project that needs notified
+  # Response: boolean
+  ####
+  def signal_ocm(project,domain="https://dev.cpdm.oraclecorp.com")
+    begin
+      logger.info project.inspect
+      account = Account.first({ :id => project.user_id})
+      ocmapp = OCMApp.first({ :user_id => account.id })
+      url = domain+'/api/translation_projects/'+ocmapp.app_install_id+'/projects/'+project.id
+      return get_callback_auth(url,ocmapp.username,ocmapp.api_key)
+    rescue Exception => e
+      logger.error e
+      return false
+    end
+  end
+
+  ####
+  # Name: get_callback_auth
+  # Description: make a get request to compendium
+  # Arguments: url - location of callback
+  # Response: boolean
+  ####
+  def get_callback_auth(url,username,api_key)
+    begin
+      auth = { :username => username, :password => api_key }
+      response = HTTParty.get(URI.unescape(url), :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
+      logger.info response
+      return true
+    rescue Exception => e
+      logger.error e
+      return false
+    end
+  end
+
+  ####
+  # Name: post_callback
+  # Description: post back to compendium without authentication
+  # Arguments: url - location of callback
+  #            data - json object of data
+  # Response: boolean
+  ####
+  def post_callback(url,data={})
+    begin
+      response = HTTParty.post(URI.unescape(url), :body => data, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
+      logger.info response
+      return true
+    rescue Exception => e
+      logger.error e
+      return false
+    end
+  end
+
+  ####
+  # Name: post_callback_auth
+  # Description: post back to compendium with authentication
+  # Arguments: url - location of callback
+  #            data - json object of data
+  #            username - compendium username
+  #            api_key - compendium user's api_key
+  # Response: boolean
+  ####
+  def post_callback_auth(url,data,username,api_key)
+    begin
+      auth = { :username => username, :password => api_key }
+      response = HTTParty.post(URI.unescape(url), :body => data.to_json, :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
+      logger.info response
+      if response.key? "error"
+        return false
+      end
+      return true
+    rescue Exception => e
+      logger.error e
+      return false
+    end
+  end
+
+  ####
+  # Name: delete_project(project,user)
+  # Description: delete a project and all its components
+  # Arguments: project - project
+  #            user - user trying to delete project
+  # Response: boolean
+  ####
+  def delete_project(project,user)
+    begin
+      if project.user_id = user.id
+        assets = Asset.all( :project_id => params[:id] )
+        assets.each do |asset|
+          if !asset.destroy
+            errors = []
+            asset.errors.each do |e|
+              errors << e
+            end
+            return 400, { :success => false, :info => errors }.to_json
+          end
+        end
+        languages = Language.all( :project_id => params[:id] )
+        languages.each do |lang|
+          if !lang.destroy
+            errors = []
+            asset.errors.each do |e|
+              errors << e
+            end
+            return 400, { :success => false, :info => errors }.to_json
+          end
+        end
+        if project.destroy
+          return 200, { :success => true, :info => "Project was successfully deleted. Along with it's assets and languages." }.to_json
+        else
+          errors = []
+          project.errors.each do |e|
+            errors << e
+          end
+          return 400, { :success => false, :info => errors }.to_json
+        end
+      else
+        return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json
+      end
+      return true
+    rescue Exception => e
+      logger.error e
+      return false
+    end
+  end
+
+  ####
+  # Name: ocm_create_post(data,ocmapp)
+  # Description: send translated content to OCM/Compendium
+  # Arguments: data - json object of new content data
+  #            ocmapp - ocmapp object
+  #            domain - optional - tell which environment to send to. defaults to dev
+  # Response: boolean
+  ####
+  def ocm_create_post(data,ocmapp,domain="https://dev.cpdm.oraclecorp.com")
+    begin
+      auth = { :username => ocmapp.username, :password => ocmapp.api_key }
+      post = { :post_attributes => { :title => data[:title], :body => data[:body] }, :remote_project_id => data[:project_id], :source_post_id => data[:source_id], :language_code => data[:language] }
+      url = "/api/translation_projects/"+ocmapp.app_install_id+"/create_translation"
+      response = HTTParty.post(domain+url, :body => post.to_json, :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
+      logger.info response
+      if response.code == 200
+        return true
+      else
+        return response.parsed_response
+      end
+    rescue Exception => e
+      logger.error e
+      return false
+    end
   end
 
 end

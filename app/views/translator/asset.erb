@@ -1,0 +1,12 @@
+<a class="btn btn-danger btn-lg btn-back" href="<%= back %>"><i class="fa fa-arrow-left"></i></a>
+
+<div class="page-header">
+  <h1><%= asset.title %> <% if asset.status == 0 && project.status == 1 %><button class="btn btn-warning btn-translate pull-right" onclick="translateAsset('<%= asset.id %>')">Translate</button> <% end %></h1>
+</div>
+
+<div class="asset-body well"></div>
+
+<script>
+  var decoded = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>').text();
+  $('.asset-body').html(decoded);
+</script>
