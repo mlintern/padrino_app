@@ -11,8 +11,6 @@ PadrinoApp::App.controllers :curl do
 
     curl_start = 'curl '
 
-    headers = JSON.parse(params[:session]['headers'].gsub('=>',':')) || { "Accept" => "application/vnd.compendium.blog;version=2,application/json" }
-
     unless params[:session]['public'] == 'on'
       curl_auth = params[:session]['username']+':'+params[:session]['api_key']+'@'
       @auth = { :username => params[:session]['username'], :password => params[:session]['api_key'] }
@@ -28,19 +26,42 @@ PadrinoApp::App.controllers :curl do
     end
 
     begin
+      if params[:session]['headers'].is_json?
+        headers = JSON.parse(params[:session]['headers']) || {}
+      else
+        headers = eval(params[:session]['headers']).map{|key, v| [key.to_s, v] }.to_h || {}
+      end
+    rescue Exception => e
+      logger.error e.inspect
+      logger.error(e.backtrace)
+      headers = nil
+      halt 400, '<div class="alert alert-danger">' + e.to_s + '</div>'
+    end
+
+    begin
       if params[:session]['body'].is_json?
         body = params[:session]['body'] || {}
       else
         body = eval(params[:session]['body']) || {}
       end
-    rescue NameError
-      body = { :error => "check your body syntax for missing ':'"}
+    rescue Exception => e
+      logger.error e.inspect
+      logger.error(e.backtrace)
+      headers = nil
+      halt 400, '<div class="alert alert-danger">' + e.to_s + '</div>'
     end
 
     begin
-      query = eval(params[:session]['query']) || {}
-    rescue NameError
-      query = { :error => "check your query syntax for missing ':'"}
+      if params[:session]['query'].is_json?
+        query = JSON.parse(params[:session]['query']) || {}
+      else
+        query = eval(params[:session]['query']) || {}
+      end
+    rescue Exception => e
+      logger.error e.inspect
+      logger.error(e.backtrace)
+      headers = nil
+      halt 400, '<div class="alert alert-danger">' + e.to_s + '</div>'
     end
 
     @result = { :results => 'Did not make request' }
@@ -71,7 +92,7 @@ PadrinoApp::App.controllers :curl do
       logger.error(e.backtrace)
       @result = { :error => e }
     end
-    
+
     logger.info @result
     render 'curl/result', :locals => { :curl_call => curl_call, :result => @result }
 
