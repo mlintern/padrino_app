@@ -64,16 +64,6 @@ class String
     self.length > 2 ? self.first + self.middle.shuffle + self.last : self
   end
 
-  ####
-  # Name: pig_latin
-  # Description: returns string word in translated into pig latin.
-  # Arguments: string
-  # Response: string
-  ####
-  def pig_latin
-    self.length > 2 ? self.first + self.middle.shuffle + self.last : self
-  end
-
 end
 
 PadrinoApp::App.helpers do
