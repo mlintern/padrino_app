@@ -66,6 +66,10 @@ class Account
     self.uuid = SecureRandom.uuid if self.uuid.nil?
   end
 
+  def self.auth_token_authenticate(auth_token)
+    account = first(:conditions => ["auth_token = ?", auth_token])
+  end
+
   private
 
   def password_required
