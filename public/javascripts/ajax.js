@@ -15,6 +15,23 @@ $.fn.serializeObject = function()
 	return o;
 };
 
+$.fn.serializeForm = function()
+{
+	var self = this.find('input,select');
+	var o = {};
+	$.each(self, function() {
+		input = $(this);
+		if ( input.attr("name") !== undefined ) {
+			if (input.attr("type") == "checkbox") {
+				o[input.attr("name")] = input.is(':checked');
+			} else {
+				o[input.attr("name")] = input.val();
+			}
+		}
+	});
+	return o;
+};
+
 function flashSuccess (message) {
 	$('.flash-notice').html('<div class="alert alert-success" role="alert">'+message+'</div>');
 	window.scrollTo(0,0);
@@ -289,7 +306,7 @@ function addAsset (project_id, language) {
 
 function updateTranslator () {
 	event.preventDefault();
-	var data = $('.translation-settings-form').serializeObject();
+	var data = $('.translation-settings-form').serializeForm();
 	$.ajax({
 		url: "/api/translator/configure",
 		data: JSON.stringify(data),
@@ -307,7 +324,7 @@ function updateTranslator () {
 
 function deleteTranslator () {
 	event.preventDefault();
-	var data = $('.translation-settings-form').serializeObject();
+	var data = $('.translation-settings-form').serializeForm();
 	var app_install_id = data["app_install_id"]
 	$.ajax({
 		url: "/api/translator/"+app_install_id,
