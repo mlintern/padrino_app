@@ -35,6 +35,9 @@ PadrinoApp::App.controllers :translator do
                 if ocmapp.update({ :user_id => account.id })
                   data = { :success => true, :configured =>  true }
                   logger.debug url = params["configuration_confirm_url"]
+                  if url.include? "app.test-cpdm.oraclecorp.com" # Update Url for Ngrok
+                    url = url.gsub("app.test-cpdm.oraclecorp.com","")
+                  end
                   if post_callback_auth(url, data, ocmapp.username, ocmapp.api_key)
                     erb '<div class="text-center"><h3>Configuration Complete</h3></div>', :layout => 'minimal'
                   else
