@@ -24,28 +24,38 @@
           <span class="icon-bar"></span>
         </button>
         <% end %>
-        <a class="navbar-brand" title="Nretnil Admin" id="tools" class="btn btn-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nretnil App</a>
+        <a class="navbar-brand" id="tools" class="btn btn-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nretnil App</a>
         <% unless current_user.nil? %>
         <ul class="dropdown-menu main-nav" role="menu" aria-labelledby="tools">
           <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-          <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> Projects</a></li><% end %>
+          <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> Translator</a></li><% end %>
           <% if permission_check('curl',false) %><li><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
+          <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
         </ul>
         <% end %>
       </div>
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <% unless current_user.nil? %>
-        <ul class="nav navbar-nav navbar-right">
-          <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i></a></li><% end %>
-          <% unless current_user.nil? %><li class="visible-xs"><a href="/"><i class="fa fa-home"></i> Home</a></li><% end %>
-          <% if permission_check('curl',false) %><li class="visible-xs"><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
-          <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users"></i></a></li><% end %>
-          <li class="hidden-xs"><a><div class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" /></div></a></li>
-          <li><a title="Edit your profile" class="navbar-nav-link" href="/accounts/edit/<%= current_user.id %>"><span class="account-name"><%= current_user.name %>&nbsp;<%= current_user.surname %></span></a></li>
-          <li><a href="/sessions/destroy"><i class="fa fa-power-off"></i></a></li>
+      
+      <% unless current_user.nil? %>
+      <div class="nav navbar-nav navbar-right hidden-xs">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><div class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" />&nbsp;<%= current_user.name %>&nbsp;<%= current_user.surname %></div></a>
+        <ul class="dropdown-menu user-nav">
+          <li><% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i>&nbsp;Accounts</a></li><% end %></li>
+          <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-cog fa-fw"></i>&nbsp;Profile Settings</a></li>
+          <li><a href="/sessions/destroy"><i class="fa fa-power-off fa-fw"></i>&nbsp;Log Out</a></li>
         </ul>
-        <% end %>
       </div>
+      <% end %>
+
+      <% unless current_user.nil? %>
+      <ul class="collapse navbar-ex1-collapse navbar-nav list-unstyled mobile-menu">
+        <li><a href="/"><i class="fa fa-home fa-fw"></i> Home</a></li>
+        <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> Translator</a></li><% end %>
+        <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i>&nbsp;Accounts</a></li><% end %>
+        <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
+        <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-cog fa-fw"></i>&nbsp;Profile Settings</a></li>
+        <li><a href="/sessions/destroy"><i class="fa fa-power-off fa-fw"></i>&nbsp;Log Out</a></li>
+      </ul>
+      <% end %>
     </div>
 
     <div class='container main'>

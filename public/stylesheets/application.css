@@ -190,13 +190,14 @@ background-color: transparent;
   margin: 5px 0;
 }
 .navbar .small-user-photo{
-  margin-top: -5px;
   height: 30px;
   overflow: hidden;
+  font-size: 20px;
 }
 .navbar .small-user-photo img{
   border-radius: 8px;
   width: 30px;
+  background-color: #fff;
 }
 .nav>li>.navbar-nav-link {
   padding: 17px 15px 13px;
@@ -209,9 +210,8 @@ background-color: transparent;
   background: none;
   color: #ccc;
   text-decoration: none;
-  /*text-shadow: 0 1px 0 #ffffff;*/
-  font-size: 20px;
-  padding: 17px 15px 13px;
+  padding: 15px 10px;
+  display: inline-block;
 }
 .navbar .nav a:hover {
   text-decoration: none;
@@ -234,6 +234,13 @@ background-color: transparent;
 }
 .navbar .main-nav {
   left: 15px;
+}
+.dropdown-menu>li>a {
+  padding: 8px 24px;
+  font-size: 16px;
+}
+.navbar-right .dropdown-menu.user-nav {
+  right: 15px;
 }
 /* --- End Application::TopBar --- */
 
@@ -366,6 +373,13 @@ background-color: transparent;
   .row {
     margin: 0;
   }
+  .navbar .navbar-brand {
+    font-size: 1.5em;
+    padding-top: 8px;
+  }
+  .navbar-toggle {
+    padding: 13px;
+  }
   .navbar-fixed-top {
     position: relative;
     border-bottom: none;
@@ -378,7 +392,8 @@ background-color: transparent;
     text-align: center;
   }
   .navbar-default .navbar-nav>li>a {
-    border-bottom: 1px #fff solid;
+    border-bottom: 1px #ddd solid;
+    display: block;
   }
   footer { 
     position: relative;

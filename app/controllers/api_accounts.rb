@@ -139,6 +139,34 @@ PadrinoApp::App.controllers :accounts, :map => '/api/accounts' do
   end
 
   ####
+  # Endpoint: PUT /api/accounts/:id/auth_token
+  # Description: Updated account information
+  # Authorization: owner of account or admin
+  # Arguments: none
+  # Response: json object of account with :id
+  ####
+  put :auth_token, :map => "/api/accounts/:id/auth_token" do
+    api_owner?(request.env["HTTP_AUTHORIZATION"],params[:id]) || api_auth(request.env["HTTP_AUTHORIZATION"], "admin") # nil indicates any or no role is ok.
+
+    account = Account.first(:id => params[:id])
+    if account
+      new_auth = SecureRandom.hex
+      if account.update({ :auth_token => new_auth, :last_update => DateTime.now.utc })
+        return 200, { :auth_token => new_auth }.to_json
+      else
+        errors = []
+        account.errors.each do |e|
+          errors << e
+        end
+        return 400, { :success => false, :errors => errors }.to_json
+      end
+    else
+      return 404, { :success => false, :error => "User does not exist" }.to_json
+    end
+
+  end
+
+  ####
   # Endpoint: DELETE /api/accounts/:id
   # Description: Delete an Account
   # Authorization: admin

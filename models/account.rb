@@ -11,6 +11,7 @@ class Account
   property :email,            String
   property :crypted_password, String, :length => 70
   property :token,            String
+  property :auth_token,       String
   property :role,             String
   property :last_update,      DateTime
   property :last_login,       DateTime
