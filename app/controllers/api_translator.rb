@@ -149,7 +149,7 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
       destination_languages = data["target_languages"]
       data[:language] = data["source_language"]
 
-      project = Project.new(remove_other_elements(data,[:id,:user_id,:name,:language,:description]))
+      project = Project.new(remove_other_elements(data,[:id,:user_id,:name,:language,:description,:type]))
       if project.save
         if destination_languages && destination_languages.length > 0
           destination_languages.each do |lang|

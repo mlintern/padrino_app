@@ -42,7 +42,6 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
 
     already_translated = Asset.all({ :source_id => asset.external_id, :project_id => asset.project_id })
     finished_langs = already_translated.map { |at| at.language.downcase }
-    logger.info finished_langs.inspect
 
     if asset
       if asset.status == 0 || asset.status == 3
@@ -59,13 +58,13 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
               data[:id] = SecureRandom.uuid
               data[:language] = lang.name
               data[:status] = 2
-              data[:title] = translate_title(asset.title,lang.name)
-              data[:body] = translate_body(asset.body,lang.name)
+              data[:title] = translate_piglatin_title(asset.title,lang.name)
+              data[:body] = translate_piglatin(asset.body,lang.name)
               new_asset = Asset.new(data)
               if new_asset.save
                 ### Send new asset to OCM
                 ocmapp = OCMApp.first({ :user_id => auth_account.id })
-                if ocmapp
+                if ocmapp && project.type.to_i == 0
                   logger.info "Sending Post to Compendium"
                   logger.info data
                   result = ocm_create_post(data,ocmapp)
@@ -77,7 +76,7 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
                   new_assets << new_asset
                 else
                   new_asset.destroy
-                  errors << JSON.parse(result)["error"]
+                  errors << result.is_a?(Hash) ? result['error'] : JSON.parse(result)["error"]
                 end
               else
                 new_asset.errors.each do |e|

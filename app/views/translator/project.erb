@@ -62,10 +62,14 @@
         <h4 class="modal-title" id="myModalLabel"><span class="project-title"><%= project.name %></span> Settings</h4>
       </div>
       <div class="modal-body">
-        <h3>Project Title</h3>
-        <input type="text" class="form-control" id="project-title" value="<%= project.name %>" />
-        <h3>Project Description</h3>
-        <textarea class="form-control" rows="5" id="project-desc" ><%= project.description %></textarea>
+        <div class="form-group">
+          <h3>Project Title</h3>
+          <input type="text" class="form-control" id="project-title" value="<%= project.name %>" />
+        </div>
+        <div class="form-group">
+          <h3>Project Description</h3>
+          <textarea class="form-control" rows="5" id="project-desc" ><%= project.description %></textarea>
+        </div>
         <div class="clearfix"><button class="btn btn-info pull-right btn-update" onclick="updateProject('<%= project.id %>')">Update</button></div>
         
         <h3>Languages</h3>

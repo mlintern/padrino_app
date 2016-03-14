@@ -9,6 +9,7 @@ class Project
   property :description,        Text
   property :status,             Integer, :default => 0
   property :language,           String
+  property :type,               Integer, :default => 0
 
   validates_presence_of         :id
   validates_presence_of         :user_id

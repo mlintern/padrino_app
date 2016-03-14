@@ -1,7 +1,7 @@
 <i class="fa fa-gear fa-2x pull-right clickable" data-toggle="modal" data-target=".translator-settings"></i>
 
 <div class="page-header">
-  <h1>Translation Projects</h1>
+  <h1>Pig Latin Translation Projects<i class="fa fa-plus pull-right clickable" data-toggle="modal" data-target=".new-project"></i></h1>
 </div>
 
 <table id="list" class="table table-striped table-hover table-condensed">
@@ -52,7 +52,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Settings <% if ocmapp %>(<%= ocmapp.app_install_id %>)<% end %></h4>
+        <h4 class="modal-title">Settings <% if ocmapp %>(<%= ocmapp.app_install_id %>)<% end %></h4>
       </div>
       <div class="modal-body">
         <% if ocmapp %>
@@ -68,6 +68,34 @@
         <% else %>
           <div>There are no Apps setup for this account.</div>
         <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Project Modal -->
+<div class="modal fade new-project" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">New Project</h4>
+      </div>
+      <div class="modal-body">
+        <form class="row add-project-form">
+          <input type="hidden" name="app_install_id" value="<% if ocmapp %><%= ocmapp.app_install_id %><% end %>"/>
+          <input type="hidden" name="type" value="1"/>
+          <div class="form-group clearfix">
+            <label class="col-sm-5">Name</label>
+            <div class="col-sm-7"><input type="text" class="form-control" name="name" /></div>
+          </div>
+          <div class="form-group clearfix">
+            <label class="col-sm-5">Source Language</label>
+            <div class="col-sm-7"><input type="text" class="form-control" name="source_language" /></div>
+          </div>
+        </form>
+        <button class="btn btn-info pull-right" onclick="addProject()">Add</button>
+        <div class="clearfix"></div>
       </div>
     </div>
   </div>

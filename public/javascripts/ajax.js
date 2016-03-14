@@ -32,16 +32,25 @@ $.fn.serializeForm = function()
 	return o;
 };
 
+function uuid() {
+	function s4() {
+		return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1);
+	}
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		s4() + '-' + s4() + s4() + s4();
+}
+
 function flashSuccess (message) {
-	$('.flash-notice').html('<div class="alert alert-success" role="alert">'+message+'</div>');
+	$('.flash-notice').html('<div class="alert alert-success" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	window.scrollTo(0,0);
 	_.delay(function () { $('.flash-notice').html('')}, 3000);
 }
 
 function flashError (message) {
-	$('.flash-notice').html('<div class="alert alert-danger" role="alert">'+message+'</div>');
+	$('.flash-notice').html('<div class="alert alert-danger" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	window.scrollTo(0,0);
-	_.delay(function () { $('.flash-notice').html('')}, 5000);
 }
 
 function updatePhoto () {
@@ -216,6 +225,28 @@ function translateAsset (asset_id,refresh) {
 			if (refresh) {
 				setTimeout(function() { location.reload() }, 1000 );
 			}
+		}
+	});
+}
+
+function addProject () {
+	event.preventDefault();
+	$('.new-project').modal('hide');
+	var data = $('.add-project-form').serializeForm();
+	data['project_id'] = uuid();
+	$.ajax({
+		url: "/api/translator/create_project",
+		data: JSON.stringify(data),
+		dataType: 'json',
+		contentType: "application/json",
+		type: 'POST',
+		success: function(response) {
+			$('.translator-settings').modal('hide');
+			flashSuccess("Project Created Successfully.");
+			setTimeout(function() { location.reload() }, 1000 );
+		},
+		error: function(response) {
+			flashError(response['responseText']);
 		}
 	});
 }
