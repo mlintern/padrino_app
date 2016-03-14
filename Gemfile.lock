@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/mlintern/compendium-api
-  revision: d5053c80c9263cffb627630c327b55b39e830b16
+  revision: 84b366c30c3728b210a0b60139c6bbc90c4d39df
   specs:
-    compendium-api (0.17.1)
+    compendium-api (0.17.3)
       httparty (~> 0)
 
 GIT
@@ -20,14 +20,14 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.5.2)
+    activesupport (4.2.6)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    bcrypt (3.1.10)
+    bcrypt (3.1.11)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
     data_objects (0.10.17)
@@ -128,7 +128,7 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    rake (10.5.0)
+    rake (11.1.1)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
