@@ -56,7 +56,7 @@ PadrinoApp::App.controllers :api_projects, :map => '/api/projects' do
     data[:user_id] = account.id
     destination_languages = data["destination_languages"]
 
-    project = Project.new(remove_other_elements(data,[:id,:user_id,:name,:language,:description]))
+    project = Project.new(remove_other_elements(data,[:id,:user_id,:name,:language,:description,:type]))
     if project.save
       if destination_languages && destination_languages.length > 0
         destination_languages.each do |lang|

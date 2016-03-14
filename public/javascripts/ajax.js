@@ -233,9 +233,9 @@ function addProject () {
 	event.preventDefault();
 	$('.new-project').modal('hide');
 	var data = $('.add-project-form').serializeForm();
-	data['project_id'] = uuid();
+	data['type'] = 1
 	$.ajax({
-		url: "/api/translator/create_project",
+		url: "/api/projects",
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
