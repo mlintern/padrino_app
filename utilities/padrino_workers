@@ -17,7 +17,6 @@ fi
 
 
 BUNDLE=/usr/bin/bundle
-APPDIR=/var/www/padrino_app
 
 PROG="${BUNDLE} exec sidekiq -C ./config/sidekiq.yml -r ./config/boot.rb"
 PIDFILE="/var/run/padrino_workers/padrino_workers.pid"
@@ -38,7 +37,7 @@ start() {
 		chown $USER /var/run/padrino_workers
 	fi
 
-	cd #{APPDIR}
+	cd /var/www/padrino_app
 	daemon --user ${USER} --pidfile ${PIDFILE} ${PROG}  > /var/log/padrino_workers 2>&1
 	RETVAL=$?
 
