@@ -30,8 +30,8 @@ if [ -f "/etc/sysconfig/${MYNAME}" ]; then
 fi
 
 start() {
-
-
+	
+	[ -d /var/run/padrino_workers ] || mkdir /var/run/padrino_workers
 	# Ensure that /var/run/padrino_workers has proper permissions
 	if [ "`stat -c %U /var/run/padrino_workers`" != "$USER" ]; then
 		chown $USER /var/run/padrino_workers
