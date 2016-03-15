@@ -18,7 +18,7 @@ fi
 
 BUNDLE=/usr/bin/bundle
 
-PROG="${BUNDLE} exec sidekiq -C ./config/sidekiq.yml -r ./config/boot.rb"
+PROG="bundle exec sidekiq -C ./config/sidekiq.yml -r ./config/boot.rb"
 PIDFILE="/var/run/padrino_workers/padrino_workers.pid"
 LOCKFILE="/var/lock/subsys/padrino_workers"
 MYNAME=$(basename $0)
