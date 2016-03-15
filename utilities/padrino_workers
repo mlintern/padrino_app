@@ -30,14 +30,15 @@ if [ -f "/etc/sysconfig/${MYNAME}" ]; then
 fi
 
 start() {
-	
+	# Create dir if does not exist
 	[ -d /var/run/padrino_workers ] || mkdir /var/run/padrino_workers
+
 	# Ensure that /var/run/padrino_workers has proper permissions
 	if [ "`stat -c %U /var/run/padrino_workers`" != "$USER" ]; then
 		chown $USER /var/run/padrino_workers
 	fi
 
-	cd #{APP}
+	cd #{APPDIR}
 	daemon --user ${USER} --pidfile ${PIDFILE} ${PROG}  > /var/log/padrino_workers 2>&1
 	RETVAL=$?
 
