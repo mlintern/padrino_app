@@ -29,5 +29,8 @@ Padrino.configure_apps do
   set :protection, :except => :frame_options
 end
 
+require 'sidekiq/web'
+
 # Mounts the core application for this project
+Padrino.mount('PadrinoApp::Sidekiq').to('/sidekiq')
 Padrino.mount('PadrinoApp::App', :app_file => Padrino.root('app/app.rb')).to('/')

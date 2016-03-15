@@ -1,0 +1,8 @@
+---
+:verbose: true
+:concurrency: 1
+production:
+  :concurrency: 5
+:queues:
+  - default
+  - translate

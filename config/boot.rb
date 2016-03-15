@@ -14,6 +14,9 @@ require 'securerandom'
 require './env' if File.exists?('env.rb')
 Bundler.require(:default, RACK_ENV)
 
+# Load worker definitions
+require File.join(PADRINO_ROOT, 'config', 'workers.rb')
+
 ##
 # ## Enable devel logging
 #
@@ -32,23 +35,28 @@ Padrino::Logger::Config[:development] = { :log_level => log_level || :debug, :st
 # text_field :foo, :dialog => true
 # Generates: <input type="text" data-dialog="true" name="foo" />
 #
-# ## Add helpers to mailer
-#
-# Mail::Message.class_eval do
-#   include Padrino::Helpers::NumberHelpers
-#   include Padrino::Helpers::TranslationHelpers
-# end
 
 ##
 # Add your before (RE)load hooks here
 #
 Padrino.before_load do
+  
 end
 
 ##
 # Add your after (RE)load hooks here
 #
 Padrino.after_load do
+
+  # Sidekiq should log to our main log file.
+  Sidekiq.logger = Padrino.logger
+
+  Sidekiq.configure_client do |config|
+    config.redis = { :size => 5 } # Limit the client size, see http://manuel.manuelles.nl/blog/2012/11/13/sidekiq-on-heroku-with-redistogo-nano/
+  end
+  Sidekiq.configure_server do |config|
+    config.redis = { :size => 55 } # Limit the server size, see http://manuel.manuelles.nl/blog/2012/11/13/sidekiq-on-heroku-with-redistogo-nano/
+  end
   DataMapper.finalize
 end
 

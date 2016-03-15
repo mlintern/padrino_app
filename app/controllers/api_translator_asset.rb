@@ -67,8 +67,7 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
                 if ocmapp && project.type.to_i == 0
                   logger.info "Sending Post to Compendium"
                   logger.info data
-                  result = ocm_create_post(data,ocmapp)
-                  logger.info result
+                  logger.debug result = ocm_create_post(data,ocmapp)
                 else
                   result = true
                 end
@@ -76,7 +75,7 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
                   new_assets << new_asset
                 else
                   new_asset.destroy
-                  errors << result.is_a?(Hash) ? result['error'] : JSON.parse(result)["error"]
+                  errors << ( result.is_a?(Hash) ? result['error'] : JSON.parse(result)["error"] )
                 end
               else
                 new_asset.errors.each do |e|
@@ -87,7 +86,7 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
           end
           if errors.length > 0
             asset.update({:status => 3})
-            logger.error errors
+            logger.error errors.inspect
             return 400, { :success => false, :info => errors }.to_json
           else
             asset.update({:status => 1}) if languages.count > 0

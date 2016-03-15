@@ -26,17 +26,19 @@ gem 'dm-aggregates'
 gem 'dm-serializer'
 gem 'dm-types'
 gem 'dm-core'
+gem 'rake'
 gem 'json'
 gem 'httparty'
 gem "sinatra-flash", :require => "sinatra/flash"
 gem 'compendium-api', :git => 'https://github.com/mlintern/compendium-api'
 gem 'nretnil-password', :git => 'https://github.com/mlintern/nretnil-password'
 gem 'nretnil-fake-data', :git => 'https://github.com/mlintern/nretnil-fake-data'
+gem 'sidekiq'
 
 # Test requirements
 
 # Padrino Stable Gem
-gem 'padrino', '0.12.4'
+gem 'padrino', '0.13.1'
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'

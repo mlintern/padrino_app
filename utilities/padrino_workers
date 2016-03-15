@@ -1,0 +1,89 @@
+#! /bin/sh
+#
+# chkconfig: - 60 40
+# description:	Compendium PadrinoAPI Workers
+# processname: padrino
+# pidfile: /var/run/padrino_workers.pid
+
+. /etc/init.d/functions
+
+# Check that networking is up.
+. /etc/sysconfig/network
+
+if [ "$NETWORKING" = "no" ]
+then
+	exit 1
+fi
+
+
+BUNDLE=/usr/bin/bundle
+APP=/var/www/padrino_app
+
+PROG="${BUNDLE} exec sidekiq -C #{APP}/config/sidekiq.yml -r #{APP}/config/boot.rb"
+PIDFILE="/var/run/padrino_workers/padrino_workers.pid"
+LOCKFILE="/var/lock/subsys/padrino_workers"
+MYNAME=$(basename $0)
+USER="padrino"
+
+if [ -f "/etc/sysconfig/${MYNAME}" ]; then
+	. /etc/sysconfig/${MYNAME}
+fi
+
+start() {
+
+
+	# Ensure that /var/run/padrino_workers has proper permissions
+	if [ "`stat -c %U /var/run/padrino_workers`" != "$USER" ]; then
+		chown $USER /var/run/padrino_workers
+	fi
+
+	cd /var/www/template_manager
+	daemon --user ${USER} --pidfile ${PIDFILE} ${PROG}  > /var/log/padrino_workers 2>&1
+	RETVAL=$?
+
+	echo
+	[ $RETVAL -eq 0 ] && touch ${LOCKFILE}
+
+}
+
+stop() {
+	if [ ! -f "$PIDFILE" ]; then
+		return 0
+	fi
+	echo -n $"Stopping $prog: "
+	killproc -p ${PIDFILE} ${BUNDLE}
+	RETVAL=$?
+	echo
+	if [ $RETVAL -eq 0 ] ; then
+		rm -f ${LOCKFILE} ${PIDFILE}
+	fi
+
+}
+
+restart () {
+	stop
+	start
+}
+
+
+# See how we were called.
+case "$1" in
+	start)
+	start
+	;;
+	stop)
+	stop
+	;;
+	status)
+	status -p $PIDFILE $prog
+	RETVAL=$?
+	;;
+	restart)
+	restart
+	;;
+	*)
+	echo "Usage: $0 {start|stop|status|restart}"
+	exit 1
+esac
+
+exit $RETVAL

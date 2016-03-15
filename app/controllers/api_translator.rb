@@ -291,7 +291,7 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
     status = ["open","in_progress","canceled","complete"]
     if ocmapp
       if params[:project_ids]
-        projects = Project.all( :user_id => ocmapp.user_id )
+        projects = Project.all( :user_id => ocmapp.user_id, :type => 0 )
         projects.each do |p|
           if params[:project_ids].include? p.id.to_s 
             data << { :ocm_project_id => p.id, :status => { :ocm_code => status[p.status] } }
@@ -300,9 +300,9 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
         data = data[0] if data.count == 1
       else
         if params[:closed]
-          projects = Project.all( :user_id => ocmapp.user_id, :status => [2,3] )
+          projects = Project.all( :user_id => ocmapp.user_id, :status => [2,3], :type => 0 )
         else
-          projects = Project.all( :user_id => ocmapp.user_id, :status => [0,1] )
+          projects = Project.all( :user_id => ocmapp.user_id, :status => [0,1], :type => 0 )
         end
         projects.each do |p|
           data << { :ocm_project_id => p.id, :status => { :ocm_code => status[p.status] } }
@@ -341,6 +341,80 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
       end
     else
       return 404, { :success => false, :info => "Could not Find App" }
+    end
+  end
+
+  ####
+  # Endpoint: POST/PUT /api/translator/add_source_auto_return
+  # Description: endpoint to add source to project
+  # Authorization: translate
+  # Arguments: data from compendium
+  # Response: information as json object
+  ####
+  [ :post, :put ].each do |method|
+    send method, :add_source_auto_return do
+      data = JSON.parse request.body.read
+      logger.info data
+
+      ocmapp = OCMApp.first({ :app_install_id => data["app_install_id"] })
+
+      if ocmapp
+        project = Project.get(data["project_id"])
+        if project
+          if project.status == 0
+            begin
+              project_assets = data["source_materials_add"]
+              project_assets.each do |pa|
+                logger.info pa
+                asset = Asset.first({ :external_id => pa["id"], :project_id => project.id })
+                if asset
+                  logger.info "Existing Asset"
+                  unless asset.update(remove_elements(pa,[:id]))
+                    errors = []
+                    asset.errors.each do |e|
+                      logger.error e
+                      errors << e
+                    end
+                    return 400, { :success => false, :info => errors }.to_json
+                  end
+                else
+                  logger.info "New Asset"
+                  new_asset = pa
+                  new_asset[:language] = data["source_language"]
+                  new_asset[:project_id] = project.id
+                  new_asset[:external_id] = pa["id"]
+                  new_asset[:id] = SecureRandom.uuid
+                  new_asset[:source] = 1
+                  asset = Asset.new(new_asset)
+                  if asset.save
+                    user = Account.get(ocmapp.user_id)
+                    logger.debug Background.perform_async(asset.id,user.auth_token)
+                  else
+                    errors = []
+                    asset.errors.each do |e|
+                      logger.error e
+                      errors << e
+                    end
+                    return 400, { :success => false, :info => errors }.to_json
+                  end
+                end
+              end
+              return 200, { :success => true, :info => "Assets updated or added" }.to_json
+            rescue Exception => e
+              logger.error e
+              logger.error e.backtrace
+              return 500, { :success => false, :info => e }.to_json
+            end
+          else
+            return 400, { :success => false, :info => "Project is not open" }.to_json
+          end
+        else
+          return 404, { :success => false, :info => "Project does not exist." }.to_json
+        end
+      else
+        return 400, { :success => false, :info => "There was no App with this ID" }.to_json
+      end
+      
     end
   end
 

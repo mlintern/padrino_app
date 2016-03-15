@@ -517,11 +517,11 @@ PadrinoApp::App.helpers do
   def get_callback_auth(url,username,api_key)
     begin
       auth = { :username => username, :password => api_key }
-      response = HTTParty.get(URI.unescape(url), :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
-      logger.info response
+      logger.info response = HTTParty.get(URI.unescape(url), :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
       return true
     rescue Exception => e
       logger.error e
+      logger.error e.backtrace
       return false
     end
   end
@@ -535,11 +535,11 @@ PadrinoApp::App.helpers do
   ####
   def post_callback(url,data={})
     begin
-      response = HTTParty.post(URI.unescape(url), :body => data, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
-      logger.info response
+      logger.info response = HTTParty.post(URI.unescape(url), :body => data, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
       return true
     rescue Exception => e
       logger.error e
+      logger.error e.backtrace
       return false
     end
   end
@@ -556,14 +556,14 @@ PadrinoApp::App.helpers do
   def post_callback_auth(url,data,username,api_key)
     begin
       auth = { :username => username, :password => api_key }
-      response = HTTParty.post(URI.unescape(url), :body => data.to_json, :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
-      logger.info response
+      logger.info response = HTTParty.post(URI.unescape(url), :body => data.to_json, :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
       if response.key? "error"
         return false
       end
       return true
     rescue Exception => e
       logger.error e
+      logger.error e.backtrace
       return false
     end
   end
@@ -613,6 +613,7 @@ PadrinoApp::App.helpers do
       return true
     rescue Exception => e
       logger.error e
+      logger.error e.backtrace
       return false
     end
   end
@@ -631,7 +632,6 @@ PadrinoApp::App.helpers do
       post = { :post_attributes => { :title => data[:title], :body => data[:body] }, :remote_project_id => data[:project_id], :source_post_id => data[:source_id], :language_code => data[:language] }
       url = "/api/translation_projects/"+ocmapp.app_install_id+"/create_translation"
       response = HTTParty.post(domain+url, :body => post.to_json, :basic_auth => auth, :verify => false, :headers => { 'Content-Type' => 'application/x-json' } )
-      logger.info response
       if response.code == 200
         return true
       else
@@ -639,6 +639,7 @@ PadrinoApp::App.helpers do
       end
     rescue Exception => e
       logger.error e
+      logger.error e.backtrace
       return false
     end
   end
