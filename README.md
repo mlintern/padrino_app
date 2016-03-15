@@ -21,6 +21,22 @@ chmod 777 db/padrino_app_production.db
 
 
 
+Setup Redis:
+
+development: brew install redis
+production: yum install redis
+
+
+
+Move Workers initi script:
+
+sudo cp utilities/padrino_workers /etc/init.d/padrino_workers
+
+Start Workers
+
+sudo service padrino_workers start
+
+
 Current Routes:
 
 bundle exec rake routes
