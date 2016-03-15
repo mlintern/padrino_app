@@ -15,6 +15,7 @@ then
 	exit 1
 fi
 
+export PATH=/root/.rbenv/shims:/root/.rbenv/bin:/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/root/bin
 
 BUNDLE=/usr/bin/bundle
 
@@ -32,13 +33,8 @@ start() {
 	# Create dir if does not exist
 	[ -d /var/run/padrino_workers ] || mkdir /var/run/padrino_workers
 
-	# Ensure that /var/run/padrino_workers has proper permissions
-	if [ "`stat -c %U /var/run/padrino_workers`" != "$USER" ]; then
-		chown $USER /var/run/padrino_workers
-	fi
-
 	cd /var/www/padrino_app
-	daemon --user ${USER} --pidfile ${PIDFILE} ${PROG}  > /var/log/padrino_workers 2>&1
+	daemon --pidfile ${PIDFILE} ${PROG}  > /var/log/padrino_workers 2>&1
 	RETVAL=$?
 
 	echo

@@ -31,6 +31,7 @@ production: yum install redis
 Move Workers initi script:
 
 sudo cp utilities/padrino_workers /etc/init.d/padrino_workers
+sudo chmod 755 /etc/init.d/padrino_workers
 
 Start Workers
 
