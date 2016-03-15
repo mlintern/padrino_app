@@ -24,8 +24,7 @@ chmod 777 db/padrino_app_production.db
 Setup Redis:
 
 development: brew install redis
-production: yum install redis
-
+production: yum install redis (you may need to install by hand if version is not high enough)
 
 
 Move Workers initi script:
