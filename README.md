@@ -32,9 +32,15 @@ Move Workers initi script:
 sudo cp utilities/padrino_workers /etc/init.d/padrino_workers
 sudo chmod 755 /etc/init.d/padrino_workers
 
-Start Workers
+
+Start Workers on Production:
 
 sudo service padrino_workers start
+
+
+Start Workers on Development in forground:
+
+ruby utilities/start_workers.rb
 
 
 Current Routes:
