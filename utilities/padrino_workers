@@ -7,17 +7,7 @@
 
 . /etc/init.d/functions
 
-# Check that networking is up.
-. /etc/sysconfig/network
-
-if [ "$NETWORKING" = "no" ]
-then
-	exit 1
-fi
-
 export PATH=/root/.rbenv/shims:/root/.rbenv/bin:/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/root/bin
-
-BUNDLE=/usr/bin/bundle
 
 PROG="bundle exec sidekiq -C ./config/sidekiq.yml -r ./config/boot.rb"
 PIDFILE="/var/run/padrino_workers/padrino_workers.pid"
@@ -34,7 +24,7 @@ start() {
 	[ -d /var/run/padrino_workers ] || mkdir /var/run/padrino_workers
 
 	cd /var/www/padrino_app
-	daemon --pidfile ${PIDFILE} ${PROG}  > /var/log/padrino_workers 2>&1
+	daemon --make-pidfile ${PIDFILE} ${PROG} > /var/log/padrino_workers 2>&1
 	RETVAL=$?
 
 	echo
@@ -46,8 +36,8 @@ stop() {
 	if [ ! -f "$PIDFILE" ]; then
 		return 0
 	fi
-	echo -n $"Stopping $prog: "
-	killproc -p ${PIDFILE} ${BUNDLE}
+	echo -n $"Stopping $PROG: "
+	killproc -p ${PIDFILE}
 	RETVAL=$?
 	echo
 	if [ $RETVAL -eq 0 ] ; then
