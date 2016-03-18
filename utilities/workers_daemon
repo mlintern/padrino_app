@@ -4,6 +4,8 @@
 # description: workers daemon
 # processname: workers_daemon
 
+export PATH=/root/.rbenv/shims:/root/.rbenv/bin:/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/root/bin
+
 DAEMON_PATH="/var/www/padrino_app"
 
 DAEMON="bundle exec sidekiq"
@@ -12,14 +14,13 @@ DAEMONOPTS="-C ./config/sidekiq.yml -r ./config/boot.rb"
 NAME=worker_daemon
 DESC="My daemon description"
 PIDFILE=/var/run/$NAME.pid
-LOGFILE=/var/log/$NAME.log
 SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
 start)
 	printf "%-50s" "Starting $NAME..."
 	cd $DAEMON_PATH
-	PID=`$DAEMON $DAEMONOPTS > $LOGFLE 2>&1 & echo $!`
+	PID=`$DAEMON $DAEMONOPTS > /var/log/$NAME.log 2>&1 & echo $!`
 	#echo "Saving PID" $PID " to " $PIDFILE
 		if [ -z $PID ]; then
 			printf "%s\n" "Fail"
