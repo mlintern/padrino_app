@@ -29,13 +29,13 @@ production: yum install redis (you may need to install by hand if version is not
 
 Move Workers initi script:
 
-sudo cp utilities/padrino_workers /etc/init.d/padrino_workers
-sudo chmod 755 /etc/init.d/padrino_workers
+sudo cp utilities/workers_daemon /etc/init.d/workers_daemon
+sudo chmod 755 /etc/init.d/workers_daemon
 
 
 Start Workers on Production:
 
-sudo service padrino_workers start
+sudo service workers_daemon start
 
 
 Start Workers on Development in forground:
