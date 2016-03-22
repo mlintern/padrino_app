@@ -6,13 +6,13 @@ GIT
       httparty (~> 0)
 
 GIT
-  remote: https://github.com/mlintern/nretnil-fake-data
+  remote: https://github.com/nretnilkram/nretnil-fake-data
   revision: 712ef91f4ae7c59ea610ff674617387942ef2635
   specs:
     nretnil-fake-data (0.1.6)
 
 GIT
-  remote: https://github.com/mlintern/nretnil-password
+  remote: https://github.com/nretnilkram/nretnil-password
   revision: 61f2691c0675cf6ced1962dd1f9e09098acd3093
   specs:
     nretnil-password (0.1.1)
