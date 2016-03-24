@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
     <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
@@ -37,11 +33,11 @@
       
       <% unless current_user.nil? %>
       <div class="nav navbar-nav navbar-right hidden-xs">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><div class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" />&nbsp;<%= current_user.name %>&nbsp;<%= current_user.surname %></div></a>
+        <a class="dropdown-toggle user-menu-dropdown" data-toggle="dropdown" href="#"><div class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" />&nbsp;<%= current_user.name %>&nbsp;<%= current_user.surname %></div></a>
         <ul class="dropdown-menu user-nav">
           <li><% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i>&nbsp;Accounts</a></li><% end %></li>
           <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-cog fa-fw"></i>&nbsp;Profile Settings</a></li>
-          <li><a href="/sessions/destroy"><i class="fa fa-power-off fa-fw"></i>&nbsp;Log Out</a></li>
+          <li><a href="/sessions/destroy" class="logout-btn"><i class="fa fa-power-off fa-fw"></i>&nbsp;Log Out</a></li>
         </ul>
       </div>
       <% end %>
@@ -86,11 +82,13 @@
 
     <%= javascript_include_tag 'third_party/bootstrap.min', 'third_party/underscore.min', 'third_party/clipboard.min', :application, :ajax %>
 
-    <script>
+    <script type="text/javascript">
       new Clipboard('.btn-copy');
     </script>
 
     <% if !current_user.nil? && permission_check('user',false) %><%= erb :'base/todos', :layout => false %><% end %>
+
+    <script type="text/javascript">$(document).ready(function(){$('body').addClass('nretnil-document-ready');});</script>
 
   </body>
 </html>
