@@ -88,6 +88,7 @@ class ApplicationTests < Minitest::Test
     @driver.text_field(:id, "password").set(password)
     @driver.button(:css, '.sign-in-btn').click
     wait_till_page_loads
+    assert !@driver.url.include?('/sessions/new')
   end
 
   def sign_out
@@ -97,6 +98,7 @@ class ApplicationTests < Minitest::Test
     @driver.a(:css, '.logout-btn').wait_until_present
     @driver.a(:css, '.logout-btn').click
     wait_till_page_loads
+    assert @driver.url.include?('/sessions/new')
   end
 
   def teardown
