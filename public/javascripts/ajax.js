@@ -234,6 +234,7 @@ function addProject () {
 	$('.new-project').modal('hide');
 	var data = $('.add-project-form').serializeForm();
 	data['type'] = 1
+	data["destination_languages"] = [{"name":"Pig Latin","code":"pl"}]
 	$.ajax({
 		url: "/api/projects",
 		data: JSON.stringify(data),

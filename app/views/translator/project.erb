@@ -2,7 +2,7 @@
 <i class="fa fa-gear fa-2x pull-right clickable" data-toggle="modal" data-target=".project-settings"></i>
 
 <div class="page-header">
-  <h1>Project: <span class="project-title"><%= project.name %></span> <small class="pull-right language-list"><% languages.each do |lang| %><span data-language="<%= lang.id %>"> <%= lang.name %> </span><% end %></small></h1>
+  <h1>Project: <span class="project-title"><%= project.name %></span> <small class="pull-right language-list"><% languages.each do |lang| %><span data-language="<%= lang.id %>"> <%= lang.name %> (<%= lang.code %>)</span><% end %></small></h1>
   <div class="project-desc"><%= project.description %></div>
 </div>
 
@@ -111,8 +111,8 @@
         </table>
         <div class="add-language">
           <div class="row">
-            <div class="col-xs-5"><input type="text" class="form-control" id="language-name" /></div>
-            <div class="col-xs-5"><input type="text" class="form-control" id="language-code" /></div>
+            <div class="col-xs-5"><input type="text" class="form-control" id="language-name" value="Pig Latin"/></div>
+            <div class="col-xs-5"><input type="text" class="form-control" id="language-code" value="pl"/></div>
             <div class="col-xs-2"><button class="btn btn-info btn-block" onclick="addLanguage('<%= project.id %>')">Add</button></div>
           </div>
         </div>

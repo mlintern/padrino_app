@@ -28,7 +28,7 @@
         <% unless current_user.nil? %>
         <ul class="dropdown-menu main-nav" role="menu" aria-labelledby="tools">
           <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-          <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> Translator</a></li><% end %>
+          <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> PL Translator</a></li><% end %>
           <% if permission_check('curl',false) %><li><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
           <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
         </ul>
@@ -49,7 +49,7 @@
       <% unless current_user.nil? %>
       <ul class="collapse navbar-ex1-collapse navbar-nav list-unstyled mobile-menu">
         <li><a href="/"><i class="fa fa-home fa-fw"></i> Home</a></li>
-        <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> Translator</a></li><% end %>
+        <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> PL Translator</a></li><% end %>
         <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i>&nbsp;Accounts</a></li><% end %>
         <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
         <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-cog fa-fw"></i>&nbsp;Profile Settings</a></li>
