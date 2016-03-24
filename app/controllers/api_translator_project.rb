@@ -94,12 +94,14 @@ PadrinoApp::App.controllers :api_projects, :map => '/api/projects' do
 
     project = Project.get(params[:id])
     if project
-      if project.update(remove_other_elements(data,[:name,:description]))
-        ###
-        # Send updated project to Compendium
-        logger.info "Update Project"
-        signal_ocm(project)
-        ###
+      if project.update(remove_other_elements(data,[:name,:description,:language]))
+        if ( project.type != 1 )
+          ###
+          # Send updated project to Compendium
+          logger.info "Update Project"
+          signal_ocm(project)
+          ###
+        end
         return 200, project.to_json
       else
         errors = []

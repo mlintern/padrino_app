@@ -66,7 +66,7 @@
     if (list.length > 0) {
       listCheckboxes = list.find(listCheckboxesSelector);
       listCheckboxesLength = listCheckboxes.length;
-      
+
       // Confirm before deleting one item
       $('.list-row-action-delete-one').on('click', function(ev) {
         ev.preventDefault();
@@ -193,4 +193,5 @@
     var error_input;
     if (error_input = $('.has-error :input').first()) { error_input.focus(); }
   });
+
 }(window.jQuery);

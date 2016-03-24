@@ -17,6 +17,12 @@ GIT
   specs:
     nretnil-password (0.1.1)
 
+GIT
+  remote: https://github.com/nretnilkram/nretnil-translate
+  revision: 5796b5a6915123eee8a913694b4563eb5bbe86db
+  specs:
+    nretnil-translate (0.0.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -169,6 +175,7 @@ DEPENDENCIES
   json
   nretnil-fake-data!
   nretnil-password!
+  nretnil-translate!
   padrino (= 0.13.1)
   rake
   sidekiq

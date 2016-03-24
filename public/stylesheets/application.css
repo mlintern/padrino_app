@@ -361,13 +361,27 @@ background-color: transparent;
   border-radius: 8px;
 }
 
-/* -- Todo List -- */
-#todo {
-  
-}
-
 /* -- End Application -- */
-
+/* -- Translation Asset CSS -- */
+.asset-container {
+  position: relative;
+}
+.btn-copy {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  display: none;
+}
+.asset-container:hover > .btn-copy {
+  display: block;
+}
+.asset-body-html {
+  height: 1px;
+  overflow: hidden;
+  scroll: none;
+}
+/* -- End Translation Asset CSS -- */
 /* Mobile CSS*/
 @media (max-width: 767px) {
   .row {
@@ -459,5 +473,8 @@ background-color: transparent;
   }
   .nav-mobile li a {
     padding: 10px 0;
+  }
+  .btn-copy {
+    display: block;
   }
 }

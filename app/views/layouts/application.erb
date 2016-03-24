@@ -84,7 +84,11 @@
       </div>
     </footer>
 
-    <%= javascript_include_tag 'third_party/bootstrap', 'third_party/underscore', :application, :ajax %>
+    <%= javascript_include_tag 'third_party/bootstrap.min', 'third_party/underscore.min', 'third_party/clipboard.min', :application, :ajax %>
+
+    <script>
+      new Clipboard('.btn-copy');
+    </script>
 
     <% if !current_user.nil? && permission_check('user',false) %><%= erb :'base/todos', :layout => false %><% end %>
 

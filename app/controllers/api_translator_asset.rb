@@ -59,7 +59,7 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
               data[:language] = lang.name
               data[:status] = 2
               data[:title] = translate_piglatin_title(asset.title,lang.name)
-              data[:body] = translate_piglatin(asset.body,lang.name)
+              data[:body] = translate_piglatin(asset.body)
               new_asset = Asset.new(data)
               if new_asset.save
                 ### Send new asset to OCM

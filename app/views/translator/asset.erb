@@ -1,12 +1,18 @@
 <a class="btn btn-danger btn-lg btn-back" href="<%= back %>"><i class="fa fa-arrow-left"></i></a>
 
 <div class="page-header">
-  <h1><%= asset.title %> <% if asset.status == 0 && project.status == 1 %><button class="btn btn-warning btn-translate pull-right" onclick="translateAsset('<%= asset.id %>')">Translate</button> <% end %></h1>
+	<h1><%= asset.title %> <% if asset.status == 0 && project.status == 1 %><button class="btn btn-warning btn-translate pull-right" onclick="translateAsset('<%= asset.id %>')">Translate</button> <% end %></h1>
 </div>
 
-<div class="asset-body well"></div>
+<div class="asset-container">
+	<button class="btn btn-copy btn-info" data-clipboard-target=".asset-body-html div"><i class="fa fa-copy"></i> Copy Html</button>
+	<div class="asset-body well"></div>
+	<div class="asset-body-html"></div>
+</div>
 
 <script>
-  var decoded = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>').text();
-  $('.asset-body').html(decoded);
+	var decoded = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>').text();
+	var html = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>')
+	$('.asset-body').html(decoded);
+	$('.asset-body-html').html(html);
 </script>

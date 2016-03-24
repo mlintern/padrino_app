@@ -254,7 +254,11 @@ function addProject () {
 function updateProject (project_id) {
 	var newTitle = $('#project-title').val();
 	var newDesc = $('#project-desc').val();
+	var newLang = $('#project-lang').val();
 	var data = { "name" : newTitle, 'description' : newDesc };
+	if (newLang != null) {
+		data['language'] = newLang;
+	}
 	$.ajax({
 		url: "/api/projects/"+project_id,
 		data: JSON.stringify(data),

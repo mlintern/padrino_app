@@ -70,6 +70,12 @@
           <h3>Project Description</h3>
           <textarea class="form-control" rows="5" id="project-desc" ><%= project.description %></textarea>
         </div>
+        <% if project.type != 0 %>
+        <div class="form-group">
+          <h3>Project Source Language</h3>
+          <input class="form-control" id="project-lang" value="<%= project.language %>" />
+        </div>
+        <% end %>
         <div class="clearfix"><button class="btn btn-info pull-right btn-update" onclick="updateProject('<%= project.id %>')">Update</button></div>
         
         <h3>Languages</h3>

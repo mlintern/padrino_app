@@ -22,6 +22,7 @@ gem "sinatra-flash", :require => "sinatra/flash"
 gem 'compendium-api', :git => 'https://github.com/mlintern/compendium-api'
 gem 'nretnil-fake-data', :git => 'https://github.com/nretnilkram/nretnil-fake-data'
 gem 'nretnil-password', :git => 'https://github.com/nretnilkram/nretnil-password'
+gem 'nretnil-translate', :git => 'https://github.com/nretnilkram/nretnil-translate'
 gem 'sidekiq'
 
 # Padrino Stable Gem
