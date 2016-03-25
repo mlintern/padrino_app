@@ -32,7 +32,7 @@
       </div>
       
       <% unless current_user.nil? %>
-      <div class="nav navbar-nav navbar-right hidden-xs">
+      <div class="navbar-right hidden-xs">
         <a class="dropdown-toggle user-menu-dropdown" data-toggle="dropdown" href="#"><div class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" />&nbsp;<%= current_user.name %>&nbsp;<%= current_user.surname %></div></a>
         <ul class="dropdown-menu user-nav">
           <li><% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i>&nbsp;Accounts</a></li><% end %></li>

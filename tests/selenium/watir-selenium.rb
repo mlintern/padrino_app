@@ -16,7 +16,7 @@ require 'nretnil-fake-data'
 require 'nretnil-password'
 require './env' if File.exists?('env.rb')
 
-puts ENVIRONMENT_URL = ENV['TARGET_URL'] || 'https://app.nretnil.com'
+puts ENVIRONMENT_URL = ENV['TARGET_URL'] || 'http://app.nretnil.com'
 puts ENVIRONMENT_BROWSER = ENV["BROWSER"] || 'chrome'
 ROOT_DIR = File.expand_path(File.dirname(__FILE__))
 SCREENSHOT_DIR = ROOT_DIR + '/screenshots'
