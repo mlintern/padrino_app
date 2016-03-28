@@ -3,7 +3,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + './../watir-selenium')
 
-class SignInOut < ApplicationTests
+class SignInOut < SeleniumTests
 
   def test_sign_in_as_admin
     begin
