@@ -1,0 +1,13 @@
+.account-card {
+  .panel {
+    .panel-body{
+      min-height: 240px;
+
+      .account-image{
+        max-height: 210px;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+    }
+  }
+}

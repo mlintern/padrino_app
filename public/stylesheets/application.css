@@ -18,60 +18,7 @@ img {
 .pointer {
   cursor: pointer;
 }
-.footer {
-  margin-top: 25px;
-}
-.footer-links li {
-  display: inline-block;
-  margin-left: 10px;
-}
 /* -- End Layout -- */
-
-/* -- Begin Login -- */
-.login {
-  background-color: #fff;
-  -webkit-box-shadow: 0px 0px 20px #777;
-  -moz-box-shadow: 0px 0px 20px #777;
-  -o-box-shadow: 0px 0px 20px #777;
-  -ms-box-shadow: 0px 0px 20px #777; 
-  box-shadow: 0px 0px 20px #777;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  border-radius: 5px;
-  padding: 20px;
-  width: 50%;
-  margin: 10px auto 0;
-}
-.login-logo {
-  text-align: center;
-  padding: 20px 0;
-}
-.login-controls {
-  margin-left: 120px;
-}
-.login-input-label {
-  width: 100px;
-}
-.login-control-group-last, .login-bypass-label {
-  margin-bottom: 0 !important;
-}
-.input-boxes {
-  margin-top: 40px;
-}
-.login-body {
-  padding: 0 20px 30px 20px !important;
-}
-.login-footer {
-  margin-top: 0 !important;
-}
-/* iPad */
-@media (max-device-height: 1024px) and (orientation:landscape) {
-  .login {
-    margin-top: 30px;
-  }
-}
 
 /* -- Begin Errors -- */
 .custom-error {
@@ -128,88 +75,6 @@ ul.nav.navbar-nav.pull-right {
 .form-controls-radio {
   padding-top: 6px;
 }
-/* --- Begin Application::TopBar --- */
-.navbar {
-  -webkit-box-shadow: 0px 1px 10px #777;
-  -moz-box-shadow: 0px 1px 10px #777;
-  -o-box-shadow: 0px 1px 10px #777;
-  -ms-box-shadow: 0px 1px 10px #777;
-  box-shadow: 0px 1px 10px #777;
-  background: #FFFFFF;
-  min-height: 50px;
-  background-image: -webkit-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: -moz-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: -o-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: -ms-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-}
-.navbar-default .navbar-brand {
-color: #ccc;
-}
-.navbar-default .navbar-nav>li>a {
-color: #ccc;
-}
-.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-color: #fff;
-background-color: transparent;
-}
-.navbar-inner {
-  margin: 5px 0;
-}
-.navbar .small-user-photo{
-  height: 30px;
-  overflow: hidden;
-  font-size: 20px;
-}
-.navbar .small-user-photo img{
-  border-radius: 8px;
-  width: 30px;
-  background-color: #fff;
-}
-.nav>li>.navbar-nav-link {
-  padding: 17px 15px 13px;
-}
-.navbar-nav-form {
-  margin: 0;
-}
-.navbar-right a {
-  border: none;
-  background: none;
-  color: #ccc;
-  text-decoration: none;
-  padding: 15px 10px;
-  display: inline-block;
-}
-.navbar .nav a:hover {
-  text-decoration: none;
-  color: #fff;
-  background-color: transparent;
-}
-.navbar .navbar-brand {
-  margin-top: 10px;
-  padding: 0px 15px;
-  text-transform: uppercase;
-  font-size: 2.5em;
-  line-height: 1em;
-}
-.navbar .navbar-brand:hover {
-  color: #fff;
-  cursor: pointer;
-}
-.navbar-right {
-  margin-right: 15px;
-}
-.navbar .main-nav {
-  left: 15px;
-}
-.dropdown-menu>li>a {
-  padding: 8px 24px;
-  font-size: 16px;
-}
-.navbar-right .dropdown-menu.user-nav {
-  right: 15px;
-}
-/* --- End Application::TopBar --- */
 
 /* --- Begin Application::List --- */
 .list-column {
@@ -318,16 +183,6 @@ background-color: transparent;
 .LV_invalid {color: red;}
 .LV_valid {display: none;}
 
-/*Account Card View*/
-.account-card .panel .panel-body{
-  min-height: 240px;
-}
-.account-card .panel .panel-body .account-image{
-  max-height: 210px;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
 /* -- End Application -- */
 /* -- Translation Asset CSS -- */
 .asset-container {
@@ -354,61 +209,12 @@ background-color: transparent;
   .row {
     margin: 0;
   }
-  .navbar .navbar-brand {
-    font-size: 1.5em;
-    padding-top: 8px;
-  }
-  .navbar-toggle {
-    padding: 13px;
-  }
-  .navbar-fixed-top {
-    position: relative;
-    border-bottom: none;
-  }
-  .navbar-collapse {
-    padding: 0;
-  }
-  .navbar-nav {
-    margin: 0;
-    text-align: center;
-  }
-  .navbar-default .navbar-nav>li>a {
-    border-bottom: 1px #ddd solid;
-    display: block;
-  }
-  footer { 
-    position: relative;
-    margin-top: 30px;
-  }
   body {
     padding-top: 0;
     padding-bottom: 0;
   }
-  .login {
-    width: 100%;
-  }
-  .footer-links {
-    float: none;
-    padding: 0;
-  }
-  .footer-links-link {
-    color: #ddd;
-  }
-  footer p {
-    color: #ddd;
-  }
-  .footer-links li {
-    list-style: none;
-    display: block;
-    text-align: center;
-    margin: 5px 0;
-  }
   .feature-info {
     height: auto;
-  }
-  .copyright {
-    text-align: center;
-    float: none;
   }
   .base-text {
     padding: 0 20px;
@@ -433,13 +239,6 @@ background-color: transparent;
   }
   .list-row-action-wrapper-link {
     visibility: visible;
-  }
-  .nav-mobile li {
-    width: 33%;
-    text-align: center;
-  }
-  .nav-mobile li a {
-    padding: 10px 0;
   }
   .btn-copy {
     display: block;
