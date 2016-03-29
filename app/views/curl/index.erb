@@ -4,109 +4,111 @@
     <h1>Curl API Tool <br><small>This tool will make api calls to any application and display the associated curl command.</small></h1>
   </div>
 
-  <form class="form-horizontal" role="form" method="post" action="/curl">
+  <div class="form-container">
+    <form class="form-horizontal" role="form" method="post" action="/curl">
 
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Application</label>
+      <div class="form-group">
+          <label class="col-sm-4 control-label">Application</label>
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-xs-4">
+                <select name="session[protocol]" class="form-control">
+                  <option value="http://">http://</option>
+                  <option value="https://" selected>https://</option>
+                </select>
+              </div>
+              <div class="col-xs-8">
+                <input type="text" name="session[server]" value="app.compendium.com" class="form-control"/>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4"></div>
         <div class="col-sm-8">
-          <div class="row">
-            <div class="col-xs-4">
-              <select name="session[protocol]" class="form-control">
-                <option value="http://">http://</option>
-                <option value="https://" selected>https://</option>
-              </select>
+          <div class="form-group row">
+            <div class="col-sm-6 checkbox">
+              <label>
+                <input type="checkbox" id="public" name="session[public]" /> Public Access
+              </label>
             </div>
-            <div class="col-xs-8">
-              <input type="text" name="session[server]" value="app.compendium.com" class="form-control"/>
+            <div class="checkbox col-sm-6">
+              <label>
+                <input type="checkbox" id="secure" name="session[secure]" checked/> Secure?
+              </label>
             </div>
           </div>
         </div>
-    </div>
+      </div>
 
-    <div class="row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-8">
-        <div class="form-group row">
-          <div class="col-sm-6 checkbox">
-            <label>
-              <input type="checkbox" id="public" name="session[public]" /> Public Access
-            </label>
-          </div>
-          <div class="checkbox col-sm-6">
-            <label>
-              <input type="checkbox" id="secure" name="session[secure]" checked/> Secure?
-            </label>
-          </div>
+      <div class="form-group auth">
+        <label class="col-sm-4 control-label">Username</label>
+        <div class="col-sm-8">
+          <input type="text" id="f1" name="session[username]" value="" class="form-control"/>
         </div>
       </div>
-    </div>
 
-    <div class="form-group auth">
-      <label class="col-sm-4 control-label">Username</label>
-      <div class="col-sm-8">
-        <input type="text" id="f1" name="session[username]" value="" class="form-control"/>
+      <div class="form-group auth">
+        <label class="col-sm-4 control-label">Authentication Key</label>
+        <div class="col-sm-8">
+          <input type="text" id="f2" name="session[api_key]" value="" class="form-control"/>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group auth">
-      <label class="col-sm-4 control-label">Authentication Key</label>
-      <div class="col-sm-8">
-        <input type="text" id="f2" name="session[api_key]" value="" class="form-control"/>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">"Type of Call"</label>
+        <div class="col-sm-8">
+          <select name="session[call_type]" class="form-control" id="method">
+            <option value="get" selected>Get</option>
+            <option class="not-pub" value="post">Post</option>
+            <option class="not-pub" value="put">Put</option>
+            <option class="not-pub" value="delete">Delete</option>
+          </select>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="col-sm-4 control-label">"Type of Call"</label>
-      <div class="col-sm-8">
-        <select name="session[call_type]" class="form-control" id="method">
-          <option value="get" selected>Get</option>
-          <option class="not-pub" value="post">Post</option>
-          <option class="not-pub" value="put">Put</option>
-          <option class="not-pub" value="delete">Delete</option>
-        </select>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">Headers</label>
+        <div class="col-sm-8">
+          <input type="text" name="session[headers]" value='{ "Accept" => "application/vnd.compendium.blog;version=2,application/json" }' class="form-control"/>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="col-sm-4 control-label">Headers</label>
-      <div class="col-sm-8">
-        <input type="text" name="session[headers]" value='{ "Accept" => "application/vnd.compendium.blog;version=2,application/json" }' class="form-control"/>
+      <div class="form-group auth body">
+        <label class="col-sm-4 control-label">Body</label>
+        <div class="col-sm-8">
+          <input type="text" name="session[body]" value='{ :post_title => "Content Title", :url_lookup_token => "content-title" }' class="form-control"/>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group auth body">
-      <label class="col-sm-4 control-label">Body</label>
-      <div class="col-sm-8">
-        <input type="text" name="session[body]" value='{ :post_title => "Content Title", :url_lookup_token => "content-title" }' class="form-control"/>
+      <div class="form-group query">
+        <label class="col-sm-4 control-label">Query</label>
+        <div class="col-sm-8">
+          <input type="text" name="session[query]" value='{ :Count => 20, :Page => 1 }' class="form-control"/>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group query">
-      <label class="col-sm-4 control-label">Query</label>
-      <div class="col-sm-8">
-        <input type="text" name="session[query]" value='{ :Count => 20, :Page => 1 }' class="form-control"/>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">Uri</label>
+        <div class="col-sm-8">
+          <input type="text" id="uri" name="session[api_uri]" value="/api/content" class="form-control"/>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="col-sm-4 control-label">Uri</label>
-      <div class="col-sm-8">
-        <input type="text" id="uri" name="session[api_uri]" value="/api/content" class="form-control"/>
+      <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-4 checkbox">
+          <label>
+            <input type="checkbox" id="only_curl" name="session[only_curl]" /> Generate curl command only
+          </label>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <div class="col-sm-8 col-sm-offset-4 checkbox">
-        <label>
-          <input type="checkbox" id="only_curl" name="session[only_curl]" /> Generate curl command only
-        </label>
+      <div>
+        <input type="submit" class="btn btn-success btn-lg btn-block" value="Go"/>
       </div>
-    </div>
 
-    <div>
-      <input type="submit" class="btn btn-success btn-lg btn-block" value="Go"/>
-    </div>
-
-  </form>
+    </form>
+  </div>
 
 </div>

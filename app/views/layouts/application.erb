@@ -5,7 +5,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
     <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
     <%= favicon_tag "favicon.ico" %>
-    <%= stylesheet_link_tag 'third_party/bootstrap.min', 'third_party/bootstrap-theme.min', 'third_party/font-awesome.min', :application, :todo %>
+    <%= stylesheet_link_tag 'bootstrap-alta.min', :application, :todo %>
     <%= javascript_include_tag 'third_party/jquery.min', 'third_party/livevalidation_standalone' %>
   </head>
   <body>
@@ -61,26 +61,28 @@
         
         <div class="flash-notice"></div>
 
-        <div class='row'><%= yield %></div>
+        <%= yield %>
 
         <div class="footer-spacer"></div>
         
       </div>
     </div>
 
-    <footer>
-      <div class='footer-wrapper container'>
-        <p class='copyright'>Copyright &copy; <%= Date.today.year %> Nretnil App</p>
-        <ul class="footer-links">
-          <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com"><i class="fa fa-home"></i> web</a></li>
-          <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com/successbucket"><i class="fa fa-heart"></i> blog</a></li>
-          <li><a target="_blank" class="footer-links-link" href="https://github.com/mlintern/padrino_app"><i class="fa fa-github"></i> code</a></li>
-          <li><a target="_blank" class="footer-links-link" href="http://twitter.com/mlintern"><i class="fa fa-twitter"></i> twitter</a></li>
-        </ul>
+    <div class="footer container">
+      <div class='row'>
+        <div class='col-sm-6'>Copyright &copy; <%= Date.today.year %> Nretnil App</div>
+        <div class="col-sm-6">
+          <ul class="footer-links text-right">
+            <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com"><i class="fa fa-home"></i> web</a></li>
+            <li><a target="_blank" class="footer-links-link" href="http://www.marklintern.com/successbucket"><i class="fa fa-heart"></i> blog</a></li>
+            <li><a target="_blank" class="footer-links-link" href="https://github.com/mlintern/padrino_app"><i class="fa fa-github"></i> code</a></li>
+            <li><a target="_blank" class="footer-links-link" href="http://twitter.com/mlintern"><i class="fa fa-twitter"></i> twitter</a></li>
+          </ul>
+        </div>
       </div>
-    </footer>
+    </div>
 
-    <%= javascript_include_tag 'third_party/bootstrap.min', 'third_party/underscore.min', 'third_party/clipboard.min', :application, :ajax %>
+    <%= javascript_include_tag 'bootstrap.min', 'third_party/underscore.min', 'third_party/clipboard.min', :application, :ajax %>
 
     <script type="text/javascript">
       new Clipboard('.btn-copy');

@@ -27,7 +27,8 @@ end
 
 task :compile_sass do
   system "sass sass/assets/stylesheets/_full.scss public/stylesheets/bootstrap-alta.min.css --style compressed"
-  system "cp -r sass/assets/fonts/* public/fonts"
+  system "cp -r sass/assets/javascripts/bootstrap.min.js public/javascripts/bootstrap.min.js"
+  system "cp -r sass/assets/fonts public/fonts"
   system "cp -r sass/assets/images/* public/images"
 end
 

@@ -1,7 +1,4 @@
 /* -- Begin Layout -- */
-html, body {
-  font-size: 16px;
-}
 body {
   padding: 70px 0 60px;
 }
@@ -21,45 +18,12 @@ img {
 .pointer {
   cursor: pointer;
 }
-footer {
-  position: fixed;
-  bottom: 0;
-  z-index: 1030;
-  width: 100%;
-  min-height: 60px;
-  border-top: 1px solid #eee;
-  padding: 15px 10px 10px;
-  -webkit-box-shadow: 0px 1px 20px #777;
-  -moz-box-shadow: 0px 1px 22px #777;
-  -o-box-shadow: 0px 1px 22px #777;
-  -ms-box-shadow: 0px 1px 22px #777;
-  box-shadow: 0px 1px 22px #777;
-  background-image: -webkit-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: -moz-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: -o-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: -ms-linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-  background-image: linear-gradient( 90deg, #285e8e, #5bc0de 50%, #285e8e );
-}
-footer p {
-  margin-bottom: 0;
-  color: #bcbcbc;
-}
-.copyright {
-    float: left;
-  }
-.footer-links {
-  float: right;
+.footer {
+  margin-top: 25px;
 }
 .footer-links li {
   display: inline-block;
-  margin-right: 10px;
-}
-.footer-links-link {
-  color: #bcbcbc;
-}
-.footer-links-link:hover {
-  color: #ffffff;
-  text-decoration: none;
+  margin-left: 10px;
 }
 /* -- End Layout -- */
 
@@ -150,6 +114,9 @@ ul.nav.navbar-nav.pull-right {
 }
 .tabs-content {
   padding: 30px 0;
+}
+.form-container {
+  margin: 30px 0;
 }
 .form-actions {
   margin-top: 25px;
