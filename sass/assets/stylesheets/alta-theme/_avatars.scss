@@ -1,0 +1,161 @@
+// Avatars
+//
+// Avatars correctly size/style entity images and/or stamps.
+//
+// .xs - asdasdf
+// .sm    - adf
+// .md    - adsf
+// .lg    - asdf
+// .xl    - adsf
+//
+// Markup:
+// <div class="avatar {$modifiers}">
+//     AV
+// </div>
+//
+//
+// Styleguide 1.0
+
+/* Avatars
+=================================================================== */
+
+// Variables
+$avatar-border-radius:  6px !default;
+$avatar-xs:             30px !default;
+$avatar-sm:             45px !default;
+$avatar-md:             60px !default;
+$avatar-lg:             90px !default;
+$avatar-xl:             120px !default;
+$avatar-bg:             #ccc !default;
+$avatar-color:          #fff !default;
+$avatar-badge-xl:       45px !default;
+
+// Component Styles
+.avatar {
+  border-radius: $avatar-border-radius;
+  background-color: $avatar-bg;
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-position:center;
+  text-align:center; 
+  overflow: hidden;
+  vertical-align:middle;
+  color: $avatar-color;
+  position:relative;
+  //Default to sm sizes
+  width:  $avatar-sm;
+  height: $avatar-sm;
+  font-size: ceil($avatar-sm * .5);
+  line-height: $avatar-sm;
+
+  img {
+    max-width:100%;
+    height:auto;
+    display:block;
+  }
+
+  &.xs {
+    width:  $avatar-xs;
+    height: $avatar-xs;
+    font-size: ceil($avatar-xs * .5);
+    line-height: $avatar-xs;
+  }
+  &.sm {
+    width:  $avatar-sm;
+    height: $avatar-sm;
+    font-size: ceil($avatar-sm * .5);
+    line-height: $avatar-sm;
+  }
+  &.md {
+    width:  $avatar-md;
+    height: $avatar-md;
+    font-size: ceil($avatar-md * .5);
+    line-height: $avatar-md;
+  }
+  &.lg {
+    width:  $avatar-lg;
+    height: $avatar-lg;
+    font-size: ceil($avatar-lg * .5);
+    line-height: $avatar-lg;
+  }
+  &.xl {
+    width:  $avatar-xl;
+    height: $avatar-xl;
+    font-size: ceil($avatar-xl * .5);
+    line-height: $avatar-xl;
+  }
+  i {
+    position:relative;
+    top:-1px;
+  }
+  &.circle {
+    border-radius: 50%;
+    &.avatar_border::before {
+      content:" ";
+      display:block;
+      position:absolute;
+      left:2%;
+      top:2%;
+      width:96%;
+      height:96%;
+      border:2px solid white;
+      border-radius:50%;
+    }
+  }
+}
+
+//avatar-group.  Needed as a wrapper for avatar and avatar-badge
+.avatar-group {
+  position:relative;
+  display: inline-block;
+}
+
+//avatar-badge.  places circle badge in the lower right corner of an avatar
+.avatar-badge {
+  height:$avatar-badge-xl;
+  width:$avatar-badge-xl;
+  border-radius:50%;
+  background-color:$avatar-bg;
+  position:absolute;
+  bottom:-2px;
+  right:-2px;
+  line-height: 40px;
+  font-size: 24px;
+  border:2px solid white;
+  color:$avatar-color;
+  text-align: center;
+  &.xs {
+    width:  ceil($avatar-xs * .5);
+    height: ceil($avatar-xs * .5);
+    font-size: ceil($avatar-xs * .33);
+    line-height: ceil($avatar-xs * .4);
+    border:1px solid white;
+  }
+  &.sm {
+    width:  ceil($avatar-sm * .5);
+    height: ceil($avatar-sm * .5);
+    font-size: ceil($avatar-sm * .25);
+    line-height: ceil($avatar-sm * .45);
+    border:1px solid white;
+  }
+  &.md {
+    width:  ceil($avatar-md * .45);
+    height: ceil($avatar-md * .45);
+    font-size: ceil($avatar-md * .25);
+    line-height: ceil($avatar-md * .36);
+  }
+  &.lg {
+    width:  ceil($avatar-lg * .4);
+    height: ceil($avatar-lg * .4);
+    font-size: ceil($avatar-lg * .2);
+    line-height: ceil($avatar-lg * .35);
+  }
+  &.xl {
+    //width:  ceil($avatar-xl * .4);
+    //height: ceil($avatar-xl * .4);
+    //font-size: ceil($avatar-xl * .2);
+    //line-height: ceil($avatar-xl * .36);
+  }
+}
+

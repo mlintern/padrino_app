@@ -28,9 +28,12 @@ gem 'sidekiq'
 # Padrino Stable Gem
 gem 'padrino', '0.13.1'
 
-# For Selenium Tests
+# For Selenium and Unit Tests
 gem "minitest"
 gem "minitest-retry"
 gem 'minitest-reporters', '~> 1.0.5', :group => "test"
 gem 'selenium-webdriver'
 gem 'watir-webdriver'
+
+# SASS Assets
+gem 'sass'

@@ -1,0 +1,57 @@
+// Variables
+
+
+// Component Styles
+.timeline {
+    position:relative;
+
+    .timeline-separator {
+        display:inline-block;
+        background-color:#ccc;
+        color:white;
+        padding: 4px 8px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        &:first-child {
+            margin-top:0px;
+        }
+    }
+
+    .timeline-item {
+        position:relative;
+        padding-bottom:16px;
+        &:before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            content: " ";
+            width: 4px;
+            background-color: #d1d2d3;
+            left: 13px;
+        }        
+    }
+
+    .timeline-badge {
+        float:left;
+        width:40px;
+    }
+
+    .timeline-body {
+        margin-left:40px;
+    }
+    .timeline-preview {
+        width:100%;
+        max-height: 300px;
+        overflow:hidden;
+        border-radius: 4px;
+        img {
+            max-width:100%;
+        }
+    }
+
+    .timeline-heading {
+
+    }
+
+
+} 

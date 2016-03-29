@@ -1,0 +1,77 @@
+@import "alta-theme/colors";
+
+$brand-primary:         $ui-blue;
+$brand-success:         $ui-green;
+$brand-info:            $ui-teal;
+$brand-warning:         $ui-orange;
+$brand-danger:          $ui-red;
+
+$body-bg:               $grey-3 !default;
+$text-color:            #515253 !default;
+$link-color:            #145c9e !default;
+
+$icon-font-path: "../fonts/bootstrap/" !default;
+
+$border-radius-base:        3px !default;
+$border-radius-large:       4px !default;
+$border-radius-small:       2px !default;
+
+$table-cell-padding:            12px !default;
+$table-condensed-cell-padding:  4px !default;
+$table-bg:                      #ffffff !default;
+$table-bg-hover:                $grey-3 !default;
+$table-bg-active:               #EAF5FB !default;
+$table-border-color:            $grey-blue-light !default;
+
+$dropdown-link-color:            #145c9e !default;
+$dropdown-link-hover-color:      #145c9e !default;
+
+// $screen-sm:                  668px !default;
+// $screen-md:                  960px !default;
+// $screen-lg:                  1366px !default;
+
+$navbar-margin-bottom:             0 !default;
+$navbar-default-bg:                $grey-3 !default;
+$navbar-default-link-color:                #333333 !default;
+$navbar-default-link-hover-color:          $brand-primary !default;
+$navbar-default-link-hover-bg:             $grey-blue-lightest !default;
+$navbar-default-link-active-color:         $brand-primary !default;
+$navbar-default-link-active-bg:            transparent !default;
+$navbar-default-brand-color:               #252525 !default;
+
+$nav-link-padding:                          7px 10px !default;
+$nav-link-hover-bg:                         transparent !default;
+$nav-disabled-link-color:                   $grey-disabled !default;
+$nav-disabled-link-hover-color:             $grey-disabled !default;
+$nav-tabs-active-link-hover-bg:             #ffffff !default;
+
+$state-success-bg:                #F1FAF3;
+$state-success-text:              $brand-success;
+$state-success-border:            darken($state-success-bg, 15%);
+
+$state-info-bg:                   #EAF5FB;
+$state-info-text:                 $brand-info;
+$state-info-border:               darken($state-info-bg, 10%);
+
+$state-warning-bg:                #FFF3DF;
+$state-warning-text:              $brand-warning;
+$state-warning-border:            darken($state-warning-bg, 10%);
+
+$state-danger-bg:                 #FFF3F3;
+$state-danger-text:               $brand-danger;
+$state-danger-border:             darken($state-danger-bg, 10%);
+
+$label-default-bg:                $neutral-blue-grey !default;
+
+$modal-content-border-color:      $neutral-blue-grey !default;
+$modal-backdrop-opacity:        .15 !default;
+$modal-header-border-color:     $grey-blue-light !default;
+
+$panel-inner-border:            $grey-blue-light !default;
+$panel-footer-bg:               #ffffff !default;
+$panel-default-text:            $text-color !default;
+$panel-default-border:          $grey-blue-light !default;
+$panel-action-color:            #CDCDCD;
+
+$badge-color:                   $neutral-blue-grey !default;
+$badge-bg:                      #eeeeee !default;

@@ -1,0 +1,44 @@
+//Stage
+
+//Variables
+$stage-padding: 20px 8px;
+$stage-bg: #fff;
+$stage-border-color: #d6dfe6;
+$stage-title-color: #515253;
+$stage-title-size: 20px;
+$state-subtitle-color: #919FAC;
+$state-subtitle-size: 12px;
+
+.stage {
+    padding:$stage-padding;
+    background-color: $stage-bg;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: $stage-border-color;
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+    align-items: center;
+
+    .stage-heading {
+        flex:3 0 0;
+    }
+    .stage-title {
+        font-size: $stage-title-size;
+        font-weight: normal;
+        margin:0;
+        color: $stage-title-color;
+    }
+    .stage-subtitle {
+        font-size: $state-subtitle-size;
+        color: $state-subtitle-color;
+        margin:2px 0 0 0;
+    }
+    .stage-actions {
+        text-align: right;
+        flex:1 0 0;
+        .btn {
+            margin-bottom: 4px;
+        }
+    }
+}

@@ -1,0 +1,67 @@
+#alta-navbar {
+  margin-bottom: 0;
+
+  .container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .navbar-collapse {
+    background-color: $grey-3;
+    margin-top: 0;
+    box-shadow: 0 3px 4px rgba(0,0,0,0.15);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+
+  .navbar-header {
+    padding: 0 10px 0;
+  }
+
+  .navbar-brand {
+    //default
+    background: transparent url('/images/oracle_logo_sm.png') no-repeat;
+    background-position: 0 45%;
+    position: relative;
+    min-width: 250px;
+    top: 0;
+    bottom: 0;
+    margin:  0 50px 0 10px;
+
+    &.small {
+      background: transparent url('/images/oracle_logo_sm.png') no-repeat 0 0;
+      width: 135px;
+    }
+
+    &::after {
+      width: 65%;
+      right: -20%;
+      top: 30%;
+      position: absolute;
+      content: 'OCM Network Apps';
+      color: $text-color;
+    }
+  }
+
+  .navbar-collapse {
+    padding: 0 10px 0;
+
+    .navbar-nav {
+      margin: 7.5px -10px;
+      @media (min-width: $grid-float-breakpoint-max) {
+        margin: 0;
+      }
+
+      > .active > a {
+        &,
+        &:hover,
+        &:focus {
+          box-shadow: inset 0px -4px $navbar-default-link-active-color;
+          @media (max-width: $grid-float-breakpoint-max) {
+            box-shadow: inset 4px 0px $navbar-default-link-active-color;
+          }
+        }
+  }
+}
+  }
+}

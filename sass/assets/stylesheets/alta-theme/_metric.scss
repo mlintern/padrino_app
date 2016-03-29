@@ -1,0 +1,79 @@
+// Metric
+//
+// Metrics are used to display a large value with a smaller key
+//
+// .metric_stacked - Will stack the value above the label
+// .metric_stacked.metric_left - Will align the text left when stacked
+// .metric_stacked.metric_right - Will align the text right when stacked
+//
+// Markup:
+// <div class="metric {$modifiers}">
+//   <div class="metric-value">
+//     10
+//   </div>
+//   <div class="metric-label">
+//     units
+//   </div>
+// </div>
+//
+//
+// Styleguide 2.0
+
+/* Metrics
+=================================================================== */
+
+// Variables
+$metric-value-color:  $text-color !default;
+$metric-label-color:  $gray-light !default;
+$metric-margin:       16px !default;
+$metric-value-font-size: $font-size-base * 3 !default;
+$metric-value-min-width: 48px !default;
+
+// Component Styles
+.metric {
+
+  margin-right:$metric-margin;
+
+  .metric-value {
+    display:inline-block;
+    font-size: $metric-value-font-size;
+    padding:0;
+    line-height: 1em;
+    color: $metric-value-color;
+    min-width:$metric-value-min-width;
+    text-align: right;
+  }
+
+  .metric-label {
+    display:inline-block;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $metric-label-color;
+    margin-left:8px;
+  }
+
+  &.pull-right {
+    margin-left:$metric-margin;
+    margin-right:0px;
+  }
+
+  &.metric_stacked {
+    margin:0;
+    .metric-value, .metric-label {
+      display:block;
+      text-align:center;
+      margin:0;
+    }
+    &.metric_left {
+      .metric-value, .metric-label{
+        text-align:left;
+      }
+    }
+    &.metric_right {
+      .metric-value, .metric-label {
+        text-align:right;
+      }
+    }
+  }
+}
+

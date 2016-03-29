@@ -1,0 +1,70 @@
+// Theme Colors
+// ----------------------------------------------------
+$hue-chartreuse:        #dedf54;
+$hue-yellow:            #fbce4a;
+$hue-orange:            #ed813e;
+$hue-red:               #e95b54;
+$hue-salmon:            #e85d88;
+$hue-fuschia:           #ca589d;
+$hue-violet:            #854e9b;
+$hue-purple:            #5a68ad;
+$hue-blue:              #309fdb;
+$hue-teal:              #13b6cf;
+$hue-aqua:              #2ebfbc;
+$hue-emerald:           #3caf85;
+$hue-green:             #81bb5f;
+
+$ui-chartreuse:        #dedf54;
+$ui-yellow:            #fbce4a;
+$ui-orange:            #ed813e;
+$ui-red:               #e95b54;
+$ui-salmon:            #e85d88;
+$ui-fuschia:           #ca589d;
+$ui-violet:            #854e9b;
+$ui-purple:            #5a68ad;
+$ui-blue:              #309fdb;
+$ui-teal:              #13b6cf;
+$ui-aqua:              #2ebfbc;
+$ui-emerald:           #3caf85;
+$ui-green:             #81bb5f;
+
+$ui-select:             $ui-blue;
+$ui-hover:              #85BBE7;
+$ui-select-background:  #e4f0fa;
+
+$neutral-blue-grey:     #919fab;
+
+$panel-grey:                #eff2f5;
+$panel-blue:                #e8f2fb;
+
+$header-grey:               #f5f5f5;
+
+// Neutrals
+$grey-blue-lightest:        #f7f8f9;
+$grey-blue-light:           #d6dfe6;
+$grey-light:                #f0f0f0;
+$grey-lightest:             #fafafa;
+$grey-disabled:             #9e9e9e;
+
+$grey-1:                #fcfcfc;
+$grey-2:                #f9f9f9;
+$grey-3:                #f6f6f6;
+$grey-5:                #f2f2f2;
+$grey-8:                #e8e8e8;
+$grey-10:               #e3e3e3;
+$grey-15:               #d4d4d4;
+$grey-20:               #c7c7c7;
+$grey-40:               #909090;
+$grey-50:               #777777;
+$grey-60:               #5e5e5e;
+
+//Background Colors
+.bg-white {
+  background-color: #ffffff; 
+}
+.bg-grey-3 {
+  background-color: $grey-3; 
+}
+.bg-grey-lightest {
+  background-color: $grey-lightest;
+}

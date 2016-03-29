@@ -1,0 +1,59 @@
+//maximum tab count found on a page
+$tabCount: 7;
+
+.nav.css-tabs.nav-tabs {
+
+  input[type="radio"].css-tab {
+    display: none;
+
+    &:checked {
+      + label {
+        color: $ui-select;
+        border: 1px solid $nav-tabs-active-link-hover-border-color;
+        border-top-width: 3px;
+        border-top-color: $ui-select;
+        border-bottom-color: white;
+        cursor: default;
+      }
+
+      @for $i from 0 through $tabCount {
+        &[id^="tab#{$i}"] {
+          ~ .css-tab-content.tab#{$i} {
+            display: block;
+          }
+          ~ .css-tab-content:not(.tab#{$i}) {
+            display: none;
+          }
+        }
+      }
+
+
+    }
+  }
+
+  label {
+    padding: $nav-link-padding;
+    margin-right: 2px;
+    line-height: $line-height-base;
+    border: 1px solid transparent;
+    border-top-width: 3px;
+    border-radius: $border-radius-base $border-radius-base 0 0;
+    margin-bottom: 0;
+    &:hover {
+      border-color: $nav-tabs-link-hover-border-color $nav-tabs-link-hover-border-color $nav-tabs-border-color;
+    }
+  }
+
+  .css-tab-content {
+    display: none;
+
+    > .panel {
+      padding: 10px;
+      margin-top: -1px;
+      border-top-right-radius: 0px;
+      border-top-left-radius: 0px;
+    }
+  }
+
+
+}

@@ -1,0 +1,57 @@
+/* Validatation & Alerts
+=================================================================== */
+.alert {
+  position:relative;
+  padding-left: $alert-padding * 3;
+  padding-right: $alert-padding * 2.5;
+  &.alert-page {
+    border-radius: 0px;
+    position:absolute;
+    width:100%;
+    z-index: 100;
+    border-top:0px;
+    border-right: 0px;
+    border-left:0px;   
+  }
+  &:before {
+    position:absolute;
+    font-family: 'FontAwesome';
+    top: $alert-padding;
+    left: $alert-padding;
+  }
+  &.alert-danger {
+    &:before {
+        content: "\f071"; // fa-exclamation-triangle
+        color:  $brand-danger;
+    }
+  }
+  &.alert-success {
+    &:before {
+        content: "\f058"; // fa-check-circle
+        color:$brand-success;
+    }
+  }
+  &.alert-info {
+    &:before {
+        content: "\f05a"; // fa-info-circle
+        color:$brand-info;
+    }
+  }
+  &.alert-warning {
+    &:before {
+        content: "\f071"; // fa-exclamation-triangle
+        color:$brand-warning;
+    }
+  }
+  .alert-title {
+    font-weight: bold;
+  }
+  button.close {
+    position:absolute;
+    right:0;
+    top:0;
+    padding:11px 12px;
+    margin-left: 4px;
+    outline: none;
+  }    
+}

@@ -1,0 +1,158 @@
+/* Drawer
+
+    Requirements
+    - can only be used inside a drawercontainer
+    - if you want fixed positioning, and the ability for a fixed footer, use .drawercontainer-fixed
+=================================================================== */
+
+//Variables
+$drawer-width: 320px !default;
+$drawer-timing: .25s !default;
+$pagecontainer-offset: $navbar-height +2 !default;
+$drawer-border-color: #ccc !default;
+
+//Component Styles - Mobile First
+.drawercontainer{
+  position:relative;
+  padding:0px;
+  width:100%;
+  overflow-x:hidden;
+  min-height:480px;
+
+  .page {
+    overflow-x:hidden;
+    overflow-y:auto;
+    left:0;
+    right:0;
+    -webkit-transition:all $drawer-timing ease-out;
+    -o-transition:all $drawer-timing ease-out;
+    transition:all $drawer-timing ease-out;
+  }
+
+  .drawer {
+    position: fixed;
+    background-color: white;
+    top: 0;
+    bottom:0;
+    width:100%;    
+    z-index:100;
+    -webkit-transition:all $drawer-timing ease-out;
+    -o-transition:all $drawer-timing ease-out;
+    transition:all $drawer-timing ease-out;
+
+    &.drawer-left {
+      left:0;
+      -webkit-transform:translateX(-100%);
+      -moz-transform:translateX(-100%);
+      -ms-transform:translateX(-100%);
+      -o-transform:translateX(-100%);
+      transform:translateX(-100%);   
+      border-right:1px solid $drawer-border-color;   
+    }
+    &.drawer-right {
+      right:0;
+      -webkit-transform:translateX(100%);
+      -moz-transform:translateX(100%);
+      -ms-transform:translateX(100%);
+      -o-transform:translateX(100%);
+      transform:translateX(100%);
+      border-left:1px solid $drawer-border-color;
+    }
+
+    .drawer-header {
+        position:absolute;
+        top:0;
+        right:0;
+        left:0;
+        min-height:51px;
+        background-color:#eee;
+        padding: 16px;
+        border-bottom:1px solid $drawer-border-color;
+    }
+    .drawer-body {
+        position:absolute;
+        top:53px;
+        right:0;
+        left:0;
+        bottom:0;
+        padding-top: 16px;
+        padding-right: 16px;
+        padding-left: 16px;
+        padding-bottom:60px;
+        overflow-x:hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+
+    }
+    .drawer-footer {
+        position:absolute;
+        bottom: 0;
+        right:0;
+        left:0;
+        padding: 8px 16px;
+        background-color:#fff;
+        border-top:1px solid $drawer-border-color;
+    }
+    //States:  Default is Closed/Off Screen
+    &.drawer-state-open {
+      -webkit-transform:translateX(0);
+      -moz-transform:translateX(0);
+      -ms-transform:translateX(0);
+      -o-transform:translateX(0);
+      transform:translateX(0);
+    }
+  }
+}
+//sm md
+@media screen and (min-width: $screen-sm) {
+  .drawercontainer {
+    &.drawercontainer-fixed {
+      position:absolute;
+      top: $pagecontainer-offset;
+      right:0;
+      bottom:0;
+      left:0;
+      .page {
+        position:absolute;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+      }
+    }
+
+    .drawer {
+      position:absolute;
+      width:$drawer-width;
+      border-bottom: 1px solid $drawer-border-color;
+    }
+  }
+}
+
+//lg
+@media screen and (min-width: $screen-lg) {
+
+  .drawer {
+    width:$drawer-width;
+    &.drawer-state-open.drawer-right {
+      &~.stage {
+        margin-right:$drawer-width;
+        width:auto;
+      }
+      &~.page {
+        margin-right:$drawer-width;
+        width:auto;
+      }
+    }
+    &.drawer-state-open.drawer-left {
+      &~.stage {
+        margin-left:$drawer-width;
+        width:auto;
+      }        
+      &~.page {
+        margin-left:$drawer-width;
+        width:auto;
+      }
+    }      
+  }
+} 
