@@ -1,21 +1,31 @@
 <div class="alta-navbar navbar navbar-fixed-top" role="navigation">
+
   <div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse" aria-expanded="false" aria-controls="navbar"><i class="fa fa-bars"></i></button>
-    <a class="navbar-brand toggle-left-nav pointer"><i class="fa fa-hand-pointer-o"></i> Nretnil Apps</a>
+    <a class="navbar-brand toggle-left-nav pointer"><% unless current_user.nil? %><i class="fa fa-hand-pointer-o"></i> <% end %>Nretnil Apps</a>
   </div>
+
   <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+    <% unless current_user.nil? %>
     <ul class="nav navbar-nav">
       <li class="left-nav-hidden"><a href="/"><i class="fa fa-home"></i> Home</a></li>
       <% if permission_check('translate',false) %><li class="left-nav-hidden"><a href="/translator"><i class="fa fa-globe fa-fw"></i> PL Translator</a></li><% end %>
       <% if permission_check('curl',false) %><li class="left-nav-hidden"><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
     </ul>
+    <% end %>
+
     <ul class="nav navbar-nav navbar-right">
+      <% unless current_user.nil? %>
       <% if permission_check('admin',false) %><li class="right-nav-hidden"><a href="/accounts"><i class="fa fa-users fa-fw"></i> Accounts</a></li><% end %>
       <li class="right-nav-hidden"><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-cog fa-fw"></i> Profile Settings</a></li>
       <li class="right-nav-hidden"><a href="/sessions/destroy" class="logout-btn"><i class="fa fa-power-off fa-fw"></i> Log Out</a></li>
       <li class="nav-avatar"><a class="toggle-right-nav pointer"><div class="avatar xs circle"><img alt="User Icon" src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" />&nbsp;<%= current_user.name %>&nbsp;<%= current_user.surname %></div></a></li>
       <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><span class="fa fa-list"></span> <span class="hidden-sm hidden-md hidden-lg">To Dos</span></a></li><% end %>
+      <% end %>
       <li><a href="#" data-toggle="modal" data-target="#help"><span class='fa fa-question-circle'></span> <span class="hidden-sm hidden-md hidden-lg">Help</span></a></li>
     </ul>
-  </div>
-</div>
+
+  </div> <!-- .collapse .navbar-collapse .navbar-ex1-collapse -->
+
+</div> <!-- .alta-navbar .navbar .navbar-fixed-top -->
