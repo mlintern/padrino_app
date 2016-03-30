@@ -3,70 +3,20 @@
   <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
-    <title><%= @title.present? ? "#{@title} | Nretnil App" : "Nretnil App" %></title>
+    <title><%= @title.present? ? "#{@title} | Nretnil Apps" : "Nretnil Apps" %></title>
     <%= favicon_tag "favicon.ico" %>
-    <%= stylesheet_link_tag 'bootstrap-alta.min', :application, :todo %>
+    <%= stylesheet_link_tag 'bootstrap-alta.min', :application %>
     <%= javascript_include_tag 'third_party/jquery.min', 'third_party/livevalidation_standalone' %>
   </head>
   <body>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <% unless current_user.nil? %>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <% end %>
-        <a class="navbar-brand main-menu-dropdown" id="tools" class="btn btn-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nretnil App</a>
-        <% unless current_user.nil? %>
-        <ul class="dropdown-menu main-nav" role="menu" aria-labelledby="tools">
-          <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-          <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> PL Translator</a></li><% end %>
-          <% if permission_check('curl',false) %><li><a href="/curl"><i class="fa fa-code"></i> Curl API Tool</a></li><% end %>
-          <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
-        </ul>
-        <% end %>
-      </div>
-      
-      <% unless current_user.nil? %>
-      <div class="navbar-right hidden-xs">
-        <a class="dropdown-toggle user-menu-dropdown" data-toggle="dropdown" href="#"><div class="small-user-photo"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" />&nbsp;<%= current_user.name %>&nbsp;<%= current_user.surname %></div></a>
-        <ul class="dropdown-menu user-nav">
-          <li><% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i> Accounts</a></li><% end %></li>
-          <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-cog fa-fw"></i> Profile Settings</a></li>
-          <li><a href="/sessions/destroy" class="logout-btn"><i class="fa fa-power-off fa-fw"></i> Log Out</a></li>
-        </ul>
-      </div>
-      <% end %>
 
-      <% unless current_user.nil? %>
-      <ul class="collapse navbar-ex1-collapse navbar-nav list-unstyled mobile-menu">
-        <li><a href="/"><i class="fa fa-home fa-fw"></i> Home</a></li>
-        <% if permission_check('translate',false) %><li><a href="/translator"><i class="fa fa-globe fa-fw"></i> PL Translator</a></li><% end %>
-        <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i> Accounts</a></li><% end %>
-        <% if permission_check('user',false) %><li><a class="pointer" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
-        <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-cog fa-fw"></i> Profile Settings</a></li>
-        <li><a href="/sessions/destroy"><i class="fa fa-power-off fa-fw"></i> Log Out</a></li>
-      </ul>
-      <% end %>
-    </div>
-
-    <div class='container main'>
-      <div class='main-wrapper'>
+    <%= render "layouts/alta-navbar.erb", :layout => false %>
         
-        <%= {:error => 'danger', :warning => 'warning', :success => 'success', :notice => 'info'}.map { |type, class_name| flash_tag(type, :class => "alert alert-#{class_name} fade in", :bootstrap => true) }.join.html_safe %>
-        
-        <div class="flash-notice"></div>
+    <%= {:error => 'danger', :warning => 'warning', :success => 'success', :notice => 'info'}.map { |type, class_name| flash_tag(type, :class => " container alert alert-#{class_name} fade in", :bootstrap => true) }.join.html_safe %>
+    
+    <div class="container flash-notice"></div>
 
-        <%= yield %>
-
-        <div class="footer-spacer"></div>
-        
-      </div>
-    </div>
+    <%= yield %>
 
     <div class="footer container">
       <div class='row'>
@@ -81,6 +31,8 @@
         </div>
       </div>
     </div>
+
+    <%= render "base/help-modal.erb", :layout => false %>
 
     <%= javascript_include_tag 'bootstrap.min', 'third_party/underscore.min', 'third_party/clipboard.min', :application, :ajax %>
 

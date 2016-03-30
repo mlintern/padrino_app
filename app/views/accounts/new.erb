@@ -1,14 +1,22 @@
-<div class="page-header">
-  <h1>Account Creator <small>Create new account</small></h1>
+<div class="stage">
+  <div class="stage-heading">
+    <div class="stage-title">Account Creator</div>
+    <div class="stage-subtitle">Create a new account.</div>
+  </div>
 </div>
 
-<%= erb :"accounts/tabs", :layout => false, :locals => { 'user' => account || nil, 'page' => "new" } %>
-<div class="tabs-content">
-	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2">
-			<% form_for :account, url(:accounts, :create), :class => 'form-horizontal' do |f| %>
-				<%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account } %>
-		  <% end %>
-		</div>
+<div class='container-fluid'>
+
+  <%= render "accounts/tabs", :layout => false, :locals => { 'user' => account || nil, 'page' => "new" } %>
+
+  <div class="tabs-content panel p-lg">
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <% form_for :account, url(:accounts, :create), :class => 'form-horizontal' do |f| %>
+          <%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account } %>
+        <% end %>
+      </div>
+    </div>
   </div>
+
 </div>

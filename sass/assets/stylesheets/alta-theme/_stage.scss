@@ -1,7 +1,7 @@
 //Stage
 
 //Variables
-$stage-padding: 20px 8px;
+$stage-padding: 20px 30px;
 $stage-bg: #fff;
 $stage-border-color: #d6dfe6;
 $stage-title-color: #515253;
@@ -19,6 +19,7 @@ $state-subtitle-size: 12px;
     justify-content: space-between;
     width:100%;
     align-items: center;
+    margin: 0 0 30px 0;
 
     .stage-heading {
         flex:3 0 0;

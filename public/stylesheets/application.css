@@ -1,22 +1,6 @@
 /* -- Begin Layout -- */
 body {
-  padding: 70px 0 60px;
-}
-img {
-  max-width: 100%;
-  height: auto;
-}
-.fa {
-  display: inline-block;
-}
-.main {
-  min-height: 100%;
-  height: auto !important;
-  margin: 0 auto;
-  padding: 0 10px;
-}
-.pointer {
-  cursor: pointer;
+  padding: 70px 0 0 0;
 }
 /* -- End Layout -- */
 
@@ -42,7 +26,6 @@ img {
 .custom-error-footer {
   padding-top: 20px;
 }
-
 /* -- Begin Notifications -- */
 .alert {
   text-align: center;
@@ -58,9 +41,6 @@ ul.nav.navbar-nav.pull-right {
   display: block;
   padding: 10px 50px;
   font-size: 20px;
-}
-.tabs-content {
-  padding: 30px 0;
 }
 .form-container {
   margin: 30px 0;
@@ -162,12 +142,6 @@ ul.nav.navbar-nav.pull-right {
 
 /* --- End Application::List --- */
 /* --- Begin Application::Base --- */
-.page-header {
-  margin: 20px 0 20px;
-}
-.page-header h1 small {
-  font-size: 50%;
-}
 .screenshot {
   margin-bottom: 20px;
 }

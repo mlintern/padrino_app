@@ -169,18 +169,8 @@
       var r1 = new LiveValidation( 'r1', { onlyOnSubmit: true } );
       r1.add( Validate.Presence );
 
-      // var r2 = new LiveValidation( 'r2', { onlyOnSubmit: true } );
-      // r2.add( Validate.Presence );
-
-      // var r3 = new LiveValidation( 'r3', { onlyOnSubmit: true } );
-      // r3.add( Validate.Presence );
-      // r3.add( Validate.Confirmation, { match: 'r2' } );
-
       var r4 = new LiveValidation( 'r4', { onlyOnSubmit: true } );
       r4.add( Validate.Presence );
-
-      // var r5 = new LiveValidation( 'r5', { onlyOnSubmit: true } );
-      // r5.add( Validate.Presence );
 
       var r6 = new LiveValidation( 'r6', { onlyOnSubmit: true } );
       r6.add( Validate.Presence );
@@ -190,8 +180,19 @@
     }
 
     // Autofocus first field with an error. (usability)
-    var error_input;
+    var error_input
     if (error_input = $('.has-error :input').first()) { error_input.focus(); }
+
+    $('.toggle-right-nav').click(function (e) {
+      e.preventDefault();
+      $('.left-nav-hidden').hide();
+      $('.right-nav-hidden').toggle();
+    });
+    $('.toggle-left-nav').click(function (e) {
+      e.preventDefault();
+      $('.right-nav-hidden').hide();
+      $('.left-nav-hidden').toggle();
+    });
   });
 
 }(window.jQuery);

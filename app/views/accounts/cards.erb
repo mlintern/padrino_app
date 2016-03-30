@@ -1,33 +1,43 @@
-<div class="page-header">
-  <h1>Accounts <small>View all user accounts</small></h1>
+<div class="stage">
+  <div class="stage-heading">
+    <div class="stage-title">Accounts</div>
+    <div class="stage-subtitle">View all user accounts.</div>
+  </div>
 </div>
 
-<%= erb :"accounts/tabs", :layout => false, :locals => { 'user' => account || nil, 'page' => "card" } %>
-<div class="tabs-content">
-  <div class="row">
-    <% accounts.each do |account| %>
-      <div class="col-sm-6 account-card" data-account-id="<%= account[:id] %>">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><%= account[:name] %> <%= account[:surname] %></h3>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-sm-5">
-                <div class="account-image"><img src="<%= account[:properties][:photo] || default("photo") %>"></div>
+<div class='container-fluid'>
+
+  <%= render "accounts/tabs.erb", :layout => false, :locals => { 'user' => account || nil, 'page' => "card" } %>
+
+  <div class="tabs-content panel p-lg">
+    <div class="container">
+      <div class="row">
+        <% accounts.each do |account| %>
+          <div class="col-sm-6 account-card" data-account-id="<%= account[:id] %>">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= account[:name] %> <%= account[:surname] %></h3>
               </div>
-              <div class="col-sm-7">
-                <p><%= account[:email] %></p>
-                <p>
-                <% account[:role].gsub('"',"").gsub('[',"").gsub(']',"").split(',').each do |role| %> 
-                  <span class="label label-primary"><%= role %></span>
-                <% end %>
-                </p>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <div class="account-image"><img alt="User Icon" src="<%= account[:properties][:photo] || default("photo") %>"></div>
+                  </div>
+                  <div class="col-sm-7">
+                    <p><%= account[:email] %></p>
+                    <p>
+                    <% account[:role].gsub('"',"").gsub('[',"").gsub(']',"").split(',').each do |role| %> 
+                      <span class="label label-primary"><%= role %></span>
+                    <% end %>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
   </div>
+
 </div>

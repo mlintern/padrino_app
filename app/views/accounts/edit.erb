@@ -1,27 +1,35 @@
-<div class="page-header">
-	<h1>Account Editor <small>Edit <%= @account.username %>'s account information</small></h1>
+<div class="stage">
+  <div class="stage-heading">
+    <div class="stage-title">Account Editor</div>
+    <div class="stage-subtitle">Edit <%= @account.username %>'s account information</div>
+  </div>
 </div>
 
-<%= erb :"accounts/tabs", :layout => false, :locals => { 'user' => account || nil, 'page' => "edit" } %>
-<div class="tabs-content">
-	<div class="row">
-		<div class="col-sm-4">
-			<div class="thumbnail">
-				<div class="row text-center"><div class="col-xs-10 col-xs-offset-1"><img class="user-photo" src="<%= photo_url %>" alt="User Photo"></div></div>
-				<div class="caption">
-					<input type="text" class="form-control photo-url" value="<%= photo_url %>" />
-					<p><button onclick="updatePhoto()" class="btn btn-success pull-right" role="button">Update</button><button onclick="clearPhoto()" class="btn btn-warning" role="button">Clear</button></p>
+<div class='container-fluid'>
+
+  <%= render "accounts/tabs.erb", :layout => false, :locals => { 'user' => account || nil, 'page' => "edit" } %>
+
+  <div class="tabs-content panel p-lg">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="thumbnail">
+					<div class="row text-center"><div class="col-xs-10 col-xs-offset-1"><img class="user-photo" src="<%= photo_url %>" alt="User Photo"></div></div>
+					<div class="caption">
+						<input type="text" class="form-control photo-url" value="<%= photo_url %>" />
+						<p><button onclick="updatePhoto()" class="btn btn-success pull-right" role="button">Update</button><button onclick="clearPhoto()" class="btn btn-warning" role="button">Clear</button></p>
+					</div>
+					<div>
+					<h4>Auth Token <i class="fa clickable fa-refresh" onClick="resetAuthToken('<%= account.id %>')"></i></h4>
+					<div class="well auth-token"><%= @account.auth_token %></div>
 				</div>
-				<div>
-				<h4>Auth Token <i class="fa clickable fa-refresh" onClick="resetAuthToken('<%= account.id %>')"></i></h4>
-				<div class="well auth-token"><%= @account.auth_token %></div>
+				</div>
 			</div>
+			<div class="col-sm-8 user-info" data-user-id="<%= account.id %>">
+				<% form_for :account, url(:accounts, :update, :id => account.id), :method => :put, :class => 'form-horizontal' do |f| %>
+					<%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account || nil } %>
+				<% end %>
 			</div>
-		</div>
-		<div class="col-sm-8 user-info" data-user-id="<%= account.id %>">
-			<% form_for :account, url(:accounts, :update, :id => account.id), :method => :put, :class => 'form-horizontal' do |f| %>
-				<%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account || nil } %>
-			<% end %>
 		</div>
 	</div>
+
 </div>
