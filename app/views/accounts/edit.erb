@@ -18,10 +18,10 @@
 						<input type="text" class="form-control photo-url" value="<%= photo_url %>" />
 						<p><button onclick="updatePhoto()" class="btn btn-success pull-right" role="button">Update</button><button onclick="clearPhoto()" class="btn btn-warning" role="button">Clear</button></p>
 					</div>
-					<div>
-					<h4>Auth Token <i class="fa clickable fa-refresh" onClick="resetAuthToken('<%= account.id %>')"></i></h4>
-					<div class="well auth-token"><%= @account.auth_token %></div>
-				</div>
+					<div class="caption">
+						<h4>Auth Token <i class="fa clickable fa-refresh" onClick="resetAuthToken('<%= account.id %>')"></i></h4>
+						<div class="well auth-token"><%= @account.auth_token %></div>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-8 user-info" data-user-id="<%= account.id %>">

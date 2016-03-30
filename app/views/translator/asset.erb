@@ -1,13 +1,20 @@
-<a class="btn btn-danger btn-lg btn-back" href="<%= back %>"><i class="fa fa-arrow-left"></i></a>
-
-<div class="page-header">
-	<h1><%= asset.title %> <% if asset.status == 0 && project.status == 1 %><button class="btn btn-warning btn-translate pull-right" onclick="translateAsset('<%= asset.id %>')">Translate</button> <% end %></h1>
+<div class="stage">
+  <div class="stage-heading">
+    <div class="stage-title"><%= asset.title %> <% if asset.status == 0 && project.status == 1 %><button class="btn btn-warning btn-translate pull-right" onclick="translateAsset('<%= asset.id %>')">Translate</button> <% end %></div>
+    <div class="stage-subtitle">Manage and Configure your Pig Latin translation projects.</div>
+  </div>
 </div>
 
-<div class="asset-container">
-	<button class="btn btn-copy btn-info" data-clipboard-target=".asset-body-html div"><i class="fa fa-copy"></i> Copy Html</button>
-	<div class="asset-body well"></div>
-	<div class="asset-body-html"></div>
+<a class="btn btn-danger btn-lg btn-back" href="<%= back %>"><i class="fa fa-arrow-left"></i></a>
+
+<div class="panel p-lg">
+
+	<div class="asset-container">
+		<button class="btn btn-copy btn-lg btn-info" data-clipboard-target=".asset-body-html div"><i class="fa fa-copy"></i> Copy Html</button>
+		<div class="asset-body well"></div>
+		<div class="asset-body-html"></div>
+	</div>
+
 </div>
 
 <script>
