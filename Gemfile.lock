@@ -1,21 +1,21 @@
 GIT
   remote: https://github.com/mlintern/compendium-api
-  revision: 84b366c30c3728b210a0b60139c6bbc90c4d39df
+  revision: b934a37910143efc001f97f71b24793d95aec477
   specs:
     compendium-api (0.17.3)
       httparty (~> 0)
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-fake-data
-  revision: 712ef91f4ae7c59ea610ff674617387942ef2635
+  revision: 4e7c1bb448550bfc568854789c460ee3f6f5aae9
   specs:
-    nretnil-fake-data (0.1.6)
+    nretnil-fake-data (0.1.7)
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-password
-  revision: 61f2691c0675cf6ced1962dd1f9e09098acd3093
+  revision: d69710db39c00ad835cbf934d152c1daf7459bed
   specs:
-    nretnil-password (0.1.1)
+    nretnil-password (0.1.2)
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-translate
@@ -93,9 +93,11 @@ GEM
     i18n (0.7.0)
     json (1.8.3)
     json_pure (1.8.3)
-    mail (2.6.3)
-      mime-types (>= 1.16, < 3)
-    mime-types (1.25.1)
+    mail (2.6.4)
+      mime-types (>= 1.16, < 4)
+    mime-types (3.0)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0221)
     minitest (5.8.4)
     minitest-reporters (1.0.20)
       ansi
@@ -107,7 +109,7 @@ GEM
     moneta (0.7.20)
     multi_json (1.11.2)
     multi_xml (0.5.5)
-    mustermann19 (0.4.2)
+    mustermann19 (0.4.3)
       enumerable-lazy
     padrino (0.13.1)
       padrino-admin (= 0.13.1)
@@ -146,11 +148,11 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    rake (11.1.1)
+    rake (11.1.2)
     redis (3.2.2)
     ruby-progressbar (1.7.5)
     rubyzip (1.2.0)
-    sass (3.4.21)
+    sass (3.4.22)
     selenium-webdriver (2.53.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)

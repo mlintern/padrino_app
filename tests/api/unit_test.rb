@@ -25,6 +25,14 @@ class UnitTests < Minitest::Test
     @SERVER = "http://localhost:3000"
   end
 
+  def get( url, auth = nil )
+    return HTTParty.get(@SERVER+url, :basic_auth => auth )
+  end
+
+  def post( url, auth = nil )
+    return HTTParty.get(@SERVER+url, :basic_auth => auth )
+  end
+
   def teardown
     
   end
