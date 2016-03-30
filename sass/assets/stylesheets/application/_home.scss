@@ -1,0 +1,14 @@
+.screenshot {
+  margin-bottom: 20px;
+
+  img {
+    cursor: pointer;
+  }
+}
+.feature-info {
+  height: 100px;
+
+  @media (max-width: $grid-float-breakpoint-max) {
+  	height: auto;
+  }
+}

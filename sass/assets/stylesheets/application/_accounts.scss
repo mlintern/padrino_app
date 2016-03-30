@@ -1,0 +1,143 @@
+.nav-tabs {
+
+  > li {
+
+    > a {
+      position: relative;
+      display: block;
+      padding: 10px 50px;
+      font-size: 20px;
+    }
+  }
+}
+
+.table {
+
+  .list-menu {
+    text-align: left;
+
+    .list-menu-toggle { 
+      
+      &:hover {
+        outline: none;
+        text-decoration: none;
+      }
+    }
+
+    .list-menu-divider {
+      height: 2px;
+    }
+
+    .list-menu-link-disabled {
+      color: #999;
+      cursor: default;
+      background-color: #fff;
+      background-image: inherit;
+      cursor: default;
+
+      &:hover {
+        background-color: #fff;
+        background-image: inherit;
+        cursor: default;
+      }
+    }
+
+    .list-menu-wrapper {
+
+      .list-menu-popover-delete-selected {
+        left: 160px;
+        top: 37px;
+        width: 250px;
+        text-align: center;
+
+        .list-menu-popover-delete-selected-btn {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .list-row {
+
+    &.list-row-selected {
+      background-color: #f5f5f5;
+    }
+
+    .list-column {
+      vertical-align: middle;
+
+      .list-row-action-wrapper {
+        position: relative;
+        text-align: right;
+        height: 100%;
+
+        @media (max-width: $grid-float-breakpoint-max) {
+          min-width: 60px;
+        }
+
+        .list-row-action-wrapper-link {
+          font-size: 1.3em;
+          padding: 4px;
+          display: inline-block;
+          visibility: hidden;
+
+          @media (max-width: $grid-float-breakpoint-max) {
+            visibility: visible;
+          }
+
+          &:hover {
+            text-decoration: none;
+            visibility: visible;
+          }
+        }
+
+        .list-row-action-popover-delete-one {
+          left: -120px;
+          top: -27px;
+          width: 200px;
+          text-align: center;
+
+          .list-row-action-popover-delete-one-btn {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      .list-column {
+        .list-row-action-wrapper {
+          .list-row-action-wrapper-link,
+          .list-row-action-wrapper-link-active {
+            visibility: visible;
+          }
+        }
+      }
+
+    }
+
+  }
+
+  .list-row-action-header {
+    width: 110px;
+    text-align: center;
+  }
+
+  .list-selectable {
+    width: 40px;
+    text-align: center;
+
+    .list-selectable-checkbox {
+      margin: 0;
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 25px;
+  text-align :right;
+}
+
+.form-controls-checkbox {
+  padding-top: 7px;
+}

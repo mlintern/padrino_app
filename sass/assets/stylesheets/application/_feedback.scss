@@ -1,0 +1,15 @@
+.alert {
+  text-align: center;
+}
+
+.LV_validation_message {
+  font-size: 12px;
+} 
+
+.LV_invalid {
+  color: $ui-red;
+}
+
+.LV_valid {
+  display: none;
+}
