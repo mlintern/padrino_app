@@ -8781,7 +8781,7 @@ button.close {
   border-radius: 5px;
   padding: 20px;
   width: 50%;
-  margin: 10px auto 0; }
+  margin: 30px auto; }
 
 .login-logo {
   text-align: center;
@@ -8817,7 +8817,7 @@ button.close {
   .login {
     width: 100%; } }
 .footer {
-  padding: 25px 15px; }
+  padding: 15px; }
   .footer .copyright {
     text-align: right; }
 
@@ -9108,7 +9108,8 @@ label[for='toggle-all'] {
   .todo-list li .destroy {
     display: block; } }
 .alert {
-  text-align: center; }
+  text-align: center;
+  margin-top: 15px; }
 
 .LV_validation_message {
   font-size: 12px; }
