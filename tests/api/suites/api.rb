@@ -5,47 +5,47 @@ class String
     return !self.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/).nil?
   end
   def has_sym
-    return self.match(/[a-zA-Z0-9]/).nil?
+    return !self.match(/[^a-zA-Z0-9]/).nil?
   end
 end
 
 class API < UnitTests
   
   def test_api
-    result = get('/api')
-    assert result["success"]
+    response = get('/api')
+    assert ( response.code == 200 && response["success"] ), "success was not returned"
   end
 
   def test_api_info
-    result = get('/api/info')
-    assert result["success"]
+    response = get('/api/info')
+    assert ( response.code == 200 && response["success"] ), "success was not returned"
   end
 
   def test_api_password
     # No Params
-    result = get('/api/password')
-    assert result["password"], "Password was not returned."
+    response = get('/api/password')
+    assert ( response.code == 200 && response["password"] && response["password"].length == 15 && response["phonetic"] && response["password"].has_sym ), "Password was not returned correctly."
 
     # Length Param
-    result = get('/api/password?length=20')
-    assert result["password"].length == 20, "Password was not 20 characters long."
+    response = get('/api/password?length=20')
+    assert ( response.code == 200 && response["password"].length == 20 && response["password"].has_sym ), "Password was not 20 characters long."
 
-    # Symbols Param
-    result = get('/api/password?symbols=false')
-    assert !result["password"].has_sym, "Password contains Symbols."
+    # Symbols Param is false
+    response = get('/api/password?symbols=false')
+    assert ( response.code == 200 && !response["password"].has_sym && response["password"].length == 15 ), "Password contains Symbols."
 
-    # Symbols Param and Length Param
-    result = get('/api/password?symbols=false&length=25')
-    assert ( ( !result["password"].has_sym ) && ( result["password"].length == 25 ) ), "Password contains Symbols or was not 25 characters long."
+    # Symbols Param is false and Length Param
+    response = get('/api/password?symbols=false&length=25')
+    assert ( response.code == 200 && !response["password"].has_sym && response["password"].length == 25 ), "Password contains Symbols or was not 25 characters long."
   end
 
   def test_api_password_phrase
-    result = get('/api/password/phrase')
-    assert result["password"]
+    response = get('/api/password/phrase')
+    assert ( response.code == 200 && response["password"] && response["phonetic"] ), "password not provided"
   end
 
   def test_api_uuid
-    result = get('/api/uuid')
-    assert result.is_uuid
+    response = get('/api/uuid')
+    assert ( response.code == 200 && response.is_uuid ), "Response is not a uuid"
   end
 end

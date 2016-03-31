@@ -29,8 +29,8 @@ class UnitTests < Minitest::Test
     return HTTParty.get(@SERVER+url, :basic_auth => auth )
   end
 
-  def post( url, auth = nil )
-    return HTTParty.get(@SERVER+url, :basic_auth => auth )
+  def post( url, data = {}, auth = nil )
+    return HTTParty.post(@SERVER+url, :body => data.to_json, :basic_auth => auth )
   end
 
   def teardown

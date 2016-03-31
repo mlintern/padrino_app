@@ -19,7 +19,7 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
     canceled = Project.all( :user_id => auth_account.id, :status => 2 ).count
     completed = Project.all( :user_id => auth_account.id, :status => 3 ).count
 
-    return 200, { :info => "Up and Running with #{active} projects active out of #{total} total.", :data => { :total => total, :active => active, :canceled => canceled, :completed => completed }, :config => OCMApp.first({:user_id => auth_account.id}) || ['No App Configured'] }.to_json
+    return 200, { :success => true, :info => "Up and Running with #{active} projects active out of #{total} total.", :data => { :total => total, :active => active, :canceled => canceled, :completed => completed }, :config => OCMApp.first({:user_id => auth_account.id}) || ['No App Configured'] }.to_json
   end
 
   ####
