@@ -31,16 +31,35 @@
         <div class="col-sm-4"></div>
         <div class="col-sm-8">
           <div class="form-group row">
-            <div class="col-sm-6 checkbox">
-              <label>
-                <input type="checkbox" id="public" name="session[public]" /> Public Access
-              </label>
+
+            <div class="col-sm-6">
+              <div class="checkbox-switch">
+                <div class="switch">
+                  <input type="checkbox" id="public" name="session[public]" />
+                  <label>
+                    <i class="fa fa-check"></i>
+                    <i class="fa fa-remove"></i>
+                    <div class="switch-handle"></div>
+                  </label>
+                </div>
+                <label class="switch-label">Public Access <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="This will toggle whether or not basic auth gets used with the request."></i></label>
+              </div>
             </div>
-            <div class="checkbox col-sm-6">
-              <label>
-                <input type="checkbox" id="secure" name="session[secure]" checked/> Secure?
-              </label>
+
+            <div class="col-sm-6">
+              <div class="checkbox-switch">
+                <div class="switch">
+                  <input type="checkbox" id="secure" name="session[secure]" />
+                  <label>
+                    <i class="fa fa-check"></i>
+                    <i class="fa fa-remove"></i>
+                    <div class="switch-handle"></div>
+                  </label>
+                </div>
+                <label class="switch-label">Secure? <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="If this is on then the ignore unsecure flag will not be included with the request."></i></label>
+              </div>
             </div>
+
           </div>
         </div>
       </div>

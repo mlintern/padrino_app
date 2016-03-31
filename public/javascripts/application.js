@@ -190,6 +190,9 @@
       $('.right-nav-hidden').hide();
       $('.left-nav-hidden').toggle();
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
+
   });
 
 }(window.jQuery);

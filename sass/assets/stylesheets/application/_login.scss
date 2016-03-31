@@ -17,7 +17,7 @@
 
 .login-logo {
   text-align: center;
-  padding: 20px 0;
+  padding: 0;
 }
 
 .login-controls {
@@ -33,7 +33,7 @@
 }
 
 .input-boxes {
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 .login-body {
@@ -42,6 +42,11 @@
 
 .login-footer {
   margin-top: 0 !important;
+}
+
+.tooltip-inner {
+  width: 350px;
+  padding: 10px;
 }
 
 /* iPad */
