@@ -399,7 +399,8 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
                   end
                 end
               end
-              return 200, { :success => true, :info => "Assets updated or added" }.to_json
+              puts project.update( :status => 3 )
+              return 200, { :success => true, :info => "Assets added for auto translation" }.to_json
             rescue Exception => e
               logger.error e
               logger.error e.backtrace

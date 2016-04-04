@@ -8,7 +8,7 @@
 
 <a class="btn btn-danger btn-lg btn-back" href="<%= back %>"><i class="fa fa-arrow-left"></i></a>
 
-<div class="panel p-lg">
+<div class="panel p-lg clearfix">
 
   <h2>Assets <% if project.status != 1 %><button class="btn btn-success btn-start pull-right" data-project="<%= project.id %>" onclick="startProject()">Start</button><% end %><% if project.status == 1 %><button class="btn btn-danger btn-cancel pull-right" data-project="<%= project.id %>" onclick="cancelProject()">Cancel</button><% end %></h2>
 
