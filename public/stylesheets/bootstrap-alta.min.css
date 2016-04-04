@@ -8621,6 +8621,15 @@ button.close {
   @media (max-width: 767px) {
     .alta-navbar .nav-avatar {
       display: none; } }
+  .alta-navbar .navbar-brand > img {
+    position: relative;
+    top: -1px;
+    display: inline-block;
+    width: 20px; }
+    @media (max-width: 767px) {
+      .alta-navbar .navbar-brand > img {
+        top: -2px;
+        width: 21px; } }
   @media (max-width: 767px) {
     .alta-navbar .navbar-brand .fa {
       display: none; } }

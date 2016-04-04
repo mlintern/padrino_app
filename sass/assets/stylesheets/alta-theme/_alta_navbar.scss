@@ -84,6 +84,18 @@
   }
 
   .navbar-brand {
+
+    > img {
+      position: relative;
+      top: -1px;
+      display: inline-block;
+      width: 20px;
+      @media (max-width: $grid-float-breakpoint-max) {
+        top: -2px;
+        width: 21px;
+      }
+    }
+
     .fa {
       @media (max-width: $grid-float-breakpoint-max) {
         display: none;
