@@ -153,13 +153,19 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
       if project.save
         if destination_languages && destination_languages.length > 0
           destination_languages.each do |lang|
-            language = Language.new({ :id => SecureRandom.uuid, :project_id => project.id, :name => lang, :code => lang })
-            if language.save
-              language.inspect
-            else
-              language.errors.each do |e|
-                logger.error e
+            if ['pl','PL','pig latin','piglatin'].partial_include? lang
+              language = Language.new({ :id => SecureRandom.uuid, :project_id => project.id, :name => lang, :code => lang })
+              if language.save
+                language.inspect
+              else
+                language.errors.each do |e|
+                  logger.error e
+                end
               end
+            else
+              logger.debug project.destroy
+              message = "#{lang} is not an accepted language. Accepted languages pl, PL"
+              return 400, { :success => false, :info => message, :message => message, :error => message }.to_json
             end
           end
         end
@@ -311,7 +317,7 @@ PadrinoApp::App.controllers :api_translator, :map => '/api/translator' do
       logger.info data
       return 200, data.to_json
     else
-      return 400, { :success => false, :info => "App Not Found" }.to_json
+      return 404, { :success => false, :info => "App Not Found" }.to_json
     end
 
   end
