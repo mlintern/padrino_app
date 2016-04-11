@@ -15,13 +15,13 @@
           <div class="col-sm-8">
             <div class="row">
               <div class="col-xs-4">
-                <select name="session[protocol]" class="form-control">
-                  <option value="http://">http://</option>
-                  <option value="https://" selected>https://</option>
+                <select name="protocol" class="form-control">
+                  <option value="http://" selected>http://</option>
+                  <option value="https://">https://</option>
                 </select>
               </div>
               <div class="col-xs-8">
-                <input type="text" name="session[server]" value="app.compendium.com" class="form-control"/>
+                <input type="text" name="server" value="app.nretnil.com" class="form-control"/>
               </div>
             </div>
           </div>
@@ -35,21 +35,21 @@
             <div class="col-sm-6">
               <div class="checkbox-switch">
                 <div class="switch">
-                  <input type="checkbox" id="public" name="session[public]" checked/>
+                  <input type="checkbox" id="public" name="basic" />
                   <label>
                     <i class="fa fa-check"></i>
                     <i class="fa fa-remove"></i>
                     <div class="switch-handle"></div>
                   </label>
                 </div>
-                <label class="switch-label">Unauthenticated Access <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="This will toggle whether or not basic auth gets used with the request."></i></label>
+                <label class="switch-label">Basic Auth <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="This will toggle whether or not basic auth gets used with the request."></i></label>
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="checkbox-switch">
                 <div class="switch">
-                  <input type="checkbox" id="secure" name="session[secure]" />
+                  <input type="checkbox" id="secure" name="secure" />
                   <label>
                     <i class="fa fa-check"></i>
                     <i class="fa fa-remove"></i>
@@ -67,21 +67,21 @@
       <div class="form-group auth">
         <label class="col-sm-4 control-label">Username</label>
         <div class="col-sm-8">
-          <input type="text" id="f1" name="session[username]" value="" class="form-control"/>
+          <input type="text" id="f1" name="username" value="" class="form-control"/>
         </div>
       </div>
 
       <div class="form-group auth">
         <label class="col-sm-4 control-label">Authentication Key</label>
         <div class="col-sm-8">
-          <input type="text" id="f2" name="session[api_key]" value="" class="form-control"/>
+          <input type="text" id="f2" name="api_key" value="" class="form-control"/>
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-4 control-label">"Type of Call"</label>
         <div class="col-sm-8">
-          <select name="session[call_type]" class="form-control" id="method">
+          <select name="call_type]" class="form-control" id="method">
             <option value="get" selected>Get</option>
             <option class="not-pub" value="post">Post</option>
             <option class="not-pub" value="put">Put</option>
@@ -93,35 +93,35 @@
       <div class="form-group">
         <label class="col-sm-4 control-label">Headers</label>
         <div class="col-sm-8">
-          <input type="text" name="session[headers]" value='{ "Accept" => "application/vnd.compendium.blog;version=2,application/json" }' class="form-control"/>
+          <input type="text" name="headers" value='{ "Accept" => "application/vnd.compendium.blog;version=2,application/json" }' class="form-control"/>
         </div>
       </div>
 
       <div class="form-group auth body">
         <label class="col-sm-4 control-label">Body</label>
         <div class="col-sm-8">
-          <input type="text" name="session[body]" value='{ :post_title => "Content Title", :url_lookup_token => "content-title" }' class="form-control"/>
+          <input type="text" name="body" value='{ :post_title => "Content Title", :url_lookup_token => "content-title" }' class="form-control"/>
         </div>
       </div>
 
       <div class="form-group query">
         <label class="col-sm-4 control-label">Query</label>
         <div class="col-sm-8">
-          <input type="text" name="session[query]" value='{ :Count => 20, :Page => 1 }' class="form-control"/>
+          <input type="text" name="query" value='{ :symbols => false, :length => 25 }' class="form-control"/>
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-4 control-label">Uri</label>
         <div class="col-sm-8">
-          <input type="text" id="uri" name="session[api_uri]" value="/api/content" class="form-control"/>
+          <input type="text" id="uri" name="api_uri" value="/api/password" class="form-control"/>
         </div>
       </div>
 
       <div class="form-group">
         <div class="col-sm-8 col-sm-offset-4 checkbox">
           <label>
-            <input type="checkbox" id="only_curl" name="session[only_curl]" /> Generate curl command only
+            <input type="checkbox" id="only_curl" name="only_curl" /> Generate curl command only
           </label>
         </div>
       </div>

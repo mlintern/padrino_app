@@ -2,10 +2,12 @@
   'use strict';
 
   $(function() {
+
     function toggleAction  (selector, disabled) {
       var method = disabled ? 'addClass' : 'removeClass';
       $(selector)[method]('list-menu-link-disabled').parent()[method]('list-menu-wrapper-disabled');
     }
+
     // Check/uncheck all functionality
     function checkAll (base, checked) {
       // Toggle all checkboxes on the table's body that exist on the first column.
@@ -13,26 +15,34 @@
       base.find('.list-row')[checked ? 'addClass' : 'removeClass']('list-row-selected');
       toggleAction('#delete-selected', !checked);
     }
+
     function generalToggle () {
       var checked = listCheckboxes.filter(':checked').length;
       toggleAction('#delete-selected', checked === 0);
       toggleAction('#deselect-all', checked === 0);
       toggleAction('#select-all', checked === listCheckboxesLength);
     }
+
+    function validateCredentials () {
+      // Comepndium API Form Validation
+      var f1 = new LiveValidation( 'f1', { onlyOnSubmit: true } );
+      f1.add( Validate.Presence );
+
+      var f2 = new LiveValidation( 'f2', { onlyOnSubmit: true } );
+      f2.add( Validate.Presence );
+
+      var automaticOnSubmit = f1.form.onsubmit;
+    }
+    
     function setFields () {
       if ( $('#public').is(':checked') ) { 
+        $('.auth').show();
+        $(".not-pub").prop('disabled',false);
+        validateCredentials();
+      } else {
         $('.auth').hide();
         $('#method').prop('selectedIndex', 0);
         $(".not-pub").prop('disabled',true);
-        if ( $("#uri").val() == '/api/content' || $("#uri").val() == '/api/publishers/<publisher_id>/feed' ) {
-          $("#uri").val('/api/publishers/<publisher_id>/feed')
-        }
-      } else {
-        $('.auth').show();
-        $(".not-pub").prop('disabled',false);
-        if ( $("#uri").val() == '/api/content' || $("#uri").val() == '/api/publishers/<publisher_id>/feed' ) {
-          $("#uri").val('/api/content')
-        }
       }
 
       var method = $('#method').val();
@@ -144,40 +154,23 @@
 
     setFields();
 
-    if ( $('#f1').length ) {
-      // Comepndium API Form Validation
-      var f1 = new LiveValidation( 'f1', {onlyOnSubmit: true } );
-      f1.add( Validate.Presence );
-
-      var f2 = new LiveValidation( 'f2', {onlyOnSubmit: true } );
-      f2.add( Validate.Presence );
-
-      var automaticOnSubmit = f1.form.onsubmit;
-      f1.form.onsubmit = function(){
-        if( automaticOnSubmit() || $('#public').is(':checked') ){ 
-          return true;
-        }
-        return false;
-      }
-    }
-
     if ( $('#r1').length ) {
       // Comepndium API Form Validation
       var r1 = new LiveValidation( 'r1', { onlyOnSubmit: true } );
       r1.add( Validate.Presence );
 
-      var r4 = new LiveValidation( 'r4', { onlyOnSubmit: true } );
-      r4.add( Validate.Presence );
+      var r2 = new LiveValidation( 'r2', { onlyOnSubmit: true } );
+      r2.add( Validate.Presence );
 
-      var r6 = new LiveValidation( 'r6', { onlyOnSubmit: true } );
-      r6.add( Validate.Presence );
-      r6.add( Validate.Email );
+      var r3 = new LiveValidation( 'r3', { onlyOnSubmit: true } );
+      r3.add( Validate.Presence );
+      r3.add( Validate.Email );
 
       var automaticOnSubmit = r1.form.onsubmit;
     }
 
     // Autofocus first field with an error. (usability)
-    var error_input
+    var error_input;
     if (error_input = $('.has-error :input').first()) { error_input.focus(); }
 
     $('.toggle-right-nav').click(function (e) {
