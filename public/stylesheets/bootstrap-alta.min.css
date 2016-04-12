@@ -8769,6 +8769,14 @@ button.close {
     .feature-info {
       height: auto; } }
 
+.api-endpoint {
+  padding-left: 15px;
+  padding-right: 15px; }
+  .api-endpoint .result {
+    max-height: 225px;
+    overflow: scroll;
+    word-wrap: break-word; }
+
 .account-card .panel .panel-body {
   min-height: 240px; }
   .account-card .panel .panel-body .account-image {
@@ -9256,5 +9264,8 @@ body {
 img {
   max-width: 100%;
   height: auto; }
+
+.two-lines-min {
+  min-height: 58px; }
 
 /*# sourceMappingURL=bootstrap-alta.min.css.map */

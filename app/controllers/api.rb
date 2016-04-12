@@ -184,6 +184,48 @@ PadrinoApp::App.controllers :api do
 
     data = {}
 
+    if !params[:adjectives].nil? && params[:adjectives].to_i > 0
+      data[:adjectives] = []
+      (0...params[:adjectives].to_i).each do |index|
+        data[:adjectives] << Nretnil::FakeData.adjective
+      end
+    end
+
+    if !params[:animals].nil? && params[:animals].to_i > 0
+      data[:animals] = []
+      (0...params[:animals].to_i).each do |index|
+        data[:animals] << Nretnil::FakeData.animal
+      end
+    end
+
+    if !params[:colors].nil? && params[:colors].to_i > 0
+      data[:colors] = []
+      (0...params[:colors].to_i).each do |index|
+        data[:colors] << Nretnil::FakeData.color[:name].downcase
+      end
+    end
+
+    if !params[:names].nil? && params[:names].to_i > 0
+      data[:names] = []
+      (0...params[:names].to_i).each do |index|
+        data[:names] << Nretnil::FakeData.name
+      end
+    end
+
+    if !params[:nouns].nil? && params[:nouns].to_i > 0
+      data[:nouns] = []
+      (0...params[:nouns].to_i).each do |index|
+        data[:nouns] << Nretnil::FakeData.noun
+      end
+    end
+
+    if !params[:verbs].nil? && params[:verbs].to_i > 0
+      data[:verbs] = []
+      (0...params[:verbs].to_i).each do |index|
+        data[:verbs] << Nretnil::FakeData.verb
+      end
+    end
+
     if !params[:words].nil? && params[:words].length > 0
       data[:words] = []
       params[:words].each do |word|
@@ -202,48 +244,6 @@ PadrinoApp::App.controllers :api do
           data[:words] << Nretnil::FakeData.color[:name].downcase
         else
         end
-      end
-    end
-
-    if !params[:nouns].nil? && params[:nouns].to_i > 0
-      data[:nouns] = []
-      (0...params[:nouns].to_i).each do |index|
-        data[:nouns] << Nretnil::FakeData.noun
-      end
-    end
-
-    if !params[:verbs].nil? && params[:verbs].to_i > 0
-      data[:verbs] = []
-      (0...params[:verbs].to_i).each do |index|
-        data[:verbs] << Nretnil::FakeData.verb
-      end
-    end
-
-    if !params[:adjectives].nil? && params[:adjectives].to_i > 0
-      data[:adjectives] = []
-      (0...params[:adjectives].to_i).each do |index|
-        data[:adjectives] << Nretnil::FakeData.adjective
-      end
-    end
-
-    if !params[:animals].nil? && params[:animals].to_i > 0
-      data[:animals] = []
-      (0...params[:animals].to_i).each do |index|
-        data[:animals] << Nretnil::FakeData.animal
-      end
-    end
-
-    if !params[:names].nil? && params[:names].to_i > 0
-      data[:names] = []
-      (0...params[:names].to_i).each do |index|
-        data[:names] << Nretnil::FakeData.name
-      end
-    end
-
-    if !params[:colors].nil? && params[:colors].to_i > 0
-      data[:colors] = []
-      (0...params[:colors].to_i).each do |index|
-        data[:colors] << Nretnil::FakeData.color[:name].downcase
       end
     end
 

@@ -64,6 +64,21 @@ class String
     self.length > 2 ? self.first + self.middle.shuffle + self.last : self
   end
 
+  ####
+  # Name: valid_json?
+  # Description: retuns boolean of whether string is valid json or not.
+  # Arguments: string
+  # Response: boolean
+  ####
+  def valid_json?
+    begin
+      JSON.parse(self)
+      return true
+    rescue JSON::ParserError => e
+      return false
+    end
+  end
+
 end
 
 class Array
@@ -203,12 +218,13 @@ PadrinoApp::App.helpers do
   # Arguments: None
   # Response: true or redirect to /sessions/new
   ####
-  def login
+  def login(redirect = true)
     if current_user
       return true
     else
-      flash[:error] = "Login is required."
-      redirect url(:sessions, :new), 302
+      flash[:error] = "Login is required." if redirect
+      redirect url(:sessions, :new), 302 if redirect
+      return false
     end
   end
 

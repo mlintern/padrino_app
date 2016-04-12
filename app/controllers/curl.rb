@@ -1,8 +1,12 @@
 PadrinoApp::App.controllers :curl do
   get :index do
+    logger.debug params
     permission_check('curl')
 
-    render '/curl/index' 
+    uri = params['uri'] || '/api/password'
+    query = params['query'] || '{ :symbols => false, :length => 25 }'
+
+    render '/curl/index', :locals => { 'uri' => uri, 'query' => query }
   end
 
   post :index do
@@ -93,9 +97,9 @@ PadrinoApp::App.controllers :curl do
       @result = { :error => e }
     end
 
-    logger.info @result
-    render 'curl/result', :locals => { :curl_call => curl_call, :result => @result }
-
+    logger.debug @result
+    logger.debug @result.body.class
+    render 'curl/result', :locals => { :curl_call => curl_call, :result => @result, :is_json => @result.body.valid_json? }
   end
 
 end

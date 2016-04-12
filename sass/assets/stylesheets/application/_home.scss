@@ -9,6 +9,16 @@
   height: 100px;
 
   @media (max-width: $grid-float-breakpoint-max) {
-  	height: auto;
+    height: auto;
+  }
+}
+.api-endpoint {
+  padding-left: 15px;
+  padding-right: 15px;
+
+  .result {
+    max-height: 225px;
+    overflow: scroll;
+    word-wrap: break-word;
   }
 }

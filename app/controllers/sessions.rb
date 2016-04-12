@@ -81,6 +81,6 @@ PadrinoApp::App.controllers :sessions do
     session[:redirect_to] = nil
     flash[:error] = nil
     flash[:success] = nil
-    redirect url(:sessions, :new)
+    redirect url(:base, :index)
   end
 end

@@ -53,6 +53,48 @@ function flashError (message) {
 	window.scrollTo(0,0);
 }
 
+function httpGetAndUpdate (url,sel) {
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function (response) {
+			$(sel).html(JSON.stringify(response));
+		},
+		error: function (response) {
+			console.log(response);
+			return response;
+		}
+	});
+}
+
+function updateApiExample (endpoint) {
+	switch(endpoint) {
+		case "password":
+			httpGetAndUpdate("/api/password","."+endpoint+".result");
+			break;
+		case "passphrase":
+			httpGetAndUpdate("/api/password/phrase","."+endpoint+".result");
+			break;
+		case "uuid":
+			httpGetAndUpdate("/api/uuid","."+endpoint+".result");
+			break;
+		case "fakedata":
+			httpGetAndUpdate("/api/fakedata","."+endpoint+".result");
+			break;
+		case "words":
+			var params = "?words[]=verb&words[]=noun&words[]=animal&words[]=color&words[]=name&nouns=4&verbs=2&adjectives=5&names=2&colors=3&animals=4"
+			httpGetAndUpdate("/api/words"+params,"."+endpoint+".result");
+			break;
+		default:
+			//do nothing
+	}
+}
+
+var endpoints = ['password','passphrase','uuid','fakedata','words']
+_.each(endpoints,function (endpoint) {
+  updateApiExample(endpoint);
+})
+
 function updatePhoto () {
 	id = $(".user-info").data('user-id');
 	photo = $('.photo-url').val()
@@ -63,12 +105,12 @@ function updatePhoto () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'PUT',
-		success: function(response) {
+		success: function (response) {
 			console.log(response);
 			$('.user-photo').attr('src', photo);
 			flashSuccess('Account photo updated successfully.');
 		},
-		error: function(response) {
+		error: function (response) {
 			console.log(response);
 			flashError(response['responseText']);
 		}
@@ -84,13 +126,13 @@ function clearPhoto () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'PUT',
-		success: function(response) {
+		success: function (response) {
 			console.log(response);
 			$('.user-photo').attr('src', '/images/default.png');
 			$('.photo-url').val('')
 			flashSuccess('Account photo cleared successfully.');
 		},
-		error: function(response) {
+		error: function (response) {
 			console.log(response);
 			flashError(response['responseText']);
 		}
@@ -105,11 +147,11 @@ function resetAuthToken (id) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'PUT',
-		success: function(response) {
+		success: function (response) {
 			$('.auth-token').text(response["auth_token"]);
 			flashSuccess('Auth Token Reset.');
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -124,11 +166,11 @@ function startProject () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function(response) {
+		success: function (response) {
 			flashSuccess(response["info"]);
 			setTimeout(function() { location.reload() }, 1000 );
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -143,11 +185,11 @@ function cancelProject () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function(response) {
+		success: function (response) {
 			flashSuccess(response["info"]);
 			setTimeout(function() { location.reload() }, 1000 );
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -162,11 +204,11 @@ function completeProject () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function(response) {
+		success: function (response) {
 			flashSuccess(response["info"]);
 			setTimeout(function() { location.reload() }, 1000 );
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -178,11 +220,11 @@ function deleteAsset (asset_id) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',
-		success: function(response) {
+		success: function (response) {
 			$('tr[data-asset='+asset_id+']').remove();
 			flashSuccess(response["info"]);
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -194,11 +236,11 @@ function deleteProject (project_id) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',
-		success: function(response) {
+		success: function (response) {
 			$('tr[data-project='+project_id+']').remove();
 			flashSuccess(response["info"]);
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -213,14 +255,14 @@ function translateAsset (asset_id,refresh) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function(response) {
+		success: function (response) {
 			$('.btn-translate').remove();
 			flashSuccess("Successfully Translated.");
 			if (refresh) {
 				setTimeout(function() { location.reload() }, 1000 );
 			}
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 			if (refresh) {
 				setTimeout(function() { location.reload() }, 1000 );
@@ -241,12 +283,12 @@ function addProject () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function(response) {
+		success: function (response) {
 			$('.translator-settings').modal('hide');
 			flashSuccess("Project Created Successfully.");
 			setTimeout(function() { location.reload() }, 1000 );
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -266,12 +308,12 @@ function updateProject (project_id) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'PUT',
-		success: function(response) {
+		success: function (response) {
 			$('.project-title').text(response['name']);
 			$('.project-desc').text(response['description']);
 			flashSuccess("Title Successfully Updated");
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -283,11 +325,11 @@ function deleteLanguage (language_id) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',
-		success: function(response) {
+		success: function (response) {
 			$('tr[data-language='+language_id+'],span[data-language='+language_id+']').remove();
 			flashSuccess(response["info"]);
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -303,13 +345,13 @@ function addLanguage (project_id) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function(response) {
+		success: function (response) {
 			$('.add-language').hide();
 			$('.language-list').append('<span data-language="'+response["id"]+'"> '+response["name"]+' ('+response["code"]+')  </span>');
 			$('.table-language-list').append('<tr data-language="'+response["id"]+'" class="list-row"><td class=list-column> '+response["name"]+' </td><td class=list-column> '+response["code"]+' </td><td> Refresh to Delete</td></tr>');
 			flashSuccess("Language Successfully Added.");
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -328,12 +370,12 @@ function addAsset (project_id, language) {
 			dataType: 'json',
 			contentType: "application/json",
 			type: 'POST',
-			success: function(response) {
+			success: function (response) {
 				$('.new-asset').modal('hide');
 				flashSuccess("Asset Successfully Added.");
 				setTimeout(function() { location.reload() }, 1000 );
 			},
-			error: function(response) {
+			error: function (response) {
 				flashError(response['responseText']);
 			}
 		});
@@ -349,10 +391,10 @@ function updateTranslator () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function(response) {
+		success: function (response) {
 			flashSuccess("Translator Successfully Updated.");
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});
@@ -367,12 +409,12 @@ function deleteTranslator () {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',
-		success: function(response) {
+		success: function (response) {
 			$('.translator-settings').modal('hide');
 			flashSuccess("Translator Deleted Successfully.");
 			setTimeout(function() { location.reload() }, 1000 );
 		},
-		error: function(response) {
+		error: function (response) {
 			flashError(response['responseText']);
 		}
 	});

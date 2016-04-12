@@ -14,7 +14,7 @@
 
   <div>
     <h3>Results</h3>
-    <pre class="call-results"><%= JSON.pretty_generate(result) %></pre>
+    <pre class="call-results"><%= is_json ? JSON.pretty_generate(result) : result %></pre>
   </div>
 
 </div>
