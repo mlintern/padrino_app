@@ -1,4 +1,4 @@
-PadrinoApp::App.controllers :todos, :map => '/api/todos' do
+PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
 
   before do
     headers "Content-Type" => "application/json; charset=utf8"
