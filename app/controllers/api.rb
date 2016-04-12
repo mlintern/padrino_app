@@ -167,9 +167,10 @@ PadrinoApp::App.controllers :api do
 
   ####
   # Endpoint: GET /api/words
-  # Description: reads parameters and returns correct number of each type of word
+  # Description: reads parameters and returns correct number of each type of word.
   # Authorization: none
   # Arguments: 
+  #   optional: words - array of types of words - ex: ["noun","verb","verb","color","animal","noun","acjective"]
   #   optional: nouns - number
   #   optional: verbs - number
   #   optional: adjectives - number
@@ -179,39 +180,68 @@ PadrinoApp::App.controllers :api do
   # Response: json object containing data you requested
   ####
   get :words do
-    data = { :nouns => [], :verbs => [], :adjectives => [], :animals => [], :names => [], :colors => [] }
+    logger.debug params
+
+    data = {}
+
+    if !params[:words].nil? && params[:words].length > 0
+      data[:words] = []
+      params[:words].each do |word|
+        case word
+        when "noun"
+          data[:words] << Nretnil::FakeData.noun
+        when "verb"
+          data[:words] << Nretnil::FakeData.verb
+        when "adjective"
+          data[:words] << Nretnil::FakeData.adjective
+        when "animal"
+          data[:words] << Nretnil::FakeData.animal
+        when "name"
+          data[:words] << Nretnil::FakeData.name
+        when "color"
+          data[:words] << Nretnil::FakeData.color[:name].downcase
+        else
+        end
+      end
+    end
 
     if !params[:nouns].nil? && params[:nouns].to_i > 0
+      data[:nouns] = []
       (0...params[:nouns].to_i).each do |index|
         data[:nouns] << Nretnil::FakeData.noun
       end
     end
 
     if !params[:verbs].nil? && params[:verbs].to_i > 0
+      data[:verbs] = []
       (0...params[:verbs].to_i).each do |index|
         data[:verbs] << Nretnil::FakeData.verb
       end
     end
 
     if !params[:adjectives].nil? && params[:adjectives].to_i > 0
+      data[:adjectives] = []
       (0...params[:adjectives].to_i).each do |index|
         data[:adjectives] << Nretnil::FakeData.adjective
       end
     end
 
     if !params[:animals].nil? && params[:animals].to_i > 0
+      data[:animals] = []
       (0...params[:animals].to_i).each do |index|
         data[:animals] << Nretnil::FakeData.animal
       end
     end
 
     if !params[:names].nil? && params[:names].to_i > 0
+      data[:names] = []
       (0...params[:names].to_i).each do |index|
         data[:names] << Nretnil::FakeData.name
       end
     end
 
     if !params[:colors].nil? && params[:colors].to_i > 0
+      data[:colors] = []
       (0...params[:colors].to_i).each do |index|
         data[:colors] << Nretnil::FakeData.color[:name].downcase
       end

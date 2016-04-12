@@ -1,13 +1,3 @@
-module Sidekiq
-  class CLI
-    private
-
-    def print_banner
-      # banner taking up all my screen :)
-    end
-  end
-end
-
 class Background
   include Sidekiq::Worker
   sidekiq_options queue: 'translate'

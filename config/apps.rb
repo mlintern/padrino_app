@@ -32,5 +32,5 @@ end
 require 'sidekiq/web'
 
 # Mounts the core application for this project
-Padrino.mount('PadrinoApp::Sidekiq').to('/sidekiq')
+Padrino.mount('SidekiqWebInterface', :app_file => Padrino.root('app/sidekiq.rb')).to('/sidekiq')
 Padrino.mount('PadrinoApp::App', :app_file => Padrino.root('app/app.rb')).to('/')

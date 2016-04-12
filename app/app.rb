@@ -1,13 +1,5 @@
 module PadrinoApp
 
-  class Sidekiq < Sidekiq::Web
-    class << self
-      def dependencies; []; end
-      def setup_application!; end
-      def reload!; end
-    end
-  end
-
   class App < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
