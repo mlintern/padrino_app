@@ -5,8 +5,9 @@ PadrinoApp::App.controllers :curl do
 
     uri = params['uri'] || '/api/password'
     query = params['query'] || '{ :symbols => false, :length => 25 }'
+    host = params['host'] || 'app.nretnil.com'
 
-    render '/curl/index', :locals => { 'uri' => uri, 'query' => query }
+    render '/curl/index', :locals => { 'uri' => uri, 'query' => query, 'host' => host }
   end
 
   post :index do

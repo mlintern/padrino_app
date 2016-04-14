@@ -11,7 +11,7 @@
 
     <div class="col-sm-6">
       <div class="panel api-endpoint">
-        <h3>Fake Data - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/fakedata&query={ :count => 5, :id => 'uuid', :name => 'name', :surname => 'surname', :username => 'username', :email => 'email', :description => 'sentence', :dob => 'date' }">Try It</a></h3>
+        <h3>Fake Data - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/fakedata&query={ :count => 5, :id => 'uuid', :name => 'name', :surname => 'surname', :username => 'username', :email => 'email', :description => 'sentence', :dob => 'date' }&host=<%= ENV["SERVER_HOST"] %>">Try It</a></h3>
         <h4 class="well well-sm">/api/fakedata</h4>
         <h5>Parameters:</h5>
         <ul>
@@ -26,7 +26,7 @@
 
     <div class="col-sm-6">
       <div class="panel api-endpoint">
-        <h3>Password - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/password&query={ :symbols => false, :length => 25 }">Try It</a></h3>
+        <h3>Password - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/password&query={ :symbols => false, :length => 25 }&host=<%= ENV["SERVER_HOST"] %>">Try It</a></h3>
         <h4 class="well well-sm">/api/password</h4>
         <h5>Parameters:</h5>
         <ul>
@@ -40,7 +40,7 @@
 
     <div class="col-sm-6">
       <div class="panel api-endpoint">
-        <h3>Passphrase - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/password/phrase&query={}">Try It</a></h3>
+        <h3>Passphrase - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/password/phrase&query={}&host=<%= ENV["SERVER_HOST"] %>">Try It</a></h3>
         <h4 class="well well-sm">/api/password/phrase</h4>
         <h5 class="clearfix">Example Result: <button class="btn btn-warning btn-sm pull-right" onclick="updateApiExample('passphrase');"><i class="fa fa-refresh"></i></button></h5>
         <div class="passphrase result well well-sm two-lines-min"></div>
@@ -49,7 +49,7 @@
 
     <div class="col-sm-6">
       <div class="panel api-endpoint">
-        <h3>UUID - string <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/uuid&query={}">Try It</a></h3>
+        <h3>UUID - string <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/uuid&query={}&host=<%= ENV["SERVER_HOST"] %>">Try It</a></h3>
         <h4 class="well well-sm">/api/uuid</h4>
         <h5 class="clearfix">Example Result: <button class="btn btn-warning btn-sm pull-right" onclick="updateApiExample('uuid');"><i class="fa fa-refresh"></i></button></h5>
         <div class="uuid result well well-sm"></div>
@@ -58,7 +58,7 @@
 
     <div class="col-sm-6">
       <div class="panel api-endpoint">
-        <h3>Words - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/words&query={ :words => ['verb','noun','animal','color','name'], :verbs => 3, :nouns => 2, :colors => 5, :animals => 3, :names => 1, :adjectives => 5 }">Try It</a></h3>
+        <h3>Words - json <a class="btn btn-info btn-sm pull-right" href="/curl?uri=/api/words&query={ :words => ['verb','noun','animal','color','name'], :verbs => 3, :nouns => 2, :colors => 5, :animals => 3, :names => 1, :adjectives => 5 }&host=<%= ENV["SERVER_HOST"] %>">Try It</a></h3>
         <h4 class="well well-sm">/api/words</h4>
         <h5>Parameters: (must pass something to get a populated response)</h5>
         <ul>
