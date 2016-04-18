@@ -1,10 +1,10 @@
 # MySQL
-# development: &defaults
-#   adapter: mysql
-#   database: nretnil_dev
-#   username: webuser
-#   password: webuser
-#   host: 127.0.0.1
+development: &defaults
+  adapter: mysql
+  database: nretnil_dev
+  username: webuser
+  password: webuser
+  host: 127.0.0.1
 
 test:
   adapter: mysql
@@ -21,11 +21,11 @@ production:
   host: localhost
 
 # # SQLite version 3.x
-development:
-  adapter: sqlite3
-  database: db/padrino_app_development.db
-  pool: 5
-  timeout: 5000
+# development:
+#   adapter: sqlite3
+#   database: db/padrino_app_development.db
+#   pool: 5
+#   timeout: 5000
 
 # # Warning: The database defined as "test" will be erased and
 # # re-generated from your development database when you run "rake".

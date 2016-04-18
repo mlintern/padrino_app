@@ -27,7 +27,7 @@ end
 
 unless Account.first(:username => "jporter")
   account = Account.create(:username => "jporter", :email => "jesse.porter@nretnil.com", :name => "Jesse", :surname => "Porter", :password => "password", :password_confirmation => "password", :role => ["curl"], :last_update => DateTime.now.utc, :id => SecureRandom.uuid )
-  account_property = AccountProperty.create(:id => account.id, :name => "photo", :value => "http://www.usanetwork.com/sites/usanetwork/files/styles/person_cover/public/burnnotice_profiles_hero_jesse_0.jpg?itok=cqV92t5A")
+  account_property = AccountProperty.create(:id => account.id, :name => "photo", :value => "http://www.eurweb.com/wp-content/uploads/2011/06/burn-notice-1.jpg")
 end
 
 unless Account.first(:username => "maddie")
@@ -36,7 +36,7 @@ unless Account.first(:username => "maddie")
 end
 
 unless Account.first(:username => "nweston")
-  account = Account.create(:username => "nweston", :email => "nate.weston@nretnil.com", :name => "Nate", :surname => "Weston", :password => "password", :password_confirmation => "password", :role => ["user"], :last_update => DateTime.now.utc, :id => SecureRandom.uuid )
+  account = Account.create(:username => "nweston", :email => "nate.weston@nretnil.com", :name => "Nate", :surname => "Weston", :password => "password", :password_confirmation => "password",:status => 0, :role => ["user"], :last_update => DateTime.now.utc, :id => SecureRandom.uuid )
   account_property = AccountProperty.create(:id => account.id, :name => "photo", :value => "http://cdn.images.express.co.uk/img/dynamic/79/590x/452369_1.jpg")
 end
 
@@ -64,7 +64,7 @@ if Account.count == 0 || false
   else
     shell.say "Sorry but some thing went wrong!"
     shell.say ""
-    account.errors.full_messages.each { |m| shell.say "   - #{m}" }
+    account.errors.full_messages.each { |m| shell.say " - #{m}" }
   end
 
   shell.say ""
