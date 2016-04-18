@@ -5,12 +5,17 @@
   </div>
 </fieldset>
 <% if permission_check('admin',false) %>
-<fieldset class="control-group ">
-  <label for="account_role" class="control-label">Active: </label>
-  <div class="controls">
-    <label class="checkbox-inline">
-      <input type="checkbox" name="account[status]" value="1" <% if user.active? %>checked<%end%>/> active
-    </label>
+<fieldset class="control-group">
+  <div class="checkbox-switch m-top-lg">
+    <div class="switch">
+      <input type="checkbox" name="account[status]" value="1" <% if user.active? %>checked<%end%>/>
+      <label>
+        <i class="fa fa-check"></i>
+        <i class="fa fa-remove"></i>
+        <div class="switch-handle"></div>
+      </label>
+    </div>
+    <label class="switch-label">Active <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Set user status."></i></label>
   </div>
 </fieldset>
 <% end %>
@@ -47,19 +52,51 @@
 <% if permission_check('admin',false) %>
 <fieldset class="control-group ">
   <label for="account_role" class="control-label">Roles: </label>
-  <div class="controls">
-    <label class="checkbox-inline">
-      <input type="checkbox" name="account[role][]" value="user" <% if user.role["user"] %>checked<%end%>/> user
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="account[role][]" value="admin" <% if user.role["admin"] %>checked<%end%>/> admin
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="account[role][]" value="curl" <% if user.role["curl"] %>checked<%end%>/> curl</span>
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="account[role][]" value="translate" <% if user.role["translate"] %>checked<%end%>/> translate</span>
-    </label>
+  <div class="controls m-top-md">
+    <div class="checkbox-switch m-top-md">
+      <div class="switch">
+        <input type="checkbox" name="account[role][]" value="user" <% if user.role["user"] %>checked<%end%>/>
+        <label>
+          <i class="fa fa-check"></i>
+          <i class="fa fa-remove"></i>
+          <div class="switch-handle"></div>
+        </label>
+      </div>
+      <label class="switch-label">user <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Turn on user role."></i></label>
+    </div>
+    <div class="checkbox-switch m-top-md">
+      <div class="switch">
+        <input type="checkbox" name="account[role][]" value="admin" <% if user.role["admin"] %>checked<%end%>/>
+        <label>
+          <i class="fa fa-check"></i>
+          <i class="fa fa-remove"></i>
+          <div class="switch-handle"></div>
+        </label>
+      </div>
+      <label class="switch-label">admin <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Turn on admin role."></i></label>
+    </div>
+    <div class="checkbox-switch m-top-md">
+      <div class="switch">
+        <input type="checkbox" name="account[role][]" value="curl" <% if user.role["curl"] %>checked<%end%>/>
+        <label>
+          <i class="fa fa-check"></i>
+          <i class="fa fa-remove"></i>
+          <div class="switch-handle"></div>
+        </label>
+      </div>
+      <label class="switch-label">curl <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Turn on curl role."></i></label>
+    </div>
+    <div class="checkbox-switch m-top-md">
+      <div class="switch">
+        <input type="checkbox" name="account[role][]" value="translate" <% if user.role["translate"] %>checked<%end%>/>
+        <label>
+          <i class="fa fa-check"></i>
+          <i class="fa fa-remove"></i>
+          <div class="switch-handle"></div>
+        </label>
+      </div>
+      <label class="switch-label">translate <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Turn on tranlate role."></i></label>
+    </div>
   </div>
 </fieldset>
 <% end %>

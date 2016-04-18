@@ -16,7 +16,7 @@
 					<div class="row text-center"><div class="col-xs-10 col-xs-offset-1"><img class="user-photo" src="<%= photo_url %>" alt="User Photo"></div></div>
 					<div class="caption">
 						<input type="text" class="form-control photo-url" value="<%= photo_url %>" />
-						<p><button onclick="updatePhoto()" class="btn btn-success pull-right" role="button">Update</button><button onclick="clearPhoto()" class="btn btn-warning" role="button">Clear</button></p>
+						<p class="m-top-md"><button onclick="updatePhoto()" class="btn btn-success pull-right" role="button">Update</button><button onclick="clearPhoto()" class="btn btn-warning" role="button">Clear</button></p>
 					</div>
 					<div class="caption">
 						<h4>Auth Token <i class="fa clickable fa-refresh" onClick="resetAuthToken('<%= account.id %>')"></i></h4>
