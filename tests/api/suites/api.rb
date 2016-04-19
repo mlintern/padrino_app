@@ -57,7 +57,7 @@ class API < UnitTests
     assert ( response.code == 400 ), "Response not 400"
 
     data = { :content => {} }
-    
+
     response = post('/api/external_pub', data)
     assert ( response.code == 400 ), "Response not 400"
 
@@ -72,7 +72,7 @@ class API < UnitTests
     assert ( response.code == 400 && !response['data_received'].nil? ), "Response not 400 or data_received not present"
 
     data = { :content => {} }
-    
+
     response = post('/api/external_pub/debug', data)
     assert ( response.code == 400 && !response['data_received'].nil? ), "Response not 400 or data_received not present"
 
