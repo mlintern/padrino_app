@@ -48,4 +48,53 @@ class API < UnitTests
     response = get('/api/uuid')
     assert ( response.code == 200 && response.is_uuid ), "Response is not a uuid"
   end
+
+  def test_external_pub
+    response = get('/api/external_pub')
+    assert ( response.code == 200 ), "Response not 200"
+
+    response = post('/api/external_pub')
+    assert ( response.code == 400 ), "Response not 400"
+
+    data = { :content => {} }
+    
+    response = post('/api/external_pub', data)
+    assert ( response.code == 400 ), "Response not 400"
+
+    data = { :content => { :title => "Unit Test" } }
+
+    response = post('/api/external_pub', data)
+    assert ( response.code == 202 && !response['id'].nil? && !response['url'].nil? ), "Response not 202"
+  end
+
+  def test_external_pub_debug
+    response = post('/api/external_pub/debug')
+    assert ( response.code == 400 && !response['data_received'].nil? ), "Response not 400 or data_received not present"
+
+    data = { :content => {} }
+    
+    response = post('/api/external_pub/debug', data)
+    assert ( response.code == 400 && !response['data_received'].nil? ), "Response not 400 or data_received not present"
+
+    data = { :content => { :title => "Unit Test" } }
+
+    response = post('/api/external_pub/debug', data)
+    assert ( response.code == 202 && !response['id'].nil? && !response['url'].nil? && !response['data_received'].nil? ), "Response not 202 or id, url or data_received missing"
+  end
+
+  def test_get_fakedata
+    response = get('/api/fakedata')
+    assert ( response.code == 200 && response.length == 10 && response[0].length == 7 ), "Response not 200 or there are not 10 data entries or there are not 7 elements per entry"
+
+    response = get('/api/fakedata?count=25')
+    assert ( response.code == 200 && response.length == 25), "Response not 200 or there are not 25 data entries"
+
+    response = get('/api/fakedata?count=15&name=fullname&id=uuid&dob=date')
+    assert ( response.code == 200 && response.length == 15 && response[0].length == 3 ), "Response not 200 or there are not 15 data entries or the entry does not have 3 elements"
+  end
+
+  def test_post_fakedata
+    response = post('/api/fakedata', { :message => "hi" })
+    assert ( response.code == 200 && !response['message'].nil? ), "Response not 200, or message not present"
+  end
 end

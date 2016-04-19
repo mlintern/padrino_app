@@ -113,12 +113,12 @@ PadrinoApp::App.controllers :api do
       id = data['content'].try(:[],'remote_id') || rand(1000000)
       if data["content"]["title"]
         url = data['content'].try(:[],'remote_url') || 'http://' + host + '/' + data.try(:[],"content").try(:[],"title").downcase.gsub(' ','-')
-        return 202, { :success => true, :id => id, :url => url, :data_recieved => data }.to_json
+        return 202, { :success => true, :id => id, :url => url, :data_received => data }.to_json
       else
-        return 400, { :success => false, :error => 'Missing Title', :data_recieved => data }.to_json
+        return 400, { :success => false, :error => 'Missing Title', :data_received => data }.to_json
       end
     else
-      return 400, { :success => false, :error => 'Bad Data', :data_recieved => data }.to_json
+      return 400, { :success => false, :error => 'Bad Data', :data_received => data }.to_json
     end
   end
 
