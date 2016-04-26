@@ -13,9 +13,9 @@ GIT
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-password
-  revision: d69710db39c00ad835cbf934d152c1daf7459bed
+  revision: d6cc0c24f09f729ff4b8f9b589d34f989854db2a
   specs:
-    nretnil-password (0.1.2)
+    nretnil-password (0.1.3)
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-translate
