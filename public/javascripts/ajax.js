@@ -58,7 +58,7 @@ function httpGetAndUpdate (url,sel) {
 		url: url,
 		type: 'GET',
 		success: function (response) {
-			$(sel).html(JSON.stringify(response));
+			$(sel).html(JSON.stringify(response, null, 2));
 		},
 		error: function (response) {
 			console.log(response);
