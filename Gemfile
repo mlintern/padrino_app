@@ -23,6 +23,7 @@ gem 'compendium-api', :git => 'https://github.com/mlintern/compendium-api'
 gem 'nretnil-fake-data', :git => 'https://github.com/nretnilkram/nretnil-fake-data'
 gem 'nretnil-password', :git => 'https://github.com/nretnilkram/nretnil-password'
 gem 'nretnil-translate', :git => 'https://github.com/nretnilkram/nretnil-translate'
+gem 'nretnil-utilities', :git => 'https://github.com/nretnilkram/nretnil-utilities'
 gem 'sidekiq'
 
 # Padrino Stable Gem

@@ -19,9 +19,15 @@ GIT
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-translate
-  revision: 5796b5a6915123eee8a913694b4563eb5bbe86db
+  revision: d537f64f87d3e1f575f491240d393d7c21cc7f35
   specs:
-    nretnil-translate (0.0.2)
+    nretnil-translate (0.0.3)
+
+GIT
+  remote: https://github.com/nretnilkram/nretnil-utilities
+  revision: 30b916e341cfa2f66f1e0f7e62897d9000388dfc
+  specs:
+    nretnil-utilities (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -107,7 +113,7 @@ GEM
     minitest-retry (0.1.4)
       minitest (>= 5.0)
     moneta (0.7.20)
-    multi_json (1.11.2)
+    multi_json (1.11.3)
     multi_xml (0.5.5)
     mustermann19 (0.4.3)
       enumerable-lazy
@@ -149,8 +155,8 @@ GEM
     rack-protection (1.5.3)
       rack
     rake (11.1.2)
-    redis (3.2.2)
-    ruby-progressbar (1.7.5)
+    redis (3.3.0)
+    ruby-progressbar (1.8.0)
     rubyzip (1.2.0)
     sass (3.4.22)
     selenium-webdriver (2.53.0)
@@ -176,7 +182,7 @@ GEM
     uuidtools (2.1.5)
     watir-webdriver (0.9.1)
       selenium-webdriver (>= 2.46.2)
-    websocket (1.2.2)
+    websocket (1.2.3)
 
 PLATFORMS
   ruby
@@ -203,6 +209,7 @@ DEPENDENCIES
   nretnil-fake-data!
   nretnil-password!
   nretnil-translate!
+  nretnil-utilities!
   padrino (= 0.13.1)
   rake
   sass
