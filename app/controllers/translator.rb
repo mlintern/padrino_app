@@ -131,4 +131,25 @@ PadrinoApp::App.controllers :translator do
       redirect_last
     end
   end
+
+  get :asset, :map => 'translator/asset/:id/preview' do
+    permission_check('translate')
+
+    asset = Asset.get(params[:id])
+    if asset
+      project = Project.get(asset.project_id)
+      session[:redirect_to] = request.fullpath
+      if current_user.id == project.user_id
+        @title = asset.title
+
+        return asset.body
+      else
+        flash[:error] = "You do not have permission to view asset."
+        redirect_last
+      end
+    else
+      flash[:warning] = "Asset does not exist."
+      redirect_last
+    end
+  end
 end

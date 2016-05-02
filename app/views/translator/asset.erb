@@ -11,7 +11,9 @@
 
 	<div class="asset-container">
 		<button class="btn btn-copy btn-lg btn-info" data-clipboard-target=".asset-body-html div"><i class="fa fa-copy"></i> Copy Html</button>
-		<div class="asset-body well"></div>
+		<div class="asset-body embed-responsive">
+			<iframe class="asset-preview embed-responsive-item" src="/translator/asset/<%= asset.id %>/preview"></iframe>
+		</div>
 		<div class="asset-body-html"></div>
 	</div>
 
@@ -20,6 +22,11 @@
 <script>
 	var decoded = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>').text();
 	var html = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>')
-	$('.asset-body').html(decoded);
 	$('.asset-body-html').html(html);
+
+	$(document).ready (function () {
+		var $el = $('.footer');
+		var diff = $(document).height() - $el.offset().top - $el.height() - 30; // Padding is not included in height
+		$('.asset-body').height(diff+"px");
+	})
 </script>

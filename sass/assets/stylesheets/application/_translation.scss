@@ -5,6 +5,10 @@
 .asset-container {
   position: relative;
 
+  .asset-body {
+    min-height: 300px;
+  }
+
   .btn-copy {
     position: absolute;
     top: 5px;
