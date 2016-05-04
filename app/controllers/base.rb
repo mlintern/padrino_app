@@ -29,6 +29,7 @@ PadrinoApp::App.controllers :base, :map => "/" do
       files.each do |file|
         name =  file[:filename]
         size = File.size(file[:tempfile])
+        File.delete(file[:tempfile]) # Remove tmp file since we are not using it for anything
         response_hash << { :name => name, :size => size.to_human(1) }
       end
     end
