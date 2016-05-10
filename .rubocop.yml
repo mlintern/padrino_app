@@ -7,16 +7,14 @@ AllCops:
     - 'tmp/**/*'
 
 
-#
-# Max number of characters per line
-#
 Metrics/LineLength:
   Max: 300
 
 Metrics/AbcSize:
-  # The ABC size is a calculated magnitude, so this number can be a Fixnum or
-  # a Float.
   Max: 25
+
+Metrics/MethodLength:
+  Max: 150
 
 Style/Encoding:
   EnforcedStyle: always
