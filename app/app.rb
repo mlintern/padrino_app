@@ -1,5 +1,9 @@
-module PadrinoApp
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
 
+module PadrinoApp
+  # App
   class App < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
@@ -12,7 +16,7 @@ module PadrinoApp
     # set :dump_errors, true          # Exception backtraces are written to STDERR (default for production/development)
     # set :show_exceptions, true      # Shows a stack trace in browser (default for development)
     set :logging, true                # Logging in STDOUT for development and file for production (default only for development)
-    set :public_folder, "public"      # Location for static assets (default root/public)
+    set :public_folder, 'public'      # Location for static assets (default root/public)
     # set :reload, false              # Reload application files (default in development)
     # set :default_builder, "foo"     # Set a custom form builder (default 'StandardFormBuilder')
     # set :locale_path, "bar"         # Set path for I18n translations (default your_app/locales)
@@ -22,18 +26,18 @@ module PadrinoApp
     #
 
     # Padrino Mailer setup
-    set :delivery_method, :smtp => { 
-      :address              => "smtp.gmail.com",
-      :port                 => 587,
-      :user_name            => ENV['GMAIL_EMAIL'],
-      :password             => ENV['GMAIL_PASSWORD'],
-      :authentication       => :plain,
-      :enable_starttls_auto => true  
+    set :delivery_method, smtp: {
+      address: 'smtp.gmail.com',
+      port: 587,
+      user_name: ENV['GMAIL_EMAIL'],
+      password: ENV['GMAIL_PASSWORD'],
+      authentication: :plain,
+      enable_starttls_auto: true
     }
 
-    enable  :sessions
+    enable :sessions
 
-    # Custom error management 
+    # Custom error management
     # error(401) { @title = "Error 401"; render('errors/401', :layout => :error) }
     # error(403) { @title = "Error 403"; render('errors/403', :layout => :error) }
     # error(404) { @title = "Error 404"; render('errors/404', :layout => :error) }
