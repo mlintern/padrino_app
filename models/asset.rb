@@ -1,16 +1,21 @@
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
+
+# Asset Model
 class Asset
   include DataMapper::Resource
   include DataMapper::Validate
 
   # Properties
-  property :id,                UUID, :key => true, :unique_index => true
+  property :id,                UUID, key: true, unique_index: true
   property :project_id,        UUID
   property :external_id,       UUID
   property :title,             String
   property :body,              Text
-  property :source,            Boolean, :default => false
+  property :source,            Boolean, default: false
   property :source_id,         UUID
-  property :status,            Integer, :default => 0
+  property :status,            Integer, default: 0
   property :language,          String
 
   validates_presence_of        :id
