@@ -2,11 +2,11 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
+# SeleniumTest Helpers
 class SeleniumTests < Minitest::Test
-
   def screenshot(name)
     time = Time.new
-    @driver.screenshot.save './screenshots/' + name + '_' + time.strftime('%Y%m%d_%H%M%S') + '.png'  # @driver.driver.save_screenshot('screenshots/' + name + '_' + time.strftime('%Y%m%d_%H%M%S') + '.png')
+    @driver.screenshot.save './screenshots/' + name + '_' + time.strftime('%Y%m%d_%H%M%S') + '.png' # @driver.driver.save_screenshot('screenshots/' + name + '_' + time.strftime('%Y%m%d_%H%M%S') + '.png')
   end
 
   def get_error(test_name, error = nil)
