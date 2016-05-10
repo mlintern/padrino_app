@@ -1,5 +1,6 @@
 #!/bin/env ruby
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'erb'
 require 'bundler/setup'
@@ -15,56 +16,51 @@ require 'compendium-api'
 require 'nretnil-fake-data'
 require 'nretnil-password'
 require File.expand_path(File.dirname(__FILE__) + '/selenium_helpers.rb')
-require './env' if File.exists?('env.rb')
+require './env' if File.exist?('env.rb')
 
 puts ENVIRONMENT_URL = ENV['TARGET_URL'] || 'http://app.nretnil.com'
-puts ENVIRONMENT_BROWSER = ENV["BROWSER"] || 'chrome'
+puts ENVIRONMENT_BROWSER = ENV['BROWSER'] || 'chrome'
 ROOT_DIR = File.expand_path(File.dirname(__FILE__))
 SCREENSHOT_DIR = ROOT_DIR + '/screenshots'
 
-NRETNIL_USERNAME = ENV["NRETNIL_USERNAME"]
-NRETNIL_PASSWORD = ENV["NRETNIL_PASSWORD"]
-NRETNIL_KEY = ENV["NRETNIL_KEY"]
+NRETNIL_USERNAME = ENV['NRETNIL_USERNAME']
+NRETNIL_PASSWORD = ENV['NRETNIL_PASSWORD']
+NRETNIL_KEY = ENV['NRETNIL_KEY']
 
 # Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(:color => true)]
 # Minitest::Reporters.use! [Minitest::Reporters::ProgressReporter.new(:color => true)]
-Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new(:color => true)]
+Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new(color: true)]
 Minitest::Retry.use!(
   retry_count: 1,  # The number of times to retry. The default is 3.
   verbose: true,   # Whether or not to display the message at the time of retry. The default is true.
-  io: $stdout     # Display destination of retry when the message. The default is stdout.
+  io: $stdout # Display destination of retry when the message. The default is stdout.
 )
 
+# Selenium Test Class
 class SeleniumTests < Minitest::Test
-
   include Selenium
 
   def setup
+    timout = ENV['TIMEOUT'] || 30 # 30 seconds is default
+    Watir.default_timeout = timout.to_i
 
-    begin
-      timout = ENV['TIMEOUT'] || 30 # 30 seconds is default
-      Watir.default_timeout = timout.to_i
-
-      case ENVIRONMENT_BROWSER
-        when "firefox"
-          @driver = Watir::Browser.start ENVIRONMENT_URL, :firefox
-        when "chrome"
-          @driver = Watir::Browser.start ENVIRONMENT_URL, :chrome, :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate]
-        else
-          puts "\n\n\nI don't know this BROWSER"
-          abort
-        end
-      @date = DateTime.now.strftime("%Y-%m-%d~%H:%M:%S")
-
-      if ENV['BROWSER'] != 'safari'
-        @driver.window.resize_to(1024, 768)
-      end
-
-    rescue StandardError => e
-      puts "StandardError"
-      puts "@driver was not created."
-      raise
+    case ENVIRONMENT_BROWSER
+    when 'firefox'
+      @driver = Watir::Browser.start ENVIRONMENT_URL, :firefox
+    when 'chrome'
+      @driver = Watir::Browser.start ENVIRONMENT_URL, :chrome, switches: %w(--ignore-certificate-errors --disable-popup-blocking --disable-translate)
+    else
+      puts "\n\n\nI don't know this BROWSER"
+      abort
     end
+    @date = DateTime.now.strftime('%Y-%m-%d~%H:%M:%S')
+
+    @driver.window.resize_to(1024, 768) if ENV['BROWSER'] != 'safari'
+
+  rescue StandardError
+    puts 'StandardError'
+    puts '@driver was not created.'
+    raise
   end
 
   def teardown
