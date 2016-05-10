@@ -1,10 +1,14 @@
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
+
 migration 6, :languages do
   up do
     create_table :languages do
       column :id, DataMapper::Property::UUID
       column :project_id, DataMapper::Property::UUID
-      column :name, DataMapper::Property::String, :length => 255
-      column :code, DataMapper::Property::String, :length => 255
+      column :name, DataMapper::Property::String, length: 255
+      column :code, DataMapper::Property::String, length: 255
     end
   end
 

@@ -1,3 +1,7 @@
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
+
 ##
 # This file mounts each app in the Padrino project to a specified sub-uri.
 # You can mount additional applications using any of these commands below:
@@ -26,11 +30,11 @@
 # override these settings in the subapps as needed.
 #
 Padrino.configure_apps do
-  set :protection, :except => :frame_options
+  set :protection, except: :frame_options
 end
 
 require 'sidekiq/web'
 
 # Mounts the core application for this project
-Padrino.mount('SidekiqWebInterface', :app_file => Padrino.root('app/sidekiq.rb')).to('/sidekiq')
-Padrino.mount('PadrinoApp::App', :app_file => Padrino.root('app/app.rb')).to('/')
+Padrino.mount('SidekiqWebInterface', app_file: Padrino.root('app/sidekiq.rb')).to('/sidekiq')
+Padrino.mount('PadrinoApp::App', app_file: Padrino.root('app/app.rb')).to('/')

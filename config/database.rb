@@ -1,3 +1,7 @@
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
+
 ##
 # A MySQL connection:
 # DataMapper.setup(:default, 'mysql://user:password@localhost/the_database_name')
