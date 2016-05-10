@@ -1,15 +1,16 @@
 #!/bin/env ruby
-# encoding: utf-8
+# encoding: UTF-8
+# frozen_string_literal: true
 
 require File.expand_path(File.dirname(__FILE__) + './../watir-selenium')
 
+# Navigation Test Suite
 class Navigation < SeleniumTests
-
   def test_main_menu
     begin
-      sign_in(NRETNIL_USERNAME,NRETNIL_PASSWORD)
+      sign_in(NRETNIL_USERNAME, NRETNIL_PASSWORD)
       main_nav("Home")
-      assert @driver.div(:css, ".new-features").exists?, "Did not load Home page"
+      assert @driver.div(:css, ".api-enpoints").exists?, "Did not load Home page"
       main_nav("PL Translator")
       assert @driver.url.include?('/translator'), "Did not load PL Translator page"
       main_nav("Curl API Tool")
@@ -21,7 +22,7 @@ class Navigation < SeleniumTests
 
   def test_user_menu
     begin
-      sign_in(NRETNIL_USERNAME,NRETNIL_PASSWORD)
+      sign_in(NRETNIL_USERNAME, NRETNIL_PASSWORD)
       user_nav("Accounts")
       assert @driver.url.include?('/accounts'), "Did not load Accounts page"
       user_nav("Profile Settings")
@@ -30,5 +31,4 @@ class Navigation < SeleniumTests
       get_error(__method__.to_s, e)
     end
   end
-
 end
