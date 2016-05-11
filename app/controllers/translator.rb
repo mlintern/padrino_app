@@ -1,3 +1,7 @@
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
+
 PadrinoApp::App.controllers :translator do
   get :index do
     permission_check('translate')
@@ -5,7 +9,7 @@ PadrinoApp::App.controllers :translator do
 
     @title = "Projects"
 
-    projects = Project.all( :user_id => current_user.id, :order => [ :name.asc ] )
+    projects = Project.all(:user_id => current_user.id, :order => [:name.asc])
     counts = {}
     dest_languages = {}
     projects.each do |project|

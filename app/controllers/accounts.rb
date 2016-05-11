@@ -1,5 +1,7 @@
-# encoding: utf-8
+#!/bin/env ruby
+# encoding: UTF-8
 # frozen_string_literal: true
+
 PadrinoApp::App.controllers :accounts do
   get :index do
     permission_check('admin')

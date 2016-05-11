@@ -1,3 +1,7 @@
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
+
 PadrinoApp::App.controllers :sessions do
   get :new do
     render "/sessions/new"
