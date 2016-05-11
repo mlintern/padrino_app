@@ -18,11 +18,8 @@ class Background
     logger.info 'Performing Async Request'
     url = '/api/assets/' + asset_id + '/translate'
     response = HTTParty.post(ENV['SERVER_URL'] + url, body: { auth_token: auth_token })
-    if response.code == 200
-      return true
-    else
-      return response.parsed_response
-    end
+    return true unless response.code != 200
+    return response.parsed_response
   rescue StandardException => e
     logger.error e
     logger.error e.backtrace
