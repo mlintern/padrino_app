@@ -6,9 +6,6 @@ require File.expand_path(File.dirname(__FILE__) + './../unit_test')
 
 # API Accounts Test Suite
 class APIAccounts < UnitTests
-  ADMIN_AUTH = { username: '__selenium_admin', password: 'password' }.freeze
-  BAD_AUTH = { username: 'foo', password: 'bar' }.freeze
-
   def test_api_accounts
     response = get('/api/accounts')
     assert (response.code == 403), 'Was not Forbidden'
@@ -23,9 +20,15 @@ class APIAccounts < UnitTests
 
     response = get('/api/accounts/me', ADMIN_AUTH)
     assert (response.code == 200 && !response.empty?), 'Did not Recieve 200 or there was no data.'
+
+    response = get('/api/accounts/me', USER_ONE_AUTH)
+    assert (response.code == 200 && !response.empty?), 'Did not Recieve 200 or there was no data.'
+
+    response = get('/api/accounts/me', USER_TWO_AUTH)
+    assert (response.code == 200 && !response.empty?), 'Did not Recieve 200 or there was no data.'
   end
 
-  def test_api_accounts_id
+  def test_api_accounts_id_admin
     accounts = get('/api/accounts', ADMIN_AUTH)
     user_one = accounts[0]
 
@@ -37,5 +40,13 @@ class APIAccounts < UnitTests
 
     response = get('/api/accounts/' + user_one['id'], BAD_AUTH)
     assert (response.code == 403), 'Did not Recieve 403.'
+  end
+
+  def test_api_accounts_id_non_admin
+    accounts = get('/api/accounts', ADMIN_AUTH)
+    user_one = accounts[0]
+
+    response = get('/api/accounts/' + user_one['id'], USER_TWO_AUTH)
+    assert (response.code == 403), 'Was not Forbidden'
   end
 end

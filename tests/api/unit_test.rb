@@ -21,6 +21,11 @@ Minitest::Retry.use!(
 
 # UnitTests Class
 class UnitTests < Minitest::Test
+  ADMIN_AUTH = { username: ENV['NRETNIL_ADMIN_USERNAME'], password: ENV['NRETNIL_ADMIN_PASSWORD'] }.freeze
+  USER_ONE_AUTH = { username: ENV['NRETNIL_USER_ONE_USERNAME'], password: ENV['NRETNIL_USER_ONE_PASSWORD'] }.freeze
+  USER_TWO_AUTH = { username: ENV['NRETNIL_USER_TWO_USERNAME'], password: ENV['NRETNIL_USER_TWO_PASSWORD'] }.freeze
+  BAD_AUTH = { username: 'foo', password: 'bar' }.freeze
+
   def setup
     @server = 'http://localhost:3000'
   end

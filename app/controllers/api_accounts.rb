@@ -102,15 +102,12 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     add_update_properties(data)
 
     account = Account.new(data)
-    if account.save
-      return 200, account.to_json
-    else
-      errors = []
-      account.errors.each do |e|
-        errors << e
-      end
-      return 400, { :success => false, :errors => errors }.to_json
+    return 200, account.to_json if account.save
+    errors = []
+    account.errors.each do |e|
+      errors << e
     end
+    return 400, { :success => false, :errors => errors }.to_json
   end
 
   ####
