@@ -7,8 +7,12 @@ PadrinoTasks.use(:database)
 PadrinoTasks.use(:datamapper)
 PadrinoTasks.init
 
+task :user_setup do
+  system 'bundle exec padrino runner tests/lib/user_setup.rb'
+end
+
 namespace :selenium do
-  task :all do
+  task all: :user_setup do
     Dir[File.dirname(__FILE__) + '/tests/selenium/suites/**/*.rb'].each { |file| require file }
   end
 end
@@ -17,7 +21,7 @@ end
 # Rake task for running unit tests
 #
 namespace :unit_tests do
-  task :all do
+  task all: :user_setup do
     Dir[File.dirname(__FILE__) + '/tests/api/suites/**/*.rb'].each { |file| require file }
   end
 end

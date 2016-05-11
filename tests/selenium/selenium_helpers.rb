@@ -20,40 +20,40 @@ class SeleniumTests < Minitest::Test
     @driver.body(:css, '.nretnil-document-ready').wait_until_present
   end
 
+  def wac(el)
+    el.wait_until_present
+    el.click
+  end
+
+  alias wait_and_click wac
+
   def sign_in(username, password)
     @driver.goto ENVIRONMENT_URL
-    @driver.a(:css, '.login-btn').wait_until_present
-    @driver.a(:css, '.login-btn').click
+    wait_and_click(@driver.a(:css, '.login-btn'))
     @driver.text_field(:id, 'username').set(username)
     @driver.text_field(:id, 'password').set(password)
-    @driver.button(:css, '.sign-in-btn').click
+    wait_and_click(@driver.button(:css, '.sign-in-btn'))
     wait_till_page_loads
     assert !@driver.url.include?('/sessions/new')
   end
 
   def sign_out
     wait_till_page_loads
-    @driver.a(:css, '.toggle-right-nav').wait_until_present
-    @driver.a(:css, '.toggle-right-nav').click
-    @driver.a(:css, '.logout-btn').wait_until_present
-    @driver.a(:css, '.logout-btn').click
+    wait_and_click(@driver.a(:css, '.toggle-right-nav'))
+    wait_and_click(@driver.a(:css, '.logout-btn'))
     wait_till_page_loads
     assert @driver.url == ('http://' + ENVIRONMENT_URL + '/')
   end
 
   def main_nav(option)
-    @driver.a(:css, '.toggle-left-nav').wait_until_present
-    @driver.a(:css, '.toggle-left-nav').click
-    @driver.a(:text, option).wait_until_present
-    @driver.a(:text, option).click
+    wait_and_click(@driver.a(:css, '.toggle-left-nav'))
+    wait_and_click(@driver.a(:text, option))
     wait_till_page_loads
   end
 
   def user_nav(option)
-    @driver.a(:css, '.toggle-right-nav').wait_until_present
-    @driver.a(:css, '.toggle-right-nav').click
-    @driver.a(:text, option).wait_until_present
-    @driver.a(:text, option).click
+    wait_and_click(@driver.a(:css, '.toggle-right-nav'))
+    wait_and_click(@driver.a(:text, option))
     wait_till_page_loads
   end
 end
