@@ -56,8 +56,8 @@
 			}
 		}
 
-		$('#public').change(function() { setFields() } );
-		$('#method').change(function() { setFields() } );
+		$('#public').change(function() { setFields(); } );
+		$('#method').change(function() { setFields(); } );
 
 		$('.screenshot img').click(function() {
 			var url = $(this).attr('src');
@@ -171,7 +171,7 @@
 
 		// Autofocus first field with an error. (usability)
 		var error_input;
-		if (error_input = $('.has-error :input').first()) { error_input.focus(); }
+		if (error_input == $('.has-error :input').first()) { error_input.focus(); }
 
 		$('.toggle-right-nav').click(function (e) {
 			e.preventDefault();

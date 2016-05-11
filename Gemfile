@@ -1,3 +1,7 @@
+#!/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Project requirements
@@ -18,21 +22,21 @@ gem 'dm-types'
 gem 'dm-core'
 gem 'json'
 gem 'httparty'
-gem "sinatra-flash", :require => "sinatra/flash"
-gem 'compendium-api', :git => 'https://github.com/mlintern/compendium-api'
-gem 'nretnil-fake-data', :git => 'https://github.com/nretnilkram/nretnil-fake-data'
-gem 'nretnil-password', :git => 'https://github.com/nretnilkram/nretnil-password'
-gem 'nretnil-translate', :git => 'https://github.com/nretnilkram/nretnil-translate'
-gem 'nretnil-utilities', :git => 'https://github.com/nretnilkram/nretnil-utilities'
+gem 'sinatra-flash', require: 'sinatra/flash'
+gem 'compendium-api', git: 'https://github.com/mlintern/compendium-api'
+gem 'nretnil-fake-data', git: 'https://github.com/nretnilkram/nretnil-fake-data'
+gem 'nretnil-password', git: 'https://github.com/nretnilkram/nretnil-password'
+gem 'nretnil-translate', git: 'https://github.com/nretnilkram/nretnil-translate'
+gem 'nretnil-utilities', git: 'https://github.com/nretnilkram/nretnil-utilities'
 gem 'sidekiq'
 
 # Padrino Stable Gem
 gem 'padrino', '0.13.1'
 
 # For Selenium and Unit Tests
-gem "minitest"
-gem "minitest-retry"
-gem 'minitest-reporters', '~> 1.0.5', :group => "test"
+gem 'minitest'
+gem 'minitest-retry'
+gem 'minitest-reporters', '~> 1.0.5', group: 'test'
 gem 'selenium-webdriver'
 gem 'watir-webdriver'
 

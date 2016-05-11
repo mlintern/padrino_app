@@ -6,7 +6,6 @@ AllCops:
     - 'spec/fixtures/**/*'
     - 'tmp/**/*'
 
-
 Metrics/LineLength:
   Max: 300
 

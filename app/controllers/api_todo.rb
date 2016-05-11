@@ -2,11 +2,10 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
-
+PadrinoApp::App.controllers :api_todos, map: '/api/todos' do
   before do
-    headers "Content-Type" => "application/json; charset=utf8"
-    @api_account = api_auth(request.env["HTTP_AUTHORIZATION"], "user")
+    headers 'Content-Type' => 'application/json; charset=utf8'
+    @api_account = api_auth(request.env['HTTP_AUTHORIZATION'], 'user')
   end
 
   ####
@@ -17,7 +16,7 @@ PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
   # Response: json object
   ####
   get :index do
-    todos = Todo.all(:user_id => @api_account.id, :order => [ :title.asc ])
+    todos = Todo.all(user_id: @api_account.id, order: [:title.asc])
     return 200, todos.to_json
   end
 
@@ -30,12 +29,11 @@ PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
   # Response: json object
   ####
   post :index do
-
     data = JSON.parse request.body.read
-    if (data["title"])
-      data = remove_other_elements(data,[:title])
-      data["user_id"] = @api_account.id
-      data["id"] = SecureRandom.uuid
+    if data['title']
+      data = remove_other_elements(data, [:title])
+      data['user_id'] = @api_account.id
+      data['id'] = SecureRandom.uuid
       todo = Todo.new(data)
       if todo.save
         return 200, todo.to_json
@@ -49,7 +47,6 @@ PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
     else
       return 400, { :success => false, :error => "Payload must contain title." }.to_json
     end
-
   end
 
   ####
@@ -60,12 +57,11 @@ PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
   #  options: title, completed (boolean)
   # Response: json object
   ####
-  put :todo, :map => '/api/todos/:id' do
-
+  put :todo, map: '/api/todos/:id' do
     data = JSON.parse request.body.read
 
-    if (data.key?("title") || data.key?("completed"))
-      data = remove_other_elements(data,[:title,:completed])
+    if data.key?('title') || data.key?('completed')
+      data = remove_other_elements(data, [:title, :completed])
       todo = Todo.get(params[:id])
       if todo
         if @api_account.id == todo.user_id
@@ -96,7 +92,7 @@ PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
   # Arguments: None
   # Response: json object
   ####
-  delete :todo, :map => '/api/todos/:id' do
+  delete :todo, map: '/api/todos/:id' do
     todo = Todo.get(params[:id])
     if todo
       if @api_account.id == todo.user_id
@@ -120,5 +116,4 @@ PadrinoApp::App.controllers :api_todos, :map => '/api/todos' do
   after do
     @api_account = nil
   end
-
 end

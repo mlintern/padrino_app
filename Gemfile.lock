@@ -163,7 +163,7 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    sidekiq (4.1.1)
+    sidekiq (4.1.2)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       redis (~> 3.2, >= 3.2.1)
@@ -219,4 +219,4 @@ DEPENDENCIES
   watir-webdriver
 
 BUNDLED WITH
-   1.12.1
+   1.12.3

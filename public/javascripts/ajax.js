@@ -45,7 +45,7 @@ function uuid() {
 function flashSuccess (message) {
 	$('.flash-notice').html('<div class="alert alert-success" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	window.scrollTo(0,0);
-	_.delay(function () { $('.flash-notice').html('')}, 3000);
+	_.delay(function () { $('.flash-notice').html(''); }, 3000);
 }
 
 function flashError (message) {
@@ -82,7 +82,7 @@ function updateApiExample (endpoint) {
 			httpGetAndUpdate("/api/fakedata","."+endpoint+".result");
 			break;
 		case "words":
-			var params = "?words[]=verb&words[]=noun&words[]=animal&words[]=color&words[]=name&nouns=4&verbs=2&adjectives=5&names=2&colors=3&animals=4"
+			var params = "?words[]=verb&words[]=noun&words[]=animal&words[]=color&words[]=name&nouns=4&verbs=2&adjectives=5&names=2&colors=3&animals=4";
 			httpGetAndUpdate("/api/words"+params,"."+endpoint+".result");
 			break;
 		default:
@@ -90,14 +90,18 @@ function updateApiExample (endpoint) {
 	}
 }
 
-var endpoints = ['password','passphrase','uuid','fakedata','words']
-_.each(endpoints,function (endpoint) {
-  updateApiExample(endpoint);
-})
+var url = window.location.toString();
+console.log(url);
+if ( url == 'http://localhost:3000/' || url == 'http://app.nretnil.com/' ) {
+	var endpoints = ['password','passphrase','uuid','fakedata','words'];
+	_.each(endpoints,function (endpoint) {
+	  updateApiExample(endpoint);
+	});
+}
 
 function updatePhoto () {
 	id = $(".user-info").data('user-id');
-	photo = $('.photo-url').val()
+	photo = $('.photo-url').val();
 	data = { "properties" : [ { "name":"photo", "value": photo } ] };
 	$.ajax({
 		url: '/api/accounts/'+id,
@@ -112,7 +116,7 @@ function updatePhoto () {
 		},
 		error: function (response) {
 			console.log(response);
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -129,12 +133,12 @@ function clearPhoto () {
 		success: function (response) {
 			console.log(response);
 			$('.user-photo').attr('src', '/images/default.png');
-			$('.photo-url').val('')
+			$('.photo-url').val('');
 			flashSuccess('Account photo cleared successfully.');
 		},
 		error: function (response) {
 			console.log(response);
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -148,11 +152,11 @@ function resetAuthToken (id) {
 		contentType: "application/json",
 		type: 'PUT',
 		success: function (response) {
-			$('.auth-token').text(response["auth_token"]);
+			$('.auth-token').text(response.auth_token);
 			flashSuccess('Auth Token Reset.');
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -167,11 +171,11 @@ function startProject () {
 		contentType: "application/json",
 		type: 'POST',
 		success: function (response) {
-			flashSuccess(response["info"]);
-			setTimeout(function() { location.reload() }, 1000 );
+			flashSuccess(response.info);
+			setTimeout(function() { location.reload(); }, 1000 );
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -186,11 +190,11 @@ function cancelProject () {
 		contentType: "application/json",
 		type: 'POST',
 		success: function (response) {
-			flashSuccess(response["info"]);
-			setTimeout(function() { location.reload() }, 1000 );
+			flashSuccess(response.info);
+			setTimeout(function() { location.reload(); }, 1000);
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -205,11 +209,11 @@ function completeProject () {
 		contentType: "application/json",
 		type: 'POST',
 		success: function (response) {
-			flashSuccess(response["info"]);
-			setTimeout(function() { location.reload() }, 1000 );
+			flashSuccess(response.info);
+			setTimeout(function() { location.reload(); }, 1000);
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -222,10 +226,10 @@ function deleteAsset (asset_id) {
 		type: 'DELETE',
 		success: function (response) {
 			$('tr[data-asset='+asset_id+']').remove();
-			flashSuccess(response["info"]);
+			flashSuccess(response.info);
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -238,15 +242,15 @@ function deleteProject (project_id) {
 		type: 'DELETE',
 		success: function (response) {
 			$('tr[data-project='+project_id+']').remove();
-			flashSuccess(response["info"]);
+			flashSuccess(response.info);
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
 
-function translateAsset (asset_id,refresh) {
+function translateAsset(asset_id,refresh) {
 	refresh = typeof refresh !== 'undefined' ? refresh : false;
 	var data = {};
 	$.ajax({
@@ -255,52 +259,52 @@ function translateAsset (asset_id,refresh) {
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function (response) {
+		success: function(response) {
 			$('.btn-translate').remove();
 			flashSuccess("Successfully Translated.");
 			if (refresh) {
-				setTimeout(function() { location.reload() }, 1000 );
+				setTimeout(function() { location.reload(); }, 1000);
 			}
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 			if (refresh) {
-				setTimeout(function() { location.reload() }, 1000 );
+				setTimeout(function() { location.reload(); }, 1000);
 			}
 		}
 	});
 }
 
-function addProject () {
+function addProject() {
 	event.preventDefault();
 	$('.new-project').modal('hide');
 	var data = $('.add-project-form').serializeForm();
-	data['type'] = 1
-	data["destination_languages"] = [{"name":"Pig Latin","code":"pl"}]
+	data.type = 1;
+	data.destination_languages = [{"name":"Pig Latin","code":"pl"}];
 	$.ajax({
 		url: "/api/projects",
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'POST',
-		success: function (response) {
+		success: function(response) {
 			$('.translator-settings').modal('hide');
 			flashSuccess("Project Created Successfully.");
-			setTimeout(function() { location.reload() }, 1000 );
+			setTimeout(function() { location.reload(); }, 1000);
 		},
-		error: function (response) {
-			flashError(response['responseText']);
+		error: function(response) {
+			flashError(response.responseText);
 		}
 	});
 }
 
-function updateProject (project_id) {
+function updateProject(project_id) {
 	var newTitle = $('#project-title').val();
 	var newDesc = $('#project-desc').val();
 	var newLang = $('#project-lang').val();
 	var data = { "name" : newTitle, 'description' : newDesc };
-	if (newLang != null) {
-		data['language'] = newLang;
+	if (newLang !== null) {
+		data.language = newLang;
 	}
 	$.ajax({
 		url: "/api/projects/"+project_id,
@@ -309,12 +313,12 @@ function updateProject (project_id) {
 		contentType: "application/json",
 		type: 'PUT',
 		success: function (response) {
-			$('.project-title').text(response['name']);
-			$('.project-desc').text(response['description']);
+			$('.project-title').text(response.name);
+			$('.project-desc').text(response.description);
 			flashSuccess("Title Successfully Updated");
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -327,10 +331,10 @@ function deleteLanguage (language_id) {
 		type: 'DELETE',
 		success: function (response) {
 			$('tr[data-language='+language_id+'],span[data-language='+language_id+']').remove();
-			flashSuccess(response["info"]);
+			flashSuccess(response.info);
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -347,12 +351,12 @@ function addLanguage (project_id) {
 		type: 'POST',
 		success: function (response) {
 			$('.add-language').hide();
-			$('.language-list').append('<span data-language="'+response["id"]+'"> '+response["name"]+' ('+response["code"]+')  </span>');
-			$('.table-language-list').append('<tr data-language="'+response["id"]+'" class="list-row"><td class=list-column> '+response["name"]+' </td><td class=list-column> '+response["code"]+' </td><td> Refresh to Delete</td></tr>');
+			$('.language-list').append('<span data-language="'+response.id+'"> '+response.name+' ('+response.code+')  </span>');
+			$('.table-language-list').append('<tr data-language="'+response.id+'" class="list-row"><td class=list-column> '+response.name+' </td><td class=list-column> '+response.code+' </td><td> Refresh to Delete</td></tr>');
 			flashSuccess("Language Successfully Added.");
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -373,10 +377,10 @@ function addAsset (project_id, language) {
 			success: function (response) {
 				$('.new-asset').modal('hide');
 				flashSuccess("Asset Successfully Added.");
-				setTimeout(function() { location.reload() }, 1000 );
+				setTimeout(function() { location.reload(); }, 1000 );
 			},
 			error: function (response) {
-				flashError(response['responseText']);
+				flashError(response.responseText);
 			}
 		});
 	}
@@ -395,7 +399,7 @@ function updateTranslator () {
 			flashSuccess("Translator Successfully Updated.");
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }
@@ -403,7 +407,7 @@ function updateTranslator () {
 function deleteTranslator () {
 	event.preventDefault();
 	var data = $('.translation-settings-form').serializeForm();
-	var app_install_id = data["app_install_id"]
+	var app_install_id = data.app_install_id;
 	$.ajax({
 		url: "/api/translator/"+app_install_id,
 		dataType: 'json',
@@ -412,10 +416,10 @@ function deleteTranslator () {
 		success: function (response) {
 			$('.translator-settings').modal('hide');
 			flashSuccess("Translator Deleted Successfully.");
-			setTimeout(function() { location.reload() }, 1000 );
+			setTimeout(function() { location.reload(); }, 1000 );
 		},
 		error: function (response) {
-			flashError(response['responseText']);
+			flashError(response.responseText);
 		}
 	});
 }

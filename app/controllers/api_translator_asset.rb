@@ -2,10 +2,9 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
-
+PadrinoApp::App.controllers :api_assets, map: '/api/assets' do
   before do
-    headers "Content-Type" => "application/json; charset=utf8"
+    headers 'Content-Type' => 'application/json; charset=utf8'
   end
 
   ####
@@ -15,8 +14,8 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
   # Arguments: None
   # Response: asset as json object
   ####
-  get :index, :with => :id do
-    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env["HTTP_AUTHORIZATION"], "translate")
+  get :index, with: :id do
+    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     asset = Asset.get(params[:id])
 
@@ -39,61 +38,60 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
   # Arguments: None
   # Response: translated asset(s) in json object
   ####
-  post :translate, :map => '/api/assets/:id/translate' do
-    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env["HTTP_AUTHORIZATION"], "translate")
+  post :translate, map: '/api/assets/:id/translate' do
+    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     asset = Asset.get(params[:id])
 
-    already_translated = Asset.all({ :source_id => asset.external_id, :project_id => asset.project_id })
+    already_translated = Asset.all(source_id: asset.external_id, project_id: asset.project_id)
     finished_langs = already_translated.map { |at| at.language.downcase }
 
     if asset
       if asset.status == 0 || asset.status == 3
         project = Project.get(asset.project_id)
         if project.user_id = auth_account.id
-          languages = Language.all( :project_id => project.id )
+          languages = Language.all(project_id: project.id)
           new_assets = []
           errors = []
           languages.each do |lang|
-            unless finished_langs.include? lang.name.downcase
-              data = {}
-              data[:source_id] = asset.external_id
-              data[:project_id] = project.id
-              data[:id] = SecureRandom.uuid
-              data[:language] = lang.name
-              data[:status] = 2
-              data[:title] = translate_piglatin_title(asset.title,lang.name)
-              data[:body] = translate_piglatin(asset.body)
-              new_asset = Asset.new(data)
-              if new_asset.save
-                ### Send new asset to OCM
-                ocmapp = OCMApp.first({ :user_id => auth_account.id })
-                if ocmapp && project.type.to_i == 0
-                  logger.info "Sending Post to Compendium"
-                  logger.info data
-                  logger.debug result = ocm_create_post(data,ocmapp)
-                else
-                  result = true
-                end
-                if result == true
-                  new_assets << new_asset
-                else
-                  new_asset.destroy
-                  errors << ( result.is_a?(Hash) ? result['error'] : JSON.parse(result)["error"] )
-                end
+            next if finished_langs.include? lang.name.downcase
+            data = {}
+            data[:source_id] = asset.external_id
+            data[:project_id] = project.id
+            data[:id] = SecureRandom.uuid
+            data[:language] = lang.name
+            data[:status] = 2
+            data[:title] = translate_piglatin_title(asset.title, lang.name)
+            data[:body] = translate_piglatin(asset.body)
+            new_asset = Asset.new(data)
+            if new_asset.save
+              ### Send new asset to OCM
+              ocmapp = OCMApp.first(user_id: auth_account.id)
+              if ocmapp && project.type.to_i == 0
+                logger.info 'Sending Post to Compendium'
+                logger.info data
+                logger.debug result = ocm_create_post(data, ocmapp)
               else
-                new_asset.errors.each do |e|
-                  errors << e
-                end
+                result = true
+              end
+              if result == true
+                new_assets << new_asset
+              else
+                new_asset.destroy
+                errors << (result.is_a?(Hash) ? result['error'] : JSON.parse(result)['error'])
+              end
+            else
+              new_asset.errors.each do |e|
+                errors << e
               end
             end
           end
-          if errors.length > 0
-            asset.update({:status => 3})
+          if !errors.empty?
+            asset.update(status: 3)
             logger.error errors.inspect
             return 400, { :success => false, :info => errors }.to_json
           else
-            asset.update({:status => 1}) if languages.count > 0
+            asset.update(status: 1) if languages.count > 0
             return 200, new_assets.to_json
           end
         else
@@ -114,8 +112,8 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
   # Arguments: None
   # Response: json object with result
   ####
-  delete :index, :with => :id do
-    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env["HTTP_AUTHORIZATION"], "translate")
+  delete :index, with: :id do
+    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     asset = Asset.get(params[:id])
 
@@ -138,5 +136,4 @@ PadrinoApp::App.controllers :api_assets, :map => '/api/assets' do
       return 404, { :success => false, :info => "Asset does not exist." }.to_json
     end
   end
-
 end

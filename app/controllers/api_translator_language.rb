@@ -2,10 +2,9 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-PadrinoApp::App.controllers :api_languages, :map => '/api/languages' do
-
+PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
   before do
-    headers "Content-Type" => "application/json; charset=utf8"
+    headers 'Content-Type' => 'application/json; charset=utf8'
   end
 
   ####
@@ -15,8 +14,8 @@ PadrinoApp::App.controllers :api_languages, :map => '/api/languages' do
   # Arguments: None
   # Response: language as json object
   ####
-  get :index, :with => :id do
-    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env["HTTP_AUTHORIZATION"], "translate")
+  get :index, with: :id do
+    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     language = Language.get(params[:id])
 
@@ -40,13 +39,13 @@ PadrinoApp::App.controllers :api_languages, :map => '/api/languages' do
   # Response: create language as json object
   ####
   post :index do
-    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env["HTTP_AUTHORIZATION"], "translate")
+    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     data = JSON.parse request.body.read
 
     data[:id] = SecureRandom.uuid
 
-    project_id = data["project_id"] || nil
+    project_id = data['project_id'] || nil
 
     if project_id
       project = Project.get(project_id)
@@ -76,8 +75,8 @@ PadrinoApp::App.controllers :api_languages, :map => '/api/languages' do
   # Arguments: None
   # Response: json object with result
   ####
-  delete :index, :with => :id do
-    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env["HTTP_AUTHORIZATION"], "translate")
+  delete :index, with: :id do
+    auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     language = Language.get(params[:id])
 
@@ -100,5 +99,4 @@ PadrinoApp::App.controllers :api_languages, :map => '/api/languages' do
       return 404, { :success => false, :info => "Language does not exist." }.to_json
     end
   end
-
 end
