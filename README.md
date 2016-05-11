@@ -136,6 +136,9 @@ To use email you will want to create a file on the root of hte project called en
 
 ENV['GMAIL_EMAIL'] = 'emailaddress@gamil.com'
 ENV['GMAIL_PASSWORD'] = 'passwordtoemailaddress'
+ENV['LOG_LEVEL'] = 'devel'
+ENV['SERVER_HOST'] = 'localhost:3000'
+ENV['SERVER_URL'] = 'http://localhost:3000'
 
 # Testing Environment Variables
 ENV['NRETNIL_ADMIN_USERNAME'] = '__selenium_admin'
