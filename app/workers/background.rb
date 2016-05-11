@@ -1,3 +1,8 @@
+#!/bin/env ruby
+# encoding: UTF-8
+# frozen_string_literal: true
+
+# Background Worker
 class Background
   include Sidekiq::Worker
   sidekiq_options queue: 'translate'
@@ -9,20 +14,18 @@ class Background
   #            auth_token - user who owns project's auth token
   # Response: boolean
   ####
-  def perform(asset_id,auth_token)
-    logger.info "Performing Async Request"
-    begin
-      url = "/api/assets/"+asset_id+"/translate"
-      response = HTTParty.post(ENV['SERVER_URL']+url, :body => { :auth_token => auth_token })
-      if response.code == 200
-        return true
-      else
-        return response.parsed_response
-      end
-    rescue Exception => e
-      logger.error e
-      logger.error e.backtrace
-      return false
+  def perform(asset_id, auth_token)
+    logger.info 'Performing Async Request'
+    url = '/api/assets/' + asset_id + '/translate'
+    response = HTTParty.post(ENV['SERVER_URL'] + url, body: { auth_token: auth_token })
+    if response.code == 200
+      return true
+    else
+      return response.parsed_response
     end
+  rescue StandardException => e
+    logger.error e
+    logger.error e.backtrace
+    return false
   end
 end
