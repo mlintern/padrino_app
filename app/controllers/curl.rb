@@ -40,33 +40,19 @@ PadrinoApp::App.controllers :curl do
                 else
                   eval(params['headers']).map { |key, v| [key.to_s, v] }.to_h || {}
                 end
-    rescue Exception => e
-      logger.error e.inspect
-      logger.error(e.backtrace)
-      headers = nil
-      halt 400, '<div class="alert alert-danger">' + e.to_s + '</div>'
-    end
 
-    begin
       body = if params['body'].is_json?
                params['body'] || {}
              else
                eval(params['body']) || {}
              end
-    rescue Exception => e
-      logger.error e.inspect
-      logger.error(e.backtrace)
-      headers = nil
-      halt 400, '<div class="alert alert-danger">' + e.to_s + '</div>'
-    end
 
-    begin
       query = if params['query'].is_json?
                 JSON.parse(params['query']) || {}
               else
                 eval(params['query']) || {}
               end
-    rescue Exception => e
+    rescue StandarError => e
       logger.error e.inspect
       logger.error(e.backtrace)
       headers = nil
@@ -95,7 +81,7 @@ PadrinoApp::App.controllers :curl do
       when 'delete'
         curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XDELETE'
         params['only_curl'] == 'on' ? true : @result = HTTParty.delete(@url, basic_auth: @auth, query: query, headers: headers, verify: secure)
-        end
+      end
     rescue StandardError => e
       logger.error(e)
       logger.error(e.backtrace)
