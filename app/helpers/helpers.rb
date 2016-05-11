@@ -58,18 +58,15 @@ PadrinoApp::App.helpers do
         next unless current_properties.include? p['name']
         property = AccountProperty.first(id: params[:id], name: p['name'])
         if property
-          if property.update(value: p['value'])
-            return true
-          else
-            property.errors.each do |e|
-              logger.error("Save Error: #{e}")
-            end
-            errors = []
-            property.errors.each do |e|
-              errors << e
-            end
-            halt 400, { success: false, errors: errors }.to_json
+          return true if property.update(value: p['value'])
+          property.errors.each do |e|
+            logger.error("Save Error: #{e}")
           end
+          errors = []
+          property.errors.each do |e|
+            errors << e
+          end
+          halt 400, { success: false, errors: errors }.to_json
         else
           property = AccountProperty.new(id: params[:id], name: p['name'], value: p['value'])
           if property.save
@@ -151,24 +148,14 @@ PadrinoApp::App.helpers do
   ####
   def api_auth(auth_header, role = nil)
     if current_user
-      if role.nil?
-        return current_user
-      else
-        if current_user.role[role]
-          return current_user
-        else
-          halt 403, { success: false, message: 'You are Unauthorized' }.to_json
-        end
-      end
+      return current_user if role.nil?
+      return current_user if current_user.role[role]
     else
       logger.debug creds = auth_creds(auth_header)
       account = Account.authenticate(creds[:username], creds[:password]) || Account.token_authenticate(creds[:username], creds[:password])
-      if account && ((role.nil? || account.role[role]) && account.active?)
-        return account
-      else
-        halt 403, { success: false, message: 'You are Unauthorized' }.to_json
-      end
+      return account if account && ((role.nil? || account.role[role]) && account.active?)
     end
+    halt 403, { success: false, message: 'You are Unauthorized' }.to_json
   end
 
   ####
@@ -179,23 +166,12 @@ PadrinoApp::App.helpers do
   ####
   def permission_check(role, redirect = true)
     login
-    if current_user['role'].nil?
-      if redirect
-        flash[:error] = role + ' right required to view that page.'
-        redirect_last
-      end
-      return false
-    else
-      if current_user.role[role]
-        return true
-      else
-        if redirect
-          flash[:error] = role + ' right required to view that page.'
-          redirect_last
-        end
-        return false
-      end
+    return true if !current_user['role'].nil? && current_user.role[role]
+    if redirect
+      flash[:error] = role + ' right required to view that page.'
+      redirect_last
     end
+    false
   end
 
   ####
@@ -221,15 +197,10 @@ PadrinoApp::App.helpers do
     else
       creds = auth_creds(auth_header)
       if (account = Account.authenticate(creds[:username], creds[:password])) && !creds.nil?
-        if account.id.to_s == owner_id
-          return true
-        else
-          return false
-        end
-      else
-        return false
+        return true if account.id.to_s == owner_id
       end
     end
+    false
   end
 
   ####
@@ -366,6 +337,7 @@ PadrinoApp::App.helpers do
     title_words.each do |w|
       new_title = new_title.gsub(w, w.scramble)
     end
+
     '[' + language + '] ' + new_title
   end
 
@@ -373,11 +345,11 @@ PadrinoApp::App.helpers do
   # Name: trasnlate_body
   # Description: takes a body text (html) and language and returns a translated text
   # Arguments: body - string
-  #            language - string
+  #            _language - string
   # Response: string
   ####
   def translate_body(body, _language)
-    word_array = body.gsub(/<\/?[^>]+>/, '').gsub(/[!@#`$%^&*()-=_+|;:",.<>?]/, '').gsub('\'s', '').split(' ').uniq
+    word_array = body.gsub(%r{<\/?[^>]+>}, '').gsub(/[!@#`$%^&*()-=_+|;:",.<>?]/, '').gsub('\'s', '').split(' ').uniq
     new_html = body
     word_array.each do |word|
       new_word = word.scramble
@@ -482,38 +454,32 @@ PadrinoApp::App.helpers do
   # Response: boolean
   ####
   def delete_project(project, user)
-    if project.user_id = user.id
-      assets = Asset.all(project_id: params[:id])
-      assets.each do |asset|
-        next if asset.destroy
-        errors = []
-        asset.errors.each do |e|
-          errors << e
-        end
-        return 400, { :success => false, :info => errors }.to_json
+    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json if project.user_id != user.id
+    assets = Asset.all(project_id: params[:id])
+    assets.each do |asset|
+      next if asset.destroy
+      errors = []
+      asset.errors.each do |e|
+        errors << e
       end
-      languages = Language.all(project_id: params[:id])
-      languages.each do |lang|
-        next if lang.destroy
-        errors = []
-        asset.errors.each do |e|
-          errors << e
-        end
-        return 400, { :success => false, :info => errors }.to_json
-      end
-      if project.destroy
-        return 200, { :success => true, :info => "Project was successfully deleted. Along with it's assets and languages." }.to_json
-      else
-        errors = []
-        project.errors.each do |e|
-          errors << e
-        end
-        return 400, { :success => false, :info => errors }.to_json
-      end
-    else
-      return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json
+      return 400, { :success => false, :info => errors }.to_json
     end
-    return true
+    languages = Language.all(project_id: params[:id])
+    languages.each do |lang|
+      next if lang.destroy
+      errors = []
+      asset.errors.each do |e|
+        errors << e
+      end
+      return 400, { :success => false, :info => errors }.to_json
+    end
+
+    return 200, { :success => true, :info => "Project was successfully deleted. Along with it's assets and languages." }.to_json if project.destroy
+    errors = []
+    project.errors.each do |e|
+      errors << e
+    end
+    return 400, { :success => false, :info => errors }.to_json
   rescue StandardSException => e
     logger.error e
     logger.error e.backtrace
@@ -533,11 +499,8 @@ PadrinoApp::App.helpers do
     post = { post_attributes: { title: data[:title], body: data[:body] }, remote_project_id: data[:project_id], source_post_id: data[:source_id], language_code: data[:language] }
     url = '/api/translation_projects/' + ocmapp.app_install_id + '/create_translation'
     response = HTTParty.post(domain + url, body: post.to_json, basic_auth: auth, verify: false, headers: { 'Content-Type' => 'application/x-json' })
-    if response.code == 200
-      return true
-    else
-      return response.parsed_response
-    end
+    return true if response.code == 200
+    return response.parsed_response
   rescue StandardException => e
     logger.error e
     logger.error e.backtrace
