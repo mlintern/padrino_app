@@ -11,7 +11,7 @@ class SeleniumTests < Minitest::Test
 
   def get_error(test_name, error = nil)
     puts error.message
-    puts error.backtrace
+    # puts error.backtrace
     screenshot(test_name)
     raise
   end

@@ -52,4 +52,13 @@ class Navigation < SeleniumTests
   rescue StandardError => e
     get_error(__method__.to_s, e)
   end
+
+  def test_todo_menu
+    sign_in(NRETNIL_USER_ONE_USERNAME, NRETNIL_USER_ONE_PASSWORD)
+    wac(@driver.a(:css, '.todo-btn'))
+    @driver.div(:css, '.modal.fade.in')
+    assert @driver.div(:css, '.modal-header').exists?, 'Modal did not Load'
+  rescue StandardError => e
+    get_error(__method__.to_s, e)
+  end
 end
