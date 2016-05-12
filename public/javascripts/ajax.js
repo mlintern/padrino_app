@@ -92,7 +92,7 @@ function updateApiExample (endpoint) {
 
 var url = window.location.toString();
 console.log(url);
-if ( url == 'http://localhost:3000/' || url == 'http://app.nretnil.com/' ) {
+if ( url == 'http://localhost:3000/' || url == 'https://app.nretnil.com/' ) {
 	var endpoints = ['password','passphrase','uuid','fakedata','words'];
 	_.each(endpoints,function (endpoint) {
 	  updateApiExample(endpoint);
