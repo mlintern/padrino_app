@@ -15,6 +15,7 @@ require 'compendium-api'
 require 'nretnil-password'
 require 'nretnil-fake-data'
 require 'nretnil-translate'
+require 'nretnil-utilities'
 require 'securerandom'
 require './env' if File.exist?('env.rb')
 Bundler.require(:default, RACK_ENV)

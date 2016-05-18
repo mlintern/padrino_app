@@ -77,9 +77,9 @@ class API < UnitTests
     response = post('/api/external_pub/debug')
     assert (response.code == 400 && !response['data_received'].nil?), 'Response not 400 or data_received not present'
 
-    data = { content: {} }
+    empty_data = { content: {} }
 
-    response = post('/api/external_pub/debug', data)
+    response = post('/api/external_pub/debug', empty_data)
     assert (response.code == 400 && !response['data_received'].nil?), 'Response not 400 or data_received not present'
 
     data = { content: { title: 'Unit Test' } }
