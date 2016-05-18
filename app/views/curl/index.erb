@@ -16,8 +16,8 @@
             <div class="row">
               <div class="col-xs-4">
                 <select name="protocol" class="form-control">
-                  <option value="http://" selected>http://</option>
-                  <option value="https://">https://</option>
+                  <option value="http://" <% if protocol == 'http://' %>selected <% end %>>http://</option>
+                  <option value="https://" <% if protocol == 'https://' %>selected <% end %>>https://</option>
                 </select>
               </div>
               <div class="col-xs-8">

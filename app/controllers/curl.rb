@@ -7,11 +7,12 @@ PadrinoApp::App.controllers :curl do
     logger.debug params
     permission_check('curl')
 
-    uri = params['uri'] || '/api/password'
+    uri = params['api_uri'] || '/api/password'
     query = params['query'] || '{ :symbols => false, :length => 25 }'
     host = !(params['host'].nil? || params['host'].empty?) ? params['host'] : 'app.nretnil.com'
+    protocol = params['protocol'] || 'http://'
 
-    render '/curl/index', locals: { 'uri' => uri, 'query' => query, 'host' => host }
+    render '/curl/index', locals: { 'uri' => uri, 'query' => query, 'host' => host, 'protocol' => protocol }
   end
 
   post :index do
@@ -52,18 +53,17 @@ PadrinoApp::App.controllers :curl do
               else
                 eval(params['query']) || {}
               end
-    rescue StandarError => e
-      logger.error e.inspect
-      logger.error(e.backtrace)
-      headers = nil
-      halt 400, '<div class="alert alert-danger">' + e.to_s + '</div>'
-    end
 
-    @result = { results: 'Did not make request' }
+      @result = { results: 'Did not make request' }
 
-    @url = params['protocol'] + params['server'] + params['api_uri']
+      @url = params['protocol'] + params['server'] + params['api_uri']
 
-    begin
+      json_body = if body.to_s.is_json?
+                    body
+                  else
+                    body.to_json
+                  end
+
       case params['call_type']
       when 'get'
         curl_call = curl_start + '"' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + norm_data(query) + '"'
@@ -74,18 +74,26 @@ PadrinoApp::App.controllers :curl do
         end
       when 'put'
         curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XPUT'
-        params['only_curl'] == 'on' ? true : @result = HTTParty.put(@url, basic_auth: @auth, body: body.to_s.is_json? ? body : body.to_json, headers: headers, verify: secure)
+        params['only_curl'] == 'on' ? true : @result = HTTParty.put(@url, basic_auth: @auth, body: json_body, headers: headers, verify: secure)
       when 'post'
         curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XPOST'
-        params['only_curl'] == 'on' ? true : @result = HTTParty.post(@url, basic_auth: @auth, body: body.to_s.is_json? ? body : body.to_json, headers: headers, verify: secure)
+        params['only_curl'] == 'on' ? true : @result = HTTParty.post(@url, basic_auth: @auth, body: json_body, headers: headers, verify: secure)
       when 'delete'
         curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XDELETE'
         params['only_curl'] == 'on' ? true : @result = HTTParty.delete(@url, basic_auth: @auth, query: query, headers: headers, verify: secure)
       end
     rescue StandardError => e
-      logger.error(e)
-      logger.error(e.backtrace)
+      logger.error e
+      logger.error e.backtrace
       @result = { error: e }
+      # render 'errors/generic', locals: { 'e' => e }
+    rescue SyntaxError => e
+      logger.debug 'SyntaxError'
+      logger.error e.inspect
+      logger.error e.backtrace
+      flash[:error] = e.message
+      query = params.map { |key, value| "#{key}=#{value}" }.join('&')
+      redirect "/curl?#{query}"
     end
 
     logger.debug @result
