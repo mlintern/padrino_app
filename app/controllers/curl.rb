@@ -39,19 +39,19 @@ PadrinoApp::App.controllers :curl do
       headers = if params['headers'].is_json?
                   JSON.parse(params['headers']) || {}
                 else
-                  eval(params['headers']).map { |key, v| [key.to_s, v] }.to_h || {}
+                  string_to_hash(params['headers']).map { |key, v| [key.to_s, v] }.to_h || {}
                 end
 
-      body = if params['body'].is_json?
+      puts body = if params['body'].is_json?
                params['body'] || {}
              else
-               eval(params['body']) || {}
+               string_to_hash(params['body']) || {}
              end
 
       query = if params['query'].is_json?
                 JSON.parse(params['query']) || {}
               else
-                eval(params['query']) || {}
+                string_to_hash(params['query']) || {}
               end
 
       @result = { results: 'Did not make request' }
@@ -82,11 +82,13 @@ PadrinoApp::App.controllers :curl do
         curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XDELETE'
         params['only_curl'] == 'on' ? true : @result = HTTParty.delete(@url, basic_auth: @auth, query: query, headers: headers, verify: secure)
       end
-    rescue StandardError => e
-      logger.error e
+    rescue JSON::ParserError => e
+      logger.debug 'SyntaxError'
+      logger.error e.inspect
       logger.error e.backtrace
-      @result = { error: e }
-      # render 'errors/generic', locals: { 'e' => e }
+      flash[:error] = e.message
+      query = params.map { |key, value| "#{key}=#{value}" }.join('&')
+      redirect "/curl?#{query}"
     rescue SyntaxError => e
       logger.debug 'SyntaxError'
       logger.error e.inspect
@@ -94,6 +96,10 @@ PadrinoApp::App.controllers :curl do
       flash[:error] = e.message
       query = params.map { |key, value| "#{key}=#{value}" }.join('&')
       redirect "/curl?#{query}"
+    rescue StandardError => e
+      logger.error e
+      logger.error e.backtrace
+      @result = { error: e }
     end
 
     logger.debug @result

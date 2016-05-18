@@ -4,6 +4,16 @@
 
 PadrinoApp::App.helpers do
   ####
+  # Name: string_to_hash
+  # Description: returns hash from a string that is a hash
+  # Arguments: string - of hash
+  # Response: hash
+  ####
+  def string_to_hash(s)
+    JSON.parse(s.tr('\'', '"').gsub(/:([a-zA-z]+)/, '"\\1"').gsub('=>', ': ').gsub(' :  ', ': '))
+  end
+
+  ####
   # Name: attributes_to_remove
   # Description: returns list of attributes used in remove_elements
   # Arguments: None
