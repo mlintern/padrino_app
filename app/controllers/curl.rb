@@ -10,7 +10,7 @@ PadrinoApp::App.controllers :curl do
     uri = params['api_uri'] || '/api/password'
     query = params['query'] || '{ :symbols => false, :length => 25 }'
     host = !(params['host'].nil? || params['host'].empty?) ? params['host'] : 'app.nretnil.com'
-    protocol = params['protocol'] || 'http://'
+    protocol = params['protocol'] || 'https://'
 
     render '/curl/index', locals: { 'uri' => uri, 'query' => query, 'host' => host, 'protocol' => protocol }
   end
