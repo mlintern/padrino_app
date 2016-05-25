@@ -17,7 +17,6 @@ PadrinoApp::App.controllers :editor, map: '/api/editor' do
     data[:cpdm_user_id] = data['user_id'] if data.key? 'user_id'
 
     ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
-    logger.debug ocmapp.inspect
 
     return 200, { :success => true, :info => "Install Successfull." }.to_json unless ocmapp.nil?
 
