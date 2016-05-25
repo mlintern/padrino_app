@@ -10,6 +10,8 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
 
   get :index do
     logger.info params
+
+    @title = 'Editor'
     render 'editor/index', layout: 'minimal'
   end
 

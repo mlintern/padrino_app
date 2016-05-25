@@ -84,6 +84,7 @@ PadrinoApp::App.controllers :translator do
   get :configure do
     session[:redirect_to] = request.fullpath
 
+    @title = 'Translation Configuration'
     render 'translator/configure', layout: 'minimal', locals: { params: params }
   end
 
