@@ -399,7 +399,7 @@ PadrinoApp::App.helpers do
     ocmapp = OCMApp.first(user_id: account.id)
     url = domain + '/api/translation_projects/' + ocmapp.app_install_id + '/projects/' + project.id
     return get_callback_auth(url, ocmapp.username, ocmapp.api_key)
-  rescue StandardException => e
+  rescue StandardError => e
     logger.error e
     return false
   end
@@ -414,7 +414,7 @@ PadrinoApp::App.helpers do
     auth = { username: username, password: api_key }
     logger.info HTTParty.get(URI.unescape(url), basic_auth: auth, verify: false, headers: { 'Content-Type' => 'application/x-json' })
     return true
-  rescue StandardException => e
+  rescue StandardError => e
     logger.error e
     logger.error e.backtrace
     return false
@@ -430,7 +430,7 @@ PadrinoApp::App.helpers do
   def post_callback(url, data = {})
     logger.info HTTParty.post(URI.unescape(url), body: data, verify: false, headers: { 'Content-Type' => 'application/x-json' })
     return true
-  rescue StandardException => e
+  rescue StandardError => e
     logger.error e
     logger.error e.backtrace
     return false
@@ -450,7 +450,7 @@ PadrinoApp::App.helpers do
     logger.info response = HTTParty.post(URI.unescape(url), body: data.to_json, basic_auth: auth, verify: false, headers: { 'Content-Type' => 'application/x-json' })
     return false if response.key? 'error'
     return true
-  rescue StandardException => e
+  rescue StandardError => e
     logger.error e
     logger.error e.backtrace
     return false
@@ -490,7 +490,7 @@ PadrinoApp::App.helpers do
       errors << e
     end
     return 400, { :success => false, :info => errors }.to_json
-  rescue StandardSException => e
+  rescue StandardError => e
     logger.error e
     logger.error e.backtrace
     return false
@@ -511,7 +511,7 @@ PadrinoApp::App.helpers do
     response = HTTParty.post(domain + url, body: post.to_json, basic_auth: auth, verify: false, headers: { 'Content-Type' => 'application/x-json' })
     return true if response.code == 200
     return response.parsed_response
-  rescue StandardException => e
+  rescue StandardError => e
     logger.error e
     logger.error e.backtrace
     return false
