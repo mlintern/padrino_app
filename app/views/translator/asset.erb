@@ -21,12 +21,12 @@
 
 <script>
 	var decoded = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>').text();
-	var html = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>')
+	var html = $('<div/>').html('<%= asset.body.gsub( "\n", "" ) %>');
 	$('.asset-body-html').html(html);
 
-	$(document).ready (function () {
+	$(document).ready (function() {
 		var $el = $('.footer');
 		var diff = $(document).height() - $el.offset().top - $el.height() - 30; // Padding is not included in height
 		$('.asset-body').height(diff+"px");
-	})
+	});
 </script>
