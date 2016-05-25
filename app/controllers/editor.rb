@@ -14,13 +14,16 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
 
   get :configure do
     logger.info params
-    ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
-    message = if post_callback_auth(params['configuration_confirm_url'], { success: true, configured: true }, ocmapp.username, ocmapp.api_key)
-                'Success'
-              else
-                'Danger'
-              end
-    logger.info params['configuration_confirm_url']
+    logger.debug ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
+    message = 'App Id Not Found'
+    unless ocmapp.nil?
+      message = if post_callback_auth(params['configuration_confirm_url'], { success: true, configured: true }, ocmapp.username, ocmapp.api_key)
+                  'Success'
+                else
+                  'Danger'
+                end
+      logger.info params['configuration_confirm_url']
+    end
     render 'editor/info', layout: 'minimal', locals: { 'message' => message }
   end
 end

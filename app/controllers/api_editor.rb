@@ -16,11 +16,12 @@ PadrinoApp::App.controllers :editor, map: '/api/editor' do
     data[:id] = SecureRandom.uuid
     data[:cpdm_user_id] = data['user_id'] if data.key? 'user_id'
 
-    return 200, { :success => true, :info => "Install Successful." }.to_json if OCMApp.first(params['app_install_id'])
+    ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
+
+    return 200, { :success => true, :info => "Install Successful." }.to_json unless ocmapp.nil?
 
     ocmapp = OCMApp.new(remove_elements(data, ['user_id']))
 
-    # find out what to send back
     return 200, { :success => true, :info => "Install Successful.", :config => ocmapp }.to_json if ocmapp.save
 
     errors = []
