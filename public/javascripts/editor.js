@@ -96,4 +96,21 @@ $(function() {
 		$('.btn-normal').addClass('active');
 		$('.btn-style').removeClass('active');
 	});
+
+	tinymce.init({ 
+		selector:'.editor',
+		theme: 'modern',
+		menubar: 'edit insert view format table tools',
+		plugins: [
+			'advlist autolink lists link image charmap preview hr anchor pagebreak',
+			'searchreplace wordcount visualblocks visualchars code fullscreen',
+			'insertdatetime nonbreaking save table contextmenu directionality',
+			'paste textcolor colorpicker textpattern imagetools'
+		],
+		toolbar1: 'insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview | code',
+		image_advtab: true,
+		browser_spellcheck: true,
+		statusbar: false,
+		auto_focus: 'mce-editor'
+	});
 });

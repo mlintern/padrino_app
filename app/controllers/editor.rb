@@ -15,6 +15,13 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
     render 'editor/index', layout: 'editor'
   end
 
+  get :mce do
+    logger.info params
+
+    @title = 'TinyMCE Editor'
+    render 'editor/tinymce', layout: 'editor'
+  end
+
   get :configure do
     logger.info params
     logger.debug ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
