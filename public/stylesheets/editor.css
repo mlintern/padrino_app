@@ -3,7 +3,7 @@ body {
 	margin: 0;
 	position: absolute;
 	top: 0;
-	bottom: 108px;
+	bottom: 71px;
 	right: 0;
 	left: 0;
 }
@@ -21,6 +21,13 @@ body {
 	font-size: 20px;
 	line-height: 1;
 	border-bottom: 2px solid #aaa;
+}
+.tinymce-editor-header {
+	background-color: #4E73B4;
+	color: #fff;
+	padding: 5px;
+	font-size: 15px;
+	line-height: 1;
 }
 .editor {
 	position: absolute;
