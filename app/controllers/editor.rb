@@ -18,7 +18,7 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
   get :mce do
     logger.info params
 
-    @title = 'TinyMCE Editor'
+    @title = 'TinyMCE WYSIWYG'
     render 'editor/tinymce', layout: 'editor'
   end
 
