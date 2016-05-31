@@ -5,7 +5,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
     <title><%= @title.present? ? "#{@title} | Nretnil Apps" : "Nretnil Apps" %></title>
     <%= favicon_tag "favicon.ico" %>
-    <%= stylesheet_link_tag 'bootstrap-alta.min','minimal' %>
+    <%= stylesheet_link_tag 'bootstrap-alta.min','editor' %>
+    <%= javascript_include_tag 'third_party/jquery.min', 'bootstrap.min' %>
   </head>
   <body>
 
@@ -18,8 +19,6 @@
     </div>
 
     <%= yield %>
-
-    <%= javascript_include_tag 'third_party/jquery.min', 'bootstrap.min' %>
 
     <script type="text/javascript">$(document).ready(function(){$('body').addClass('nretnil-document-ready');});</script>
 

@@ -19,7 +19,7 @@ body {
 }
 .editor {
 	position: absolute;
-	top: 60px;
+	top: 65px;
 	right: 0;
 	bottom: 0;
 	left: 0;
@@ -32,4 +32,30 @@ body {
 	outline-offset: -5px;
 	outline-style: auto;
 	outline-width: 5px;
+}
+.btn-editor {
+	padding: 2px 6px;
+}
+.btn-editor:focus,
+.btn-editor:active,
+.btn-editor:visited,
+.btn-editor:hover,
+.btn-editor.active:focus,
+.btn-editor.active:active,
+.btn-editor.active:visited,
+.btn-editor.active:hover,
+.btn-editor:active:focus,
+.btn-editor .fa:focus,
+.btn-editor .fa:active,
+.btn-editor .fa:visited,
+.btn-editor .fa:hover {
+	outline: none;
+}
+.fa-small {
+	font-size: 75%;
+	vertical-align: middle;
+}
+.fa-large {
+	font-size: 125%;
+	vertical-align: middle;
 }
