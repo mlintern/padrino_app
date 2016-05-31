@@ -51,6 +51,14 @@ body {
 .btn-editor .fa:hover {
 	outline: none;
 }
+.btn-editor:focus,
+.btn-editor:active,
+.btn-editor:visited,
+.btn-editor:hover {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+}
 .fa-small {
 	font-size: 75%;
 	vertical-align: middle;
