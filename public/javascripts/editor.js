@@ -110,7 +110,7 @@ $(function() {
 		toolbar1: 'insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview | code',
 		image_advtab: true,
 		browser_spellcheck: true,
-		statusbar: false,
+		// statusbar: false,
 		auto_focus: 'mce-editor'
 	});
 });
