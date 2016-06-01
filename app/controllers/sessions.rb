@@ -36,9 +36,9 @@ PadrinoApp::App.controllers :sessions do
       redirect url(:sessions, :new), 302
     else
       errors = ''
-      @account.errors.each do |e|
-        logger.error("Save Error: #{e}")
-        errors += e[0] + ' '
+      @account.errors.each do |error|
+        logger.error("Save Error: #{error}")
+        errors += error[0] + ' '
       end
       flash.now[:error] = errors
       flash[:error] = errors
@@ -47,7 +47,8 @@ PadrinoApp::App.controllers :sessions do
   end
 
   post :create do
-    if account = Account.authenticate(params[:username], params[:password])
+    account = Account.authenticate(params[:username], params[:password])
+    if account
       if account.status == 0
         flash[:error] = 'Account is Disabled'
         logger.info('Account is Disabled')
@@ -55,12 +56,10 @@ PadrinoApp::App.controllers :sessions do
       else
         token = SecureRandom.hex
         account.update(token: token, last_login: Time.now.utc)
+        expire_time = Time.now.utc + 30 * 60
+        expire_time += (24 * 60 * 60) - (30 * 60) if params[:remember_me]
         if account
-          if params[:remember_me]
-            response.set_cookie('user', value: token, path: '/', expires: (Time.now.utc + 24 * 60 * 60))
-          else
-            response.set_cookie('user', value: token, path: '/', expires: (Time.now.utc + 30 * 60))
-          end
+          response.set_cookie('user', value: token, path: '/', expires: expire_time)
         end
         if account.status == 2
           account.update(status: 1)

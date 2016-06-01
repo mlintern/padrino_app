@@ -27,6 +27,6 @@
 	$(document).ready (function() {
 		var $el = $('.footer');
 		var diff = $(document).height() - $el.offset().top - $el.height() - 30; // Padding is not included in height
-		$('.asset-body').height(diff+"px");
+		$('.asset-body').height(300+diff+"px"); // 300 px is the min so that will be included in the offset
 	});
 </script>

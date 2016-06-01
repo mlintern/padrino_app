@@ -19,16 +19,12 @@ PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
 
     language = Language.get(params[:id])
 
-    if language
-      project = Project.get(language.project_id)
-      if project.user_id = auth_account.id
-        return 200, language.to_json
-      else
-        return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json
-      end
-    else
-      return 404, { :success => false, :info => "Asset does not exist." }.to_json
-    end
+    return 404, { :success => false, :info => "Asset does not exist." }.to_json unless language
+
+    project = Project.get(language.project_id)
+    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json unless project.user_id == auth_account.id
+
+    return 200, language.to_json
   end
 
   ####
@@ -47,25 +43,19 @@ PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
 
     project_id = data['project_id'] || nil
 
-    if project_id
-      project = Project.get(project_id)
-      if project.user_id = auth_account.id
-        language = Language.new(data)
-        if language.save
-          return 200, language.to_json
-        else
-          errors = []
-          language.errors.each do |e|
-            errors << e
-          end
-          return 400, { :success => false, :info => errors }.to_json
-        end
-      else
-        return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json
-      end
-    else
-      return 400, { :success => false, :info => "project_id is required." }.to_json
+    return 400, { :success => false, :info => "project_id is required." }.to_json unless project_id
+
+    project = Project.get(project_id)
+    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json unless project.user_id == auth_account.id
+
+    language = Language.new(data)
+    return 200, language.to_json if language.save
+
+    errors = []
+    language.errors.each do |e|
+      errors << e
     end
+    return 400, { :success => false, :info => errors }.to_json
   end
 
   ####
@@ -80,23 +70,17 @@ PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
 
     language = Language.get(params[:id])
 
-    if language
-      project = Project.get(language.project_id)
-      if project.user_id = auth_account.id
-        if language.destroy
-          return 200, { :success => true, :info => "Langauge was successfully deleted." }.to_json
-        else
-          errors = []
-          language.errors.each do |e|
-            errors << e
-          end
-          return 400, { :success => false, :info => errors }.to_json
-        end
-      else
-        return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json
-      end
-    else
-      return 404, { :success => false, :info => "Language does not exist." }.to_json
+    return 404, { :success => false, :info => "Language does not exist." }.to_json unless language
+
+    project = Project.get(language.project_id)
+    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json unless project.user_id == auth_account.id
+
+    return 200, { :success => true, :info => "Langauge was successfully deleted." }.to_json if language.destroy
+
+    errors = []
+    language.errors.each do |e|
+      errors << e
     end
+    return 400, { :success => false, :info => errors }.to_json
   end
 end

@@ -42,7 +42,7 @@ PadrinoApp::App.controllers :curl do
                   string_to_hash(params['headers']).map { |key, v| [key.to_s, v] }.to_h || {}
                 end
 
-      puts body = if params['body'].is_json?
+      body = if params['body'].is_json?
                params['body'] || {}
              else
                string_to_hash(params['body']) || {}
@@ -82,6 +82,9 @@ PadrinoApp::App.controllers :curl do
         curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XDELETE'
         params['only_curl'] == 'on' ? true : @result = HTTParty.delete(@url, basic_auth: @auth, query: query, headers: headers, verify: secure)
       end
+
+      logger.debug @result
+      render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: @result.body.valid_json? }
     rescue JSON::ParserError => e
       logger.debug 'SyntaxError'
       logger.error e.inspect
@@ -99,11 +102,8 @@ PadrinoApp::App.controllers :curl do
     rescue StandardError => e
       logger.error e
       logger.error e.backtrace
-      @result = { error: e }
+      @result = { error: e, body: { error: e }.to_json }
     end
-
-    logger.debug @result
-    logger.debug @result.body.class
-    render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: @result.body.valid_json? }
+    render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: true }
   end
 end

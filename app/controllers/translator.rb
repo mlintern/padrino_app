@@ -25,7 +25,8 @@ PadrinoApp::App.controllers :translator do
 
   post :configure do
     session[:redirect_to] = request.fullpath + params_to_url(params, %w(username password))
-    if account = Account.authenticate(params[:username], params[:password])
+    account = Account.authenticate(params[:username], params[:password])
+    if account
       if account.role['translate']
         if account.status == 0
           flash[:error] = 'Account is disabled'
@@ -35,39 +36,37 @@ PadrinoApp::App.controllers :translator do
           if user_ocmapp && user_ocmapp.app_install_id != params['app_install_id']
             flash[:error] = "#{account.username} already has an app installed"
             redirect_last
+          elsif params['app_install_id'].nil?
+            flash[:error] = 'App Install ID not provided'
+            redirect_last
           else
-            if params['app_install_id'].nil?
-              flash[:error] = 'App Install ID not provided'
-              redirect_last
-            else
-              ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
-              if ocmapp
-                if ocmapp.update(user_id: account.id)
-                  data = { success: true, configured: true }
-                  url = params['configuration_confirm_url']
-                  # if url.include? "app.test-cpdm.oraclecorp.com" # Update Url for Ngrok
-                  #   url = url.gsub("app.test-cpdm.oraclecorp.com","wh_notifier:reNdN3Ykh3uCwWra@3db356e5.ngrok.io")
-                  # elsif url.include? "dev.cpdm.oraclecorp.com" # Update Url for Ngrok
-                  #   url = url.gsub("dev.cpdm.oraclecorp.com","78834bbf.ngrok.io")
-                  # end
-                  logger.debug url
-                  if post_callback_auth(url, data, ocmapp.username, ocmapp.api_key)
-                    erb '<div class="text-center"><h3>Configuration Complete</h3></div>', layout: 'minimal'
-                  else
-                    erb '<div class="text-center"><h3>Configuration Failed</h3></div>', layout: 'minimal'
-                  end
+            ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
+            if ocmapp
+              if ocmapp.update(user_id: account.id)
+                data = { success: true, configured: true }
+                url = params['configuration_confirm_url']
+                # if url.include? "app.test-cpdm.oraclecorp.com" # Update Url for Ngrok
+                #   url = url.gsub("app.test-cpdm.oraclecorp.com","wh_notifier:reNdN3Ykh3uCwWra@3db356e5.ngrok.io")
+                # elsif url.include? "dev.cpdm.oraclecorp.com" # Update Url for Ngrok
+                #   url = url.gsub("dev.cpdm.oraclecorp.com","78834bbf.ngrok.io")
+                # end
+                logger.debug url
+                if post_callback_auth(url, data, ocmapp.username, ocmapp.api_key)
+                  erb '<div class="text-center"><h3>Configuration Complete</h3></div>', layout: 'minimal'
                 else
-                  errors = []
-                  ocmapp.errors.each do |e|
-                    errors << e
-                  end
-                  flash[:error] = errors
-                  redirect_last
+                  erb '<div class="text-center"><h3>Configuration Failed</h3></div>', layout: 'minimal'
                 end
               else
-                flash[:error] = 'App not found'
+                errors = []
+                ocmapp.errors.each do |e|
+                  errors << e
+                end
+                flash[:error] = errors
                 redirect_last
               end
+            else
+              flash[:error] = 'App not found'
+              redirect_last
             end
           end
         end

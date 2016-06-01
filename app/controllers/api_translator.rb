@@ -22,7 +22,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     canceled = Project.all(user_id: auth_account.id, status: 2).count
     completed = Project.all(user_id: auth_account.id, status: 3).count
 
-    return 200, { :success => true, :info => "Up and Running with #{active} projects active out of #{total} total.", :data => { :total => total, :active => active, :canceled => canceled, :completed => completed }, :config => OCMApp.first({:user_id => auth_account.id}) || ['No App Configured'] }.to_json
+    return 200, { :success => true, :info => "#{active} projects active out of #{total} total.", :data => { :total => total, :active => active, :canceled => canceled, :completed => completed }, :config => OCMApp.first({:user_id => auth_account.id}) || ['No App Configured'] }.to_json
   end
 
   ####
@@ -43,17 +43,14 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
 
     ocmapp = OCMApp.new(remove_elements(data, ['user_id']))
 
-    if ocmapp.save
-      # find out what to send back
-      return 200, { :success => true, :info => "Install Successful.", :config => ocmapp }.to_json
-    else
-      errors = []
-      ocmapp.errors.each do |e|
-        errors << e
-        logger.error(e)
-      end
-      return 400, { :success => false, :info => errors }.to_json
+    return 200, { :success => true, :info => "Install Successful.", :config => ocmapp }.to_json if ocmapp.save
+
+    errors = []
+    ocmapp.errors.each do |e|
+      errors << e
+      logger.error(e)
     end
+    return 400, { :success => false, :info => errors }.to_json
   end
 
   ####
@@ -72,34 +69,29 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     data[:cpdm_user_id] = data['user_id'] if data.key? 'user_id'
 
     ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
-    if ocmapp
-      if ocmapp.user_id.nil?
-        unless ocmapp.update(user_id: auth_account.id)
-          errors = []
-          ocmapp.errors.each do |e|
-            errors << e
-            logger.error(e)
-          end
-          return 400, { :success => false, :info => errors }.to_json
+    return 404, { :success => false, :info => "There were no apps matching this id." }.to_json unless ocmapp
+
+    if ocmapp.user_id.nil?
+      unless ocmapp.update(user_id: auth_account.id)
+        errors = []
+        ocmapp.errors.each do |e|
+          errors << e
+          logger.error(e)
         end
+        return 400, { :success => false, :info => errors }.to_json
       end
-      if ocmapp.user_id == auth_account.id
-        if ocmapp.update(remove_elements(data, %w(app_install_id user_id)))
-          return 200, { :success => true, :info => "Update Successful.", :config => ocmapp }.to_json
-        else
-          errors = []
-          ocmapp.errors.each do |e|
-            errors << e
-            logger.error(e)
-          end
-          return 400, { :success => false, :info => errors }.to_json
-        end
-      else
-        return 403, { :success => false, :info => "You Do not have permissions to edit this Translator." }.to_json
-      end
-    else
-      return 404, { :success => false, :info => "There were no apps matching this id." }.to_json
     end
+
+    return 403, { :success => false, :info => "You Do not have permissions to edit this Translator." }.to_json unless ocmapp.user_id == auth_account.id
+
+    return 200, { :success => true, :info => "Update Successful.", :config => ocmapp }.to_json if ocmapp.update(remove_elements(data, %w(app_install_id user_id)))
+
+    errors = []
+    ocmapp.errors.each do |e|
+      errors << e
+      logger.error(e)
+    end
+    return 400, { :success => false, :info => errors }.to_json
   end
 
   ####
@@ -118,19 +110,15 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
 
       ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
 
-      if ocmapp
-        if ocmapp.destroy
-          return 200, { :success => true, :info => "Uninstall Successful." }.to_json
-        else
-          errors = []
-          ocmapp.errors.each do |e|
-            errors << e
-          end
-          return 400, { :success => false, :info => errors }.to_json
-        end
-      else
-        return 200, { :success => false, :info => "There were no Apps matching this id." }.to_json
+      return 400, { :success => false, :info => "There were no Apps matching this id." }.to_json unless ocmapp
+
+      return 200, { :success => true, :info => "Uninstall Successful." }.to_json if ocmapp.destroy
+
+      errors = []
+      ocmapp.errors.each do |e|
+        errors << e
       end
+      return 400, { :success => false, :info => errors }.to_json
     end
   end
 
@@ -146,42 +134,40 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     logger.info data
 
     ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
-    if ocmapp
-      data[:id] = data['project_id']
-      data[:user_id] = ocmapp.user_id
-      destination_languages = data['target_languages']
-      data[:language] = data['source_language']
+    return 400, { :success => false, :info => "There was no App with this ID" }.to_json unless ocmapp
 
-      project = Project.new(remove_other_elements(data, [:id, :user_id, :name, :language, :description, :type]))
-      if project.save
-        if destination_languages && !destination_languages.empty?
-          destination_languages.each do |lang|
-            if ['pl', 'PL', 'pig latin', 'piglatin'].partial_include? lang
-              language = Language.new(id: SecureRandom.uuid, project_id: project.id, name: lang, code: lang)
-              if language.save
-                language.inspect
-              else
-                language.errors.each do |e|
-                  logger.error e
-                end
-              end
+    data[:id] = data['project_id']
+    data[:user_id] = ocmapp.user_id
+    destination_languages = data['target_languages']
+    data[:language] = data['source_language']
+
+    project = Project.new(remove_other_elements(data, [:id, :user_id, :name, :language, :description, :type]))
+    if project.save
+      if destination_languages && !destination_languages.empty?
+        destination_languages.each do |lang|
+          if ['pl', 'PL', 'pig latin', 'piglatin'].partial_include? lang
+            language = Language.new(id: SecureRandom.uuid, project_id: project.id, name: lang, code: lang)
+            if language.save
+              language.inspect
             else
-              logger.debug project.destroy
-              message = "#{lang} is not an accepted language. Accepted languages pl, PL"
-              return 400, { :success => false, :info => message, :message => message, :error => message }.to_json
+              language.errors.each do |e|
+                logger.error e
+              end
             end
+          else
+            logger.debug project.destroy
+            message = "#{lang} is not an accepted language. Accepted languages pl, PL, pig latin, piglatin"
+            return 400, { :success => false, :info => message, :message => message, :error => message }.to_json
           end
         end
-        return 201, project.to_json
-      else
-        errors = []
-        project.errors.each do |e|
-          errors << e
-        end
-        return 400, { :success => false, :info => errors }.to_json
       end
+      return 201, project.to_json
     else
-      return 400, { :success => false, :info => "There was no App with this ID" }.to_json
+      errors = []
+      project.errors.each do |e|
+        errors << e
+      end
+      return 400, { :success => false, :info => errors }.to_json
     end
   end
 
@@ -199,57 +185,50 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
 
       ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
 
-      if ocmapp
-        project = Project.get(data['project_id'])
-        if project
-          if project.status == 0
-            begin
-              project_assets = data['source_materials_add']
-              project_assets.each do |pa|
-                logger.info pa
-                asset = Asset.first(external_id: pa['id'], project_id: project.id)
-                if asset
-                  logger.info 'Existing Asset'
-                  unless asset.update(remove_elements(pa, [:id]))
-                    errors = []
-                    asset.errors.each do |e|
-                      logger.error e
-                      errors << e
-                    end
-                    return 400, { :success => false, :info => errors }.to_json
-                  end
-                else
-                  logger.info 'New Asset'
-                  new_asset = pa
-                  new_asset[:language] = data['source_language']
-                  new_asset[:project_id] = project.id
-                  new_asset[:external_id] = pa['id']
-                  new_asset[:id] = SecureRandom.uuid
-                  new_asset[:source] = 1
-                  asset = Asset.new(new_asset)
-                  unless asset.save
-                    errors = []
-                    asset.errors.each do |e|
-                      logger.error e
-                      errors << e
-                    end
-                    return 400, { :success => false, :info => errors }.to_json
-                  end
-                end
+      return 400, { :success => false, :info => "There was no App with this ID" }.to_json unless ocmapp
+
+      project = Project.get(data['project_id'])
+      return 404, { :success => false, :info => "Project does not exist." }.to_json unless project
+
+      return 400, { :success => false, :info => "Project is not open" }.to_json unless project.status == 0
+      begin
+        project_assets = data['source_materials_add']
+        project_assets.each do |pa|
+          logger.info pa
+          asset = Asset.first(external_id: pa['id'], project_id: project.id)
+          if asset
+            logger.info 'Existing Asset'
+            unless asset.update(remove_elements(pa, [:id]))
+              errors = []
+              asset.errors.each do |e|
+                logger.error e
+                errors << e
               end
-              return 200, { :success => true, :info => "Assets updated or added" }.to_json
-            rescue Exception => e
-              logger.error e
-              return 500, { :success => false, :info => e }.to_json
+              return 400, { :success => false, :info => errors }.to_json
             end
           else
-            return 400, { :success => false, :info => "Project is not open" }.to_json
+            logger.info 'New Asset'
+            new_asset = pa
+            new_asset[:language] = data['source_language']
+            new_asset[:project_id] = project.id
+            new_asset[:external_id] = pa['id']
+            new_asset[:id] = SecureRandom.uuid
+            new_asset[:source] = 1
+            asset = Asset.new(new_asset)
+            unless asset.save
+              errors = []
+              asset.errors.each do |e|
+                logger.error e
+                errors << e
+              end
+              return 400, { :success => false, :info => errors }.to_json
+            end
           end
-        else
-          return 404, { :success => false, :info => "Project does not exist." }.to_json
         end
-      else
-        return 400, { :success => false, :info => "There was no App with this ID" }.to_json
+        return 200, { :success => true, :info => "Assets updated or added" }.to_json
+      rescue StandardException => e
+        logger.error e
+        return 500, { :success => false, :info => e }.to_json
       end
     end
   end
@@ -265,60 +244,51 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     data = JSON.parse request.body.read
     logger.info data
 
-    ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
     project = Project.get(params[:project_id])
-    user = User.get(ocmapp.user_id)
-    if project.update(status: 2)
-      return 200, { :success => true, :info => "Project canceled." }.to_json
-    else
-      errors = []
-      project.errors.each do |e|
-        errors << e
-      end
-      return 400, { :success => false, :info => errors }.to_json
+
+    return 200, { :success => true, :info => "Project canceled." }.to_json if project.update(status: 2)
+
+    errors = []
+    project.errors.each do |e|
+      errors << e
     end
+    return 400, { :success => false, :info => errors }.to_json
   end
 
   ####
   # Endpoint: GET /api/translator/get_open_projects
   # Description: Returns open projects
   # Authorization: none
-  # Arguments: optional - assets - boolean - true to include assets - default false
   # Response: list of open projects as json object
   ####
   get :get_open_projects do
     logger.info params
     data = []
 
-    include_assets = params[:assets] || false
-    include_asset_body = params[:asset_body] || false
-
     ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
     status = %w(open in_progress canceled complete)
-    if ocmapp
-      if params[:project_ids]
-        projects = Project.all(user_id: ocmapp.user_id, type: 0)
-        projects.each do |p|
-          if params[:project_ids].include? p.id.to_s
-            data << { ocm_project_id: p.id, status: { ocm_code: status[p.status] } }
-          end
-        end
-        data = data[0] if data.count == 1
-      else
-        projects = if params[:closed]
-                     Project.all(user_id: ocmapp.user_id, status: [2, 3], type: 0)
-                   else
-                     Project.all(user_id: ocmapp.user_id, status: [0, 1], type: 0)
-                   end
-        projects.each do |p|
+    return 404, { :success => false, :info => "App Not Found" }.to_json unless ocmapp
+
+    if params[:project_ids]
+      projects = Project.all(user_id: ocmapp.user_id, type: 0)
+      projects.each do |p|
+        if params[:project_ids].include? p.id.to_s
           data << { ocm_project_id: p.id, status: { ocm_code: status[p.status] } }
         end
       end
-      logger.info data
-      return 200, data.to_json
+      data = data[0] if data.count == 1
     else
-      return 404, { :success => false, :info => "App Not Found" }.to_json
+      projects = if params[:closed]
+                   Project.all(user_id: ocmapp.user_id, status: [2, 3], type: 0)
+                 else
+                   Project.all(user_id: ocmapp.user_id, status: [0, 1], type: 0)
+                 end
+      projects.each do |p|
+        data << { ocm_project_id: p.id, status: { ocm_code: status[p.status] } }
+      end
     end
+    logger.info data
+    return 200, data.to_json
   end
 
   ####
@@ -334,19 +304,15 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     app_install_id = params[:id]
     logger.info app_install_id
     ocmapp = OCMApp.first(app_install_id: app_install_id)
-    if ocmapp && auth_account.id == ocmapp.user_id
-      if ocmapp.destroy
-        return 200, { :success => true, :info => "App Removed" }.to_json
-      else
-        errors = []
-        ocmapp.errors.each do |e|
-          errors << e
-        end
-        return 400, { :success => false, :info => errors }.to_json
-      end
-    else
-      return 404, { :success => false, :info => "Could not Find App" }
+    return 404, { :success => false, :info => "Could not Find App" } unless ocmapp && auth_account.id == ocmapp.user_id
+
+    return 200, { :success => true, :info => "App Removed" }.to_json if ocmapp.destroy
+
+    errors = []
+    ocmapp.errors.each do |e|
+      errors << e
     end
+    return 400, { :success => false, :info => errors }.to_json
   end
 
   ####
@@ -363,62 +329,56 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
 
       ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
 
-      if ocmapp
-        project = Project.get(data['project_id'])
-        if project
-          if project.status == 0
-            begin
-              project_assets = data['source_materials_add']
-              project_assets.each do |pa|
-                logger.info pa
-                asset = Asset.first(external_id: pa['id'], project_id: project.id)
-                if asset
-                  logger.info 'Existing Asset'
-                  unless asset.update(remove_elements(pa, [:id]))
-                    errors = []
-                    asset.errors.each do |e|
-                      logger.error e
-                      errors << e
-                    end
-                    return 400, { :success => false, :info => errors }.to_json
-                  end
-                else
-                  logger.info 'New Asset'
-                  new_asset = pa
-                  new_asset[:language] = data['source_language']
-                  new_asset[:project_id] = project.id
-                  new_asset[:external_id] = pa['id']
-                  new_asset[:id] = SecureRandom.uuid
-                  new_asset[:source] = 1
-                  asset = Asset.new(new_asset)
-                  if asset.save
-                    user = Account.get(ocmapp.user_id)
-                    logger.debug Background.perform_async(asset.id, user.auth_token)
-                  else
-                    errors = []
-                    asset.errors.each do |e|
-                      logger.error e
-                      errors << e
-                    end
-                    return 400, { :success => false, :info => errors }.to_json
-                  end
-                end
+      return 400, { :success => false, :info => "There was no App with this ID" }.to_json unless ocmapp
+
+      project = Project.get(data['project_id'])
+      return 404, { :success => false, :info => "Project does not exist." }.to_json unless project
+
+      return 400, { :success => false, :info => "Project is not open" }.to_json unless project.status == 0
+
+      begin
+        project_assets = data['source_materials_add']
+        project_assets.each do |pa|
+          logger.info pa
+          asset = Asset.first(external_id: pa['id'], project_id: project.id)
+          if asset
+            logger.info 'Existing Asset'
+            unless asset.update(remove_elements(pa, [:id]))
+              errors = []
+              asset.errors.each do |e|
+                logger.error e
+                errors << e
               end
-              puts project.update(status: 3)
-              return 200, { :success => true, :info => "Assets added for auto translation" }.to_json
-            rescue Exception => e
-              logger.error e
-              logger.error e.backtrace
-              return 500, { :success => false, :info => e }.to_json
+              return 400, { :success => false, :info => errors }.to_json
             end
           else
-            return 400, { :success => false, :info => "Project is not open" }.to_json
+            logger.info 'New Asset'
+            new_asset = pa
+            new_asset[:language] = data['source_language']
+            new_asset[:project_id] = project.id
+            new_asset[:external_id] = pa['id']
+            new_asset[:id] = SecureRandom.uuid
+            new_asset[:source] = 1
+            asset = Asset.new(new_asset)
+            if asset.save
+              user = Account.get(ocmapp.user_id)
+              logger.debug Background.perform_async(asset.id, user.auth_token)
+            else
+              errors = []
+              asset.errors.each do |e|
+                logger.error e
+                errors << e
+              end
+              return 400, { :success => false, :info => errors }.to_json
+            end
           end
-        else
-          return 404, { :success => false, :info => "Project does not exist." }.to_json
         end
-      else
-        return 400, { :success => false, :info => "There was no App with this ID" }.to_json
+        puts project.update(status: 3)
+        return 200, { :success => true, :info => "Assets added for auto translation" }.to_json
+      rescue StandardException => e
+        logger.error e
+        logger.error e.backtrace
+        return 500, { :success => false, :info => e }.to_json
       end
     end
   end

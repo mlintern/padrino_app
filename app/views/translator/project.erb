@@ -54,7 +54,7 @@
     </div> <!-- table-responsive -->
 
   <div class="add-asset  fa-2x">
-    <i class="fa fa-plus clickable" data-toggle="modal" data-target=".new-asset"></i> <% if assets.length == 0 %> &nbsp; <span class="label label-warning"><i class="fa fa-arrow-left"></i> Click to add a project.</span> <% end %>
+    <i class="fa fa-plus clickable" data-toggle="modal" data-target=".new-asset"></i> <% if assets.length == 0 %> &nbsp; <span class="label label-warning"><i class="fa fa-arrow-left"></i> Click to add an asset.</span> <% end %>
   </div>
 
   <% if project.status == 1 && can_complete %><button class="btn btn-warning btn-complete pull-right bottom-space" data-project="<%= project.id %>" onclick="completeProject()">Complete</button><% end %>

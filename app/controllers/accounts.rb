@@ -52,7 +52,8 @@ PadrinoApp::App.controllers :accounts do
 
     @title = 'New Account'
     account = Account.new
-    account.role = ''
+    account.role = '["user"]'
+    account.status = 1
     render 'accounts/new', locals: { 'account' => account }
   end
 
