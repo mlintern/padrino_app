@@ -115,4 +115,13 @@ $(function() {
 		// statusbar: false,
 		auto_focus: 'mce-editor'
 	});
+
+	$('.btn-save').click(function() {
+		console.debug(tinymce.activeEditor.getContent({format : 'raw'}));
+		var fields = {
+			body: tinymce.activeEditor.getContent({format : 'raw'})
+		};
+		console.debug(fields);
+		global.parent.postMessage(fields, "*");
+	});
 });
