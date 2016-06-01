@@ -108,7 +108,7 @@ $(function() {
 			'insertdatetime nonbreaking save table contextmenu directionality',
 			'paste textcolor colorpicker textpattern imagetools'
 		],
-		toolbar1: 'insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview | code',
+		toolbar1: 'insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
 		image_advtab: true,
 		browser_spellcheck: true,
 		// statusbar: false,
