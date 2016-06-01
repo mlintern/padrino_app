@@ -1,5 +1,39 @@
-<div style="position: absolute; top: 0; right: 0; left: 0; bottom: 0;">
-	<iframe src="/editor/mce" style="position: absolute; top: 20%; left: 20%; width: 60%; height: 50%; border: solid 2px green;"></iframe>
+<style>
+	.iframe-test-container {
+		position: absolute; 
+		top: 0; 
+		right: 0; 
+		left: 0; 
+		bottom: 0;
+	}
+	.the-iframe {
+		position: absolute; 
+		top: 10%; 
+		left: 20%; 
+		width: 60%; 
+		height: 50%; 
+		border: solid 2px green;
+	}
+	#console {
+		position: absolute; 
+		top: 65%; 
+		left: 20%; 
+		width: 60%; 
+		height: 25%; 
+		overflow-y: scroll; 
+		background-color: #fff; 
+		border: solid 2px black; line-height: 1;
+	}
+	#console p {
+		margin-bottom: 0;
+		padding: 4px 25px;
+		border-bottom: solid 1px #efefef;
+	}
+</style>
+
+<div class="iframe-test-container">
+	<iframe class="the-iframe" src="/editor/mce"></iframe>
+	<div id="console"></div>
 </div>
 
 <script>
@@ -15,4 +49,30 @@
 		console.debug(e);
 		console.debug(data);
 	},false);
+
+	/*
+	Updates to output console to HTML div
+	*/
+
+	function htmlEntities(str) {
+		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+	}
+
+	if (typeof console  != "undefined") 
+		if (typeof console.log != 'undefined')
+			console.olog = console.log;
+		else
+			console.olog = function() {};
+
+	console.log = function(message) {
+		el = '#console';
+		console.olog(message);
+		if (typeof message == 'object') {
+			$(el).append('<p>' + (JSON && JSON.stringify ? htmlEntities(JSON.stringify(message)) : message) + '</p>');
+		} else {
+			$(el).append('<p>' + message + '</p>');
+		}
+		$(el).scrollTop($(el)[0].scrollHeight);
+	};
+	console.error = console.debug = console.info = console.log;
 </script>
