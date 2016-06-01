@@ -1,5 +1,7 @@
 $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 
+var global = $.g;
+
 $(function() {
 	$('.btn-color').colorpicker().on('changeColor', function(e) {
 		color = e.color.toHex();
@@ -124,4 +126,5 @@ $(function() {
 		console.debug(fields);
 		global.parent.postMessage(fields, "*");
 	});
+
 });
