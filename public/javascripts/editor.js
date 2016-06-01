@@ -1,7 +1,8 @@
+$('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
+
 $(function() {
 	$('.btn-color').colorpicker().on('changeColor', function(e) {
 		color = e.color.toHex();
-		console.debug(color);
 		$(this).css({'color':color});
 		$('.editor').css({'color':color});
 	});
@@ -88,17 +89,17 @@ $(function() {
 	});
 
 	$('.btn-reset').click(function(){
-		console.log('reset');
 		$('.editor').removeAttr('style');
 		$('.btn-align').removeClass('active');
 		$('.btn-align-left').addClass('active');
 		$('.btn-size').removeClass('active');
 		$('.btn-normal').addClass('active');
 		$('.btn-style').removeClass('active');
+		$('.btn-color').css({'color':'#333333'});
 	});
 
 	tinymce.init({ 
-		selector:'.editor',
+		selector:'#mce-editor',
 		theme: 'modern',
 		menubar: 'edit insert view format table tools',
 		plugins: [

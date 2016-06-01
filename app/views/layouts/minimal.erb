@@ -21,7 +21,12 @@
 
     <%= javascript_include_tag 'third_party/jquery.min', 'bootstrap.min' %>
 
-    <script type="text/javascript">$(document).ready(function(){$('body').addClass('nretnil-document-ready');});</script>
+    <script type="text/javascript">
+      $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
+      $(document).ready(function(){
+        $('body').addClass('nretnil-document-ready');
+      });
+    </script>
 
   </body>
 </html>

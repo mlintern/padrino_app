@@ -1,3 +1,5 @@
+$('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
+
 !function($) {
 	'use strict';
 
