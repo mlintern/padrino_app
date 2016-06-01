@@ -22,6 +22,13 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
     render 'editor/tinymce', layout: 'editor'
   end
 
+  get :iframe do
+    logger.info params
+
+    @title = 'TinyMCE WYSIWYG'
+    render 'editor/iframe', layout: 'editor'
+  end
+
   get :configure do
     logger.info params
     logger.debug ocmapp = OCMApp.first(app_install_id: params['app_install_id'])

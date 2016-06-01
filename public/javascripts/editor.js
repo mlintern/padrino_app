@@ -120,7 +120,6 @@ $(function() {
 		var fields = {
 			body: tinymce.activeEditor.getContent({format : 'raw'})
 		};
-		console.debug(fields);
 		parent.postMessage(fields, "*");
 	});
 
