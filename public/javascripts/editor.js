@@ -1,7 +1,5 @@
 $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 
-var global = $.g;
-
 $(function() {
 	$('.btn-color').colorpicker().on('changeColor', function(e) {
 		color = e.color.toHex();
@@ -119,12 +117,11 @@ $(function() {
 	});
 
 	$('.btn-save').click(function() {
-		console.debug(tinymce.activeEditor.getContent({format : 'raw'}));
 		var fields = {
 			body: tinymce.activeEditor.getContent({format : 'raw'})
 		};
 		console.debug(fields);
-		global.parent.postMessage(fields, "*");
+		parent.postMessage(fields, "*");
 	});
 
 });
