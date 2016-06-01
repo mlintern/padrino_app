@@ -23,6 +23,7 @@
       <li class="nav-avatar"><a class="toggle-right-nav pointer"><div class="avatar xs circle"><img alt="User Icon" src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" />&nbsp;<%= current_user.name %>&nbsp;<%= current_user.surname %></div></a></li>
       <% if permission_check('user',false) %><li><a class="pointer todo-btn" data-toggle="modal" data-target="#todos"><span class="fa fa-list"></span> <span class="hidden-sm hidden-md hidden-lg">To Dos</span></a></li><% end %>
       <% end %>
+      <li><a href="#" data-toggle="modal" data-target="#info"><span class='fa fa-book'></span> <span class="hidden-sm hidden-md hidden-lg">Info</span></a></li>
       <li><a href="#" data-toggle="modal" data-target="#help"><span class='fa fa-question-circle'></span> <span class="hidden-sm hidden-md hidden-lg">Help</span></a></li>
     </ul>
 
