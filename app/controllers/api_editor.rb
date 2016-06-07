@@ -8,17 +8,15 @@ PadrinoApp::App.controllers :editor, map: '/api/editor' do
   end
 
   post :install do
-    logger.info params
-
     data = JSON.parse request.body.read
     logger.info data
 
-    data[:id] = SecureRandom.uuid
-    data[:cpdm_user_id] = data['user_id'] if data.key? 'user_id'
-
     ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
 
-    return 200, { :success => true, :info => "Install Successfull." }.to_json unless ocmapp.nil?
+    return 200, { :success => true, :info => "App Already Installed." }.to_json unless ocmapp.nil?
+
+    data[:id] = SecureRandom.uuid
+    data[:cpdm_user_id] = data['user_id'] if data.key? 'user_id'
 
     ocmapp = OCMApp.new(remove_elements(data, ['user_id']))
 
