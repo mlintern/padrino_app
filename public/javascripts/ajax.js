@@ -68,7 +68,6 @@ function httpGetAndUpdate (url,sel) {
 }
 
 function updateApiExample (endpoint) {
-	console.log(endpoint);
 	switch(endpoint) {
 		case "password":
 			httpGetAndUpdate("/api/password","."+endpoint+".result");
