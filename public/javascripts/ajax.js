@@ -68,6 +68,7 @@ function httpGetAndUpdate (url,sel) {
 }
 
 function updateApiExample (endpoint) {
+	console.log(endpoint);
 	switch(endpoint) {
 		case "password":
 			httpGetAndUpdate("/api/password","."+endpoint+".result");
@@ -89,6 +90,11 @@ function updateApiExample (endpoint) {
 			//do nothing
 	}
 }
+
+$('.api-refresh').click(function () {
+	var endpoint = $(this).data('endpoint');
+	updateApiExample(endpoint);
+});
 
 var url = window.location.toString();
 if ( url == 'http://localhost:3000/' || url == 'https://app.nretnil.com/' ) {
