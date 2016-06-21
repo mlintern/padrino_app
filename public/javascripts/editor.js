@@ -117,8 +117,18 @@ $(function() {
 	});
 
 	$('.btn-save').click(function() {
+		current_content = tinymce.activeEditor.getContent({format : 'raw'});
 		var fields = {
-			body: tinymce.activeEditor.getContent({format : 'raw'})
+			info: "Sync Click",
+			body: current_content,
+			customFields: {
+				"nretnil_mce|fake_info": "fake_info",
+				"nretnil_mce|important_info": "important_info",
+				"nretnil_editor|one": "one",
+				"nretnil_editor|two": "two",
+				"nretnil_editor|three": "three",
+				"nretnil_editor|four": "four"
+			}
 		};
 		console.debug(fields);
 		parent.postMessage(fields, "*");

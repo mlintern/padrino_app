@@ -103,7 +103,7 @@ PadrinoApp::App.controllers :curl do
       logger.error e
       logger.error e.backtrace
       @result = { error: e, body: { error: e }.to_json }
+      render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: true }
     end
-    render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: true }
   end
 end
