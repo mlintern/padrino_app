@@ -6,6 +6,7 @@
     <title><%= @title.present? ? "#{@title} | Nretnil Apps" : "Nretnil Apps" %></title>
     <%= favicon_tag "na-logo-b.png" %>
     <%= stylesheet_link_tag 'bootstrap-alta.min', 'bootstrap-colorpicker.min', 'editor' %>
+    <%= javascript_include_tag 'third_party/jquery.min' %>
   </head>
   <body>
 
@@ -19,7 +20,7 @@
 
     <%= yield %>
 
-    <%= javascript_include_tag 'third_party/jquery.min', 'third_party/lodash.min', 'bootstrap.min', 'third_party/bootstrap-colorpicker.min', 'third_party/tinymce/tinymce.min', 'editor' %>
+    <%= javascript_include_tag 'third_party/lodash.min', 'bootstrap.min', 'third_party/bootstrap-colorpicker.min', 'third_party/tinymce/tinymce.min', 'editor' %>
 
     <script type="text/javascript">$(document).ready(function(){$('body').addClass('nretnil-document-ready');});</script>
 

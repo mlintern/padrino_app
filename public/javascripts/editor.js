@@ -9,6 +9,8 @@ $(function() {
 
 	$('.editor').focus();
 
+	var cssElement = $('.editor');
+
 	function cssUpdate(element,singleStyleAdjustment) {
 		var key = Object.keys(singleStyleAdjustment)[0];
 		var val = singleStyleAdjustment[key];
@@ -22,68 +24,68 @@ $(function() {
 
 	$('.btn-bold').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		cssUpdate('.editor',{'font-weight':'bold'});
+		cssUpdate(cssElement,{'font-weight':'bold'});
 		$(this).toggleClass('active');
 	});
 
 	$('.btn-italic').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		cssUpdate('.editor',{'font-style':'italic'});
+		cssUpdate(cssElement,{'font-style':'italic'});
 		$(this).toggleClass('active');
 	});
 
 	$('.btn-strikethrough').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		cssUpdate('.editor',{'text-decoration':'line-through'});
+		cssUpdate(cssElement,{'text-decoration':'line-through'});
 		$('.btn-decoration').removeClass('active');
 		$(this).toggleClass('active');
 	});
 
 	$('.btn-underline').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		cssUpdate('.editor',{'text-decoration':'underline'});
+		cssUpdate(cssElement,{'text-decoration':'underline'});
 		$('.btn-decoration').removeClass('active');
 		$(this).toggleClass('active');
 	});
 
 	$('.btn-small').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		$('.editor').css({'font-size':'75%'});
+		$(cssElement).css({'font-size':'75%'});
 		$('.btn-size').removeClass('active');
 		$(this).addClass('active');
 	});
 
 	$('.btn-normal').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		$('.editor').css({'font-size':'100%'});
+		$(cssElement).css({'font-size':'100%'});
 		$('.btn-size').removeClass('active');
 		$(this).addClass('active');
 	});
 
 	$('.btn-large').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		$('.editor').css({'font-size':'150%'});
+		$(cssElement).css({'font-size':'150%'});
 		$('.btn-size').removeClass('active');
 		$(this).addClass('active');
 	});
 
 	$('.btn-align-left').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		$('.editor').css({'text-align':'left'});
+		$(cssElement).css({'text-align':'left'});
 		$('.btn-align').removeClass('active');
 		$(this).addClass('active');
 	});
 
 	$('.btn-align-center').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		$('.editor').css({'text-align':'center'});
+		$(cssElement).css({'text-align':'center'});
 		$('.btn-align').removeClass('active');
 		$(this).addClass('active');
 	});
 
 	$('.btn-align-right').click(function(){
 		if ($(this).hasClass('active')) { return false; }
-		$('.editor').css({'text-align':'right'});
+		$(cssElement).css({'text-align':'right'});
 		$('.btn-align').removeClass('active');
 		$(this).addClass('active');
 	});
@@ -117,13 +119,15 @@ $(function() {
 	});
 
 	$('.btn-sync-mce').click(function() {
-		current_content = tinymce.activeEditor.getContent({format : 'raw'});
+		var current_content = tinymce.activeEditor.getContent({format : 'raw'});
 		var fields = {
 			info: "Sync Click MCE",
 			body: current_content,
 			customFields: {
 				"nretnil_mce|fake_info": "fake_info",
 				"nretnil_mce|important_info": "important_info",
+				"nretnil_mce_local|fake_info": "fake_info",
+				"nretnil_mce_local|important_info": "important_info"
 			}
 		};
 		console.debug(fields);
@@ -131,15 +135,21 @@ $(function() {
 	});
 
 	$('.btn-sync-editor').click(function() {
-		current_content = $('.editor').html();
+		var current_content = $('.editor').text();
+		var style = $('.editor').attr('style');
+		var with_style = '<div style="' + style + '">' + current_content + '</div>';
 		var fields = {
 			info: "Sync Click Editor",
-			body: current_content,
+			body: with_style,
 			customFields: {
 				"nretnil_editor|one": "one",
 				"nretnil_editor|two": "two",
 				"nretnil_editor|three": "three",
-				"nretnil_editor|four": "four"
+				"nretnil_editor|four": "four",
+				"nretnil_editor_local|one": "one",
+				"nretnil_editor_local|two": "two",
+				"nretnil_editor_local|three": "three",
+				"nretnil_editor_local|four": "four"
 			}
 		};
 		console.debug(fields);

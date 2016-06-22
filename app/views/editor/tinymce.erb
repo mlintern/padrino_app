@@ -3,5 +3,11 @@
 		<div class="pull-left">TinyMCE WYSIWYG</div>
 		<button class="btn btn-tiny btn-success btn-sync-mce pull-right">Sync</button>
 	</div>
-	<div id='mce-editor' class="editor"><% if !post.nil? %><%= post['body'] %><% end %></div>
+	<div id='mce-editor' class="editor"></div>
 </div>
+
+<script>
+ var body = "<% if !post.nil? %><%= post['body'] %><% end %>";
+ var decoded = $('<div/>').html(body).text();
+	$('#mce-editor').html(decoded);
+</script>
