@@ -116,14 +116,26 @@ $(function() {
 		auto_focus: 'mce-editor'
 	});
 
-	$('.btn-save').click(function() {
+	$('.btn-sync-mce').click(function() {
 		current_content = tinymce.activeEditor.getContent({format : 'raw'});
 		var fields = {
-			info: "Sync Click",
+			info: "Sync Click MCE",
 			body: current_content,
 			customFields: {
 				"nretnil_mce|fake_info": "fake_info",
 				"nretnil_mce|important_info": "important_info",
+			}
+		};
+		console.debug(fields);
+		parent.postMessage(fields, "*");
+	});
+
+	$('.btn-sync-editor').click(function() {
+		current_content = $('.editor').html();
+		var fields = {
+			info: "Sync Click Editor",
+			body: current_content,
+			customFields: {
 				"nretnil_editor|one": "one",
 				"nretnil_editor|two": "two",
 				"nretnil_editor|three": "three",
