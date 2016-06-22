@@ -11,15 +11,36 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
   get :index do
     logger.info params
 
+    logger.info "content_id: #{params['content_id']}"
+    logger.info "app_install_id: #{params['app_install_id']}"
+
+    ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
+    post = nil
+    unless params['content_id'].nil? || params['content_id'] == 'undefined'
+      session = Nretnil::CompendiumAPI::Compendium.new(ocmapp.username, ocmapp.api_key, 'https://dev.cpdm.oraclecorp.com')
+      post = session.post.get(params['content_id'])
+    end
+
     @title = 'Editor'
-    render 'editor/index', layout: 'editor'
+    render 'editor/index', layout: 'editor', locals: { 'post' => post }
   end
 
   get :mce do
     logger.info params
 
+    logger.info "content_id: #{params['content_id']}"
+    logger.info "app_install_id: #{params['app_install_id']}"
+
+    ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
+    post = nil
+    unless params['content_id'].nil? || params['content_id'] == 'undefined'
+      session = Nretnil::CompendiumAPI::Compendium.new(ocmapp.username, ocmapp.api_key, 'https://dev.cpdm.oraclecorp.com')
+      post = session.post.get(params['content_id'])
+      logger.debug(post)
+    end
+
     @title = 'TinyMCE WYSIWYG'
-    render 'editor/tinymce', layout: 'editor'
+    render 'editor/tinymce', layout: 'editor', locals: { 'post' => post }
   end
 
   get :iframe do
@@ -41,6 +62,7 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
                 end
       logger.info params['configuration_confirm_url']
     end
+    @title = 'Configure Editor'
     render 'editor/info', layout: 'minimal', locals: { 'message' => message }
   end
 end
