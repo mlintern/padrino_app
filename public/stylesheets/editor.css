@@ -91,10 +91,13 @@ body.nk-mce {
 	border-radius: 2px;
 }
 .updated-alert {
-	display: inline-block;
-	color: #8a6d3b;
-	background-color: #fcf8e3;
-	border-color: #faebcc;
 	margin-right: 15px;
-	visibility: hidden;
+	display: none;
+}
+.updated-alert.nretnil-editor {
+	margin-right: auto;
+	padding: 2px 6px;
+}
+.modal-xl {
+	width: 80%;
 }

@@ -101,11 +101,11 @@ $(function() {
 	});
 
 	function showSyncAlert () {
-		$('.updated-alert').css({'visibility':'visible'});
+		$('.updated-alert').show();
 	}
 
 	function hideSyncAlert () {
-		$('.updated-alert').css({'visibility':'hidden'});
+		$('.updated-alert').hide();
 	}
 
 	tinymce.init({ 
@@ -135,6 +135,10 @@ $(function() {
 			});
 		}
 	});
+
+$('.editor').on('keyup paste input', function() {
+	showSyncAlert();
+});
 
 	$('.btn-sync-mce').click(function() {
 		var current_content = tinymce.activeEditor.getContent({format : 'raw'});
@@ -174,6 +178,13 @@ $(function() {
 		hideSyncAlert();
 		console.debug(fields);
 		parent.postMessage(fields, "*");
+	});
+
+	$('.btn-preview').click(function () {
+		// update modal content
+		var current_content = $('.editor').text();
+		$('.preview-modal-content').html(current_content);
+		$('#previewModal').modal('show');
 	});
 
 });
