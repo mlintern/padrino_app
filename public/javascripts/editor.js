@@ -100,6 +100,14 @@ $(function() {
 		$('.btn-color').css({'color':'#333333'});
 	});
 
+	function showSyncAlert () {
+		$('.updated-alert').css({'visibility':'visible'});
+	}
+
+	function hideSyncAlert () {
+		$('.updated-alert').css({'visibility':'hidden'});
+	}
+
 	tinymce.init({ 
 		selector:'#mce-editor',
 		theme: 'modern',
@@ -115,7 +123,17 @@ $(function() {
 		browser_spellcheck: true,
 		content_css : '/stylesheets/editor-content.css',
 		// statusbar: false,
-		auto_focus: 'mce-editor'
+		auto_focus: 'mce-editor',
+		setup : function(editor) {
+			editor.on('change', function(event) {
+				// console.debug(event.type);
+				showSyncAlert();
+			});
+			editor.on('keyup', function(event) {
+				// console.debug(event.type);
+				showSyncAlert();
+			});
+		}
 	});
 
 	$('.btn-sync-mce').click(function() {
@@ -130,6 +148,7 @@ $(function() {
 				"nretnil_mce_local|important_info": "important_info"
 			}
 		};
+		hideSyncAlert();
 		console.debug(fields);
 		parent.postMessage(fields, "*");
 	});
@@ -152,6 +171,7 @@ $(function() {
 				"nretnil_editor_local|four": "four"
 			}
 		};
+		hideSyncAlert();
 		console.debug(fields);
 		parent.postMessage(fields, "*");
 	});

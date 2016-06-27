@@ -90,3 +90,11 @@ body.nk-mce {
 	line-height: 1;
 	border-radius: 2px;
 }
+.updated-alert {
+	display: inline-block;
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+	margin-right: 15px;
+	visibility: hidden;
+}

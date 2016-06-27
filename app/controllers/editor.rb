@@ -37,7 +37,7 @@ PadrinoApp::App.controllers :editor, map: '/editor' do
     ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
     post = nil
     unless params['content_id'].nil? || params['content_id'] == 'undefined' || ocmapp.nil?
-      # session = Nretnil::CompendiumAPI::Compendium.new(ocmapp.username, ocmapp.api_key, 'https://dev.cpdm.oraclecorp.com')
+      # session = Nretnil::CompendiumAPI::Compendium.new(ocmapp.username, ocmapp.api_key, 'https://dev.cpdm.oraclecorp.com') # app user does not have permission to get post content
       session = Nretnil::CompendiumAPI::Compendium.new('mlintern', '4mIV8kFBv788yOTv45rPNPMDRH7ra8s5JZzqjcP7', 'https://dev.cpdm.oraclecorp.com')
       logger.debug session.inspect
       post = session.content.get(params['content_id'])
