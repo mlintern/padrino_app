@@ -1,7 +1,8 @@
 <div class="editor-container">
 
 	<div class="editor-header clearfix">
-		<div class="pull-left">Nrentil Editor</div>
+		<div class="logo"><img src="/images/na-logo-b.png" width="20px"/></div>
+		<div class="pull-left brand"> Nrentil Editor</div>
 		<div class="pull-right">
 			<div class="btn-group">
 				<button class="btn btn-editor btn-default btn-style btn-bold"><i class="fa fa-bold"></i></button>
@@ -35,7 +36,7 @@
 		</div>
 	</div>
 
-	<div class="editor-wrapper"><div class="editor" contentEditable=true><% if !post.nil? %><%= post['body'] %><% end %></div></div>
+	<div class="editor-wrapper"><pre id="nretnil-editor" class="editor" contentEditable=true><% if !post.nil? %><%= post['body'] %><% end %></pre></div>
 
 </div>
 
