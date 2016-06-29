@@ -9,10 +9,17 @@ PadrinoApp::App.controllers :curl do
 
     uri = params['api_uri'] || '/api/password'
     query = params['query'] || '{ :symbols => false, :length => 25 }'
-    host = !(params['host'].nil? || params['host'].empty?) ? params['host'] : 'app.nretnil.com'
+    host = params['server'] || params['host'] || 'app.nretnil.com'
     protocol = params['protocol'] || 'https://'
+    basic = params['basic'] || false
+    secure = params['secure'] || false
+    username = params['username'] || ''
+    api_key = params['api_key'] || ''
+    call_type = params['call_type'] || 'get'
+    headers = params['headers'] || '{ "Accept" => "application/vnd.compendium.blog;version=2,application/json" }'
+    body = params['body'] || '{ :post_title => "Content Title", :url_lookup_token => "content-title" }'
 
-    render '/curl/index', locals: { 'uri' => uri, 'query' => query, 'host' => host, 'protocol' => protocol }
+    render '/curl/index', locals: { 'uri' => uri, 'query' => query, 'host' => host, 'protocol' => protocol, 'basic' => basic, 'secure' => secure, 'username' => username, 'api_key' => api_key, 'call_type' => call_type, 'headers' => headers, 'body' => body }
   end
 
   post :index do
@@ -64,6 +71,8 @@ PadrinoApp::App.controllers :curl do
                     body.to_json
                   end
 
+      logger.debug json_body
+
       case params['call_type']
       when 'get'
         curl_call = curl_start + '"' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + norm_data(query) + '"'
@@ -86,7 +95,7 @@ PadrinoApp::App.controllers :curl do
       logger.debug @result
       render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: @result.body.valid_json? }
     rescue JSON::ParserError => e
-      logger.debug 'SyntaxError'
+      logger.debug 'JSON SyntaxError'
       logger.error e.inspect
       logger.error e.backtrace
       flash[:error] = e.message

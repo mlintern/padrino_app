@@ -35,7 +35,7 @@
             <div class="col-sm-6">
               <div class="checkbox-switch">
                 <div class="switch">
-                  <input type="checkbox" id="public" name="basic" />
+                  <input type="checkbox" id="public" name="basic" <% if basic == 'on' %>checked<% end %>/>
                   <label>
                     <i class="fa fa-check"></i>
                     <i class="fa fa-remove"></i>
@@ -49,7 +49,7 @@
             <div class="col-sm-6">
               <div class="checkbox-switch">
                 <div class="switch">
-                  <input type="checkbox" id="secure" name="secure" />
+                  <input type="checkbox" id="secure" name="secure" <% if secure == 'on' %>checked<% end %>/>
                   <label>
                     <i class="fa fa-check"></i>
                     <i class="fa fa-remove"></i>
@@ -67,14 +67,14 @@
       <div class="form-group auth">
         <label class="col-sm-4 control-label">Username</label>
         <div class="col-sm-8">
-          <input type="text" id="f1" name="username" value="" class="form-control"/>
+          <input type="text" id="f1" name="username" value="<%= username %>" class="form-control"/>
         </div>
       </div>
 
       <div class="form-group auth">
         <label class="col-sm-4 control-label">Authentication Key</label>
         <div class="col-sm-8">
-          <input type="text" id="f2" name="api_key" value="" class="form-control"/>
+          <input type="text" id="f2" name="api_key" value="<%= api_key %>" class="form-control"/>
         </div>
       </div>
 
@@ -82,10 +82,10 @@
         <label class="col-sm-4 control-label">"Type of Call"</label>
         <div class="col-sm-8">
           <select name="call_type]" class="form-control" id="method">
-            <option value="get" selected>Get</option>
-            <option class="not-pub" value="post">Post</option>
-            <option class="not-pub" value="put">Put</option>
-            <option class="not-pub" value="delete">Delete</option>
+            <option value="get" <% if call_type == 'get' %>selected<% end %>>Get</option>
+            <option class="not-pub" value="post" <% if call_type == 'post' %>selected<% end %>>Post</option>
+            <option class="not-pub" value="put"> <% if call_type == 'put' %>selected<% end %>Put</option>
+            <option class="not-pub" value="delete" <% if call_type == 'delete' %>selected<% end %>>Delete</option>
           </select>
         </div>
       </div>
@@ -93,14 +93,14 @@
       <div class="form-group">
         <label class="col-sm-4 control-label">Headers</label>
         <div class="col-sm-8">
-          <input type="text" name="headers" value='{ "Accept" => "application/vnd.compendium.blog;version=2,application/json" }' class="form-control"/>
+          <input type="text" name="headers" value='<%= headers %>' class="form-control"/>
         </div>
       </div>
 
       <div class="form-group auth body">
         <label class="col-sm-4 control-label">Body</label>
         <div class="col-sm-8">
-          <input type="text" name="body" value='{ :post_title => "Content Title", :url_lookup_token => "content-title" }' class="form-control"/>
+          <input type="text" name="body" value='<%= body %>' class="form-control"/>
         </div>
       </div>
 
