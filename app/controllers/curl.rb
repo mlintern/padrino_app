@@ -93,7 +93,12 @@ PadrinoApp::App.controllers :curl do
       end
 
       logger.debug @result
-      render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: @result.body.valid_json? }
+      is_json = if params['only_curl'] == 'on'
+                  true
+                else
+                  @result.body.valid_json?
+                end
+      render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: is_json }
     rescue JSON::ParserError => e
       logger.debug 'JSON SyntaxError'
       logger.error e.inspect
