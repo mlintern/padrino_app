@@ -13,20 +13,20 @@ PadrinoApp::App.controllers :editor, map: '/api/editor' do
 
     ocmapp = OCMApp.first(app_install_id: data['app_install_id'])
 
-    return 200, { :success => true, :info => "App Already Installed." }.to_json unless ocmapp.nil?
+    return 200, { success: true, info: 'App Already Installed.' }.to_json unless ocmapp.nil?
 
     data[:id] = SecureRandom.uuid
     data[:cpdm_user_id] = data['user_id'] if data.key? 'user_id'
 
     ocmapp = OCMApp.new(remove_elements(data, ['user_id']))
 
-    return 200, { :success => true, :info => "Install Successfull.", :config => ocmapp }.to_json if ocmapp.save
+    return 200, { success: true, info: 'Install Successfull.', config: ocmapp }.to_json if ocmapp.save
 
     errors = []
     ocmapp.errors.each do |e|
       errors << e
       logger.error(e)
     end
-    return 400, { :success => false, :info => errors }.to_json
+    return 400, { success: false, info: errors }.to_json
   end
 end

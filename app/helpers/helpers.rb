@@ -464,7 +464,7 @@ PadrinoApp::App.helpers do
   # Response: boolean
   ####
   def delete_project(project, user)
-    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json if project.user_id != user.id
+    return 403, { success: false, info: 'You do not have permission to perform this action.' }.to_json if project.user_id != user.id
     assets = Asset.all(project_id: params[:id])
     assets.each do |asset|
       next if asset.destroy
@@ -472,7 +472,7 @@ PadrinoApp::App.helpers do
       asset.errors.each do |e|
         errors << e
       end
-      return 400, { :success => false, :info => errors }.to_json
+      return 400, { success: false, info: errors }.to_json
     end
     languages = Language.all(project_id: params[:id])
     languages.each do |lang|
@@ -481,15 +481,15 @@ PadrinoApp::App.helpers do
       asset.errors.each do |e|
         errors << e
       end
-      return 400, { :success => false, :info => errors }.to_json
+      return 400, { success: false, info: errors }.to_json
     end
 
-    return 200, { :success => true, :info => "Project was successfully deleted. Along with it's assets and languages." }.to_json if project.destroy
+    return 200, { success: true, info: "Project was successfully deleted. Along with it's assets and languages." }.to_json if project.destroy
     errors = []
     project.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :info => errors }.to_json
+    return 400, { success: false, info: errors }.to_json
   rescue StandardError => e
     logger.error e
     logger.error e.backtrace

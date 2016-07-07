@@ -17,7 +17,7 @@ PadrinoApp::App.controllers :api do
   # Response: json object
   ####
   get :index do
-    return 200, { :success => true, :content => "Hello World" }.to_json
+    return 200, { success: true, content: 'Hello World' }.to_json
   end
 
   ####
@@ -28,7 +28,7 @@ PadrinoApp::App.controllers :api do
   # Response: json object containing information
   ####
   get :info do
-    return 200, { :success => true, :info => [{ 1 =>"This endpoint provides information about the app.nretnil.com API." }, { 2 => "You are able to perform all Account management tasks via the API." }, { 3 => "You are able to perform all Todo tasks via the API." }] }.to_json
+    return 200, { success: true, info: [{ 1 => 'This endpoint provides information about the app.nretnil.com API.' }, { 2 => 'You are able to perform all Account management tasks via the API.' }, { 3 => 'You are able to perform all Todo tasks via the API.' }] }.to_json
   end
 
   ####
@@ -76,7 +76,7 @@ PadrinoApp::App.controllers :api do
   # Response: json object with success, id, and url
   ####
   get :external_pub do
-    return 200, { :success => true, :content => "This endpoint only accepts POST requests." }.to_json
+    return 200, { success: true, content: 'This endpoint only accepts POST requests.' }.to_json
   end
 
   ####
@@ -88,14 +88,15 @@ PadrinoApp::App.controllers :api do
   ####
   post :external_pub do
     data = JSON.parse request.body.read
+    logger.debug data
     host = params['host'] || 'www.nretnil.com'
-    return 400, { :success => false, :error => 'Bad Data' }.to_json unless data['content']
+    return 400, { success: false, error: 'Bad Data' }.to_json unless data['content']
 
     id = data['content'].try(:[], 'remote_id') || rand(1_000_000)
-    return 400, { :success => false, :error => 'Missing Title' }.to_json unless data['content']['title']
+    return 400, { success: false, error: 'Missing Title' }.to_json unless data['content']['title']
 
     url = data['content'].try(:[], 'remote_url') || 'http://' + host + '/' + data.try(:[], 'content').try(:[], 'title').downcase.tr(' ', '-')
-    return 202, { :success => true, :id => id, :url => url }.to_json
+    return 202, { success: true, id: id, url: url }.to_json
   end
 
   ####
@@ -107,14 +108,15 @@ PadrinoApp::App.controllers :api do
   ####
   post :debug, map: 'api/external_pub/debug' do
     data = JSON.parse request.body.read
+    logger.debug data
     host = params['host'] || 'www.nretnil.com'
-    return 400, { :success => false, :error => 'Bad Data', :data_received => data }.to_json unless data['content']
+    return 400, { success: false, error: 'Bad Data', data_received: data }.to_json unless data['content']
 
     id = data['content'].try(:[], 'remote_id') || rand(1_000_000)
-    return 400, { :success => false, :error => 'Missing Title', :data_received => data }.to_json unless data['content']['title']
+    return 400, { success: false, error: 'Missing Title', data_received: data }.to_json unless data['content']['title']
 
     url = data['content'].try(:[], 'remote_url') || 'http://' + host + '/' + data.try(:[], 'content').try(:[], 'title').downcase.tr(' ', '-')
-    return 202, { :success => true, :id => id, :url => url, :data_received => data }.to_json
+    return 202, { success: true, id: id, url: url, data_received: data }.to_json
   end
 
   ####

@@ -66,7 +66,7 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     api_owner?(request.env['HTTP_AUTHORIZATION'], params[:id]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'admin') # nil indicates any or no role is ok.  Only being logged in is neccessary.
 
     account = Account.all(id: params[:id])[0]
-    return 404, { :success => false, :error => "User Not Found" }.to_json unless account
+    return 404, { success: false, error: 'User Not Found' }.to_json unless account
 
     data = remove_elements(account.attributes)
     user_properties = AccountProperty.all(id: params[:id])
@@ -104,7 +104,7 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     account.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :errors => errors }.to_json
+    return 400, { success: false, errors: errors }.to_json
   end
 
   ####
@@ -125,7 +125,7 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     remove_other_elements(data)
     if account
       data[:last_update] = DateTime.now.utc
-      return 400, { :success => false, :error => "Bad Request" }.to_json unless account.update(data)
+      return 400, { success: false, error: 'Bad Request' }.to_json unless account.update(data)
 
       data = remove_elements(account.attributes)
       return 200, data.to_json
@@ -143,16 +143,16 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     api_owner?(request.env['HTTP_AUTHORIZATION'], params[:id]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'admin') # nil indicates any or no role is ok.
 
     account = Account.first(id: params[:id])
-    return 404, { :success => false, :error => "User does not exist" }.to_json unless account
+    return 404, { success: false, error: 'User does not exist' }.to_json unless account
 
     new_auth = SecureRandom.hex
-    return 200, { :auth_token => new_auth }.to_json if account.update(auth_token: new_auth, last_update: DateTime.now.utc)
+    return 200, { auth_token: new_auth }.to_json if account.update(auth_token: new_auth, last_update: DateTime.now.utc)
 
     errors = []
     account.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :errors => errors }.to_json
+    return 400, { success: false, errors: errors }.to_json
   end
 
   ####
@@ -168,8 +168,8 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     account = Account.get(params[:id])
     return 404, { success: false, error: 'Account does not exist.' }.to_json unless account
 
-    return 200, { :success => true, :message => "Account #{params[:id]} was successfully deleted." }.to_json if (account != auth_account) && account.destroy
+    return 200, { success: true, message: "Account #{params[:id]} was successfully deleted." }.to_json if (account != auth_account) && account.destroy
 
-    return 400, { :success => false, :error => "You cannot delete yourself." }.to_json
+    return 400, { success: false, error: 'You cannot delete yourself.' }.to_json
   end
 end

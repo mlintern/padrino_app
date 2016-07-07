@@ -36,6 +36,6 @@ PadrinoApp::App.controllers :base, map: '/' do
         response_hash << { name: name, size: size.to_human(1) }
       end
     end
-    return 200, { :success => true, :files => response_hash }.to_json
+    return 200, { success: true, files: response_hash }.to_json
   end
 end

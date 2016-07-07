@@ -19,10 +19,10 @@ PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
 
     language = Language.get(params[:id])
 
-    return 404, { :success => false, :info => "Asset does not exist." }.to_json unless language
+    return 404, { success: false, info: 'Asset does not exist.' }.to_json unless language
 
     project = Project.get(language.project_id)
-    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json unless project.user_id == auth_account.id
+    return 403, { success: false, info: 'You do not have permission to perform this action.' }.to_json unless project.user_id == auth_account.id
 
     return 200, language.to_json
   end
@@ -43,10 +43,10 @@ PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
 
     project_id = data['project_id'] || nil
 
-    return 400, { :success => false, :info => "project_id is required." }.to_json unless project_id
+    return 400, { success: false, info: 'project_id is required.' }.to_json unless project_id
 
     project = Project.get(project_id)
-    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json unless project.user_id == auth_account.id
+    return 403, { success: false, info: 'You do not have permission to perform this action.' }.to_json unless project.user_id == auth_account.id
 
     language = Language.new(data)
     return 200, language.to_json if language.save
@@ -55,7 +55,7 @@ PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
     language.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :info => errors }.to_json
+    return 400, { success: false, info: errors }.to_json
   end
 
   ####
@@ -70,17 +70,17 @@ PadrinoApp::App.controllers :api_languages, map: '/api/languages' do
 
     language = Language.get(params[:id])
 
-    return 404, { :success => false, :info => "Language does not exist." }.to_json unless language
+    return 404, { success: false, info: 'Language does not exist.' }.to_json unless language
 
     project = Project.get(language.project_id)
-    return 403, { :success => false, :info => "You do not have permission to perform this action." }.to_json unless project.user_id == auth_account.id
+    return 403, { success: false, info: 'You do not have permission to perform this action.' }.to_json unless project.user_id == auth_account.id
 
-    return 200, { :success => true, :info => "Langauge was successfully deleted." }.to_json if language.destroy
+    return 200, { success: true, info: 'Langauge was successfully deleted.' }.to_json if language.destroy
 
     errors = []
     language.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :info => errors }.to_json
+    return 400, { success: false, info: errors }.to_json
   end
 end

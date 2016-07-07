@@ -79,7 +79,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
       project.errors.each do |e|
         errors << e
       end
-      return 400, { :success => false, :info => errors }.to_json
+      return 400, { success: false, info: errors }.to_json
     end
   end
 
@@ -96,7 +96,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     data = JSON.parse request.body.read
 
     project = Project.get(params[:id])
-    return 404, { :success => false, :info => "Project Not Found" }.to_json unless project
+    return 404, { success: false, info: 'Project Not Found' }.to_json unless project
 
     if project.update(remove_other_elements(data, [:name, :description, :language]))
       if project.type != 1
@@ -110,7 +110,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
       project.errors.each do |e|
         errors << e
       end
-      return 400, { :success => false, :info => errors }.to_json
+      return 400, { success: false, info: errors }.to_json
     end
   end
 
@@ -127,7 +127,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     project = Project.get(params[:id])
     return 200, project.to_json if project
 
-    return 404, { :success => false, :info => "Project Not Found" }.to_json
+    return 404, { success: false, info: 'Project Not Found' }.to_json
   end
 
   ####
@@ -141,19 +141,19 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     project = Project.get(params[:id])
-    return 403, { :success => false, :info => "You do not have permission to start project." }.to_json unless project.user_id == auth_account.id
+    return 403, { success: false, info: 'You do not have permission to start project.' }.to_json unless project.user_id == auth_account.id
 
     if project.update(status: 1)
       # Send updated project to Compendium
       logger.info 'Start Project'
       signal_ocm(project)
-      return 200, { :success => true, :info => "Project started." }.to_json
+      return 200, { success: true, info: 'Project started.' }.to_json
     else
       errors = []
       project.errors.each do |e|
         errors << e
       end
-      return 400, { :success => false, :info => errors }.to_json
+      return 400, { success: false, info: errors }.to_json
     end
   end
 
@@ -168,19 +168,19 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     project = Project.get(params[:id])
-    return 403, { :success => false, :info => "You do not have permission to cancel project." }.to_json unless project.user_id == auth_account.id
+    return 403, { success: false, info: 'You do not have permission to cancel project.' }.to_json unless project.user_id == auth_account.id
 
     if project.update(status: 2)
       # Send updated project to Compendium
       logger.info 'Canceled Project'
       signal_ocm(project)
-      return 200, { :success => true, :info => "Project canceled." }.to_json
+      return 200, { success: true, info: 'Project canceled.' }.to_json
     else
       errors = []
       project.errors.each do |e|
         errors << e
       end
-      return 400, { :success => false, :info => errors }.to_json
+      return 400, { success: false, info: errors }.to_json
     end
 
     return 200, @data.to_json
@@ -197,7 +197,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     project = Project.get(params[:id])
-    return 403, { :success => false, :info => "You do not have permission to complete project." }.to_json unless project.user_id == auth_account.id
+    return 403, { success: false, info: 'You do not have permission to complete project.' }.to_json unless project.user_id == auth_account.id
 
     if project.update(status: 3)
       ###
@@ -205,13 +205,13 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
       logger.info 'Complete Project'
       signal_ocm(project)
       ###
-      return 200, { :success => true, :info => "Project completed." }.to_json
+      return 200, { success: true, info: 'Project completed.' }.to_json
     else
       errors = []
       project.errors.each do |e|
         errors << e
       end
-      return 400, { :success => false, :info => errors }.to_json
+      return 400, { success: false, info: errors }.to_json
     end
 
     return 200, @data.to_json
@@ -251,11 +251,11 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
 
     project = Project.get(params[:id])
 
-    return 404, { :success => false, :info => "Project does not exist." }.to_json unless project
+    return 404, { success: false, info: 'Project does not exist.' }.to_json unless project
 
-    return 400, { :success => false, :info => "Asset language must match project source language." }.to_json unless project.language == data['language']
+    return 400, { success: false, info: 'Asset language must match project source language.' }.to_json unless project.language == data['language']
 
-    return 403, { :success => false, :info => "You do not have permissions to add to project." }.to_json unless auth_account.id == project.user_id
+    return 403, { success: false, info: 'You do not have permissions to add to project.' }.to_json unless auth_account.id == project.user_id
 
     asset = Asset.new(remove_other_elements(data, [:id, :project_id, :title, :body, :source, :language, :external_id]))
     return 200, asset.to_json if asset.save
@@ -264,7 +264,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     asset.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :info => errors }.to_json
+    return 400, { success: false, info: errors }.to_json
   end
 
   ####
@@ -278,7 +278,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     auth_account = Account.auth_token_authenticate(params[:auth_token]) || api_auth(request.env['HTTP_AUTHORIZATION'], 'translate')
 
     project = Project.get(params[:id])
-    return 404, { :success => false, :info => "Project does not exist." }.to_json unless project
+    return 404, { success: false, info: 'Project does not exist.' }.to_json unless project
 
     delete_project(project, auth_account)
   end

@@ -30,7 +30,7 @@ PadrinoApp::App.controllers :api_todos, map: '/api/todos' do
   ####
   post :index do
     data = JSON.parse request.body.read
-    return 400, { :success => false, :error => "Payload must contain title." }.to_json unless data['title']
+    return 400, { success: false, error: 'Payload must contain title.' }.to_json unless data['title']
 
     data = remove_other_elements(data, [:title])
     data['user_id'] = @api_account.id
@@ -42,7 +42,7 @@ PadrinoApp::App.controllers :api_todos, map: '/api/todos' do
     todo.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :errors => errors }.to_json
+    return 400, { success: false, errors: errors }.to_json
   end
 
   ####
@@ -56,20 +56,20 @@ PadrinoApp::App.controllers :api_todos, map: '/api/todos' do
   put :todo, map: '/api/todos/:id' do
     data = JSON.parse request.body.read
 
-    return 400, { :success => false, :error => "Payload must contain title or completed." }.to_json unless data.key?('title') || data.key?('completed')
+    return 400, { success: false, error: 'Payload must contain title or completed.' }.to_json unless data.key?('title') || data.key?('completed')
 
     data = remove_other_elements(data, [:title, :completed])
     todo = Todo.get(params[:id])
-    return 404, { :success => false, :errors => "Bad todo id." }.to_json unless todo
+    return 404, { success: false, errors: 'Bad todo id.' }.to_json unless todo
 
-    return 403, { :success => false, :errors => "Forbidden" }.to_json unless @api_account.id == todo.user_id
+    return 403, { success: false, errors: 'Forbidden' }.to_json unless @api_account.id == todo.user_id
     return 200, todo.to_json if todo.update(data)
 
     errors = []
     todo.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :errors => errors }.to_json
+    return 400, { success: false, errors: errors }.to_json
   end
 
   ####
@@ -81,17 +81,17 @@ PadrinoApp::App.controllers :api_todos, map: '/api/todos' do
   ####
   delete :todo, map: '/api/todos/:id' do
     todo = Todo.get(params[:id])
-    return 404, { :success => false, :errors => "Bad todo id." }.to_json unless todo
+    return 404, { success: false, errors: 'Bad todo id.' }.to_json unless todo
 
-    return 403, { :success => false, :errors => "Forbidden" }.to_json unless @api_account.id == todo.user_id
+    return 403, { success: false, errors: 'Forbidden' }.to_json unless @api_account.id == todo.user_id
 
-    return 200, { :success => true, :content => "Todo was deleted." }.to_json if todo.destroy
+    return 200, { success: true, content: 'Todo was deleted.' }.to_json if todo.destroy
 
     errors = []
     todo.errors.each do |e|
       errors << e
     end
-    return 400, { :success => false, :errors => errors }.to_json
+    return 400, { success: false, errors: errors }.to_json
   end
 
   after do
