@@ -66,10 +66,10 @@
     box-shadow: none;
 
     &.collapse {
-      display: block;
-      height: auto;
+      display: block !important;
+      height: auto !important;
       padding-bottom: 0; // Override default setting
-      overflow: visible;
+      overflow: visible !important;
     }
 
     &.in {
@@ -377,10 +377,10 @@
 
 @media (min-width: $grid-float-breakpoint) {
   .navbar-left {
-    float: left;
+    float: left !important;
   }
   .navbar-right {
-    float: right;
+    float: right !important;
   margin-right: -$navbar-padding-horizontal;
 
     ~ .navbar-right {

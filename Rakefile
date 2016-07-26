@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 require 'bundler/setup'
 require 'padrino-core/cli/rake'
+require 'fileutils'
 
 PadrinoTasks.use(:database)
 PadrinoTasks.use(:datamapper)
@@ -48,9 +49,12 @@ end
 namespace :sass do
   task :compile do
     system 'sass sass/assets/stylesheets/_full.scss public/stylesheets/bootstrap-alta.min.css --style compressed'
-    system 'cp -r sass/assets/javascripts/bootstrap.min.js public/javascripts/bootstrap.min.js'
-    system 'cp -r sass/assets/fonts public/'
-    system 'cp -r sass/assets/images/* public/images'
+    # system 'cp -r sass/assets/javascripts/bootstrap.min.js public/javascripts/bootstrap.min.js'
+    # system 'cp -r sass/assets/fonts public/'
+    # system 'cp -r sass/assets/images/* public/images'
+    FileUtils.copy_entry 'sass/assets/fonts', 'public/fonts/'
+    FileUtils.copy_entry 'sass/assets/images', 'public/images/'
+    FileUtils.copy_entry 'sass/assets/javascripts', 'public/javascripts/'
   end
 
   task :watch do

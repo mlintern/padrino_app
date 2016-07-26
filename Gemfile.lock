@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/mlintern/compendium-api
-  revision: b934a37910143efc001f97f71b24793d95aec477
+  revision: a332433ff9fb6b1386eace612237f2384d0275bf
   specs:
-    compendium-api (0.17.3)
+    compendium-api (0.17.4)
       httparty (~> 0)
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-fake-data
-  revision: f47433c62ce4ed22a44b4f4550ae516569b0f34a
+  revision: c283d16c9a4ca1acffcd00484a4f3af87ba798ce
   specs:
     nretnil-fake-data (0.1.8)
 
@@ -32,11 +32,10 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.6)
+    activesupport (5.0.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
     ansi (1.5.0)
@@ -92,30 +91,29 @@ GEM
     enumerable-lazy (0.0.1)
     erubis (2.7.0)
     fastercsv (1.5.5)
-    ffi (1.9.10)
-    httparty (0.13.7)
-      json (~> 1.8)
+    ffi (1.9.14)
+    httparty (0.14.0)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.3)
     json_pure (1.8.3)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    mime-types (3.0)
+    mime-types (3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2016.0221)
+    mime-types-data (3.2016.0521)
     minitest (5.9.0)
     minitest-reporters (1.0.20)
       ansi
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    minitest-retry (0.1.4)
+    minitest-retry (0.1.5)
       minitest (>= 5.0)
     moneta (0.7.20)
-    multi_json (1.12.0)
+    multi_json (1.12.1)
     multi_xml (0.5.5)
-    mustermann19 (0.4.3)
+    mustermann19 (0.4.4)
       enumerable-lazy
     padrino (0.13.1)
       padrino-admin (= 0.13.1)
@@ -154,19 +152,20 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    rake (11.1.2)
-    redis (3.3.0)
+    rake (11.2.2)
+    redis (3.3.1)
     ruby-progressbar (1.8.1)
     rubyzip (1.2.0)
     sass (3.4.22)
-    selenium-webdriver (2.53.0)
+    selenium-webdriver (2.53.4)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    sidekiq (4.1.2)
+    sidekiq (4.1.4)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       redis (~> 3.2, >= 3.2.1)
+      sinatra (>= 1.4.7)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -219,4 +218,4 @@ DEPENDENCIES
   watir-webdriver
 
 BUNDLED WITH
-   1.12.4
+   1.12.5
