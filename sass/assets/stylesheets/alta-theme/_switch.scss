@@ -44,7 +44,6 @@ $switch-width:80px;
     label {
       background: $switch-off-bg;
       color: $switch-off-color;
-      border-radius: 3px;
       display: block;
       height: 100%;
       position: relative;
@@ -53,7 +52,6 @@ $switch-width:80px;
 
       div {
         background: #fff;
-        border-radius: 2px;
         display: block;
         height: $switch-height - 8;
         left: 4px;

@@ -12,9 +12,12 @@ $link-color:            #145c9e !default;
 
 $icon-font-path: "../fonts/bootstrap/" !default;
 
-$border-radius-base:        3px !default;
-$border-radius-large:       4px !default;
-$border-radius-small:       2px !default;
+$border-radius-base:        0px !default;
+$border-radius-large:       0px !default;
+$border-radius-small:       0px !default;
+
+$badge-border-radius:       0px !default;
+$pager-border-radius:       0px !default;
 
 $table-cell-padding:            12px !default;
 $table-condensed-cell-padding:  4px !default;
