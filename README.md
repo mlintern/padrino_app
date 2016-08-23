@@ -150,3 +150,14 @@ ENV['NRETNIL_USER_TWO_PASSWORD'] = 'password'
 ENV['TARGET_URL'] = 'localhost:3000'
 ENV['TIMEOUT'] = '10'
 
+For the Editors to work in Compendium you need to update a method in PostEditor.js:
+
+updateAppOwnedFields: function(msg){
+    if(this.videoEditorView){
+        this.videoEditorView.updateEmbedCode(msg.embedCode);
+    }
+    if(this.editor !== null){
+        this.editor.setData(msg.body);
+    }
+    this.trigger("postEditor:updateCustomFields", msg.customFields);
+},
