@@ -190,7 +190,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
       project = Project.get(data['project_id'])
       return 404, { success: false, info: 'Project does not exist.' }.to_json unless project
 
-      return 400, { success: false, info: 'Project is not open' }.to_json unless project.status == 0
+      return 400, { success: false, info: 'Project is not open' }.to_json unless project.status.zero?
       begin
         project_assets = data['source_materials_add']
         project_assets.each do |pa|
@@ -267,7 +267,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
 
     ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
     status = %w(open in_progress canceled complete)
-    return 404, { success: false, info: 'App Not Found' }.to_json unless ocmapp
+    return 400, { success: false, info: 'Please provide a valid app_install_id' }.to_json unless ocmapp
 
     if params[:project_ids]
       projects = Project.all(user_id: ocmapp.user_id, type: 0)
@@ -334,7 +334,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
       project = Project.get(data['project_id'])
       return 404, { success: false, info: 'Project does not exist.' }.to_json unless project
 
-      return 400, { success: false, info: 'Project is not open' }.to_json unless project.status == 0
+      return 400, { success: false, info: 'Project is not open' }.to_json unless project.status.zero?
 
       begin
         project_assets = data['source_materials_add']

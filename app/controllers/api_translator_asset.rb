@@ -42,7 +42,7 @@ PadrinoApp::App.controllers :api_assets, map: '/api/assets' do
 
     return 404, { success: false, info: 'Asset does not exist.' }.to_json unless asset
 
-    return 400, { success: false, info: 'Asset is not in a Ready State.' }.to_json unless asset.status == 0 || asset.status == 3
+    return 400, { success: false, info: 'Asset is not in a Ready State.' }.to_json unless asset.status.zero? || asset.status == 3
 
     project = Project.get(asset.project_id)
     return 403, { success: false, info: 'You do not have permission to perform this action.' }.to_json unless project.user_id == auth_account.id
@@ -64,7 +64,7 @@ PadrinoApp::App.controllers :api_assets, map: '/api/assets' do
       if new_asset.save
         ### Send new asset to OCM
         ocmapp = OCMApp.first(user_id: auth_account.id)
-        if ocmapp && project.type.to_i == 0
+        if ocmapp && project.type.to_i.zero?
           logger.info 'Sending Post to Compendium'
           logger.info data
           logger.debug result = ocm_create_post(data, ocmapp)

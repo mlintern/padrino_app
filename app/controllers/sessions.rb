@@ -49,7 +49,7 @@ PadrinoApp::App.controllers :sessions do
   post :create do
     account = Account.authenticate(params[:username], params[:password])
     if account
-      if account.status == 0
+      if account.status.zero?
         flash[:error] = 'Account is Disabled'
         logger.info('Account is Disabled')
         redirect url(:sessions, :new), 302

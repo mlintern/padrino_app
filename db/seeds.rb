@@ -10,7 +10,7 @@
 #   shell.say name
 #
 
-if Account.count == 0
+if Account.count.zero?
 
   username  = shell.ask 'Which username do you want use for logging into admin?'
   password  = shell.ask 'Tell me the password to use:'

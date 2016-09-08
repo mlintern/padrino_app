@@ -28,7 +28,7 @@ PadrinoApp::App.controllers :translator do
     account = Account.authenticate(params[:username], params[:password])
     if account
       if account.role['translate']
-        if account.status == 0
+        if account.status.zero?
           flash[:error] = 'Account is disabled'
           redirect_last
         else
@@ -101,7 +101,7 @@ PadrinoApp::App.controllers :translator do
         @title = project.name
         can_complete = true
         assets.each do |a|
-          can_complete = false if a.status == 0
+          can_complete = false if a.status.zero?
         end
 
         render 'translator/project', locals: { 'project' => project, 'assets' => assets, 'back' => '/translator', 'status' => ['Ready', 'Completed', 'Translated Asset', 'Error Translating'], :languages => languages, :can_complete => can_complete }
