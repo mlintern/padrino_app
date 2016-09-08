@@ -66,11 +66,13 @@
         <% if ocmapp %>
           <form class="translation-settings-form" method="post" onsubmit="updateTranslator();return false;">
             <% ocmapp.attributes.each do |a,b| %>
-              <% if a.to_s != "app_install_id" && a.to_s != "id" %><label><%= a.to_s %></label><% end %>
+              <% if a.to_s != "app_install_id" && a.to_s != "id" %><label class="m-top-md"><%= a.to_s %></label><% end %>
               <input <% if a.to_s == "app_install_id" || a.to_s == "id" %>type="hidden"<% else %>type="text"<% end %> class="form-control" name="<%= a.to_s %>" value="<%= b %>" />
             <% end %>
-            <button class="btn btn-primary pull-right btn-update">Update</button>
-            <button class="btn btn-danger pull-left btn-update" onclick="deleteTranslator();">Delete</button>
+            <div class="m-top-lg">
+              <button class="btn btn-primary pull-right btn-update">Update</button>
+              <button class="btn btn-danger pull-left btn-update" onclick="deleteTranslator();">Delete</button>
+            </div>
             <div class="clearfix"></div>
           </form>
         <% else %>

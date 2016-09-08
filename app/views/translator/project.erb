@@ -6,13 +6,13 @@
   </div>
 </div>
 
-<a class="btn btn-danger btn-lg btn-back" href="<%= back %>"><i class="fa fa-arrow-left"></i></a>
+<a class="btn btn-info btn-lg btn-back" href="<%= back %>"><i class="fa fa-arrow-left"></i></a>
 
 <div class="panel p-lg clearfix">
 
   <h2>Assets <% if project.status != 1 %><button class="btn btn-success btn-start pull-right" data-project="<%= project.id %>" onclick="startProject()">Start</button><% end %><% if project.status == 1 %><button class="btn btn-danger btn-cancel pull-right" data-project="<%= project.id %>" onclick="cancelProject()">Cancel</button><% end %></h2>
 
-  <div class="table-responsive">
+  <div class="table-responsive p-bottom-xl">
     <table id="list" class="table table-striped table-hover table-condensed">
       <thead>
         <tr>
@@ -53,8 +53,8 @@
     </table>
     </div> <!-- table-responsive -->
 
-  <div class="add-asset  fa-2x">
-    <i class="fa fa-plus clickable" data-toggle="modal" data-target=".new-asset"></i> <% if assets.length == 0 %> &nbsp; <span class="label label-warning"><i class="fa fa-arrow-left"></i> Click to add an asset.</span> <% end %>
+  <div class="add-asset d-inline-block">
+    <i class="fa fa-plus clickable fa-2x" data-toggle="modal" data-target=".new-asset"></i> <% if assets.length == 0 %> &nbsp; <span class="label label-warning"><i class="fa fa-arrow-left"></i> Click to add an asset.</span> <% end %>
   </div>
 
   <% if project.status == 1 && can_complete %><button class="btn btn-warning btn-complete pull-right bottom-space" data-project="<%= project.id %>" onclick="completeProject()">Complete</button><% end %>
