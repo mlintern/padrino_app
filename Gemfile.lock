@@ -13,9 +13,9 @@ GIT
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-password
-  revision: f77d0252ca37a3fff858f5cebca3c28c6ba76949
+  revision: 4a63f0f8b016f54968c397acac5a814b8b6a7e11
   specs:
-    nretnil-password (0.1.4)
+    nretnil-password (0.1.5)
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-translate
@@ -88,7 +88,7 @@ GEM
       data_objects (= 0.10.17)
     do_sqlite3 (0.10.17)
       data_objects (= 0.10.17)
-    enumerable-lazy (0.0.1)
+    enumerable-lazy (0.0.2)
     erubis (2.7.0)
     fastercsv (1.5.5)
     ffi (1.9.14)
@@ -102,7 +102,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    minitest (5.9.0)
+    minitest (5.9.1)
     minitest-reporters (1.0.20)
       ansi
       builder
@@ -152,7 +152,7 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    rake (11.2.2)
+    rake (11.3.0)
     redis (3.3.1)
     ruby-progressbar (1.8.1)
     rubyzip (1.2.0)
@@ -161,7 +161,7 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    sidekiq (4.2.1)
+    sidekiq (4.2.2)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (~> 1.5)
