@@ -11,6 +11,10 @@ PadrinoApp::App.helpers do
   ####
   def string_to_hash(s)
     JSON.parse(s.tr('\'', '"').gsub(/:([a-zA-z]+)/, '"\\1"').gsub('=>', ': ').gsub(' :  ', ': '))
+  rescue JSON::ParserError => e
+    logger.error 'Unable to Parse: ' + s
+    logger.error e
+    return false
   end
 
   ####
@@ -265,7 +269,7 @@ PadrinoApp::App.helpers do
     if data == {}
       '{}'
     else
-      data.to_s.is_json? ? data : data.to_json
+      data.to_s.valid_json? ? data : data.to_json
     end
   end
 

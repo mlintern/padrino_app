@@ -43,19 +43,30 @@ PadrinoApp::App.controllers :curl do
     end
 
     begin
-      headers = if params['headers'].is_json?
+      headers = if params['headers'].valid_json?
                   JSON.parse(params['headers']) || {}
-                else
+                elsif !params['headers'].empty?
                   string_to_hash(params['headers']).map { |key, v| [key.to_s, v] }.to_h || {}
+                else
+                  false
                 end
+      curl_headers = '-H\''
+      if headers
+        headers.each do |a, b|
+          curl_headers += "#{a}: #{b}"
+        end
+        curl_headers += '\' '
+      else
+        curl_headers = ''
+      end
 
-      body = if params['body'].is_json?
+      body = if params['body'].valid_json?
                params['body'] || {}
              else
                string_to_hash(params['body']) || {}
              end
 
-      query = if params['query'].is_json?
+      query = if params['query'].valid_json?
                 JSON.parse(params['query']) || {}
               else
                 string_to_hash(params['query']) || {}
@@ -65,7 +76,7 @@ PadrinoApp::App.controllers :curl do
 
       @url = params['protocol'] + params['server'] + params['api_uri']
 
-      json_body = if body.to_s.is_json?
+      json_body = if body.to_s.valid_json?
                     body
                   else
                     body.to_json
@@ -75,20 +86,20 @@ PadrinoApp::App.controllers :curl do
 
       case params['call_type']
       when 'get'
-        curl_call = curl_start + '"' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + norm_data(query) + '"'
+        curl_call = curl_start + curl_headers + '"' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + norm_data(query) + '"'
         if params['basic'] == 'on'
           params['only_curl'] == 'on' ? true : @result = HTTParty.get(@url, basic_auth: @auth, query: query, headers: headers, verify: secure)
         else
           params['only_curl'] == 'on' ? true : @result = HTTParty.get(@url, query: query, headers: headers, verify: secure)
         end
       when 'put'
-        curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XPUT'
+        curl_call = curl_start + curl_headers + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XPUT'
         params['only_curl'] == 'on' ? true : @result = HTTParty.put(@url, basic_auth: @auth, body: json_body, headers: headers, verify: secure)
       when 'post'
-        curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XPOST'
+        curl_call = curl_start + curl_headers + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XPOST'
         params['only_curl'] == 'on' ? true : @result = HTTParty.post(@url, basic_auth: @auth, body: json_body, headers: headers, verify: secure)
       when 'delete'
-        curl_call = curl_start + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XDELETE'
+        curl_call = curl_start + curl_headers + '--data \'' + json_data(body) + '\' "' + params['protocol'] + curl_auth + params['server'] + params['api_uri'] + '" -XDELETE'
         params['only_curl'] == 'on' ? true : @result = HTTParty.delete(@url, basic_auth: @auth, query: query, headers: headers, verify: secure)
       end
 
