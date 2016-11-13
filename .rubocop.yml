@@ -15,6 +15,14 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 150
 
+Metrics/BlockLength:
+  CountComments: false  # count full line comments?
+  Max: 150
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+
 Style/Encoding:
   EnforcedStyle: always
   Enabled: true
