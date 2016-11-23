@@ -5,9 +5,11 @@
 include FileUtils::Verbose
 
 PadrinoApp::App.controllers :base, map: '/' do
-  before do
-    headers 'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => %w(OPTIONS GET POST)
+  helpers do
+    def preflight
+      headers 'Access-Control-Allow-Origin' => '*',
+              'Access-Control-Allow-Methods' => %w(OPTIONS GET POST)
+    end
   end
 
   get :index do
@@ -20,10 +22,12 @@ PadrinoApp::App.controllers :base, map: '/' do
   end
 
   options :upload do
+    preflight
     return 200
   end
 
   post :upload do
+    preflight
     logger.debug params.inspect
 
     response_hash = []
