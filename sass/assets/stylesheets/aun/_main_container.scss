@@ -1,0 +1,39 @@
+.alta-main-container {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+
+	&.nav-open {
+		position: absolute;
+
+		@media screen and (min-width: $md-width) {
+			left: 30%;
+			width: 70%; /* Remove to push main container instead of shrinking it */
+		}
+
+		@media screen and (min-width: $lg-width) {
+			left: 20%;
+			width: 80%; /* Remove to push main container instead of shrinking it */
+		}
+
+		.alta-unified-navbar .right-nav {
+
+			@media screen and (min-width: $md-width) {
+				text-align: center;
+				float: none;
+			}
+
+			@media screen and (min-width: $lg-width) {
+				float: right;
+			}
+		}
+	}
+
+	.content {
+		overflow: auto;
+		height: 100vh;
+	}
+}

@@ -188,6 +188,57 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 
 		$('[data-toggle="tooltip"]').tooltip();
 
+		$('.menu-trigger').click(function(event){
+			event.preventDefault();
+			if ($('.alta-dropdown-menu').hasClass('open')) {
+				$('.alta-dropdown-menu').removeClass('open');
+				$('.alta-main-container').removeClass('nav-open');
+				$('.alta-dropdown-menu').find('.has-sub-menu').removeClass('open');
+				$('.menu-trigger .fa').addClass('fa-bars');
+				$('.menu-trigger .fa').removeClass('fa-arrow-left');
+			} else {
+				$('.alta-dropdown-menu').addClass('open');
+				$('.alta-main-container').addClass('nav-open');
+				$('.menu-trigger .fa').removeClass('fa-bars');
+				$('.menu-trigger .fa').addClass('fa-arrow-left');
+			}
+		});
+
+		$('.alta-main-menu li').click(function(event){
+			if ($(this).find('.alta-sub-menu').length) {
+				event.preventDefault();
+				if ($(this).find('.alta-sub-menu').hasClass('open')) {
+					$(this).find('.alta-sub-menu').removeClass('open');
+					$(this).find('a').removeClass('active');
+				} else {
+					$('.alta-sub-menu').removeClass('open');
+					$('.alta-main-menu li a').removeClass('active');
+					$(this).find('.alta-sub-menu').addClass('open');
+					$(this).find('a').addClass('active');
+				}
+			}
+		});
+
+		$('.alta-user-menu .toggle-menu').click(function(event){
+			event.preventDefault();
+			if ($('.alta-user-menu .alta-user-dropdown').hasClass('open')) {
+				$('.alta-user-menu .alta-user-dropdown').removeClass('open');
+				$(this).removeClass('active');
+			} else {
+				$('.alta-user-menu .alta-user-dropdown').addClass('open');
+				$(this).addClass('active');
+			}
+		});
+
+		$('.mobile-close').click(function(event){
+			event.preventDefault();
+			$('.alta-dropdown-menu').removeClass('open');
+			$('.alta-main-container').removeClass('nav-open');
+			$('.alta-dropdown-menu').find('.has-sub-menu').removeClass('open');
+			$('.menu-trigger .fa').addClass('fa-bars');
+			$('.menu-trigger .fa').removeClass('fa-arrow-left');
+		});
+
 	});
 
 }(window.jQuery);

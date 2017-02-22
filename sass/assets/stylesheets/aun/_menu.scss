@@ -1,0 +1,90 @@
+.alta-dropdown-menu {
+	display: none;
+	padding: 0;
+	margin: 0;
+	background-color: $menu-background;
+	overflow: auto;
+
+
+	&.open {
+		display: block;
+		position: absolute;
+		height: 100vh;
+		width: 100%;
+		z-index: 1001;
+
+		@media screen and (min-width: $md-width) {
+			width: 30%;
+		}
+
+		@media screen and (min-width: $lg-width) {
+			width: 20%;
+		}
+	}
+
+	.alta-main-menu {
+		padding-left: 0;
+		margin: 0;
+		list-style: none;
+
+		& > li {
+
+			& > a {
+				display: block;
+				padding: 9px 0 9px 20px;
+				text-decoration: none;
+				color: $menu-link;
+				border-left: solid 2px transparent;
+				cursor: pointer;
+
+				&:hover, &.active {
+					color: $menu-active-link;
+					border-left: solid 2px $active-blue;
+					background-color: $menu-active-background;
+				}
+
+				.menu-icon {
+					font-size: 30px;
+					margin-right: 20px;
+				}
+
+				.menu-text {
+					vertical-align: 25%;
+				}
+			}
+
+			&.mobile-close {
+
+				@media screen and (min-width: $md-width) {
+					display: none;
+				}
+			}
+		}
+
+		.alta-sub-menu {
+			padding-left: 60px;
+			margin: 0;
+			list-style: none;
+			background-color: $menu-active-background;
+			display: none;
+
+			& > li {
+
+				& > a {
+					display: block;
+					padding: 15px 0;
+					text-decoration: none;
+					color: $menu-link;
+
+					&:hover {
+						color: $menu-active-link;
+					}
+				}
+			}
+
+			&.open {
+				display: block;
+			}
+		}
+	}
+}

@@ -1,0 +1,27 @@
+<menu class="alta-dropdown-menu">
+  <ul class="alta-main-menu">
+    <li class="mobile-close"><a href="#"><i class="fa fa-arrow-left fa-2x menu-icon"></i></a></li>
+    <li><a href="/"><i class="fa fa-home menu-icon"></i> <span class="menu-text">Home</span></a></li>
+    <% unless current_user.nil? %>
+    <li><a><i class="fa fa-sitemap menu-icon has-sub-menu"></i> <span class="menu-text">Tools</span></a>
+      <ul class="alta-sub-menu">
+        <% if permission_check('translate',false) %><li class="left-nav-hidden"><a href="/translator"><i class="fa fa-globe fa-fw"></i> PL Translator</a></li><% end %>
+        <% if permission_check('curl',false) %><li class="left-nav-hidden"><a href="/curl"><i class="fa fa-code"></i> Curl API</a></li><% end %>
+        <% if permission_check('user',false) %><li><a class="pointer todo-btn" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
+      </ul>
+    </li>
+    <li><a href="#"><i class="fa fa-gear menu-icon has-sub-menu"></i> <span class="menu-text">Settings</span></a>
+      <ul class="alta-sub-menu">
+        <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-user fa-fw"></i> Profile</a></li>
+        <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i> Accounts</a></li><% end %>
+      </ul>
+    </li>
+    <% end %>
+    <li><a href="#"><i class="fa fa-question-circle menu-icon has-sub-menu"></i> <span class="menu-text">Help</span></a>
+      <ul class="alta-sub-menu">
+        <li><a href="#" data-toggle="modal" data-target="#info"><i class='fa fa-book'></i> Info</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#new"><i class='fa fa-info-circle'></i> What's New</a></li>
+      </ul>
+    </li>
+  </ul>
+</menu>

@@ -1,0 +1,187 @@
+.alta-unified-navbar {
+	position: relative;
+	background-color: #f6f6f6;
+	box-shadow: 0px 2px 10px #444;
+	z-index: 50;
+
+	.left-nav {
+		font-size: 25px;
+		line-height: 1;
+		padding: 12px 0 11px 30px;
+
+		.menu-state-icon {
+			color: #74777B;
+			cursor: pointer;
+			margin-right: 20px;
+		}
+
+		.logo {
+			width: 25px;
+			vertical-align: -15%;
+		}
+
+		@media screen and (min-width: $md-width) {
+			float: left;
+		}
+	}
+
+	.right-nav {
+
+		@media screen and (max-width: $md-width) {
+			text-align: center;
+		}
+
+		@media screen and (min-width: $md-width) {
+			float: right;
+		}
+
+		.alta-icon-menu {
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			min-height: 33px;
+
+			li {
+				display: inline;
+
+				a {
+					color: #474747;
+					padding: 7px 15px 4px;
+					border-bottom: solid 4px transparent;
+					display: inline-block;
+					font-size: 24px;
+
+					&:hover {
+						color: $active-blue;
+						border-bottom: solid 4px $active-blue;
+					}
+
+					&.home-icon {
+						padding-bottom: 7px;
+						padding-top: 13px;
+
+						.fa {
+							font-size: 30px;
+							vertical-align: -10%;
+						}
+					}
+				}
+
+				&.active a {
+					color: $active-blue;
+					border-bottom: solid 4px $active-blue;
+				}
+			}
+		}
+
+		.alta-user-menu {
+			padding: 0;
+			position: relative;
+			display: inline-block;
+			margin: 0 15px 0 0;
+			list-style: none;
+
+			& > li {
+				display: inline;
+
+				a {
+					color: #474747;
+					font-size: 15px;
+					display: inline-block;
+					line-height: 1;
+					padding: 2px 0;
+					vertical-align: middle;
+					border-bottom: solid 4px transparent;
+
+					&:hover {
+						color: $active-blue;
+						border-bottom: solid 4px $active-blue;
+					}
+
+					&.active {
+						color: $active-blue;
+						border-bottom: solid 4px $active-blue;
+					}
+
+					.fa {
+						vertical-align:75%;
+						margin-left: 5px;
+					}
+				}
+			}
+
+			img {
+				height: 30px;
+				width: 30px;
+				border: solid $image-border 2px;
+				border-radius: 17px;
+				display: inline-block;
+				vertical-align: baseline;
+				background-color: #fff
+			}
+
+			.alta-user-dropdown{
+				position: absolute;
+				display: none;
+				right: 0;
+				width: 200px;
+				background-color: $menu-background;
+				color: $menu-link;
+				text-align: left;
+
+				.user-info {
+					text-align: center;
+					padding-top: 15px;
+					border-bottom: solid 2px;
+
+					img {
+						height: 100px;
+						width: 100px;
+						border: solid $image-border 2px;
+						border-radius: 52px;
+					}
+
+					div {
+						margin-bottom: 10px;
+					}
+				}
+
+				ul {
+					padding: 0;
+					margin: 0;
+					list-style: none;
+
+					li a {
+						display: block;
+						padding: 13px 0 13px 20px;
+						text-decoration: none;
+						color: $menu-link;
+						border-left: solid 2px transparent;
+						cursor: pointer;
+
+						&:hover, &.active {
+							color: #fff;
+							border-left: solid 2px $active-blue;
+							background-color: $menu-active-background;
+						}
+					}
+				}
+
+				&.open {
+					display: block;
+				}
+			}
+		}
+
+	}
+
+	&:after {
+		visibility: hidden;
+		display: block;
+		font-size: 0;
+		content: " ";
+		clear: both;
+		height: 0;
+	}
+}
