@@ -5,7 +5,7 @@
 PadrinoApp::App.controllers :curl do
   get :index do
     logger.debug params
-    session[:redirect_to] = url(:curl, :index) unless login(false)
+    session[:redirect_to] = url(:curl, :index, params) unless login(false)
     permission_check('curl')
 
     uri = params['api_uri'] || '/api/password'
