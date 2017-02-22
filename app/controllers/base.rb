@@ -13,12 +13,7 @@ PadrinoApp::App.controllers :base, map: '/' do
   end
 
   get :index do
-    if login(false)
-      session[:redirect_to] = request.fullpath
-      render 'base/api_info'
-    else
-      render 'base/index'
-    end
+    render 'base/index'
   end
 
   options :upload do

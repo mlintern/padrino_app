@@ -122,7 +122,7 @@ PadrinoApp::App.helpers do
       session[:redirect_to] = nil
       redirect redirect_url
     else
-      redirect '/'
+      redirect url(:base, :index)
     end
   end
 

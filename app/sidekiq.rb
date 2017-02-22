@@ -20,10 +20,8 @@ class SidekiqWebInterface < Sidekiq::Web
       []
     end
 
-    def setup_application!
-    end
+    def setup_application!; end
 
-    def reload!
-    end
+    def reload!; end
   end
 end

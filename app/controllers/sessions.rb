@@ -4,7 +4,7 @@
 
 PadrinoApp::App.controllers :sessions do
   get :new do
-    render '/sessions/new'
+    render '/sessions/new', layout: 'minimal'
   end
 
   post :signup do
@@ -66,7 +66,7 @@ PadrinoApp::App.controllers :sessions do
           flash[:notice] = 'You should update your password!'
           redirect '/accounts/edit/' + account.id.to_s
         else
-          redirect url(:base, :index)
+          redirect_last
         end
       end
     else

@@ -38,6 +38,5 @@ class UnitTests < Minitest::Test
     HTTParty.post(@server + url, body: data.to_json, basic_auth: auth)
   end
 
-  def teardown
-  end
+  def teardown; end
 end

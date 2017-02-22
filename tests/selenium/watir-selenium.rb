@@ -58,7 +58,7 @@ class SeleniumTests < Minitest::Test
     end
     @date = DateTime.now.strftime('%Y-%m-%d~%H:%M:%S')
 
-    @driver.window.resize_to(1024, 768) if ENV['BROWSER'] != 'safari'
+    # @driver.window.maximize unless ENV['BROWSER'] == 'safari'
 
   rescue StandardError
     puts 'StandardError'
