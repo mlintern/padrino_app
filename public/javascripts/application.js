@@ -204,17 +204,17 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 			}
 		});
 
-		$('.alta-main-menu li').click(function(event){
-			if ($(this).find('.alta-sub-menu').length) {
+		$('.alta-main-menu li .toggle-menu').click(function(event){
+			if ($(this).parent().find('.alta-sub-menu').length) {
 				event.preventDefault();
-				if ($(this).find('.alta-sub-menu').hasClass('open')) {
-					$(this).find('.alta-sub-menu').removeClass('open');
-					$(this).find('a').removeClass('active');
+				if ($(this).parent().find('.alta-sub-menu').hasClass('open')) {
+					$(this).parent().find('.alta-sub-menu').removeClass('open');
+					$(this).removeClass('active');
 				} else {
 					$('.alta-sub-menu').removeClass('open');
 					$('.alta-main-menu li a').removeClass('active');
-					$(this).find('.alta-sub-menu').addClass('open');
-					$(this).find('a').addClass('active');
+					$(this).parent().find('.alta-sub-menu').addClass('open');
+					$(this).addClass('active');
 				}
 			}
 		});

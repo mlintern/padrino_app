@@ -8,7 +8,7 @@ require File.expand_path(File.dirname(__FILE__) + './../watir-selenium')
 class Accounts < SeleniumTests
   def test_accounts_pages_admin
     sign_in(NRETNIL_ADMIN_USERNAME, NRETNIL_ADMIN_PASSWORD)
-    user_nav('Accounts')
+    main_nav('Settings', 'Accounts')
     assert @driver.url.include?('/accounts'), 'Did not load Accounts page'
 
     wac(@driver.a(:css, '.new-user-tab'))

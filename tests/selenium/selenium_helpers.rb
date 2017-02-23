@@ -39,21 +39,16 @@ class SeleniumTests < Minitest::Test
 
   def sign_out
     wait_till_page_loads
-    wait_and_click(@driver.a(:css, '.toggle-right-nav'))
+    wait_and_click(@driver.a(:css, '.user-menu-toggle'))
     wait_and_click(@driver.a(:css, '.logout-btn'))
     wait_till_page_loads
     assert @driver.url == ('http://' + ENVIRONMENT_URL + '/')
   end
 
-  def main_nav(option)
-    wait_and_click(@driver.a(:css, '.toggle-left-nav'))
-    wait_and_click(@driver.a(:text, option))
-    wait_till_page_loads
-  end
-
-  def user_nav(option)
-    wait_and_click(@driver.a(:css, '.toggle-right-nav'))
-    wait_and_click(@driver.a(:text, option))
+  def main_nav(section, option = nil)
+    wait_and_click(@driver.a(:css, '.menu-trigger'))
+    wait_and_click(@driver.a(:text, section))
+    wait_and_click(@driver.a(:text, option)) unless option.nil?
     wait_till_page_loads
   end
 end

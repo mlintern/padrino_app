@@ -2,5 +2,5 @@
   <% if permission_check('admin',false) %><li<% if page == "list" %> class="active"<% end %>> <a href="/accounts" class='all-users-tab'><i class="fa fa-users"></i></a></li><% end %>
   <% if permission_check('admin',false) %><li class="pull-right<% if page == "new" %> active<% end %>"> <a href="/accounts/new" class='new-user-tab'><i class="fa fa-user-plus"></i></a></li><% end %>
   <% unless page == "new" %><li<% if page == "edit" %> class="active"<% end %>> <a href="/accounts/edit/<%= user.id %>" class='edit-user-tab'><i class="fa fa-user"></i></a></li><% end %>
-  <% if permission_check('admin',false) %><li<% if page == "card" %> class="active"<% end %>><a href="/accounts/cards" class='card-users-tab'><i class="fa fa-newspaper-o"></i></a></li><% end %>
+  <% if permission_check('admin',false) %><li<% if page == "card" %> class="active"<% end %>><a href="/accounts/cards" class='card-users-tab'><i class="fa fa-id-card-o"></i></a></li><% end %>
 </ul>

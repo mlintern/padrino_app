@@ -1,17 +1,17 @@
 <nav class="alta-unified-navbar">
   <div class="left-nav">
     <a class="menu-trigger"><i class="fa fa-bars menu-state-icon"></i></a> 
-    <a href="#"><img class="logo" src="/images/na-logo-b.png"/> Nretnil Apps</a>
+    <img class="logo" src="/images/na-logo-b.png"/> Nretnil Apps
   </div>
 
   <div class="right-nav">
     <ul class="alta-icon-menu">
-      <% if current_user.nil? %><li><a href="/sessions/new"><i class='fa fa-sign-in'></i></a></li><% end %>
+      <% if current_user.nil? %><li><a class="login-btn" href="/sessions/new"><i class='fa fa-sign-in'></i></a></li><% end %>
     </ul>
     <% unless current_user.nil? %>
     <ul class="alta-user-menu">
       <li>
-        <a href="#" class="toggle-menu"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>"/><i class="fa fa-caret-down"></i></a>
+        <a href="#" class="toggle-menu user-menu-toggle"><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>"/><i class="fa fa-caret-down"></i></a>
       </li>
       <div class="alta-user-dropdown">
         <div class="user-info">
@@ -19,7 +19,7 @@
           <div><%= current_user.name %> <%= current_user.surname %></div>
         </div>
         <ul>
-          <li><a href="/sessions/destroy"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a></li>
+          <li><a href="/sessions/destroy" class="logout-btn"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a></li>
         </ul>
       </div>
     </ul>
