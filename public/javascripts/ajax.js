@@ -43,13 +43,13 @@ function uuid() {
 }
 
 function flashSuccess (message) {
-	$('.flash-notice').html('<div class="alert alert-success" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+	$('.flash-notice').html('<div class="alert alert-success" role="alert">' + message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	window.scrollTo(0,0);
 	_.delay(function () { $('.flash-notice').html(''); }, 3000);
 }
 
 function flashError (message) {
-	$('.flash-notice').html('<div class="alert alert-danger" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+	$('.flash-notice').html('<div class="alert alert-danger" role="alert">' + message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	window.scrollTo(0,0);
 }
 
@@ -70,20 +70,20 @@ function httpGetAndUpdate (url,sel) {
 function updateApiExample (endpoint) {
 	switch(endpoint) {
 		case "password":
-			httpGetAndUpdate("/api/password","."+endpoint+".result");
+			httpGetAndUpdate("/api/password","." + endpoint + ".result");
 			break;
 		case "passphrase":
-			httpGetAndUpdate("/api/password/phrase","."+endpoint+".result");
+			httpGetAndUpdate("/api/password/phrase","." + endpoint + ".result");
 			break;
 		case "uuid":
-			httpGetAndUpdate("/api/uuid","."+endpoint+".result");
+			httpGetAndUpdate("/api/uuid","." + endpoint + ".result");
 			break;
 		case "fakedata":
-			httpGetAndUpdate("/api/fakedata","."+endpoint+".result");
+			httpGetAndUpdate("/api/fakedata","." + endpoint + ".result");
 			break;
 		case "words":
 			var params = "?words[]=verb&words[]=noun&words[]=animal&words[]=color&words[]=name&nouns=4&verbs=2&adjectives=5&names=2&colors=3&animals=4";
-			httpGetAndUpdate("/api/words"+params,"."+endpoint+".result");
+			httpGetAndUpdate("/api/words" + params,"." + endpoint + ".result");
 			break;
 		default:
 			//do nothing
@@ -103,12 +103,11 @@ if ( url == 'http://localhost:3000/' || url == 'https://app.nretnil.com/' ) {
 	});
 }
 
-function updatePhoto () {
-	id = $(".user-info").data('user-id');
+function updatePhoto (id) {
 	photo = $('.photo-url').val();
 	data = { "properties" : [ { "name":"photo", "value": photo } ] };
 	$.ajax({
-		url: '/api/accounts/'+id,
+		url: '/api/accounts/' + id,
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -125,11 +124,10 @@ function updatePhoto () {
 	});
 }
 
-function clearPhoto () {
-	id = $(".user-info").data('user-id');
+function clearPhoto (id) {
 	data = { "properties" : [ { "name":"photo", "value": null } ] };
 	$.ajax({
-		url: '/api/accounts/'+id,
+		url: '/api/accounts/' + id,
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -150,7 +148,7 @@ function clearPhoto () {
 function resetAuthToken (id) {
 	data = {};
 	$.ajax({
-		url: '/api/accounts/'+id+'/auth_token',
+		url: '/api/accounts/' + id + '/auth_token',
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -169,7 +167,7 @@ function startProject () {
 	var id = $(".btn-start").data('project');
 	var data = {};
 	$.ajax({
-		url: '/api/projects/'+id+'/start',
+		url: '/api/projects/' + id + '/start',
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -188,7 +186,7 @@ function cancelProject () {
 	var id = $(".btn-cancel").data('project');
 	var data = {};
 	$.ajax({
-		url: '/api/projects/'+id+'/cancel',
+		url: '/api/projects/' + id + '/cancel',
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -207,7 +205,7 @@ function completeProject () {
 	var id = $(".btn-complete").data('project');
 	var data = {};
 	$.ajax({
-		url: '/api/projects/'+id+'/complete',
+		url: '/api/projects/' + id + '/complete',
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -224,12 +222,12 @@ function completeProject () {
 
 function deleteAsset (asset_id) {
 	$.ajax({
-		url: "/api/assets/"+asset_id,
+		url: "/api/assets/" + asset_id,
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',
 		success: function (response) {
-			$('tr[data-asset='+asset_id+']').remove();
+			$('tr[data-asset=' + asset_id + ']').remove();
 			flashSuccess(response.info);
 		},
 		error: function (response) {
@@ -240,12 +238,12 @@ function deleteAsset (asset_id) {
 
 function deleteProject (project_id) {
 	$.ajax({
-		url: "/api/projects/"+project_id,
+		url: "/api/projects/" + project_id,
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',
 		success: function (response) {
-			$('tr[data-project='+project_id+']').remove();
+			$('tr[data-project=' + project_id + ']').remove();
 			flashSuccess(response.info);
 		},
 		error: function (response) {
@@ -258,7 +256,7 @@ function translateAsset(asset_id,refresh) {
 	refresh = typeof refresh !== 'undefined' ? refresh : false;
 	var data = {};
 	$.ajax({
-		url: "/api/assets/"+asset_id+"/translate",
+		url: "/api/assets/" + asset_id + "/translate",
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -311,7 +309,7 @@ function updateProject(project_id) {
 		data.language = newLang;
 	}
 	$.ajax({
-		url: "/api/projects/"+project_id,
+		url: "/api/projects/" + project_id,
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: "application/json",
@@ -329,12 +327,12 @@ function updateProject(project_id) {
 
 function deleteLanguage (language_id) {
 	$.ajax({
-		url: "/api/languages/"+language_id,
+		url: "/api/languages/" + language_id,
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',
 		success: function (response) {
-			$('tr[data-language='+language_id+'],span[data-language='+language_id+']').remove();
+			$('tr[data-language=' + language_id + '],span[data-language=' + language_id + ']').remove();
 			flashSuccess(response.info);
 		},
 		error: function (response) {
@@ -355,8 +353,8 @@ function addLanguage (project_id) {
 		type: 'POST',
 		success: function (response) {
 			$('.add-language').hide();
-			$('.language-list').append('<span data-language="'+response.id+'"> '+response.name+' ('+response.code+')  </span>');
-			$('.table-language-list').append('<tr data-language="'+response.id+'" class="list-row"><td class=list-column> '+response.name+' </td><td class=list-column> '+response.code+' </td><td> Refresh to Delete</td></tr>');
+			$('.language-list').append('<span data-language="' + response.id + '"> ' + response.name + ' (' + response.code + ')  </span>');
+			$('.table-language-list').append('<tr data-language="' + response.id + '" class="list-row"><td class=list-column> ' + response.name + ' </td><td class=list-column> ' + response.code + ' </td><td> Refresh to Delete</td></tr>');
 			flashSuccess("Language Successfully Added.");
 		},
 		error: function (response) {
@@ -373,7 +371,7 @@ function addAsset (project_id, language) {
 	} else {
 		var data = { "project_id" : project_id, 'title' : title, 'body' : body, 'language' : language };
 		$.ajax({
-			url: "/api/projects/"+project_id+"/assets",
+			url: "/api/projects/" + project_id + "/assets",
 			data: JSON.stringify(data),
 			dataType: 'json',
 			contentType: "application/json",
@@ -413,7 +411,7 @@ function deleteTranslator () {
 	var data = $('.translation-settings-form').serializeForm();
 	var app_install_id = data.app_install_id;
 	$.ajax({
-		url: "/api/translator/"+app_install_id,
+		url: "/api/translator/" + app_install_id,
 		dataType: 'json',
 		contentType: "application/json",
 		type: 'DELETE',

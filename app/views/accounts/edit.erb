@@ -1,7 +1,7 @@
 <div class="stage">
   <div class="stage-heading">
     <div class="stage-title">Account Editor</div>
-    <div class="stage-subtitle">Edit <%= @account.username %>'s account information</div>
+    <div class="stage-subtitle">Edit <%= account.username %>'s account information</div>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
 					<div class="row text-center"><div class="col-xs-10 col-xs-offset-1"><img class="user-photo" src="<%= photo_url %>" alt="User Photo"></div></div>
 					<div class="caption">
 						<input type="text" class="form-control photo-url" value="<%= photo_url %>" />
-						<p class="m-top-md"><button onclick="updatePhoto()" class="btn btn-success pull-right" role="button">Update</button><button onclick="clearPhoto()" class="btn btn-warning" role="button">Clear</button></p>
+						<p class="m-top-md"><button onclick="updatePhoto('<%= account.id %>')" class="btn btn-success image-update pull-right" role="button">Update</button><button onclick="clearPhoto('<%= account.id %>')" class="btn btn-warning image-clear" role="button">Clear</button></p>
 					</div>
 					<div class="caption">
 						<h4>Auth Token <i class="fa clickable fa-refresh" onClick="resetAuthToken('<%= account.id %>')"></i></h4>
@@ -24,7 +24,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-8 user-info" data-user-id="<%= account.id %>">
+			<div class="col-sm-8 user-form user-info" data-user-id="<%= account.id %>">
 				<% form_for :account, url(:accounts, :update, :id => account.id), :method => :put, :class => 'form-horizontal' do |f| %>
 					<%= erb :"accounts/form", :layout => false,  :locals => { :f => f, 'user' => account || nil } %>
 				<% end %>

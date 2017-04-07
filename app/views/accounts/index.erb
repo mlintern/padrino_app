@@ -60,7 +60,7 @@
               <td class="list-column list-selectable">
                 <%= check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox' %>
               </td>
-              <td class=list-column> <%= account.username %> </td>
+              <td class=list-column> <a href="/accounts/edit/<%= account.id %>"><%= account.username %></a> </td>
               <td class=list-column> <%= account.name %> </td>
               <td class=list-column> <%= account.surname %> </td>
               <td class=list-column> <%= account.email %> </td>

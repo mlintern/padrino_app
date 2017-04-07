@@ -1,9 +1,9 @@
 Set up development Database:
 
 cd project/dir
-bundle exec rake db:create
+bundle exec rake db:create (or mysql -uroot < utilities/setup_dev_db.sql)
 bundle exec rake db:migrate
-bundle exec rake db:seed
+bundle exec padrino run utilities/user_populate.rb
 
 
 
@@ -11,7 +11,7 @@ Set up Prdouction Database on MySQL:
 
 create database with util script:
 
-mysql -uroot utilities/setup_production_db.sql
+mysql -uroot < utilities/setup_production_db.sql
 
 cd project/dir
 RACK_ENV=production padrino rake db:migrate
@@ -124,7 +124,7 @@ Seeded Users:
 administrator - admin,curl
 mweston - user,curl
 fglenanne - user,admin
-saxe - 
+saxe -
 jporter - curl
 maddie - user
 nweston - user
@@ -132,7 +132,7 @@ barry - user
 
 password is 'password'
 
-To use email you will want to create a file on the root of hte project called env.rb, which should look like this:
+To use email you will want to create a file on the root of the project called env.rb, which should look like this:
 
 ENV['GMAIL_EMAIL'] = 'emailaddress@gamil.com'
 ENV['GMAIL_PASSWORD'] = 'passwordtoemailaddress'

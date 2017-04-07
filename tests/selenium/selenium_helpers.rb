@@ -37,6 +37,10 @@ class SeleniumTests < Minitest::Test
     assert !@driver.url.include?('/sessions/new')
   end
 
+  def check_for_success
+    assert @driver.div(:css, '.alert-success').exists?
+  end
+
   def sign_out
     wait_till_page_loads
     wait_and_click(@driver.a(:css, '.user-menu-toggle'))
