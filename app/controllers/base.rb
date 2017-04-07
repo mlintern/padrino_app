@@ -8,7 +8,7 @@ PadrinoApp::App.controllers :base, map: '/' do
   helpers do
     def preflight
       headers 'Access-Control-Allow-Origin' => '*',
-              'Access-Control-Allow-Methods' => %w(OPTIONS GET POST)
+              'Access-Control-Allow-Methods' => %w[OPTIONS GET POST]
     end
   end
 

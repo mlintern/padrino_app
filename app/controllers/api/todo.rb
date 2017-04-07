@@ -58,7 +58,7 @@ PadrinoApp::App.controllers :api_todos, map: '/api/todos' do
 
     return 400, { success: false, error: 'Payload must contain title or completed.' }.to_json unless data.key?('title') || data.key?('completed')
 
-    data = remove_other_elements(data, [:title, :completed])
+    data = remove_other_elements(data, %i[title completed])
     todo = Todo.get(params[:id])
     return 404, { success: false, errors: 'Bad todo id.' }.to_json unless todo
 

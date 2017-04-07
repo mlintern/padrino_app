@@ -5,7 +5,7 @@
 PadrinoApp::App.controllers :editor, map: '/editor' do
   before do
     headers 'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => %w(OPTIONS GET POST)
+            'Access-Control-Allow-Methods' => %w[OPTIONS GET POST]
   end
 
   get :index do

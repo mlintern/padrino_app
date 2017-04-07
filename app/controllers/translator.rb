@@ -24,7 +24,7 @@ PadrinoApp::App.controllers :translator do
   end
 
   post :configure do
-    session[:redirect_to] = request.fullpath + params_to_url(params, %w(username password))
+    session[:redirect_to] = request.fullpath + params_to_url(params, %w[username password])
     account = Account.authenticate(params[:username], params[:password])
     if account
       if account.role['translate']

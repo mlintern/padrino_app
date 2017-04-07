@@ -13,16 +13,16 @@ users = [{ username: ENV['NRETNIL_ADMIN_USERNAME'], password: ENV['NRETNIL_ADMIN
 
 account0 = Account.first(username: users[0][:username])
 if account0
-  account0.update(password: users[0][:password], password_confirmation: users[0][:password], role: %w(admin curl translate), last_update: DateTime.now.utc, email: users[0][:username] + '@nretnil.com')
+  account0.update(password: users[0][:password], password_confirmation: users[0][:password], role: %w[admin curl translate], last_update: DateTime.now.utc, email: users[0][:username] + '@nretnil.com')
 else
-  Account.create(username: users[0][:username], email: users[0][:username] + '@nretnil.com', name: 'Selenium', surname: 'Admin', password: users[0][:password], password_confirmation: users[0][:password], role: %w(admin curl translate), last_update: DateTime.now.utc, id: SecureRandom.uuid)
+  Account.create(username: users[0][:username], email: users[0][:username] + '@nretnil.com', name: 'Selenium', surname: 'Admin', password: users[0][:password], password_confirmation: users[0][:password], role: %w[admin curl translate], last_update: DateTime.now.utc, id: SecureRandom.uuid)
 end
 
 account1 = Account.first(username: users[1][:username])
 if account1
-  account1.update(password: users[1][:password], password_confirmation: users[1][:password], role: %w(user curl translate), last_update: DateTime.now.utc, email: users[1][:username] + '@nretnil.com')
+  account1.update(password: users[1][:password], password_confirmation: users[1][:password], role: %w[user curl translate], last_update: DateTime.now.utc, email: users[1][:username] + '@nretnil.com')
 else
-  Account.create(username: users[1][:username], email: users[1][:username] + '@nretnil.com', name: 'Selenium', surname: 'User One', password: users[1][:password], password_confirmation: users[1][:password], role: %w(user curl translate), last_update: DateTime.now.utc, id: SecureRandom.uuid)
+  Account.create(username: users[1][:username], email: users[1][:username] + '@nretnil.com', name: 'Selenium', surname: 'User One', password: users[1][:password], password_confirmation: users[1][:password], role: %w[user curl translate], last_update: DateTime.now.utc, id: SecureRandom.uuid)
 end
 
 account2 = Account.first(username: users[2][:username])

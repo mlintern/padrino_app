@@ -84,7 +84,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
 
     return 403, { success: false, info: 'You Do not have permissions to edit this Translator.' }.to_json unless ocmapp.user_id == auth_account.id
 
-    return 200, { success: true, info: 'Update Successful.', config: ocmapp }.to_json if ocmapp.update(remove_elements(data, %w(app_install_id user_id)))
+    return 200, { success: true, info: 'Update Successful.', config: ocmapp }.to_json if ocmapp.update(remove_elements(data, %w[app_install_id user_id]))
 
     errors = []
     ocmapp.errors.each do |e|
@@ -101,7 +101,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
   # Arguments: None
   # Response: information as json object
   ####
-  [:post, :put].each do |method|
+  %i[post put].each do |method|
     send method, :uninstall do
       logger.info params
 
@@ -141,7 +141,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     destination_languages = data['target_languages']
     data[:language] = data['source_language']
 
-    project = Project.new(remove_other_elements(data, [:id, :user_id, :name, :language, :description, :type]))
+    project = Project.new(remove_other_elements(data, %i[id user_id name language description type]))
     if project.save
       if destination_languages && !destination_languages.empty?
         destination_languages.each do |lang|
@@ -178,7 +178,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
   # Arguments: data from compendium
   # Response: information as json object
   ####
-  [:post, :put].each do |method|
+  %i[post put].each do |method|
     send method, :add_source do
       data = JSON.parse request.body.read
       logger.info data
@@ -266,7 +266,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     data = []
 
     ocmapp = OCMApp.first(app_install_id: params['app_install_id'])
-    status = %w(open in_progress canceled complete)
+    status = %w[open in_progress canceled complete]
     return 400, { success: false, info: 'Please provide a valid app_install_id' }.to_json unless ocmapp
 
     if params[:project_ids]
@@ -322,7 +322,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
   # Arguments: data from compendium
   # Response: information as json object
   ####
-  [:post, :put].each do |method|
+  %i[post put].each do |method|
     send method, :add_source_auto_return do
       data = JSON.parse request.body.read
       logger.info data

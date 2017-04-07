@@ -59,7 +59,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     data[:user_id] = account.id
     destination_languages = data['destination_languages']
 
-    project = Project.new(remove_other_elements(data, [:id, :user_id, :name, :language, :description, :type]))
+    project = Project.new(remove_other_elements(data, %i[id user_id name language description type]))
     if project.save
       if destination_languages && !destination_languages.empty?
         destination_languages.each do |lang|
@@ -98,7 +98,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
     project = Project.get(params[:id])
     return 404, { success: false, info: 'Project Not Found' }.to_json unless project
 
-    if project.update(remove_other_elements(data, [:name, :description, :language]))
+    if project.update(remove_other_elements(data, %i[name description language]))
       if project.type != 1
         # Send updated project to Compendium
         logger.info 'Update Project'
@@ -257,7 +257,7 @@ PadrinoApp::App.controllers :api_projects, map: '/api/projects' do
 
     return 403, { success: false, info: 'You do not have permissions to add to project.' }.to_json unless auth_account.id == project.user_id
 
-    asset = Asset.new(remove_other_elements(data, [:id, :project_id, :title, :body, :source, :language, :external_id]))
+    asset = Asset.new(remove_other_elements(data, %i[id project_id title body source language external_id]))
     return 200, asset.to_json if asset.save
 
     errors = []

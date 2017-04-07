@@ -24,7 +24,7 @@ PadrinoApp::App.helpers do
   # Response: Array of symbols
   ####
   def attributes_to_remove
-    [:token, :crypted_password, :last_update]
+    %i[token crypted_password last_update]
   end
 
   ####
@@ -34,7 +34,7 @@ PadrinoApp::App.helpers do
   # Response: Array of symbols
   ####
   def allowed_attributes
-    [:username, :name, :surname, :email, :role, :password, :password_confirmation]
+    %i[username name surname email role password password_confirmation]
   end
 
   ####

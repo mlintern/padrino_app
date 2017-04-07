@@ -51,7 +51,7 @@ class SeleniumTests < Minitest::Test
     when 'firefox'
       @driver = Watir::Browser.start ENVIRONMENT_URL, :firefox
     when 'chrome'
-      @driver = Watir::Browser.start ENVIRONMENT_URL, :chrome, switches: %w(--ignore-certificate-errors --disable-popup-blocking --disable-translate)
+      @driver = Watir::Browser.start ENVIRONMENT_URL, :chrome, switches: %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate]
     else
       puts "\n\n\nI don't know this BROWSER"
       abort
@@ -59,7 +59,6 @@ class SeleniumTests < Minitest::Test
     @date = DateTime.now.strftime('%Y-%m-%d~%H:%M:%S')
 
     # @driver.window.maximize unless ENV['BROWSER'] == 'safari'
-
   rescue StandardError
     puts 'StandardError'
     puts '@driver was not created.'

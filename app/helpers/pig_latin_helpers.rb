@@ -13,7 +13,7 @@ PadrinoApp::App.helpers do
   def translate_piglatin(body)
     word_array = body.gsub(%r{<\/?[^>]+>}, '').gsub(/[!@#`$%^&*()-=_+|;:",.<>?]/, '').gsub('\'s', '').split(' ').uniq
     new_html = body
-    safe_words = %w(alt src style as a s)
+    safe_words = %w[alt src style as a s]
     good_array = word_array - safe_words
     good_array.each do |word|
       new_word = Nretnil::Translate.pig_latin(word)

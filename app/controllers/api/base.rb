@@ -6,7 +6,7 @@ PadrinoApp::App.controllers :api do
   before do
     headers 'Content-Type' => 'application/json; charset=utf8',
             'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => %w(OPTIONS GET POST)
+            'Access-Control-Allow-Methods' => %w[OPTIONS GET POST]
   end
 
   ####

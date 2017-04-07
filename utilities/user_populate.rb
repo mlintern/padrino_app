@@ -3,16 +3,16 @@
 # frozen_string_literal: true
 
 unless Account.first(username: 'administrator')
-  Account.create(username: 'administrator', email: 'admin@nretnil.com', name: 'Nretnil', surname: 'Admin', password: 'password', password_confirmation: 'password', role: %w(admin curl), last_update: DateTime.now.utc, id: SecureRandom.uuid)
+  Account.create(username: 'administrator', email: 'admin@nretnil.com', name: 'Nretnil', surname: 'Admin', password: 'password', password_confirmation: 'password', role: %w[admin curl], last_update: DateTime.now.utc, id: SecureRandom.uuid)
 end
 
 unless Account.first(username: 'mweston')
-  account = Account.create(username: 'mweston', email: 'michael.weston@nretnil.com', name: 'Michael', surname: 'Weston', password: 'password', password_confirmation: 'password', role: %w(user curl), last_update: DateTime.now.utc, id: SecureRandom.uuid)
+  account = Account.create(username: 'mweston', email: 'michael.weston@nretnil.com', name: 'Michael', surname: 'Weston', password: 'password', password_confirmation: 'password', role: %w[user curl], last_update: DateTime.now.utc, id: SecureRandom.uuid)
   AccountProperty.create(id: account.id, name: 'photo', value: 'http://cdn04.cdn.justjared.com/wp-content/uploads/headlines/2009/07/jeffrey-donovan-dui.jpg')
 end
 
 unless Account.first(username: 'fglenanne')
-  account = Account.create(username: 'fglenanne', email: 'fiona.glenanne@nretnil.com', name: 'Fiona', surname: 'Glenanne', password: 'password', password_confirmation: 'password', role: %w(user admin), last_update: DateTime.now.utc, id: SecureRandom.uuid)
+  account = Account.create(username: 'fglenanne', email: 'fiona.glenanne@nretnil.com', name: 'Fiona', surname: 'Glenanne', password: 'password', password_confirmation: 'password', role: %w[user admin], last_update: DateTime.now.utc, id: SecureRandom.uuid)
   AccountProperty.create(id: account.id, name: 'photo', value: 'https://s-media-cache-ak0.pinimg.com/736x/6f/33/d6/6f33d6b766401ab77b72b739dc86d3de.jpg')
 end
 
