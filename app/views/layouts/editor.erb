@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
-    <title><%= @title.present? ? "#{@title} | Nretnil Apps" : "Nretnil Apps" %></title>
+    <title><%= @title.nil? || @title.empty? ? "Nretnil Apps" : "#{@title} | Nretnil Apps" %></title>
     <%= favicon_tag "na-logo-b.png" %>
     <%= stylesheet_link_tag 'bootstrap-alta.min', 'bootstrap-colorpicker.min', 'editor' %>
     <%= javascript_include_tag 'third_party/jquery.min' %>

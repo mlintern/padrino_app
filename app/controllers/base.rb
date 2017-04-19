@@ -13,6 +13,7 @@ PadrinoApp::App.controllers :base, map: '/' do
   end
 
   get :index do
+    @title = 'Home'
     render 'base/index'
   end
 

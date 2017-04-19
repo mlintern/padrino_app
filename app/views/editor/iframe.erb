@@ -1,27 +1,27 @@
 <style>
 	.iframe-test-container {
-		position: absolute; 
-		top: 0; 
-		right: 0; 
-		left: 0; 
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
 		bottom: 0;
 	}
 	.the-iframe {
-		position: absolute; 
-		top: 10%; 
-		left: 20%; 
-		width: 60%; 
-		height: 50%; 
+		position: absolute;
+		top: 10%;
+		left: 20%;
+		width: 60%;
+		height: 50%;
 		border: solid 2px green;
 	}
 	#console {
-		position: absolute; 
-		top: 65%; 
-		left: 20%; 
-		width: 60%; 
-		height: 25%; 
-		overflow-y: scroll; 
-		background-color: #fff; 
+		position: absolute;
+		top: 65%;
+		left: 20%;
+		width: 60%;
+		height: 25%;
+		overflow-y: scroll;
+		background-color: #fff;
 		border: solid 2px black; line-height: 1;
 	}
 	#console p {
@@ -58,7 +58,7 @@
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
 
-	if (typeof console  != "undefined") 
+	if (typeof console  != "undefined")
 		if (typeof console.log != 'undefined')
 			console.olog = console.log;
 		else

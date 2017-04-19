@@ -101,8 +101,9 @@ PadrinoApp::App.controllers :accounts do
 
     @title = "Update account #{params[:id]}"
 
-    params[:account][:last_update] = DateTime.now.utc
+    params[:account][:last_update] = Time.now.utc
     @account = Account.get(params[:id])
+    photo_url = user_property(params[:id], 'photo').value || '/images/default.png'
     if @account
       params[:account][:role] = '' if params[:account][:role].nil? && permission_check('admin', false)
       params[:account][:status] = 0 if params[:account][:status].nil? && permission_check('admin', false) && @account.status != 2
@@ -115,7 +116,7 @@ PadrinoApp::App.controllers :accounts do
           logger.error("Save Error: #{e}")
           flash.now[:error] = e[0] # User flash.now[:error] when rendering
         end
-        render 'accounts/edit', locals: { 'account' => @account }
+        render 'accounts/edit', locals: { 'account' => @account, 'photo_url' => photo_url }
       end
     else
       flash[:warning] = 'Account with that ID does not exist.'

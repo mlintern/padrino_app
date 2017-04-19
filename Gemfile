@@ -8,6 +8,7 @@ source 'https://rubygems.org'
 gem 'rake'
 
 # Component requirements
+gem 'activesupport'
 gem 'bcrypt'
 gem 'compendium-api', git: 'https://github.com/mlintern/compendium-api'
 gem 'dm-aggregates'
@@ -31,7 +32,7 @@ gem 'sidekiq'
 gem 'sinatra-flash', require: 'sinatra/flash'
 
 # Padrino Stable Gem
-gem 'padrino', '0.13.1'
+gem 'padrino'
 
 # For Selenium and Unit Tests
 gem 'minitest'

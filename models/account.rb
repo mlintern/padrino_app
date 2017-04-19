@@ -42,12 +42,12 @@ class Account
   # This method is for authentication purpose.
   #
   def self.authenticate(username, password)
-    account = first(conditions: ['lower(username) = lower(?)', username]) if username.present?
+    account = first(conditions: ['lower(username) = lower(?)', username]) unless username.nil? || username.empty?
     account && account.password?(password) ? account : nil
   end
 
   def self.token_authenticate(username, token)
-    account = first(conditions: ['lower(username) = lower(?)', username]) if username.present?
+    account = first(conditions: ['lower(username) = lower(?)', username]) unless username.nil? || username.empty?
     account && account.token?(token) ? account : nil
   end
 
@@ -78,7 +78,7 @@ class Account
   private
 
   def password_required
-    crypted_password.blank? || password.present?
+    crypted_password.nil? || password.present?
   end
 
   def encrypt_password

@@ -64,15 +64,15 @@
               <td class=list-column> <%= account.name %> </td>
               <td class=list-column> <%= account.surname %> </td>
               <td class=list-column> <%= account.email %> </td>
-              <td class=list-column> 
-              <% 
+              <td class=list-column>
+              <%
                 unless account.role.nil? || account.role.empty?
-                  account.role.gsub('"',"").gsub('[',"").gsub(']',"").split(',').each do |role| 
-              %> 
+                  account.role.gsub('"',"").gsub('[',"").gsub(']',"").split(',').each do |role|
+              %>
                   <span class="label label-primary"><%= role %></span>
-              <% 
+              <%
                   end
-                end 
+                end
               %>
               </td>
               <td class=list-column> <%= account_status[account.status] %> </td>

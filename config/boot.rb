@@ -9,6 +9,7 @@ PADRINO_ROOT = File.expand_path('../..', __FILE__) unless defined?(PADRINO_ROOT)
 # Load our dependencies
 require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
+require 'active_support/core_ext/string'
 require 'date'
 require 'json'
 require 'compendium-api'
