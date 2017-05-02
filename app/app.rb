@@ -37,7 +37,44 @@ module PadrinoApp
 
     enable :sessions
 
-    # Custom error management
+    ##
+    # Caching support.
+    #
+    # register Padrino::Cache
+    # enable :caching
+    #
+    # You can customize caching store engines:
+    #
+    # set :cache, Padrino::Cache::Store::Memcache.new(::Memcached.new('127.0.0.1:11211', :exception_retry_limit => 1))
+    # set :cache, Padrino::Cache::Store::Memcache.new(::Dalli::Client.new('127.0.0.1:11211', :exception_retry_limit => 1))
+    # set :cache, Padrino::Cache::Store::Redis.new(::Redis.new(:host => '127.0.0.1', :port => 6379, :db => 0))
+    # set :cache, Padrino::Cache::Store::Memory.new(50)
+    # set :cache, Padrino::Cache::Store::File.new(Padrino.root('tmp', app_name.to_s, 'cache')) # default choice
+    #
+
+    ##
+    # You can configure for a specified environment like:
+    #
+    #   configure :development do
+    #     set :foo, :bar
+    #     disable :asset_stamp # no asset timestamping for dev
+    #   end
+    #
+
+    ##
+    # You can manage errors like:
+    #
+    #   error 404 do
+    #     render 'errors/404'
+    #   end
+    #
+    #   error 505 do
+    #     render 'errors/505'
+    #   end
+    #
+
+    ## or
+    #
     # error(401) { @title = "Error 401"; render('errors/401', :layout => :error) }
     # error(403) { @title = "Error 403"; render('errors/403', :layout => :error) }
     # error(404) { @title = "Error 404"; render('errors/404', :layout => :error) }
