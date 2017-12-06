@@ -102,6 +102,7 @@ GEM
       mime-types (>= 1.16, < 4)
     mime-types (2.99.3)
     minitest (5.10.1)
+    minitest-hooks (1.4.2)
     minitest-reporters (1.0.20)
       ansi
       builder
@@ -203,6 +204,7 @@ DEPENDENCIES
   httparty
   json
   minitest
+  minitest-hooks
   minitest-reporters (~> 1.0.5)
   minitest-retry
   nretnil-fake-data!
@@ -218,4 +220,4 @@ DEPENDENCIES
   watir-webdriver
 
 BUNDLED WITH
-   1.14.6
+   1.16.0

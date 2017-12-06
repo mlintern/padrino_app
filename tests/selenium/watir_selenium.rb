@@ -1,5 +1,3 @@
-#!/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
 require 'erb'
@@ -8,6 +6,7 @@ require 'selenium-webdriver'
 require 'watir-webdriver'
 require 'watir-webdriver/wait'
 require 'minitest/autorun'
+require 'minitest/hooks'
 require 'minitest/reporters'
 require 'minitest/retry'
 require 'date'
@@ -20,7 +19,7 @@ require './env' if File.exist?('env.rb')
 
 puts ENVIRONMENT_URL = ENV['TARGET_URL'] || 'http://app.nretnil.com'
 puts ENVIRONMENT_BROWSER = ENV['BROWSER'] || 'chrome'
-ROOT_DIR = File.expand_path(File.dirname(__FILE__))
+ROOT_DIR = __dir__
 SCREENSHOT_DIR = ROOT_DIR + '/screenshots'
 
 NRETNIL_ADMIN_USERNAME = ENV['NRETNIL_ADMIN_USERNAME']
@@ -42,30 +41,45 @@ Minitest::Retry.use!(
 # Selenium Test Class
 class SeleniumTests < Minitest::Test
   include Selenium
+  include Minitest::Hooks
 
-  def setup
-    timout = ENV['TIMEOUT'] || 30 # 30 seconds is default
-    Watir.default_timeout = timout.to_i
+  def driver(browser)
+    switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate]
+    switches << '--start-maximized' unless ENV['SELENIUM_FULL_SCREEN'] == 'false'
+    switches << '--start-fullscreen' unless ENV['SELENIUM_FULL_SCREEN'] == 'false'
+    switches << '--window-size=' + ENV['SELENIUM_WINDOW_SIZE'] if ENV['SELENIUM_WINDOW_SIZE']
 
-    case ENVIRONMENT_BROWSER
+    case browser
     when 'firefox'
-      @driver = Watir::Browser.start ENVIRONMENT_URL, :firefox
+      Watir::Browser.start ENVIRONMENT_URL, :firefox
     when 'chrome'
-      @driver = Watir::Browser.start ENVIRONMENT_URL, :chrome, switches: %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate]
+      Watir::Browser.start ENVIRONMENT_URL, :chrome, switches: switches
     else
       puts "\n\n\nI don't know this BROWSER"
       abort
     end
-    @date = DateTime.now.strftime('%Y-%m-%d~%H:%M:%S')
+  end
 
-    # @driver.window.maximize unless ENV['BROWSER'] == 'safari'
+  def before_all
+    timout = ENV['SELENIUM_TIMEOUT'] || 5
+    Watir.default_timeout = timout.to_i
+
+    @driver = driver(ENVIRONMENT_BROWSER)
+  rescue StandardError
+    puts '@driver was not initialized.'
+    raise
+  end
+
+  def setup
+    @date = Time.new.strftime('%Y-%m-%d~%H:%M:%S')
+    @driver ||= driver(ENVIRONMENT_BROWSER)
   rescue StandardError
     puts 'StandardError'
     puts '@driver was not created.'
     raise
   end
 
-  def teardown
+  def after_all
     @driver.quit
   end
 end

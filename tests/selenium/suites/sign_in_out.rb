@@ -1,8 +1,6 @@
-#!/bin/env ruby
-# encoding: UTF-8
 # frozen_string_literal: true
 
-require File.expand_path(File.dirname(__FILE__) + './../watir-selenium')
+require File.expand_path(File.dirname(__FILE__) + './../watir_selenium')
 
 # SignInOut Test Suite
 class SignInOut < SeleniumTests

@@ -52,6 +52,7 @@
     <% if !current_user.nil? && permission_check('user',false) %><%= erb :'base/todos', :layout => false %><% end %>
 
     <script type="text/javascript">$(document).ready(function(){$('body').addClass('nretnil-document-ready');});</script>
+    <%= render "layouts/nretnil.erb", :layout => false %>
 
   </body>
 </html>

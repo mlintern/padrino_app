@@ -36,6 +36,7 @@ gem 'padrino'
 
 # For Selenium and Unit Tests
 gem 'minitest'
+gem 'minitest-hooks'
 gem 'minitest-reporters', '~> 1.0.5', group: 'test'
 gem 'minitest-retry'
 gem 'selenium-webdriver'

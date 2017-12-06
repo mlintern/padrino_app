@@ -1,0 +1,8 @@
+<script type="text/javascript">
+var NRETNIL = { 'user': { 'username': null }};
+<% unless current_user.nil? %>
+NRETNIL.user.username = '<%= current_user.username %>';
+NRETNIL.user.name = '<%= current_user.name %>';
+NRETNIL.user.surname = '<%= current_user.surname %>';
+<% end %>
+</script>

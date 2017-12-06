@@ -4,3 +4,4 @@ env.rb
 .bundle
 vendor/*
 .sass-cache
+.DS_Store

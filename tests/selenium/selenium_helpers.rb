@@ -27,7 +27,19 @@ class SeleniumTests < Minitest::Test
 
   alias wait_and_click wac
 
+  def logged_in?
+    return false if @driver.a(:css, '.login-btn').exists?
+    true
+  end
+
+  def logged_in_user
+    script = @driver.scripts.find { |s| s.html.include?('NRETNIL.user.username') }
+    script.html[/NRETNIL.user.username = "([^"]+)"/, 1] unless script.nil?
+  end
+
   def sign_in(username, password)
+    sign_out unless username == logged_in_user
+    return true if logged_in? # If you are already logged in then don't try and log in
     @driver.goto ENVIRONMENT_URL
     wait_and_click(@driver.a(:css, '.login-btn'))
     @driver.text_field(:id, 'username').set(username)
@@ -42,6 +54,7 @@ class SeleniumTests < Minitest::Test
   end
 
   def sign_out
+    return true unless logged_in?
     wait_till_page_loads
     wait_and_click(@driver.a(:css, '.user-menu-toggle'))
     wait_and_click(@driver.a(:css, '.logout-btn'))
