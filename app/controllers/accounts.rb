@@ -1,5 +1,4 @@
 #!/bin/env ruby
-# encoding: UTF-8
 # frozen_string_literal: true
 
 PadrinoApp::App.controllers :accounts do
@@ -60,7 +59,7 @@ PadrinoApp::App.controllers :accounts do
   post :create do
     permission_check('admin')
 
-    params[:account][:last_update] = DateTime.now.utc
+    params[:account][:last_update] = Time.new.utc
     params[:account][:status] = 0 if params[:account][:status].nil?
     params[:account][:id] = SecureRandom.uuid
     @account = Account.new(params[:account])

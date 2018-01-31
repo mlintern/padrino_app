@@ -1,5 +1,4 @@
 #!/bin/env ruby
-# encoding: UTF-8
 # frozen_string_literal: true
 
 PadrinoApp::App.helpers do
@@ -286,7 +285,7 @@ PadrinoApp::App.helpers do
     elements.each do |a, b|
       case b
       when 'sentence'
-        hash[a] = (Nretnil::FakeData.words((rand(15) + 15)) + '.').capitalize
+        hash[a] = (Nretnil::FakeData.words(rand(15..29)) + '.').capitalize
       when 'uuid'
         hash[a] = Nretnil::Password.uuid
       when 'email'

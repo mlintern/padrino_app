@@ -1,5 +1,4 @@
 #!/bin/env ruby
-# encoding: UTF-8
 # frozen_string_literal: true
 
 # Seed add you the ability to populate your db.
@@ -17,7 +16,7 @@ if Account.count.zero?
 
   shell.say ''
 
-  account = Account.create(username: username, email: 'foo@bar.com', name: 'Foo', surname: 'Bar', password: password, password_confirmation: password, role: ['admin'], last_update: DateTime.now.utc, id: SecureRandom.uuid)
+  account = Account.create(username: username, email: 'foo@bar.com', name: 'Foo', surname: 'Bar', password: password, password_confirmation: password, role: ['admin'], last_update: Time.new.utc, id: SecureRandom.uuid)
 
   if account.valid?
     shell.say '================================================================='

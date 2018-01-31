@@ -1,5 +1,4 @@
 #!/bin/env ruby
-# encoding: UTF-8
 # frozen_string_literal: true
 
 PadrinoApp::App.controllers :sessions do
@@ -10,7 +9,7 @@ PadrinoApp::App.controllers :sessions do
   post :signup do
     form_params = params
 
-    params[:last_update] = DateTime.now.utc
+    params[:last_update] = Time.new.utc
     params[:status] = 2
     params[:id] = SecureRandom.uuid
     params[:password] = params[:password_confirmation] = Nretnil::Password.generate(10)[:password]
@@ -28,7 +27,7 @@ PadrinoApp::App.controllers :sessions do
           content_type: :html,
           body: render('email/newuser', layout: false, locals: { 'user' => params })
         )
-      rescue => e
+      rescue StandardError => e
         logger.error(e)
         logger.error('Email did not send')
       end
@@ -58,9 +57,7 @@ PadrinoApp::App.controllers :sessions do
         account.update(token: token, last_login: Time.now.utc)
         expire_time = Time.now.utc + 30 * 60
         expire_time += (24 * 60 * 60) - (30 * 60) if params[:remember_me]
-        if account
-          response.set_cookie('user', value: token, path: '/', expires: expire_time)
-        end
+        response.set_cookie('user', value: token, path: '/', expires: expire_time) if account
         if account.status == 2
           account.update(status: 1)
           flash[:notice] = 'You should update your password!'

@@ -1,5 +1,4 @@
 #!/bin/env ruby
-# encoding: UTF-8
 # frozen_string_literal: true
 
 PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
@@ -272,9 +271,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
     if params[:project_ids]
       projects = Project.all(user_id: ocmapp.user_id, type: 0)
       projects.each do |p|
-        if params[:project_ids].include? p.id.to_s
-          data << { ocm_project_id: p.id, status: { ocm_code: status[p.status] } }
-        end
+        data << { ocm_project_id: p.id, status: { ocm_code: status[p.status] } } if params[:project_ids].include? p.id.to_s
       end
       data = data[0] if data.count == 1
     else

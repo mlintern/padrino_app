@@ -1,5 +1,4 @@
 #!/bin/env ruby
-# encoding: UTF-8
 # frozen_string_literal: true
 
 PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
@@ -92,7 +91,7 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
 
     data = JSON.parse request.body.read
 
-    data[:last_update] = DateTime.now.utc
+    data[:last_update] = Time.new.utc
     data[:role] = data[:role] || ''
     data[:id] = SecureRandom.uuid
 
@@ -124,7 +123,7 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     account = Account.all(id: params[:id])[0]
     remove_other_elements(data)
     if account
-      data[:last_update] = DateTime.now.utc
+      data[:last_update] = Time.new.utc
       return 400, { success: false, error: 'Bad Request' }.to_json unless account.update(data)
 
       data = remove_elements(account.attributes)
@@ -146,7 +145,7 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
     return 404, { success: false, error: 'User does not exist' }.to_json unless account
 
     new_auth = SecureRandom.hex
-    return 200, { auth_token: new_auth }.to_json if account.update(auth_token: new_auth, last_update: DateTime.now.utc)
+    return 200, { auth_token: new_auth }.to_json if account.update(auth_token: new_auth, last_update: Time.new.utc)
 
     errors = []
     account.errors.each do |e|
