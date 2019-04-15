@@ -7,7 +7,7 @@ class Navigation < SeleniumTests
   def test_main_menu_admin
     sign_in(NRETNIL_ADMIN_USERNAME, NRETNIL_ADMIN_PASSWORD)
     main_nav('Home')
-    assert @driver.div(:css, '.api-enpoints').exists?, 'Did not load Home page'
+    assert @driver.div(css: '.api-enpoints').exists?, 'Did not load Home page'
 
     main_nav('Tools', 'PL Translator')
     assert @driver.url.include?('/translator'), 'Did not load PL Translator page'
@@ -22,7 +22,7 @@ class Navigation < SeleniumTests
     assert @driver.url.include?('/accounts/edit/'), 'Did not load Profiled Settings page'
 
     main_nav('Tools')
-    assert !@driver.a(:text, 'To Dos').exists?, 'ToDos link exists'
+    assert !@driver.a(text: 'To Dos').exists?, 'ToDos link exists'
   rescue StandardError => e
     get_error(__method__.to_s, e)
   end
@@ -47,7 +47,7 @@ class Navigation < SeleniumTests
   def test_todo
     sign_in(NRETNIL_USER_ONE_USERNAME, NRETNIL_USER_ONE_PASSWORD)
     main_nav('Tools', 'To Dos')
-    assert @driver.div(:css, '.modal-header').exists?, 'Modal did not Load'
+    assert @driver.div(css: '.modal-header').exists?, 'Modal did not Load'
   rescue StandardError => e
     get_error(__method__.to_s, e)
   end

@@ -190,6 +190,7 @@ PadrinoApp::App.controllers :api_translator, map: '/api/translator' do
       return 404, { success: false, info: 'Project does not exist.' }.to_json unless project
 
       return 400, { success: false, info: 'Project is not open' }.to_json unless project.status.zero?
+
       begin
         project_assets = data['source_materials_add']
         project_assets.each do |pa|

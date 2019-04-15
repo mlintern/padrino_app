@@ -13,7 +13,7 @@ PadrinoApp::App.helpers do
   rescue JSON::ParserError => e
     logger.error 'Unable to Parse: ' + s
     logger.error e
-    return false
+    false
   end
 
   ####
@@ -69,9 +69,11 @@ PadrinoApp::App.helpers do
     if data['properties']
       data['properties'].each do |p|
         next unless current_properties.include? p['name']
+
         property = AccountProperty.first(id: params[:id], name: p['name'])
         if property
           return true if property.update(value: p['value'])
+
           property.errors.each do |e|
             logger.error("Save Error: #{e}")
           end
@@ -133,6 +135,7 @@ PadrinoApp::App.helpers do
   ####
   def login(redirect = true)
     return true unless current_user.nil?
+
     flash[:error] = 'Login is required.' if redirect
     redirect url(:sessions, :new), 302 if redirect
     false
@@ -146,6 +149,7 @@ PadrinoApp::App.helpers do
   ####
   def auth_creds(auth_header)
     return { username: nil, password: nil } unless auth_header
+
     plain = Base64.decode64(auth_header.gsub('Basic ', ''))
     username = plain.split(':')[0]
     password = plain.split(':')[1]
@@ -180,6 +184,7 @@ PadrinoApp::App.helpers do
   def permission_check(role, redirect = true)
     login
     return true if !current_user['role'].nil? && current_user.role[role]
+
     if redirect
       flash[:error] = role + ' right required to view that page.'
       redirect_last
@@ -401,10 +406,10 @@ PadrinoApp::App.helpers do
     account = Account.first(id: project.user_id)
     ocmapp = OCMApp.first(user_id: account.id)
     url = domain + '/api/translation_projects/' + ocmapp.app_install_id + '/projects/' + project.id
-    return get_callback_auth(url, ocmapp.username, ocmapp.api_key)
+    get_callback_auth(url, ocmapp.username, ocmapp.api_key)
   rescue StandardError => e
     logger.error e
-    return false
+    false
   end
 
   ####
@@ -416,11 +421,11 @@ PadrinoApp::App.helpers do
   def get_callback_auth(url, username, api_key)
     auth = { username: username, password: api_key }
     logger.info HTTParty.get(URI.unescape(url), basic_auth: auth, verify: false, headers: { 'Content-Type' => 'application/x-json' })
-    return true
+    true
   rescue StandardError => e
     logger.error e
     logger.error e.backtrace
-    return false
+    false
   end
 
   ####
@@ -432,11 +437,11 @@ PadrinoApp::App.helpers do
   ####
   def post_callback(url, data = {})
     logger.info HTTParty.post(URI.unescape(url), body: data, verify: false, headers: { 'Content-Type' => 'application/x-json' })
-    return true
+    true
   rescue StandardError => e
     logger.error e
     logger.error e.backtrace
-    return false
+    false
   end
 
   ####
@@ -452,11 +457,12 @@ PadrinoApp::App.helpers do
     auth = { username: username, password: api_key }
     logger.info response = HTTParty.post(URI.unescape(url), body: data.to_json, basic_auth: auth, verify: false, headers: { 'Content-Type' => 'application/x-json' })
     return false if response.key? 'error'
-    return true
+
+    true
   rescue StandardError => e
     logger.error e
     logger.error e.backtrace
-    return false
+    false
   end
 
   ####
@@ -468,9 +474,11 @@ PadrinoApp::App.helpers do
   ####
   def delete_project(project, user)
     return 403, { success: false, info: 'You do not have permission to perform this action.' }.to_json if project.user_id != user.id
+
     assets = Asset.all(project_id: params[:id])
     assets.each do |asset|
       next if asset.destroy
+
       errors = []
       asset.errors.each do |e|
         errors << e
@@ -480,6 +488,7 @@ PadrinoApp::App.helpers do
     languages = Language.all(project_id: params[:id])
     languages.each do |lang|
       next if lang.destroy
+
       errors = []
       asset.errors.each do |e|
         errors << e
@@ -488,15 +497,16 @@ PadrinoApp::App.helpers do
     end
 
     return 200, { success: true, info: "Project was successfully deleted. Along with it's assets and languages." }.to_json if project.destroy
+
     errors = []
     project.errors.each do |e|
       errors << e
     end
-    return 400, { success: false, info: errors }.to_json
+    [400, { success: false, info: errors }.to_json]
   rescue StandardError => e
     logger.error e
     logger.error e.backtrace
-    return false
+    false
   end
 
   ####
@@ -513,10 +523,11 @@ PadrinoApp::App.helpers do
     url = '/api/translation_projects/' + ocmapp.app_install_id + '/create_translation'
     response = HTTParty.post(domain + url, body: post.to_json, basic_auth: auth, verify: false, headers: { 'Content-Type' => 'application/x-json' })
     return true if response.code == 200
-    return response.parsed_response
+
+    response.parsed_response
   rescue StandardError => e
     logger.error e
     logger.error e.backtrace
-    return false
+    false
   end
 end

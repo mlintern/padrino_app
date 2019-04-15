@@ -9,31 +9,31 @@ class Accounts < SeleniumTests
     main_nav('Settings', 'Accounts')
     assert @driver.url.include?('/accounts'), 'Did not load Accounts page'
 
-    wac(@driver.a(:css, '.new-user-tab'))
+    wac(@driver.a(css: '.new-user-tab'))
     assert @driver.url.include?('/accounts/new'), 'Did not load new user page'
 
-    wac(@driver.a(:css, '.card-users-tab'))
+    wac(@driver.a(css: '.card-users-tab'))
     assert @driver.url.include?('/accounts/cards'), 'Did not load new user page'
 
-    wac(@driver.a(:css, '.edit-user-tab'))
+    wac(@driver.a(css: '.edit-user-tab'))
     assert @driver.url.include?('/accounts/edit'), 'Did not load new user page'
   rescue StandardError => e
     get_error(__method__.to_s, e)
   end
 
   def update_and_clear_image
-    @driver.text_field(:css, '.photo-url').set('http://www.nretnil.com/avatar/barrel.jpg')
-    wac(@driver.button(:css, '.image-clear'))
-    assert @driver.input(:css, '.photo-url').value.length.zero?, 'Image URL was not cleared'
+    @driver.text_field(css: '.photo-url').set('http://www.nretnil.com/avatar/barrel.jpg')
+    wac(@driver.button(css: '.image-clear'))
+    assert @driver.input(css: '.photo-url').value.length.zero?, 'Image URL was not cleared'
 
-    @driver.text_field(:css, '.photo-url').set('http://www.nretnil.com/avatar/barrel.jpg')
-    wac(@driver.button(:css, '.image-update'))
+    @driver.text_field(css: '.photo-url').set('http://www.nretnil.com/avatar/barrel.jpg')
+    wac(@driver.button(css: '.image-update'))
     wait_till_page_loads
     check_for_success
   end
 
   def select_user(username)
-    wac(@driver.a(:text, username))
+    wac(@driver.a(text: username))
     wait_till_page_loads
   end
 
@@ -43,7 +43,7 @@ class Accounts < SeleniumTests
     assert @driver.url.include?('/accounts'), 'Did not load Accounts page'
     select_user(NRETNIL_USER_ONE_USERNAME)
     update_and_clear_image
-    wac(@driver.input(:css, '.user_save'))
+    wac(@driver.input(css: '.user_save'))
     wait_till_page_loads
     check_for_success
   rescue StandardError => e
@@ -55,7 +55,7 @@ class Accounts < SeleniumTests
     main_nav('Settings', 'Profile')
     assert @driver.url.include?('/accounts/edit/'), 'Did not load Profiled Settings page'
     update_and_clear_image
-    wac(@driver.input(:css, '.user_save'))
+    wac(@driver.input(css: '.user_save'))
     wait_till_page_loads
     check_for_success
   rescue StandardError => e

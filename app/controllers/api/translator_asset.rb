@@ -19,8 +19,10 @@ PadrinoApp::App.controllers :api_assets, map: '/api/assets' do
     asset = Asset.get(params[:id])
 
     return 404, { success: false, info: 'Asset does not exist.' }.to_json unless asset
+
     project = Project.get(asset.project_id)
     return 200, asset.to_json if project.user_id == auth_account.id
+
     return 403, { success: false, info: 'You do not have permission to perform this action.' }.to_json
   end
 
@@ -51,6 +53,7 @@ PadrinoApp::App.controllers :api_assets, map: '/api/assets' do
     errors = []
     languages.each do |lang|
       next if finished_langs.include? lang.name.downcase
+
       data = {}
       data[:source_id] = asset.external_id
       data[:project_id] = project.id

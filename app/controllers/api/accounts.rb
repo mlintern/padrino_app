@@ -99,6 +99,7 @@ PadrinoApp::App.controllers :api_accounts, map: '/api/accounts' do
 
     account = Account.new(data)
     return 200, account.to_json if account.save
+
     errors = []
     account.errors.each do |e|
       errors << e
