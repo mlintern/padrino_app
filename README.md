@@ -1,53 +1,60 @@
-Set up development Database:
+# Padrino App
 
+## Set up development Database:
+```
 cd project/dir
 bundle exec rake db:create (or mysql -uroot < utilities/setup_dev_db.sql)
 bundle exec rake db:migrate
 bundle exec padrino run utilities/user_populate.rb
+```
 
 
+## Set up Prdouction Database on MySQL:
 
-Set up Prdouction Database on MySQL:
-
-create database with util script:
-
+### create database with util script:
+```
 mysql -uroot < utilities/setup_production_db.sql
+```
 
+```
 cd project/dir
 RACK_ENV=production padrino rake db:migrate
 RACK_ENV=production padrino rake db:seed
 chmod 777 db
 chmod 777 db/padrino_app_production.db
+```
 
 
 
-Setup Redis:
+## Setup Redis:
 
-development: brew install redis
-production: yum install redis (you may need to install by hand if version is not high enough)
+development: `brew install redis`
+
+production: `yum install redis` (you may need to install by hand if version is not high enough)
 
 
-Move Workers initi script:
-
+## Move Workers init script:
+```
 sudo cp utilities/workers_daemon /etc/init.d/workers_daemon
 sudo chmod 755 /etc/init.d/workers_daemon
-
+```
 
 Start Workers on Production:
-
+```
 sudo service workers_daemon start
-
+```
 
 Start Workers on Development in forground:
-
+```
 ruby utilities/start_workers.rb
+```
 
-
-Current Routes:
-
+## Current Routes:
+```
 bundle exec rake routes
+```
 
-Application: PadrinoApp::App
+### Application: PadrinoApp::App
     URL                                      REQUEST  PATH
     (:accounts, :index)                        GET    /accounts
     (:accounts, :cards)                        GET    /accounts/cards
@@ -119,7 +126,7 @@ Application: PadrinoApp::App
     (:translator, :asset)                      GET    /translator/asset/:id
 
 
-Seeded Users:
+### Seeded Users:
 
 administrator - admin,curl
 mweston - user,curl
@@ -133,14 +140,16 @@ barry - user
 password is 'password'
 
 To use email you will want to create a file on the root of the project called env.rb, which should look like this:
-
+```
 ENV['GMAIL_EMAIL'] = 'emailaddress@gamil.com'
 ENV['GMAIL_PASSWORD'] = 'passwordtoemailaddress'
 ENV['LOG_LEVEL'] = 'devel'
 ENV['SERVER_HOST'] = 'localhost:3000'
 ENV['SERVER_URL'] = 'http://localhost:3000'
+```
 
-# Testing Environment Variables
+## Testing Environment Variables
+```
 ENV['NRETNIL_ADMIN_USERNAME'] = '__selenium_admin'
 ENV['NRETNIL_ADMIN_PASSWORD'] = 'password'
 ENV['NRETNIL_USER_ONE_USERNAME'] = '__selenium_user_one'
@@ -149,9 +158,10 @@ ENV['NRETNIL_USER_TWO_USERNAME'] = '__selenium_user_two'
 ENV['NRETNIL_USER_TWO_PASSWORD'] = 'password'
 ENV['TARGET_URL'] = 'localhost:3000'
 ENV['TIMEOUT'] = '10'
+```
 
-For the Editors to work in Compendium you need to update a method in PostEditor.js:
-
+### For the Editors to work in Compendium you need to update a method in PostEditor.js:
+```
 updateAppOwnedFields: function(msg){
     if(this.videoEditorView){
         this.videoEditorView.updateEmbedCode(msg.embedCode);
@@ -161,3 +171,4 @@ updateAppOwnedFields: function(msg){
     }
     this.trigger("postEditor:updateCustomFields", msg.customFields);
 },
+```
