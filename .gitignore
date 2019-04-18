@@ -5,3 +5,5 @@ env.rb
 vendor/*
 .sass-cache
 .DS_Store
+
+public/cdn

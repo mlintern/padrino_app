@@ -1,0 +1,21 @@
+<div class="container file-upload-container">
+	<div class="card p-3 my-5 bg-light">
+		<form action="/files/upload" method="post" enctype="multipart/form-data">
+			<div class="text-center p-3">
+				<label for="files" class="custom-file-upload">
+					<span class="btn btn-danger"><i class="fa fa-file-upload mr-2"></i>Choose a file...</span>
+				</label>
+				<input id="files" class="file-upload-input" type="file" name="files[]" multiple>
+			</div>
+			<div class="input-information"></div>
+			<div class="upload-button-container"><input class="btn btn-info btn-sm float-right" type="submit" value="Upload"></div>
+		</form>
+	</div>
+
+	<div class="progress">
+		<div class="progress-bar progress-bar-success progress-bar-striped"></div>
+		<div class="percent">0%</div>
+	</div>
+
+	<div class="mt-5" id="status"></div>
+</div>
