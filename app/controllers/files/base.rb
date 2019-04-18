@@ -54,12 +54,16 @@ PadrinoApp::App.controllers :files do
   end
 
   get :index, with: :id do
-    file = UploadedFile.get(params['id'], current_user.id)
+    file = UploadedFile.first(id: params['id'])
+    return 404 if file.nil?
+
     send_file file.path
   end
 
   get :download, map: '/files/:id/download' do
-    file = UploadedFile.get(params['id'], current_user.id)
+    file = UploadedFile.first(id: params['id'])
+    return 404 if file.nil?
+
     send_file file.path, filename: file.name, type: 'Application/octet-stream'
   end
 
