@@ -21,6 +21,8 @@ class Account
   property :last_login,       DateTime
   property :status,           Integer
 
+  has n, :uploaded_files
+
   # Validations
   validates_presence_of      :username
   validates_presence_of      :password,                          if: :password_required

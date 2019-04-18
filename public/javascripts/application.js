@@ -35,9 +35,9 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 
 			var automaticOnSubmit = f1.form.onsubmit;
 		}
-		
+
 		function setFields () {
-			if ( $('#public').is(':checked') ) { 
+			if ( $('#public').is(':checked') ) {
 				$('.auth').show();
 				$(".not-pub").prop('disabled',false);
 				validateCredentials();
@@ -93,7 +93,7 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 			var checkbox, willBeChecked;
 			ev.stopPropagation();
 
-			if (ev.currentTarget.tagName == 'TR') { 
+			if (ev.currentTarget.tagName == 'TR') {
 				checkbox = $(this).find('.list-selectable-checkbox');
 				willBeChecked = !checkbox.prop('checked');
 				checkbox.prop('checked', willBeChecked);
@@ -101,7 +101,7 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 				generalToggle();
 			}
 		});
-		// Select all action 
+		// Select all action
 		$('#select-all').click( function(ev) {
 			ev.preventDefault();
 			ev.stopPropagation();
@@ -113,7 +113,7 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 			toggleAction('#select-all', true);
 			toggleAction('#deselect-all', false);
 		});
-		// Deselect all action 
+		// Deselect all action
 		$('#deselect-all').click( function(ev) {
 			ev.preventDefault();
 			if ($(this).is('.list-menu-link-disabled')) return;
@@ -133,7 +133,7 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 			$(this).addClass('active')
 				.siblings('.list-menu-popover-delete-selected').first().show()
 				.find('.cancel').on('click', function() {
-				
+
 					// Hide the popover on cancel
 					$(this).parents('.list-menu-popover-delete-selected').hide()
 						.siblings('#delete-selected').removeClass('active').parent().removeClass('active');
@@ -238,6 +238,57 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 			$('.menu-trigger .fa').addClass('fa-bars');
 			$('.menu-trigger .fa').removeClass('fa-arrow-left');
 		});
+
+		// File Upload JS v
+	  var bar = $('.progress-bar');
+	  var percent = $('.percent');
+	  var status = $('#status');
+
+	  function reset () {
+	    status.empty();
+	    var percentVal = '0%';
+	    bar.width(percentVal);
+	    percent.html(percentVal);
+	  }
+
+	  $('#files').change(function(){
+	    reset();
+	  });
+
+	  $('form').ajaxForm({
+	    beforeSend: function() {
+	      reset();
+	    },
+	    uploadProgress: function(event, position, total, percentComplete) {
+	      var percentVal = percentComplete + '%';
+	      bar.width(percentVal);
+	      percent.html(percentVal);
+	    },
+	    success: function() {
+	      var percentVal = '100%';
+	      bar.width(percentVal);
+	      percent.html(percentVal);
+	    },
+	    complete: function(xhr) {
+	      var response_html = "";
+	      var files = JSON.parse(xhr.responseText).files;
+	      $.each(files, function (x,file) {
+	        response_html += '<span class="badge badge-success m-1 p-2">' + file.name + ' (' + file.size + ')</span>';
+	      });
+	      status.html(response_html);
+	      $('.input-information').hide();
+	    }
+	  });
+
+	  $("#files").on('change', function() {
+	    console.log('updating');
+	    var html = '';
+	    for (var i = 0; i < $(this).get(0).files.length; ++i) {
+	        html += '<span class="badge badge-secondary m-1 p-2">' + $(this).get(0).files[i].name + '</span>';
+	    }
+	    $('.input-information').html(html);
+	    $('.input-information').show();
+	  });
 
 	});
 

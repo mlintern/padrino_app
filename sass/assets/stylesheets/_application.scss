@@ -1,16 +1,17 @@
 /*!
  *  Nrentil Apps
- *  
+ *
  */
 
-@import "application/navbar";
-@import "application/home";
-@import "application/account-card";
-@import "application/login";
-@import "application/footer";
-@import "application/curl";
-@import "application/todo";
-@import "application/feedback";
-@import "application/accounts";
-@import "application/translation";
-@import "application/utilities";
+@import 'application/navbar';
+@import 'application/home';
+@import 'application/account-card';
+@import 'application/login';
+@import 'application/footer';
+@import 'application/curl';
+@import 'application/todo';
+@import 'application/feedback';
+@import 'application/file_upload';
+@import 'application/accounts';
+@import 'application/translation';
+@import 'application/utilities';

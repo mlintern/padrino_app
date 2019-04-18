@@ -97,6 +97,17 @@
       </div>
       <label class="switch-label">translate <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Turn on tranlate role."></i></label>
     </div>
+    <div class="checkbox-switch m-top-md">
+      <div class="switch">
+        <input type="checkbox" name="account[role][]" value="file_upload" <% if !user.role.nil? && user.role["file_upload"] %>checked<%end%>/>
+        <label>
+          <i class="fa fa-check"></i>
+          <i class="fa fa-remove"></i>
+          <div class="switch-handle"></div>
+        </label>
+      </div>
+      <label class="switch-label">file upload <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Turn on file upload role."></i></label>
+    </div>
   </div>
 </fieldset>
 <% end %>
@@ -105,9 +116,10 @@
 <div class="form-actions">
   <input type="submit" value="Save" class="btn btn-primary user_save">
   &nbsp;
-  <% if permission_check('admin',false) %>
-  <input type="submit" value="Save and continue" class="btn btn-info user_save_and_continue" name="save_and_continue">
-  &nbsp;
-  <% end %>
+  <% if permission_check('admin', false) %>
   <a class="btn btn-default user_cancel" href="/accounts">Cancel</a>
+  &nbsp;
+  <%else %>
+  <a class="btn btn-default user_cancel" href="/">Cancel</a>
+  <% end %>
 </div>

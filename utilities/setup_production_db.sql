@@ -7,7 +7,7 @@ GRANT SELECT ON * . * TO 'webuser'@'localhost';
 FLUSH PRIVILEGES;
 
 # Create Database
-CREATE DATABASE nretnil_prd;
+CREATE DATABASE IF NOT EXISTS nretnil_prd;
 
 GRANT ALL PRIVILEGES ON nretnil_prd.* TO 'webuser'@'localhost';
 

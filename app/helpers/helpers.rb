@@ -3,6 +3,36 @@
 
 PadrinoApp::App.helpers do
   ####
+  # Name: clean_item
+  # Description: takes an item and updates it for a nicer user experience.
+  # Arguments: item
+  #            [boolean] show_all
+  # Response: item
+  ####
+  def clean_item(item, show_all = false)
+    clean = item.attributes
+    clean[:url] = item.url
+    clean.delete(:status) unless show_all
+    clean.delete(:last_update) unless show_all
+    clean
+  end
+
+  ####
+  # Name: clean_items
+  # Description: takes an array of items and updates it for a nicer user experience.
+  # Arguments: [array] of items
+  #            [boolean] show_all
+  # Response: [array] of items
+  ####
+  def clean_items(items, show_all = false)
+    clean = []
+    items.each do |item|
+      clean << clean_item(item, show_all)
+    end
+    clean
+  end
+
+  ####
   # Name: string_to_hash
   # Description: returns hash from a string that is a hash
   # Arguments: string - of hash
@@ -186,7 +216,7 @@ PadrinoApp::App.helpers do
     return true if !current_user['role'].nil? && current_user.role[role]
 
     if redirect
-      flash[:error] = role + ' right required to view that page.'
+      flash[:error] = role + ' required to view that page.'
       redirect_last
     end
     false
@@ -210,13 +240,11 @@ PadrinoApp::App.helpers do
   # Response: true or false
   ####
   def api_owner?(auth_header, owner_id)
-    if current_user
-      owner? current_user.id.to_s
-    else
-      creds = auth_creds(auth_header)
-      if (account = Account.authenticate(creds[:username], creds[:password])) && !creds.nil?
-        return true if account.id.to_s == owner_id
-      end
+    return owner? owner_id if current_user
+
+    creds = auth_creds(auth_header)
+    if (account = Account.authenticate(creds[:username], creds[:password])) && !creds.nil?
+      return true if account.id.to_s == owner_id
     end
     false
   end

@@ -24,6 +24,8 @@ module PadrinoApp
     # layout  :my_layout              # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
 
+    set :files_dir, Padrino.root('/public/cdn/files') + '/'
+
     # Padrino Mailer setup
     set :delivery_method, smtp: {
       address: 'smtp.gmail.com',
