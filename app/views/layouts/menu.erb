@@ -10,12 +10,14 @@
         <% if permission_check('user',false) %><li><a class="pointer todo-btn" data-toggle="modal" data-target="#todos"><i class="fa fa-list"></i> To Dos</a></li><% end %>
       </ul>
     </li>
+    <% if permission_check('user',false) || permission_check('admin',false) %>
     <li><a href="#" class="toggle-menu"><i class="fa fa-gear menu-icon has-sub-menu"></i> <span class="menu-text">Settings</span></a>
       <ul class="alta-sub-menu">
         <li><a title="Edit your profile" href="/accounts/edit/<%= current_user.id %>"><i class="fa fa-user fa-fw"></i> Profile</a></li>
         <% if permission_check('admin',false) %><li><a href="/accounts"><i class="fa fa-users fa-fw"></i> Accounts</a></li><% end %>
       </ul>
     </li>
+    <% end %>
     <% if permission_check('file_upload',false) %>
     <li><a href="#" class="toggle-menu"><i class="fa fa-file menu-icon has-sub-menu"></i> <span class="menu-text">Files</span></a>
       <ul class="alta-sub-menu">

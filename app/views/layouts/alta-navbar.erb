@@ -16,9 +16,12 @@
       <div class="alta-user-dropdown">
         <div class="user-info">
           <div><img src="<%= user_property(current_user.id,'photo').value || '/images/default.png' %>" /></div>
+          <div><%= current_user.name %> <%= current_user.surname %></div>
         </div>
         <ul>
-          <li><a href="/accounts/edit/<%= current_user.id %>" class="account-btn"><%= current_user.name %> <%= current_user.surname %></a></li>
+          <% if permission_check('user',false) %>
+          <li><a href="/accounts/edit/<%= current_user.id %>" class="account-btn"><i class="fa fa-gear fa-fw"></i> Account Settings</a></li>
+          <% end %>
           <li><a href="/sessions/destroy" class="logout-btn"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a></li>
         </ul>
       </div>
