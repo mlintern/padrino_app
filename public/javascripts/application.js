@@ -255,7 +255,7 @@ $('body').addClass($(location).attr('pathname').replace(/\//g,' nk-'));
 	    reset();
 	  });
 
-	  $('form').ajaxForm({
+	  $('form.file-upload').ajaxForm({
 	    beforeSend: function() {
 	      reset();
 	    },
