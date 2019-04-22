@@ -62,9 +62,8 @@ var TodoItem = CreateReactClass({
 	 */
 	componentDidUpdate: function (prevProps) {
 		if (!prevProps.editing && this.props.editing) {
-			var node = this.refs.editField.getDOMNode();
+			var node = ReactDOM.findDOMNode(this);
 			node.focus();
-			node.setSelectionRange(node.value.length, node.value.length);
 		}
 	},
 
