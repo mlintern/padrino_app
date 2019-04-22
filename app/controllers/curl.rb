@@ -103,7 +103,7 @@ PadrinoApp::App.controllers :curl do
         params['only_curl'] == 'on' ? true : @result = HTTParty.delete(@url, basic_auth: @auth, query: query, headers: headers, verify: secure)
       end
 
-      logger.debug @result
+      logger.debug "Result: #{@result}"
       is_json = if params['only_curl'] == 'on'
                   true
                 else
@@ -111,14 +111,14 @@ PadrinoApp::App.controllers :curl do
                 end
       render 'curl/result', locals: { curl_call: curl_call, result: @result, is_json: is_json }
     rescue JSON::ParserError => e
-      logger.debug 'JSON SyntaxError'
+      logger.error 'JSON SyntaxError'
       logger.error e.inspect
       logger.error e.backtrace
       flash[:error] = e.message
       query = params.map { |key, value| "#{key}=#{value}" }.join('&')
       redirect "/curl?#{query}"
     rescue SyntaxError => e
-      logger.debug 'SyntaxError'
+      logger.error 'SyntaxError'
       logger.error e.inspect
       logger.error e.backtrace
       flash[:error] = e.message
