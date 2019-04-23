@@ -8,7 +8,7 @@ PadrinoApp::App.controllers :curl do
     permission_check('curl')
 
     uri = params['api_uri'] || '/api/password'
-    query = params['query'] || '{ :symbols => false, :length => 25 }'
+    query = params['query'] || '{ symbols: false, length: 25 }'
     host = params['server'] || params['host'] || 'app.nretnil.com'
     protocol = params['protocol'] || 'https://'
     basic = params['basic'] || false
@@ -16,7 +16,7 @@ PadrinoApp::App.controllers :curl do
     username = params['username'] || ''
     api_key = params['api_key'] || ''
     call_type = params['call_type'] || 'get'
-    headers = params['headers'] || '{ "Accept" => "application/vnd.compendium.blog;version=2,application/json" }'
+    headers = params['headers'] || '{ "Accept": "application/json" }'
     body = params['body'] || '{ :post_title => "Content Title", :url_lookup_token => "content-title" }'
 
     render '/curl/index', locals: { 'uri' => uri, 'query' => query, 'host' => host, 'protocol' => protocol, 'basic' => basic, 'secure' => secure, 'username' => username, 'api_key' => api_key, 'call_type' => call_type, 'headers' => headers, 'body' => body }

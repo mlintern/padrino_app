@@ -13,9 +13,9 @@ GIT
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-password
-  revision: 63e129821314c99df51d3989f04e5680dbe685ae
+  revision: bcbd14c0e2a8f5fb3ccbbcb79c4a2fbcbf535263
   specs:
-    nretnil-password (0.2.0)
+    nretnil-password (0.2.1)
 
 GIT
   remote: https://github.com/nretnilkram/nretnil-translate
@@ -92,7 +92,7 @@ GEM
     erubis (2.7.0)
     fastercsv (1.5.5)
     ffi (1.10.0)
-    httparty (0.16.4)
+    httparty (0.17.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     i18n (0.9.5)
@@ -170,7 +170,7 @@ GEM
     selenium-webdriver (3.141.5926)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
-    sidekiq (5.2.6)
+    sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
