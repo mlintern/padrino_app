@@ -44,12 +44,12 @@ class Account
   #
   def self.authenticate(username, password)
     account = first(conditions: ['lower(username) = lower(?)', username]) unless username.nil? || username.empty?
-    account && account.password?(password) ? account : nil
+    account&.password?(password) ? account : nil
   end
 
   def self.token_authenticate(username, token)
     account = first(conditions: ['lower(username) = lower(?)', username]) unless username.nil? || username.empty?
-    account && account.token?(token) ? account : nil
+    account&.token?(token) ? account : nil
   end
 
   def active?

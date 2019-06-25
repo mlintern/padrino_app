@@ -96,14 +96,25 @@ PadrinoApp::App.helpers do
   def add_update_properties(data)
     current_properties = ['photo']
 
-    if data['properties']
-      data['properties'].each do |p|
-        next unless current_properties.include? p['name']
+    data['properties']&.each do |p|
+      next unless current_properties.include? p['name']
 
-        property = AccountProperty.first(id: params[:id], name: p['name'])
-        if property
-          return true if property.update(value: p['value'])
+      property = AccountProperty.first(id: params[:id], name: p['name'])
+      if property
+        return true if property.update(value: p['value'])
 
+        property.errors.each do |e|
+          logger.error("Save Error: #{e}")
+        end
+        errors = []
+        property.errors.each do |e|
+          errors << e
+        end
+        halt 400, { success: false, errors: errors }.to_json
+      else
+        property = AccountProperty.new(id: params[:id], name: p['name'], value: p['value'])
+        if property.save
+        else
           property.errors.each do |e|
             logger.error("Save Error: #{e}")
           end
@@ -112,19 +123,6 @@ PadrinoApp::App.helpers do
             errors << e
           end
           halt 400, { success: false, errors: errors }.to_json
-        else
-          property = AccountProperty.new(id: params[:id], name: p['name'], value: p['value'])
-          if property.save
-          else
-            property.errors.each do |e|
-              logger.error("Save Error: #{e}")
-            end
-            errors = []
-            property.errors.each do |e|
-              errors << e
-            end
-            halt 400, { success: false, errors: errors }.to_json
-          end
         end
       end
     end
